@@ -20,7 +20,7 @@ class CardboardRendererConfig:
     pixel_scale: int = 4
     box_width_multiplier: float = 2.25
     box_height_multiplier: float = 2.05
-    box_depth_multiplier: float = 1.25
+    box_depth_multiplier: float = 1.55
     opacity: float = 1.0
     mirrored: bool = False
     neutral_pitch_degrees: float = -10.0

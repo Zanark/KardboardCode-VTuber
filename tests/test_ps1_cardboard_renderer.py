@@ -61,7 +61,7 @@ def test_default_shell_has_enlarged_xyz_dimensions() -> None:
 
     assert config.box_width_multiplier == 2.25
     assert config.box_height_multiplier == 2.05
-    assert config.box_depth_multiplier == 1.25
+    assert config.box_depth_multiplier == 1.55
 
 
 def test_screen_left_k_follows_anatomical_left_eye_in_mirrored_preview() -> None:

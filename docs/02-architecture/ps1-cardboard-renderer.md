@@ -74,7 +74,7 @@ sequenceDiagram
 
 MediaPipe landmarks bound the face, not the full hairstyle. The shell therefore uses additional
 clearance in all three dimensions: `2.25x` tracked face width, `2.05x` tracked face height with a
-`12%` upward center bias, and a `1.25x` depth multiplier. This larger envelope keeps hair, chin,
+`12%` upward center bias, and a `1.55x` depth multiplier. This larger envelope keeps hair, chin,
 and side-profile pixels inside the opaque silhouette during combined pitch, yaw, and roll.
 
 The visible logo order is always `K C` from screen-left to screen-right. In mirrored preview, each
