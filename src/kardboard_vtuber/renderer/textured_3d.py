@@ -315,7 +315,7 @@ def _build_character_mesh() -> ndarray:
     cardboard = (0.72, 0.47, 0.23)
     dark_cardboard = (0.34, 0.20, 0.09)
     edge_cardboard = (0.50, 0.31, 0.13)
-    inner_liner = (0.18, 0.11, 0.06)
+    head_shadow = (0.16, 0.12, 0.09)
     white = (0.78, 0.75, 0.66)
     cushion = (0.13, 0.12, 0.10)
     generic_uv = ((0.0, 0.0), (0.5, 0.0), (0.5, 1.0), (0.0, 1.0))
@@ -384,43 +384,7 @@ def _build_character_mesh() -> ndarray:
         True,
     )
 
-    liner_z = 0.16
-    builder.quad(
-        (
-            (-0.43, -0.40, liner_z),
-            (0.43, -0.40, liner_z),
-            (0.43, 0.40, liner_z),
-            (-0.43, 0.40, liner_z),
-        ),
-        (0.0, 0.0, 1.0),
-        generic_uv,
-        inner_liner,
-        False,
-    )
-    builder.quad(
-        (
-            (-0.43, -0.52, liner_z),
-            (-0.11, -0.52, liner_z),
-            (0.0, -0.40, liner_z),
-            (-0.43, -0.40, liner_z),
-        ),
-        (0.0, 0.0, 1.0),
-        generic_uv,
-        inner_liner,
-        False,
-    )
-    builder.quad(
-        (
-            (0.0, -0.40, liner_z),
-            (0.11, -0.52, liner_z),
-            (0.43, -0.52, liner_z),
-            (0.43, -0.40, liner_z),
-        ),
-        (0.0, 0.0, 1.0),
-        generic_uv,
-        inner_liner,
-        False,
-    )
+    _add_privacy_head_volume(builder, head_shadow)
 
     builder.quad(
         ((-0.5, -0.5, 0.5), (-0.18, -0.5, 0.5), (-0.14, -0.65, 0.64), (-0.51, -0.64, 0.63)),
@@ -486,6 +450,61 @@ def _build_character_mesh() -> ndarray:
         )
 
     return np.asarray(builder.vertices, dtype=np.float32)
+
+
+def _add_privacy_head_volume(
+    builder: _MeshBuilder,
+    color: tuple[float, float, float],
+) -> None:
+    center = np.asarray((0.0, 0.03, 0.0), dtype=np.float64)
+    radii = np.asarray((0.41, 0.44, 0.30), dtype=np.float64)
+    latitude_segments = 8
+    longitude_segments = 12
+    uvs = ((0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0))
+
+    def point(latitude: float, longitude: float) -> tuple[float, float, float]:
+        cosine = math.cos(latitude)
+        unit = np.asarray(
+            (
+                cosine * math.cos(longitude),
+                math.sin(latitude),
+                cosine * math.sin(longitude),
+            ),
+            dtype=np.float64,
+        )
+        return tuple(center + radii * unit)
+
+    for latitude_index in range(latitude_segments):
+        latitude_0 = -math.pi / 2.0 + math.pi * latitude_index / latitude_segments
+        latitude_1 = -math.pi / 2.0 + math.pi * (latitude_index + 1) / latitude_segments
+        for longitude_index in range(longitude_segments):
+            longitude_0 = 2.0 * math.pi * longitude_index / longitude_segments
+            longitude_1 = 2.0 * math.pi * (longitude_index + 1) / longitude_segments
+            points = (
+                point(latitude_0, longitude_0),
+                point(latitude_0, longitude_1),
+                point(latitude_1, longitude_1),
+                point(latitude_1, longitude_0),
+            )
+            normal = _face_normal(points[0], points[1], points[2])
+            face_center = np.mean(np.asarray(points), axis=0)
+            if np.dot(np.asarray(normal), face_center - center) < 0:
+                normal = tuple(-component for component in normal)
+            builder.quad(points, normal, uvs, color, False)
+
+
+def _face_normal(
+    point_0: tuple[float, float, float],
+    point_1: tuple[float, float, float],
+    point_2: tuple[float, float, float],
+) -> tuple[float, float, float]:
+    edge_0 = np.asarray(point_1) - np.asarray(point_0)
+    edge_1 = np.asarray(point_2) - np.asarray(point_0)
+    normal = np.cross(edge_0, edge_1)
+    length = np.linalg.norm(normal)
+    if length <= 1e-9:
+        return (0.0, 0.0, 1.0)
+    return tuple(normal / length)
 
 
 def _add_cylinder(

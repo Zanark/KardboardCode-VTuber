@@ -38,8 +38,8 @@ flowchart LR
 - a front shell with a protected V-shaped neck opening;
 - left, right, top, and rear depth surfaces;
 - a matching rear opening so the bottom remains hollow;
-- a close dark inner head liner that blocks the apparent empty cavity and leaves only a narrow neck
-  notch visible during upward pitch;
+- a faceted dark privacy volume positioned between the front and rear faces, hiding the real head
+  while allowing the real neck to emerge below it during upward pitch;
 - front and side cardboard flaps;
 - layered dark/light edge bars that suggest corrugated cardboard;
 - faceted earcups, cushions, and a segmented headphone band;

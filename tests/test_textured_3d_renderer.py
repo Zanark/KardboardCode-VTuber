@@ -22,11 +22,16 @@ def test_character_mesh_contains_box_flaps_and_headphone_geometry() -> None:
     assert np.max(vertices[:, 0]) > 0.64
     assert np.max(vertices[:, 1]) > 0.75
     assert np.max(vertices[:, 2]) > 0.65
-    liner_vertices = vertices[
-        (np.isclose(vertices[:, 2], 0.16))
-        & (np.isclose(vertices[:, 8], 0.18))
+    head_volume_vertices = vertices[
+        (np.isclose(vertices[:, 8], 0.16))
+        & (np.isclose(vertices[:, 9], 0.12))
+        & (np.isclose(vertices[:, 10], 0.09))
     ]
-    assert liner_vertices.shape[0] >= 18
+    assert head_volume_vertices.shape[0] > 500
+    assert np.min(head_volume_vertices[:, 1]) <= -0.40
+    assert np.max(head_volume_vertices[:, 1]) >= 0.46
+    assert np.min(head_volume_vertices[:, 2]) <= -0.29
+    assert np.max(head_volume_vertices[:, 2]) >= 0.29
 
 
 def test_cardboard_texture_changes_letters_into_wink_arcs() -> None:
@@ -64,7 +69,7 @@ def test_gpu_renderer_is_fail_closed_and_composites_model() -> None:
     renderer.close()
 
 
-def test_upward_pitch_inner_liner_covers_head_but_leaves_neck_visible() -> None:
+def test_upward_pitch_head_volume_covers_head_but_leaves_neck_visible() -> None:
     try:
         renderer = Textured3DCardboardRenderer()
     except RuntimeError as error:
