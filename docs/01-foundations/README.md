@@ -82,8 +82,11 @@ direction.
 selection, latest-frame buffering, lifecycle, reconnects, rotation, mirroring, diagnostics, tests,
 and documentation.
 
-**Planned:** MediaPipe adapter, normalized face state, filters, springs, box geometry, compositing,
-calibration, OBS-specific output enhancements.
+**Implemented:** MediaPipe adapter, normalized face state, asynchronous tracking, and live debug
+overlay.
+
+**Planned:** filters, springs, box geometry, compositing, calibration, and OBS-specific output
+enhancements.
 
 ## Source anchors
 

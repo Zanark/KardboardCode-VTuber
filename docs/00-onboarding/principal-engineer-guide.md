@@ -132,7 +132,7 @@ classDiagram
 2. [Latest-frame slot](../03-algorithms-and-data-structures/latest-frame-slot.md)
 3. [Finite-state lifecycle](../03-algorithms-and-data-structures/finite-state-lifecycle.md)
 4. [Latency over completeness](../04-design-principles/latency-over-completeness.md)
-5. [Roadmap](../07-roadmap/README.md)
+5. [Roadmap](../08-roadmap/README.md)
 
 ---
 

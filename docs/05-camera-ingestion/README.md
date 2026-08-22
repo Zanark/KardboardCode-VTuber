@@ -65,4 +65,4 @@ Mappings: `src/kardboard_vtuber/camera/models.py:15-30`.
 ---
 
 ⬅️ [Design principles](../04-design-principles/README.md) · ➡️
-[Quality and testing](../06-quality-and-testing/README.md)
+[Face tracking](../06-face-tracking/README.md)

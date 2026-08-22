@@ -35,7 +35,7 @@ flowchart TD
 - No automated reconnect test with a failure-scripted fake.
 - No end-to-end latency measurement using a visible timer or LED method.
 - No CI workflow yet.
-- No MediaPipe tests because tracking is not implemented.
+- No long-duration MediaPipe soak test yet.
 - No renderer golden-image tests because rendering is not implemented.
 
 ## Recommended next quality work

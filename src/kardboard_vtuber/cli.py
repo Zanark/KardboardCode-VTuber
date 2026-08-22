@@ -5,11 +5,16 @@ from __future__ import annotations
 import argparse
 import sys
 import time
+from pathlib import Path
+from typing import TYPE_CHECKING
 
 import cv2
 
 from kardboard_vtuber.camera import CameraBackend, CameraConfig, CameraRotation, CameraSource
 from kardboard_vtuber.camera.stream import LatestFrameCamera
+
+if TYPE_CHECKING:
+    from kardboard_vtuber.tracking.mediapipe_tracker import MediaPipeFaceTracker
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -39,6 +44,23 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--mirror", action="store_true", help="Mirror frames horizontally.")
     parser.add_argument(
+        "--track-face",
+        action="store_true",
+        help="Run MediaPipe Face Landmarker and draw a tracking debug overlay.",
+    )
+    parser.add_argument(
+        "--face-model",
+        type=Path,
+        default=Path("models/face_landmarker.task"),
+        help="Path to the MediaPipe Face Landmarker .task model.",
+    )
+    parser.add_argument(
+        "--tracking-width",
+        type=int,
+        default=640,
+        help="Maximum frame width submitted to face tracking.",
+    )
+    parser.add_argument(
         "--headless",
         action="store_true",
         help="Capture and print diagnostics without opening a preview window.",
@@ -63,6 +85,11 @@ def main(argv: list[str] | None = None) -> int:
         mirror=args.mirror,
     )
     camera = LatestFrameCamera(config)
+    try:
+        tracker = _create_tracker(args) if args.track_face else None
+    except (OSError, RuntimeError, ValueError) as error:
+        print(str(error), file=sys.stderr)
+        return 1
     started_at = time.monotonic()
     last_sequence: int | None = None
     last_report_at = 0.0
@@ -85,12 +112,20 @@ def main(argv: list[str] | None = None) -> int:
                 continue
 
             last_sequence = packet.sequence
+            if tracker is not None:
+                tracker.submit(packet.frame, packet.captured_at_ns)
             if now - last_report_at >= 2.0:
                 _print_snapshot(camera)
+                if tracker is not None:
+                    _print_tracking_snapshot(tracker)
                 last_report_at = now
 
             if not args.headless:
                 frame = packet.frame
+                if tracker is not None:
+                    from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
+
+                    draw_tracking_debug(frame, tracker.snapshot().state)
                 snapshot = camera.snapshot()
                 latency_ms = (time.monotonic_ns() - packet.captured_at_ns) / 1_000_000
                 label = (
@@ -121,6 +156,8 @@ def main(argv: list[str] | None = None) -> int:
         print(str(error), file=sys.stderr)
         return 1
     finally:
+        if tracker is not None:
+            tracker.close()
         camera.stop()
         cv2.destroyAllWindows()
     return 0
@@ -141,6 +178,43 @@ def _print_snapshot(camera: LatestFrameCamera) -> None:
                 f"overwritten={snapshot.overwritten_frames}",
                 f"failures={snapshot.read_failures}",
                 f"reconnects={snapshot.reconnects}",
+            ]
+        )
+    )
+
+
+def _create_tracker(args: argparse.Namespace) -> MediaPipeFaceTracker:
+    from kardboard_vtuber.tracking.mediapipe_tracker import (
+        MediaPipeFaceTracker,
+        MediaPipeTrackerConfig,
+    )
+
+    return MediaPipeFaceTracker(
+        MediaPipeTrackerConfig(
+            model_path=args.face_model,
+            input_width=args.tracking_width,
+        )
+    )
+
+
+def _print_tracking_snapshot(tracker: MediaPipeFaceTracker) -> None:
+    snapshot = tracker.snapshot()
+    state = snapshot.state
+    print(
+        " | ".join(
+            [
+                f"tracking_detected={state.detected}",
+                f"tracking_fps={snapshot.measured_fps:.2f}",
+                f"submitted={snapshot.submitted_frames}",
+                f"results={snapshot.result_frames}",
+                f"pending_or_dropped={snapshot.dropped_or_pending_frames}",
+                f"left_eye={state.left_eye_open:.2f}",
+                f"right_eye={state.right_eye_open:.2f}",
+                f"mouth={state.mouth_open:.2f}",
+                f"pitch={state.head_pose.pitch_degrees:+.1f}",
+                f"yaw={state.head_pose.yaw_degrees:+.1f}",
+                f"roll={state.head_pose.roll_degrees:+.1f}",
+                f"tracking_error={snapshot.last_error}",
             ]
         )
     )

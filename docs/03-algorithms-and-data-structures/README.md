@@ -12,6 +12,9 @@
 | [Condition-variable synchronization](condition-variable-synchronization.md) | `threading.Condition` | Coordinate producer, consumers, lifecycle, and timeouts |
 | [Finite-state lifecycle](finite-state-lifecycle.md) | Enum state machine + retry threshold | Make recovery behavior explicit |
 | [Monotonic timing and FPS](monotonic-timing-and-fps.md) | Monotonic timestamp + time window | Measure age and throughput safely |
+| [Asynchronous live inference](asynchronous-live-inference.md) | Non-blocking submission + latest result | Keep inference out of the preview critical path |
+| [Blendshape normalization](blendshape-normalization.md) | Lookup, inversion, and clamping | Produce stable eye and mouth controls |
+| [Transformation matrix decomposition](transformation-matrix-decomposition.md) | 4x4 validation + 3x3 RQ decomposition | Expose renderer-friendly pose diagnostics |
 
 ## Complexity summary
 
@@ -38,7 +41,6 @@ When implemented, the book will add dedicated chapters for:
 - One Euro filtering.
 - Quaternion smoothing.
 - Damped spring integration.
-- Landmark-to-pose normalization.
 - Alpha compositing.
 - Nearest-neighbor scaling.
 - Ordered dithering and optional vertex snapping.

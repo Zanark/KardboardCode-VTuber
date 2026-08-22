@@ -122,23 +122,22 @@ flowchart LR
 - `slots=True` prevents undeclared fields and reduces per-instance overhead.
 - Explicit fields make the contracts easy to test, serialize later, and explain.
 
-## Planned models
+## Tracking models
 
-The tracker should introduce a library-neutral structure similar to:
+The tracker introduces a library-neutral `FaceTrackingState` containing landmarks, face bounds,
+independent eye openness, mouth openness, and `HeadPose`
+(`src/kardboard_vtuber/tracking/models.py:58-90`).
 
 ```python
-class NormalizedFaceState:
-    head_rotation: Quaternion
-    head_translation: Vector3
+class FaceTrackingState:
+    head_pose: HeadPose
     left_eye_open: float
     right_eye_open: float
     mouth_open: float
-    confidence: float
-    timestamp_ns: int
+    timestamp_ms: int
 ```
 
-This is planned, not current code. It prevents MediaPipe-specific names from contaminating the
-renderer.
+This prevents MediaPipe-specific result objects from contaminating the renderer.
 
 ---
 

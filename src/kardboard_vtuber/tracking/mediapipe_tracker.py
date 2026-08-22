@@ -1,0 +1,226 @@
+"""Asynchronous MediaPipe Face Landmarker adapter."""
+
+from __future__ import annotations
+
+import threading
+import time
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
+
+import cv2
+import numpy as np
+from numpy import ndarray
+
+from kardboard_vtuber.tracking.models import (
+    FaceTrackingState,
+    TrackingSnapshot,
+    normalize_face,
+)
+
+
+@dataclass(frozen=True, slots=True)
+class MediaPipeTrackerConfig:
+    model_path: Path = Path("models/face_landmarker.task")
+    input_width: int = 640
+    min_face_detection_confidence: float = 0.5
+    min_face_presence_confidence: float = 0.5
+    min_tracking_confidence: float = 0.5
+
+    def __post_init__(self) -> None:
+        if self.input_width <= 0:
+            raise ValueError("input_width must be positive")
+        for name in (
+            "min_face_detection_confidence",
+            "min_face_presence_confidence",
+            "min_tracking_confidence",
+        ):
+            value = getattr(self, name)
+            if not 0.0 <= value <= 1.0:
+                raise ValueError(f"{name} must be between 0 and 1")
+
+
+class MediaPipeFaceTracker:
+    """Submits current frames asynchronously and retains only the newest result."""
+
+    def __init__(self, config: MediaPipeTrackerConfig) -> None:
+        if not config.model_path.is_file():
+            raise FileNotFoundError(
+                f"Face Landmarker model not found at {config.model_path}. "
+                "Run: python scripts/download_face_landmarker_model.py"
+            )
+
+        try:
+            import mediapipe as mp
+        except ImportError as error:
+            raise RuntimeError(
+                "MediaPipe is not installed. Use Python 3.12 and install .[tracking]."
+            ) from error
+
+        self._config = config
+        self._mp = mp
+        self._lock = threading.Lock()
+        self._state = FaceTrackingState.no_face()
+        self._submitted_frames = 0
+        self._result_frames = 0
+        self._detected_frames = 0
+        self._last_error: str | None = None
+        self._last_submitted_timestamp_ms = -1
+        self._fps_window_started_ns = time.monotonic_ns()
+        self._fps_window_frames = 0
+        self._measured_fps = 0.0
+
+        options = mp.tasks.vision.FaceLandmarkerOptions(
+            base_options=mp.tasks.BaseOptions(model_asset_path=str(config.model_path.resolve())),
+            running_mode=mp.tasks.vision.RunningMode.LIVE_STREAM,
+            num_faces=1,
+            min_face_detection_confidence=config.min_face_detection_confidence,
+            min_face_presence_confidence=config.min_face_presence_confidence,
+            min_tracking_confidence=config.min_tracking_confidence,
+            output_face_blendshapes=True,
+            output_facial_transformation_matrixes=True,
+            result_callback=self._on_result,
+        )
+        self._landmarker = mp.tasks.vision.FaceLandmarker.create_from_options(options)
+
+    @property
+    def config(self) -> MediaPipeTrackerConfig:
+        return self._config
+
+    def submit(self, frame_bgr: ndarray, captured_at_ns: int) -> None:
+        frame_rgb = self._prepare_frame(frame_bgr)
+        timestamp_ms = captured_at_ns // 1_000_000
+        with self._lock:
+            timestamp_ms = max(timestamp_ms, self._last_submitted_timestamp_ms + 1)
+            self._last_submitted_timestamp_ms = timestamp_ms
+            self._submitted_frames += 1
+
+        image = self._mp.Image(image_format=self._mp.ImageFormat.SRGB, data=frame_rgb)
+        try:
+            self._landmarker.detect_async(image, timestamp_ms)
+        except Exception as error:
+            with self._lock:
+                self._last_error = f"{type(error).__name__}: {error}"
+            raise
+
+    def snapshot(self) -> TrackingSnapshot:
+        with self._lock:
+            return TrackingSnapshot(
+                state=self._state,
+                submitted_frames=self._submitted_frames,
+                result_frames=self._result_frames,
+                detected_frames=self._detected_frames,
+                dropped_or_pending_frames=max(0, self._submitted_frames - self._result_frames),
+                measured_fps=self._measured_fps,
+                last_error=self._last_error,
+            )
+
+    def close(self) -> None:
+        self._landmarker.close()
+
+    def __enter__(self) -> MediaPipeFaceTracker:
+        return self
+
+    def __exit__(self, *_: object) -> None:
+        self.close()
+
+    def _prepare_frame(self, frame_bgr: ndarray) -> ndarray:
+        height, width = frame_bgr.shape[:2]
+        if width > self._config.input_width:
+            scale = self._config.input_width / width
+            frame_bgr = cv2.resize(
+                frame_bgr,
+                (self._config.input_width, round(height * scale)),
+                interpolation=cv2.INTER_AREA,
+            )
+        frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
+        return np.ascontiguousarray(frame_rgb)
+
+    def _on_result(self, result: Any, _output_image: Any, timestamp_ms: int) -> None:
+        try:
+            if not result.face_landmarks:
+                state = FaceTrackingState.no_face(timestamp_ms)
+            else:
+                blendshapes = result.face_blendshapes[0] if result.face_blendshapes else ()
+                matrices = result.facial_transformation_matrixes
+                matrix = matrices[0] if matrices else None
+                state = normalize_face(
+                    timestamp_ms=timestamp_ms,
+                    landmarks=result.face_landmarks[0],
+                    blendshapes=blendshapes,
+                    transformation_matrix=matrix,
+                )
+            now_ns = time.monotonic_ns()
+            with self._lock:
+                self._state = state
+                self._result_frames += 1
+                if state.detected:
+                    self._detected_frames += 1
+                self._fps_window_frames += 1
+                elapsed = (now_ns - self._fps_window_started_ns) / 1_000_000_000
+                if elapsed >= 1.0:
+                    self._measured_fps = self._fps_window_frames / elapsed
+                    self._fps_window_started_ns = now_ns
+                    self._fps_window_frames = 0
+                self._last_error = None
+        except Exception as error:
+            with self._lock:
+                self._last_error = f"{type(error).__name__}: {error}"
+
+
+def draw_tracking_debug(frame: ndarray, state: FaceTrackingState) -> None:
+    """Draw sparse landmarks, face bounds, expression bars, and pose values."""
+
+    height, width = frame.shape[:2]
+    if not state.detected:
+        cv2.putText(
+            frame,
+            "FACE: not detected",
+            (16, 64),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            (60, 60, 255),
+            2,
+            cv2.LINE_AA,
+        )
+        return
+
+    for landmark in state.landmarks[::8]:
+        point = (round(landmark.x * width), round(landmark.y * height))
+        cv2.circle(frame, point, 1, (255, 180, 40), -1, cv2.LINE_AA)
+
+    x1 = round((state.center_x - state.face_width / 2) * width)
+    y1 = round((state.center_y - state.face_height / 2) * height)
+    x2 = round((state.center_x + state.face_width / 2) * width)
+    y2 = round((state.center_y + state.face_height / 2) * height)
+    cv2.rectangle(frame, (x1, y1), (x2, y2), (80, 255, 80), 2)
+
+    pose = state.head_pose
+    label = (
+        f"L-eye {state.left_eye_open:.2f}  R-eye {state.right_eye_open:.2f}  "
+        f"mouth {state.mouth_open:.2f}"
+    )
+    pose_label = (
+        f"pitch {pose.pitch_degrees:+.1f}  yaw {pose.yaw_degrees:+.1f}  "
+        f"roll {pose.roll_degrees:+.1f}"
+    )
+    cv2.putText(
+        frame,
+        label,
+        (16, 64),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.65,
+        (80, 255, 80),
+        2,
+        cv2.LINE_AA,
+    )
+    cv2.putText(
+        frame,
+        pose_label,
+        (16, 92),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.65,
+        (80, 255, 80),
+        2,
+        cv2.LINE_AA,
+    )

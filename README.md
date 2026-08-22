@@ -36,6 +36,15 @@ python -m venv .venv
 python -m pip install -e ".[dev]"
 ```
 
+Face tracking currently uses a separate Python 3.12 environment:
+
+```powershell
+py -3.12 -m venv .venv312
+.\.venv312\Scripts\Activate.ps1
+python -m pip install -e ".[dev,tracking]"
+python scripts\download_face_landmarker_model.py
+```
+
 Preview the integrated laptop camera:
 
 ```powershell
@@ -54,6 +63,12 @@ python -m kardboard_vtuber `
 Do not commit an authenticated stream URL. Camera diagnostics redact embedded credentials.
 
 Press `Q` or `Escape` to exit.
+
+Enable the live tracking overlay by adding:
+
+```powershell
+--track-face
+```
 
 ## Documentation
 

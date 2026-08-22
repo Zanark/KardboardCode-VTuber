@@ -23,7 +23,7 @@ The new application carries this visual identity into a camera-tracked PS1-style
 |---|---|---|
 | Camera ingestion | Implemented and verified | `src/kardboard_vtuber/camera/`, 9 passing tests |
 | Android IP Webcam integration | Implemented and user-verified | 1080x1920 preview at about 28-30 FPS |
-| Face tracking | Planned | MediaPipe design, no implementation yet |
+| Face tracking | Implemented and live-validated | MediaPipe at approximately 30 result FPS |
 | PS1 renderer | Planned | Product requirements and source avatar documented |
 | OBS integration | Planned | Initial Window Capture path selected |
 
@@ -36,8 +36,9 @@ The new application carries this visual identity into a camera-tracked PS1-style
 | Explain the design in an interview | [Principal engineer guide](00-onboarding/principal-engineer-guide.md) → [Algorithms](03-algorithms-and-data-structures/README.md) → [Design principles](04-design-principles/README.md) |
 | Learn every data structure | [Domain and runtime data model](02-architecture/data-model.md) |
 | Study every current algorithm | [Algorithms and data structures](03-algorithms-and-data-structures/README.md) |
-| Understand testing | [Quality and testing](06-quality-and-testing/README.md) |
-| Understand what comes next | [Roadmap](07-roadmap/README.md) |
+| Understand tracking | [Face tracking](06-face-tracking/README.md) |
+| Understand testing | [Quality and testing](07-quality-and-testing/README.md) |
+| Understand what comes next | [Roadmap](08-roadmap/README.md) |
 | Look up a term or file | [Glossary](99-appendix/glossary.md) → [Repository map](99-appendix/repository-map.md) |
 
 ## Chapters
@@ -50,8 +51,9 @@ The new application carries this visual identity into a camera-tracked PS1-style
 | 03 | [Algorithms and data structures](03-algorithms-and-data-structures/README.md) | Which algorithms preserve low latency and correctness? |
 | 04 | [Design principles](04-design-principles/README.md) | Which engineering principles shaped the implementation? |
 | 05 | [Camera ingestion](05-camera-ingestion/README.md) | How does the implemented subsystem work and how is it operated? |
-| 06 | [Quality and testing](06-quality-and-testing/README.md) | How do we verify behavior without depending on a physical camera? |
-| 07 | [Roadmap](07-roadmap/README.md) | How will tracking, PS1 rendering, and OBS output be added? |
+| 06 | [Face tracking](06-face-tracking/README.md) | How are landmarks, expressions, and head pose produced? |
+| 07 | [Quality and testing](07-quality-and-testing/README.md) | How do we verify behavior without depending only on hardware? |
+| 08 | [Roadmap](08-roadmap/README.md) | How will filtering, PS1 rendering, and OBS output be added? |
 | 99 | [Appendix](99-appendix/README.md) | Where are commands, terms, source files, and quick references? |
 
 ## The system in one picture
@@ -62,7 +64,7 @@ flowchart LR
     Laptop["Integrated camera"] --> Capture
     Network --> Capture["OpenCV capture<br/>implemented"]
     Capture --> Slot["Latest-frame slot<br/>implemented"]
-    Slot --> Tracker["Face tracker<br/>planned"]
+    Slot --> Tracker["Face tracker<br/>implemented"]
     Slot --> Composer["Full-resolution composer<br/>planned"]
     Tracker --> Filter["One Euro + springs<br/>planned"]
     Filter --> Renderer["Low-resolution PS1 box<br/>planned"]

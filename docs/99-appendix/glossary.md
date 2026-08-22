@@ -27,7 +27,7 @@
 | IP Webcam | Android application hosting the phone camera as a network stream |
 | JPEG | Compressed image format used by MJPEG |
 | Latest-frame slot | Single replaceable packet used instead of a FIFO queue |
-| MediaPipe | Planned face-landmark and blendshape tracker |
+| MediaPipe | Implemented face-landmark, blendshape, and transformation-matrix inference engine |
 | Mirroring | Horizontal flip that produces selfie-style interaction |
 | MJPEG | Stream of JPEG images delivered as multipart HTTP |
 | Monotonic clock | Clock guaranteed not to move backward, used for durations |

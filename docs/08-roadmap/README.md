@@ -1,13 +1,14 @@
-# 07 · Roadmap: from camera to VTuber
+# 08 · Roadmap: from tracking to rendered VTuber
 
-> **TL;DR** — Camera ingestion is complete. The next vertical slice is face tracking, followed by
-> filtered control signals, a low-resolution cardboard renderer, composition, and OBS hardening.
+> **TL;DR** — Camera ingestion and raw face tracking are complete. The next vertical slice is
+> filtered control signals, followed by a low-resolution cardboard renderer, composition, and OBS
+> hardening.
 
 ## Delivery sequence
 
 ```mermaid
 flowchart LR
-    Done["1. Camera ingestion<br/>done"] --> Track["2. Face tracking"]
+    Done["1. Camera ingestion<br/>done"] --> Track["2. Face tracking<br/>done"]
     Track --> Filter["3. Filtering + springs"]
     Filter --> Render["4. PS1 renderer"]
     Render --> Compose["5. Composition"]
@@ -15,18 +16,19 @@ flowchart LR
     OBS --> Polish["7. Calibration + packaging"]
 ```
 
-## Milestone 2 · Face tracking
+## Milestone 2 · Face tracking — complete
 
-Planned responsibilities:
+Implemented responsibilities:
 
 - Use MediaPipe Face Landmarker with one face.
 - Process a downscaled latest frame asynchronously.
 - Produce a library-neutral `NormalizedFaceState`.
 - Extract head pose, left/right eye openness, and mouth openness.
-- Calibrate neutral pose and expression ranges.
+- Emit live debug landmarks and diagnostics.
 
-Python compatibility must be resolved first. The project currently allows Python 3.11+, but the
-MediaPipe optional dependency is restricted below Python 3.13 in `pyproject.toml:21-23`.
+Still pending within the next filtering milestone: neutral-pose and personal expression calibration.
+Tracking runs in `.venv312` because the optional dependency remains restricted below Python 3.13
+(`pyproject.toml:21-23`).
 
 ## Milestone 3 · Filtering and motion
 
@@ -90,5 +92,5 @@ Spout2 only after rendering is stable and transparent box-only output provides r
 
 ---
 
-⬅️ [Quality and testing](../06-quality-and-testing/README.md) · ➡️
+⬅️ [Quality and testing](../07-quality-and-testing/README.md) · ➡️
 [Appendix](../99-appendix/README.md)

@@ -1,4 +1,4 @@
-# 06 · Quality and testing
+# 07 · Quality and testing
 
 > **Status: camera tests implemented and passing.**
 >
@@ -28,8 +28,14 @@ flowchart TB
 | Newer sequences | Consumer receives increasing sequence | `tests/test_camera_stream.py:47-64` |
 | Frame overwrite | Producer can supersede unread frame | `tests/test_camera_stream.py:67-80` |
 | Left rotation | Width/height swap correctly | `tests/test_camera_stream.py:83-98` |
+| Identity head pose | Matrix decomposition has neutral output | `tests/test_tracking_models.py:25-33` |
+| Matrix validation | Non-4x4 pose input fails explicitly | `tests/test_tracking_models.py:36-38` |
+| Face normalization | Bounds, independent eyes, and mouth values | `tests/test_tracking_models.py:41-66` |
+| No-face normalization | Neutral fallback has no landmarks | `tests/test_tracking_models.py:69-79` |
+| Blendshape clamping | Invalid and out-of-range values are bounded | `tests/test_tracking_models.py:82-101` |
+| Debug rendering | Overlay changes a blank frame | `tests/test_tracking_models.py:104-122` |
 
-Pytest reports nine tests because the empty-source test is parameterized with two inputs.
+Pytest reports fifteen tests because the empty-source test is parameterized with two inputs.
 
 ## `FakeCapture`
 
@@ -65,7 +71,8 @@ Those require integration or manual validation.
 .\.venv\Scripts\python.exe -m kardboard_vtuber --help
 ```
 
-Current verified result: Ruff passes and all nine tests pass.
+Current verified result: Ruff passes and all fifteen tests pass in both the Python 3.12 tracking
+environment and Python 3.13 base environment.
 
 ## Definition of done for a new behavior
 
@@ -79,5 +86,5 @@ Current verified result: Ruff passes and all nine tests pass.
 
 ---
 
-⬅️ [Camera ingestion](../05-camera-ingestion/README.md) · ➡️
-[Roadmap](../07-roadmap/README.md)
+⬅️ [Face tracking](../06-face-tracking/README.md) · ➡️
+[Roadmap](../08-roadmap/README.md)
