@@ -75,6 +75,14 @@ The tracker logs debounced face, eye, blink, wink, and mouth transitions. Use
 `--action-hold-ms 100` to tune how long a candidate action must remain stable before it is logged.
 One Euro smoothing is enabled by default; add `--no-motion-filter` to compare raw visual tracking.
 
+Render the current PS1-style cardboard prototype by adding:
+
+```powershell
+--render-cardboard
+```
+
+This automatically enables face tracking and overlays the low-resolution K/C box and mouth flaps.
+
 ## Documentation
 
 - [Engineering book](docs/README.md) - chaptered, diagram-first documentation covering onboarding, architecture, every current algorithm/data structure, design principles, camera operations, testing, roadmap, glossary, and source map.

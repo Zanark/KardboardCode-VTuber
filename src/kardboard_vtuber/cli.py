@@ -79,6 +79,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Disable One Euro smoothing and expose raw tracking values.",
     )
     parser.add_argument(
+        "--render-cardboard",
+        action="store_true",
+        help="Overlay the low-resolution PS1-style KardboardCode box on the tracked face.",
+    )
+    parser.add_argument(
         "--headless",
         action="store_true",
         help="Capture and print diagnostics without opening a preview window.",
@@ -104,8 +109,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     camera = LatestFrameCamera(config)
     try:
-        tracker = _create_tracker(args) if args.track_face else None
+        tracker = _create_tracker(args) if args.track_face or args.render_cardboard else None
         action_detector = _create_action_detector(args) if tracker is not None else None
+        renderer = _create_renderer(args) if args.render_cardboard else None
     except (OSError, RuntimeError, ValueError) as error:
         print(str(error), file=sys.stderr)
         return 1
@@ -152,9 +158,12 @@ def main(argv: list[str] | None = None) -> int:
                 if tracker is not None:
                     from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
 
+                    tracking_state = tracker.snapshot().state
+                    if renderer is not None:
+                        renderer.render(frame, tracking_state)
                     draw_tracking_debug(
                         frame,
-                        tracker.snapshot().state,
+                        tracking_state,
                         action=latest_action,
                     )
                 snapshot = camera.snapshot()
@@ -239,6 +248,12 @@ def _create_action_detector(args: argparse.Namespace) -> FaceActionDetector:
             eye_hold_ms=args.eye_action_hold_ms,
         )
     )
+
+
+def _create_renderer(args: argparse.Namespace) -> object:
+    from kardboard_vtuber.renderer import CardboardRendererConfig, PS1CardboardRenderer
+
+    return PS1CardboardRenderer(CardboardRendererConfig(mirrored=args.mirror))
 
 
 def _print_tracking_snapshot(tracker: MediaPipeFaceTracker) -> None:

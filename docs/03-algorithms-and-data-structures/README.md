@@ -18,6 +18,7 @@
 | [Facial action state machine](facial-action-state-machine.md) | Hysteresis + debounced finite-state channels | Convert continuous controls into blink, wink, and mouth events |
 | [One Euro motion filtering](one-euro-filtering.md) | Adaptive low-pass filter bank | Reduce jitter while retaining fast motion |
 | [Damped spring integration](damped-spring-integration.md) | Bounded-step harmonic oscillator | Produce controlled head/flap secondary motion |
+| [Low-resolution overlay compositing](low-resolution-overlay-compositing.md) | Separate color/alpha buffers + nearest-neighbor upscale | Pixelate only the avatar |
 
 ## Complexity summary
 
@@ -42,8 +43,6 @@ flowchart LR
 When implemented, the book will add dedicated chapters for:
 
 - Quaternion smoothing.
-- Alpha compositing.
-- Nearest-neighbor scaling.
 - Ordered dithering and optional vertex snapping.
 
 These are not yet implemented and should not be presented as current behavior.

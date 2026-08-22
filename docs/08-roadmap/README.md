@@ -10,7 +10,7 @@
 flowchart LR
     Done["1. Camera ingestion<br/>done"] --> Track["2. Face tracking<br/>done"]
     Track --> Filter["3. Filtering + springs<br/>done"]
-    Filter --> Render["4. PS1 renderer"]
+    Filter --> Render["4. PS1 renderer<br/>prototype done"]
     Render --> Compose["5. Composition"]
     Compose --> OBS["6. OBS integration"]
     OBS --> Polish["7. Calibration + packaging"]
@@ -51,17 +51,18 @@ One Euro filtering is wired into tracking. Damped spring dynamics are implemente
 renderer use. See [One Euro motion filtering](../03-algorithms-and-data-structures/one-euro-filtering.md)
 and [Damped spring integration](../03-algorithms-and-data-structures/damped-spring-integration.md).
 
-## Milestone 4 · PS1 renderer
+## Milestone 4 · PS1 renderer — prototype complete
 
-The renderer should:
+The prototype now:
 
-- model a cardboard box with a small number of planes;
-- use low-resolution cardboard textures;
-- render at 320x180 or 426x240 initially;
-- disable anti-aliasing;
-- use nearest-neighbor upscale;
-- support quantized colors and ordered dithering;
-- optionally add controlled vertex snapping/jitter.
+- models a procedural cardboard box with front, top, and side planes;
+- renders the avatar at quarter linear resolution;
+- uses nearest-neighbor upscale and separate alpha compositing;
+- drives anatomical K/C eyes and mouth flaps;
+- uses springs for flap/side-plane secondary motion.
+
+Texture art, ordered dithering, vertex snapping, and a more recognizable production mesh remain
+future renderer-polish work.
 
 ```mermaid
 flowchart LR
