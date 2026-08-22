@@ -126,6 +126,17 @@ def test_renderer_front_panel_is_fully_opaque() -> None:
     assert np.array_equal(dark[450, 640], bright[450, 640])
 
 
+def test_renderer_preserves_partial_opacity_blending() -> None:
+    renderer = PS1CardboardRenderer(CardboardRendererConfig(opacity=0.5))
+    frame = np.full((720, 1280, 3), 100, dtype=np.uint8)
+
+    renderer.render(frame, state(1))
+
+    pixel = frame[300, 640]
+    assert np.all(pixel > np.array([90, 100, 100]))
+    assert np.all(pixel < np.array([100, 150, 190]))
+
+
 def test_renderer_freezes_last_safe_frame_during_tracking_loss() -> None:
     renderer = PS1CardboardRenderer()
     tracked = np.full((720, 1280, 3), 50, dtype=np.uint8)

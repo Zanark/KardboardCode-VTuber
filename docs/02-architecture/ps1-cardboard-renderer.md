@@ -111,12 +111,14 @@ opening exposes only the neck at every pitch.
 
 ## Validation
 
-- 53 unit tests pass under Python 3.12 and 3.13.
+- 57 unit tests pass under Python 3.12 and 3.13.
 - Tests cover black output before initial acquisition, bounded overlay region, mirrored visible
   K/C placement, full lower-face and chin-margin opacity, and
   fail-closed tracking-loss freezing, crown/hair coverage, calibrated anatomical winks, roll,
   yaw-side perspective, pitch-driven top/underside visibility, enlarged XYZ dimensions, and an
-  extreme combined-pose privacy silhouette (`tests/test_ps1_cardboard_renderer.py:1-242`).
+  extreme combined-pose privacy silhouette. Default opaque composition uses a masked-copy fast
+  path, while partial opacity retains tested alpha blending
+  (`tests/test_ps1_cardboard_renderer.py:1-253`).
 - The private guided recording produced a 1,254-frame prototype video.
 - Contact-sheet inspection confirmed face coverage, pose following, K/C placement, and closed-eye
   arcs.

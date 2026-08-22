@@ -236,11 +236,15 @@ class PS1CardboardRenderer:
             alpha,
             (frame_width, frame_height),
             interpolation=cv2.INTER_NEAREST,
-        ).astype(np.float32)[:, :, None] / 255.0
-        frame[:] = (
-            overlay_full.astype(np.float32) * alpha_full
-            + frame.astype(np.float32) * (1.0 - alpha_full)
-        ).astype(np.uint8)
+        )
+        if full_alpha == 255:
+            cv2.copyTo(overlay_full, alpha_full, frame)
+        else:
+            alpha_float = alpha_full.astype(np.float32)[:, :, None] / 255.0
+            frame[:] = (
+                overlay_full.astype(np.float32) * alpha_float
+                + frame.astype(np.float32) * (1.0 - alpha_float)
+            ).astype(np.uint8)
         self._last_safe_frame = frame.copy()
 
     def reset(self) -> None:

@@ -18,9 +18,6 @@ python -m kardboard_vtuber --source 0 --backend auto --mirror
 Camera frames receive a mild brightness lift of `12` before tracking and preview. Override it with
 `--brightness 0..100`, for example `--brightness 20` in a darker room.
 
-Add display-only film grain with `--film-grain 12`. The default is `0`; grain affects only the
-final preview and is never submitted to face tracking.
-
 ## Android IP Webcam
 
 ```powershell
