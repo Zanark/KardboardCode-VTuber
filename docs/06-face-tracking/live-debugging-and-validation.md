@@ -38,10 +38,14 @@ flowchart TD
 
 ### Face-mesh inset
 
-The inset recenters normalized landmarks around the tracked face center and scales them to fit a
-bounded top-right panel. It connects the face oval, both eyes, both eyebrows, outer and inner lips,
-and nose paths, then adds sparse landmark points for additional motion feedback
-(`src/kardboard_vtuber/tracking/mediapipe_tracker.py:250-328`).
+The inset first converts normalized X/Y deltas back into source-frame pixel proportions, then
+recenters and scales them to fit a bounded top-right panel. The pixel conversion is essential for
+portrait video: applying one scale directly to normalized coordinates makes the face appear
+artificially wide and squashed. The corrected projection preserves the taller face and jaw contour.
+It connects the face oval, both eyes, both eyebrows, outer and inner lips, and nose paths, then adds
+sparse landmark points for additional motion feedback
+(`src/kardboard_vtuber/tracking/mediapipe_tracker.py:250-331`,
+`tests/test_tracking_models.py:132-171`).
 
 The black background intentionally removes camera texture from this diagnostic region. That makes
 landmark motion, eye closure, mouth movement, and tracking loss easier to inspect. The inset shows
@@ -99,6 +103,8 @@ user-visible preview rather than a headless probe
 - `submitted - results` combines current in-flight and inputs MediaPipe may drop.
 - Eye openness is derived from blendshapes and still needs user calibration.
 - Lens glare or thick frames can reduce eye/blink accuracy even when face detection remains stable.
+- Wink classification therefore combines an open-eye requirement with a minimum left/right
+  difference instead of requiring the winked eye to reach the bilateral closed threshold.
 - Euler angles are a debug view; the future renderer should preserve quaternion/matrix rotation.
 
 ## References

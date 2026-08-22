@@ -127,3 +127,46 @@ def test_draw_tracking_debug_adds_black_face_mesh_inset() -> None:
     draw_tracking_debug(frame, state)
 
     assert np.mean(frame[30:220, 900:1240]) < 80
+
+
+def test_face_mesh_inset_preserves_portrait_frame_aspect_ratio(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from kardboard_vtuber.tracking import mediapipe_tracker
+
+    landmarks = [FakeLandmark(0.5, 0.5, 0.0) for _ in range(478)]
+    oval = mediapipe_tracker._FACE_OVAL
+    for position, index in enumerate(oval):
+        angle = 2 * np.pi * position / len(oval)
+        landmarks[index] = FakeLandmark(
+            0.5 + 0.1 * np.cos(angle),
+            0.5 + 0.1 * np.sin(angle),
+            0.0,
+        )
+    state = normalize_face(
+        timestamp_ms=1,
+        landmarks=landmarks,
+        blendshapes=[],
+        transformation_matrix=np.eye(4),
+    )
+    lines: list[tuple[tuple[int, int], tuple[int, int]]] = []
+
+    def record_line(
+        _frame: np.ndarray,
+        start: tuple[int, int],
+        end: tuple[int, int],
+        *_args: object,
+        **_kwargs: object,
+    ) -> None:
+        lines.append((start, end))
+
+    monkeypatch.setattr(mediapipe_tracker.cv2, "line", record_line)
+    mediapipe_tracker.draw_tracking_debug(
+        np.zeros((1920, 1080, 3), dtype=np.uint8),
+        state,
+    )
+
+    oval_points = [point for line in lines[: len(oval)] for point in line]
+    width = max(point[0] for point in oval_points) - min(point[0] for point in oval_points)
+    height = max(point[1] for point in oval_points) - min(point[1] for point in oval_points)
+    assert height > width * 1.5

@@ -41,15 +41,17 @@ stateDiagram-v2
 | `face_detected` / `face_lost` | Debounced `detected` transition | Tracking lifecycle |
 | `eyes_open` | Both values at or above `0.65` | Neutral/open-eye state |
 | `eyes_closed` | Both values at or below `0.35` | Closed-eye state |
-| `left_wink` | Left closed while right open | Independent `K` eye control |
-| `right_wink` | Right closed while left open | Independent `C` eye control |
+| `left_wink` | Left at or below `0.65`, right open, difference at least `0.15` | Independent `K` eye control |
+| `right_wink` | Right at or below `0.65`, left open, difference at least `0.15` | Independent `C` eye control |
 | `blink` | Closed-to-open within 500 ms | Short bilateral closure |
 | `mouth_open` / `mouth_closed` | Above `0.25` / below `0.12` | Cardboard flap control |
 
 The gap between each open and closed threshold is hysteresis: intermediate values preserve the
-current stable state rather than causing rapid toggling
-(`src/kardboard_vtuber/tracking/events.py:24-41`,
-`src/kardboard_vtuber/tracking/events.py:128-148`).
+current stable state rather than causing rapid toggling. Winks additionally use left/right
+asymmetry because spectacle reflections can keep a visibly closed eye well above the bilateral
+`eyes_closed` threshold
+(`src/kardboard_vtuber/tracking/events.py:24-47`,
+`src/kardboard_vtuber/tracking/events.py:134-166`).
 
 ## Runtime data flow
 
@@ -86,12 +88,13 @@ point, no duplicate `eyes_open` or `mouth_closed` event is emitted
 ## Spectacles
 
 The live phone probe detected the user's face while spectacles were worn and produced changing eye
-values plus a complete blink event. This proves basic operation for that test, not universal
-glasses compatibility. Strong reflections, tinted lenses, frame occlusion, and off-axis head pose
-can still move the blendshape values across thresholds incorrectly. User-specific threshold
-calibration remains the next tracking milestone
+values plus a complete blink event. A later screenshot showed a real wink at `0.79` versus `0.60`,
+which the original absolute `0.35` closure rule missed. The relative rule was then live-validated
+with repeated `left_wink` transitions at closed-eye values between approximately `0.43` and `0.60`.
+This proves basic operation for that setup, not universal glasses compatibility. Strong
+reflections, tinted lenses, frame occlusion, and off-axis head pose can still require calibration
 (`src/kardboard_vtuber/tracking/models.py:93-151`,
-`tests/test_tracking_events.py:48-65`).
+`tests/test_tracking_events.py:48-72`).
 
 ## Complexity
 

@@ -54,6 +54,15 @@ def test_detector_distinguishes_left_and_right_winks() -> None:
     assert actions(detector, state(4, left_eye=0.9, right_eye=0.1)) == [FaceAction.RIGHT_WINK]
 
 
+def test_detector_recognizes_asymmetric_wink_with_spectacle_glare() -> None:
+    detector = FaceActionDetector(ActionThresholds(hold_ms=0))
+    detector.update(state(1))
+
+    assert actions(detector, state(2, left_eye=0.79, right_eye=0.60)) == [
+        FaceAction.RIGHT_WINK
+    ]
+
+
 def test_detector_emits_blink_when_both_eyes_reopen_quickly() -> None:
     detector = FaceActionDetector(ActionThresholds(hold_ms=0, maximum_blink_ms=500))
     detector.update(state(100))

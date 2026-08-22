@@ -285,17 +285,19 @@ def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:
     padding_bottom = 14
     usable_width = inset_width - padding_x * 2
     usable_height = inset_height - padding_top - padding_bottom
+    face_width_px = state.face_width * frame_width
+    face_height_px = state.face_height * frame_height
     scale = min(
-        usable_width / max(state.face_width, 1e-6),
-        usable_height / max(state.face_height, 1e-6),
+        usable_width / max(face_width_px, 1e-6),
+        usable_height / max(face_height_px, 1e-6),
     )
     center_px = (origin_x + inset_width / 2, origin_y + padding_top + usable_height / 2)
 
     def point(index: int) -> tuple[int, int]:
         landmark = state.landmarks[index]
         return (
-            round(center_px[0] + (landmark.x - state.center_x) * scale),
-            round(center_px[1] + (landmark.y - state.center_y) * scale),
+            round(center_px[0] + (landmark.x - state.center_x) * frame_width * scale),
+            round(center_px[1] + (landmark.y - state.center_y) * frame_height * scale),
         )
 
     groups = (
@@ -314,8 +316,8 @@ def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:
             _draw_closed_path(frame, indices, point, color)
 
     for landmark in state.landmarks[::12]:
-        px = round(center_px[0] + (landmark.x - state.center_x) * scale)
-        py = round(center_px[1] + (landmark.y - state.center_y) * scale)
+        px = round(center_px[0] + (landmark.x - state.center_x) * frame_width * scale)
+        py = round(center_px[1] + (landmark.y - state.center_y) * frame_height * scale)
         cv2.circle(frame, (px, py), 1, (120, 120, 120), -1, cv2.LINE_AA)
 
 

@@ -24,6 +24,8 @@ class FaceAction(StrEnum):
 class ActionThresholds:
     eye_closed: float = 0.35
     eye_open: float = 0.65
+    wink_closed: float = 0.65
+    wink_min_difference: float = 0.15
     mouth_open: float = 0.25
     mouth_closed: float = 0.12
     hold_ms: int = 100
@@ -32,6 +34,10 @@ class ActionThresholds:
     def __post_init__(self) -> None:
         if not 0.0 <= self.eye_closed < self.eye_open <= 1.0:
             raise ValueError("eye thresholds must satisfy 0 <= closed < open <= 1")
+        if not self.eye_closed < self.wink_closed <= self.eye_open:
+            raise ValueError("wink_closed must satisfy eye_closed < wink_closed <= eye_open")
+        if not 0.0 <= self.wink_min_difference <= 1.0:
+            raise ValueError("wink_min_difference must be between 0 and 1")
         if not 0.0 <= self.mouth_closed < self.mouth_open <= 1.0:
             raise ValueError("mouth thresholds must satisfy 0 <= closed < open <= 1")
         if self.hold_ms < 0:
@@ -132,9 +138,19 @@ class FaceActionDetector:
         right_open = state.right_eye_open >= self._thresholds.eye_open
         if left_closed and right_closed:
             return FaceAction.EYES_CLOSED
-        if left_closed and right_open:
+        if (
+            state.left_eye_open <= self._thresholds.wink_closed
+            and right_open
+            and state.right_eye_open - state.left_eye_open
+            >= self._thresholds.wink_min_difference
+        ):
             return FaceAction.LEFT_WINK
-        if right_closed and left_open:
+        if (
+            state.right_eye_open <= self._thresholds.wink_closed
+            and left_open
+            and state.left_eye_open - state.right_eye_open
+            >= self._thresholds.wink_min_difference
+        ):
             return FaceAction.RIGHT_WINK
         if left_open and right_open:
             return FaceAction.EYES_OPEN
