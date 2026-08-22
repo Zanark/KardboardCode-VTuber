@@ -107,7 +107,9 @@ instead of hanging vertically. The lighter flap layer is front-mounted above the
 on the lower-face contour. Each hinge begins at the exact bottom corner of the K/C front square—no
 inset or underside wedge is allowed between the face and flap—and follows the bottom edge into the
 V apex. Its shallow depth ends before the underside's far edge, leaving a dark underside strip
-visible below.
+visible below. The shared face-to-flap hinge is painted continuously in flap color; only exposed
+free edges receive the dark outline. A dark line on the shared hinge makes the flap falsely read as
+coming from behind the box.
 
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
 Privacy is fail-closed: before the first valid detection the output is black, and after tracking

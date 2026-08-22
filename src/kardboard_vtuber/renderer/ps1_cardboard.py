@@ -453,4 +453,14 @@ class PS1CardboardRenderer:
         for flap, color in ((left_flap, (95, 154, 195)), (right_flap, (90, 147, 188))):
             cv2.fillPoly(overlay, [flap], color)
             cv2.fillPoly(alpha, [flap], full_alpha)
-            cv2.polylines(overlay, [flap], True, (24, 34, 43), 1, cv2.LINE_8)
+            hinge = flap[:3]
+            exposed_edge = flap[[2, 3, 4, 0]]
+            cv2.polylines(overlay, [hinge], False, color, 2, cv2.LINE_8)
+            cv2.polylines(
+                overlay,
+                [exposed_edge],
+                False,
+                (24, 34, 43),
+                1,
+                cv2.LINE_8,
+            )
