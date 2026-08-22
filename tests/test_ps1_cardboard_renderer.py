@@ -81,9 +81,9 @@ def test_looking_up_preserves_visible_underside_above_open_flaps() -> None:
         closed_renderer.render(closed, state(timestamp_ms, mouth=0.0, pitch=-45.0))
         open_renderer.render(opened, state(timestamp_ms, mouth=1.0, pitch=-45.0))
 
-    assert np.array_equal(opened[500, 400], closed[500, 400])
-    assert np.count_nonzero(opened[500, 400]) > 0
-    assert not np.array_equal(opened[560, 400], closed[560, 400])
+    assert not np.array_equal(opened[480, 400], closed[480, 400])
+    assert np.array_equal(opened[520, 400], closed[520, 400])
+    assert np.count_nonzero(opened[520, 400]) > 0
 
 
 def test_open_mouth_flaps_project_outward_beyond_box_sides() -> None:

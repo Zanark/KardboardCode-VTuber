@@ -146,16 +146,6 @@ class PS1CardboardRenderer:
             cv2.fillConvexPoly(alpha, side, full_alpha)
             cv2.polylines(overlay, [side], True, outline, 2, cv2.LINE_8)
 
-        self._draw_flaps(
-            overlay,
-            alpha,
-            front,
-            box_width,
-            box_height,
-            full_alpha,
-            mouth_open,
-        )
-
         if bottom_depth > 1:
             center_bottom_x = round(float(front[2:4, 0].mean()))
             bottom_y = round(float(front[2:4, 1].mean()))
@@ -202,6 +192,15 @@ class PS1CardboardRenderer:
             box_width,
             box_height,
             full_alpha,
+        )
+        self._draw_flaps(
+            overlay,
+            alpha,
+            front,
+            box_width,
+            box_height,
+            full_alpha,
+            mouth_open,
         )
         self._draw_eyes(overlay, alpha, front, box_width, box_height, full_alpha, state)
         roll = max(-60.0, min(60.0, state.head_pose.roll_degrees))
@@ -428,7 +427,7 @@ class PS1CardboardRenderer:
         neck_half_width = box_width * 0.16
         neck_apex_y = hinge_y - max(5, round(box_height * 0.07))
         openness = max(0.0, min(1.0, mouth_open))
-        drop = box_height * (0.015 + 0.30 * openness)
+        drop = box_height * (0.015 + 0.14 * openness)
         spread = box_width * 0.40 * openness
         outer_inset = box_width * 0.10
         inner_free_offset = box_width * 0.08

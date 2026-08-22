@@ -103,8 +103,9 @@ same counterclockwise screen tilt shown by the face mesh; roll is bounded to `+/
 Pitch-projected underside depth and mouth-flap hinges are intentionally separate. Looking up may
 move the underside's far edge downward, but the mouth flaps remain attached to the visible front
 lower contour into the V apex. As the mouth opens, they project mostly sideways beyond the shell
-instead of hanging vertically. The lighter flap layer is drawn behind the dark underside so some
-underside remains visible rather than being completely covered.
+instead of hanging vertically. The lighter flap layer is front-mounted above the underside, directly
+on the lower-face contour. Its shallow depth ends before the underside's far edge, leaving a dark
+underside strip visible below.
 
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
 Privacy is fail-closed: before the first valid detection the output is black, and after tracking
