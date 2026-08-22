@@ -50,6 +50,7 @@ def test_hand_mask_covers_palm_fingers_and_forearm() -> None:
     assert mask[100, 100] == 255
     assert mask[35, 90] == 255
     assert mask[170, 100] == 255
+    assert mask[35, 110] == 0
 
 
 def test_hand_foreground_is_restored_over_rendered_avatar() -> None:

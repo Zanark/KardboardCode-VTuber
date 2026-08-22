@@ -11,6 +11,25 @@ import cv2
 import numpy as np
 from numpy import ndarray
 
+_FINGER_CONNECTIONS = (
+    (1, 2),
+    (2, 3),
+    (3, 4),
+    (5, 6),
+    (6, 7),
+    (7, 8),
+    (9, 10),
+    (10, 11),
+    (11, 12),
+    (13, 14),
+    (14, 15),
+    (15, 16),
+    (17, 18),
+    (18, 19),
+    (19, 20),
+)
+_PALM_LANDMARKS = (0, 1, 5, 9, 13, 17)
+
 
 @dataclass(frozen=True, slots=True)
 class HandOcclusionConfig:
@@ -148,22 +167,27 @@ def build_hand_mask(
             ],
             dtype=np.int32,
         )
-        hull = cv2.convexHull(points)
-        cv2.fillConvexPoly(hand_mask, hull, 255)
-
-        hand_extent = max(
-            int(np.ptp(points[:, 0])),
-            int(np.ptp(points[:, 1])),
-        )
-        padding = max(3, round(hand_extent * 0.05))
-        for point in points:
-            cv2.circle(hand_mask, tuple(point), padding, 255, -1, cv2.LINE_AA)
-
         wrist = points[0].astype(np.float64)
         palm_center = (points[5].astype(np.float64) + points[17].astype(np.float64)) / 2.0
         direction = wrist - palm_center
         direction_length = float(np.linalg.norm(direction))
         wrist_width = float(np.linalg.norm(points[5] - points[17]))
+        finger_thickness = max(4, round(wrist_width * 0.22))
+        palm = cv2.convexHull(points[list(_PALM_LANDMARKS)])
+        cv2.fillConvexPoly(hand_mask, palm, 255)
+        for start, end in _FINGER_CONNECTIONS:
+            cv2.line(
+                hand_mask,
+                tuple(points[start]),
+                tuple(points[end]),
+                255,
+                finger_thickness,
+                cv2.LINE_AA,
+            )
+        joint_radius = max(2, finger_thickness // 2)
+        for point in points:
+            cv2.circle(hand_mask, tuple(point), joint_radius, 255, -1, cv2.LINE_AA)
+
         if direction_length > 1.0 and wrist_width > 1.0:
             direction /= direction_length
             perpendicular = np.asarray((-direction[1], direction[0]))
@@ -181,11 +205,12 @@ def build_hand_mask(
             )
             cv2.fillConvexPoly(hand_mask, forearm, 255)
 
-        kernel_size = padding * 2 + 1
+        edge_padding = max(1, round(wrist_width * 0.015))
+        kernel_size = edge_padding * 2 + 1
         kernel = cv2.getStructuringElement(
             cv2.MORPH_ELLIPSE,
             (kernel_size, kernel_size),
         )
         hand_mask = cv2.dilate(hand_mask, kernel)
         mask = cv2.bitwise_or(mask, hand_mask)
-    return mask
+    return cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)[1]
