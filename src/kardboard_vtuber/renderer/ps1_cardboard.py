@@ -22,6 +22,7 @@ class CardboardRendererConfig:
     box_height_multiplier: float = 1.52
     opacity: float = 1.0
     mirrored: bool = False
+    tracking_loss_hold_ms: int = 2000
 
     def __post_init__(self) -> None:
         if self.pixel_scale < 1:
@@ -30,6 +31,8 @@ class CardboardRendererConfig:
             raise ValueError("box size multipliers must be positive")
         if not 0.0 <= self.opacity <= 1.0:
             raise ValueError("opacity must be between 0 and 1")
+        if self.tracking_loss_hold_ms < 0:
+            raise ValueError("tracking_loss_hold_ms must not be negative")
 
 
 class PS1CardboardRenderer:
@@ -41,9 +44,11 @@ class PS1CardboardRenderer:
         self._mouth_flap = DampedSpring(parameters=flap_parameters)
         self._side_flap = DampedSpring(parameters=SpringParameters(3.0, 0.48))
         self._last_timestamp_ms: int | None = None
+        self._last_detected_state: FaceTrackingState | None = None
 
     def render(self, frame: ndarray, state: FaceTrackingState) -> None:
-        if not state.detected:
+        state = self._state_for_rendering(state)
+        if state is None:
             self.reset()
             return
         frame_height, frame_width = frame.shape[:2]
@@ -98,8 +103,8 @@ class PS1CardboardRenderer:
         cv2.fillConvexPoly(alpha, top_plane, full_alpha)
         cv2.polylines(overlay, [top_plane], True, outline, 2, cv2.LINE_8)
 
-        side_width = max(6, round(box_width * (0.15 + 0.07 * side_open)))
-        if yaw >= 0:
+        side_width = max(3, round(box_width * (0.02 + 0.20 * side_open)))
+        if side_open > 0.08 and yaw >= 0:
             side = np.array(
                 [
                     front[1],
@@ -109,7 +114,7 @@ class PS1CardboardRenderer:
                 ],
                 dtype=np.int32,
             )
-        else:
+        elif side_open > 0.08:
             side = np.array(
                 [
                     [front[0][0] - side_width, front[0][1] - top_depth // 2],
@@ -119,9 +124,12 @@ class PS1CardboardRenderer:
                 ],
                 dtype=np.int32,
             )
-        cv2.fillConvexPoly(overlay, side, cardboard_dark)
-        cv2.fillConvexPoly(alpha, side, full_alpha)
-        cv2.polylines(overlay, [side], True, outline, 2, cv2.LINE_8)
+        else:
+            side = None
+        if side is not None:
+            cv2.fillConvexPoly(overlay, side, cardboard_dark)
+            cv2.fillConvexPoly(alpha, side, full_alpha)
+            cv2.polylines(overlay, [side], True, outline, 2, cv2.LINE_8)
 
         cv2.fillConvexPoly(overlay, front, cardboard)
         cv2.fillConvexPoly(alpha, front, full_alpha)
@@ -165,6 +173,33 @@ class PS1CardboardRenderer:
         self._mouth_flap.reset(0.0)
         self._side_flap.reset(0.0)
         self._last_timestamp_ms = None
+        self._last_detected_state = None
+
+    def _state_for_rendering(
+        self,
+        state: FaceTrackingState,
+    ) -> FaceTrackingState | None:
+        if state.detected:
+            self._last_detected_state = state
+            return state
+        if self._last_detected_state is None:
+            return None
+        elapsed_ms = state.timestamp_ms - self._last_detected_state.timestamp_ms
+        if elapsed_ms < 0 or elapsed_ms > self._config.tracking_loss_hold_ms:
+            return None
+        return FaceTrackingState(
+            timestamp_ms=state.timestamp_ms,
+            detected=True,
+            landmarks=self._last_detected_state.landmarks,
+            center_x=self._last_detected_state.center_x,
+            center_y=self._last_detected_state.center_y,
+            face_width=self._last_detected_state.face_width,
+            face_height=self._last_detected_state.face_height,
+            left_eye_open=self._last_detected_state.left_eye_open,
+            right_eye_open=self._last_detected_state.right_eye_open,
+            mouth_open=self._last_detected_state.mouth_open,
+            head_pose=self._last_detected_state.head_pose,
+        )
 
     def _delta_seconds(self, timestamp_ms: int) -> float:
         if self._last_timestamp_ms is None:
@@ -200,59 +235,26 @@ class PS1CardboardRenderer:
     ) -> None:
         center_x = round(float(front[:, 0].mean()))
         bottom = round(float(front[:, 1].max()))
-        radius_x = max(9, round(box_width * 0.27))
-        radius_y = max(7, round(box_height * 0.20))
-        opening_center = (center_x, bottom + 2)
-        cv2.ellipse(
-            alpha,
-            opening_center,
-            (radius_x, radius_y),
-            0,
-            180,
-            360,
-            0,
-            -1,
-            cv2.LINE_8,
+        radius_x = max(9, round(box_width * 0.16))
+        radius_y = max(7, round(box_height * 0.17))
+        opening = np.array(
+            [
+                [center_x - radius_x, bottom + 2],
+                [center_x, bottom - radius_y],
+                [center_x + radius_x, bottom + 2],
+            ],
+            dtype=np.int32,
         )
-        cv2.ellipse(
-            overlay,
-            opening_center,
-            (radius_x, radius_y),
-            0,
-            180,
-            360,
-            (0, 0, 0),
-            -1,
-            cv2.LINE_8,
-        )
+        cv2.fillConvexPoly(alpha, opening, 0)
+        cv2.fillConvexPoly(overlay, opening, (0, 0, 0))
         rim_color = (42, 72, 92)
-        cv2.ellipse(
-            overlay,
-            opening_center,
-            (radius_x, radius_y),
-            0,
-            180,
-            360,
-            rim_color,
-            2,
-            cv2.LINE_8,
-        )
-        cv2.ellipse(
-            alpha,
-            opening_center,
-            (radius_x, radius_y),
-            0,
-            180,
-            360,
-            full_alpha,
-            2,
-            cv2.LINE_8,
-        )
+        cv2.polylines(overlay, [opening], False, rim_color, 2, cv2.LINE_8)
+        cv2.polylines(alpha, [opening], False, full_alpha, 2, cv2.LINE_8)
         left_interior = np.array(
             [
                 front[3],
                 [center_x - radius_x, bottom],
-                [center_x - radius_x + 3, bottom - radius_y // 2],
+                [center_x - radius_x + 3, bottom - radius_y // 3],
                 [front[3][0] + round(box_width * 0.08), front[3][1] - 2],
             ],
             dtype=np.int32,
@@ -262,7 +264,7 @@ class PS1CardboardRenderer:
                 [center_x + radius_x, bottom],
                 front[2],
                 [front[2][0] - round(box_width * 0.08), front[2][1] - 2],
-                [center_x + radius_x - 3, bottom - radius_y // 2],
+                [center_x + radius_x - 3, bottom - radius_y // 3],
             ],
             dtype=np.int32,
         )
@@ -285,7 +287,7 @@ class PS1CardboardRenderer:
         top = float(front[:, 1].min())
         eye_y = round(top + box_height * 0.41)
         screen_eyes = (
-            (("C", state.right_eye_open), ("K", state.left_eye_open))
+            (("K", state.right_eye_open), ("C", state.left_eye_open))
             if self._config.mirrored
             else (("K", state.left_eye_open), ("C", state.right_eye_open))
         )

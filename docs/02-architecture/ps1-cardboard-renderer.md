@@ -66,7 +66,7 @@ sequenceDiagram
 | Front panel | Skewed quadrilateral anchored to face center and bounds |
 | Top plane | Lighter cardboard polygon |
 | Side plane | Darker polygon selected from yaw direction |
-| Bottom opening | Wide central semicircular cutout exposing the real neck |
+| Bottom opening | Central V-shaped cutout exposing the real neck |
 | Interior rim | Dark lower-corner and opening surfaces that communicate hollow depth |
 | K/C eyes | Text when open, horizontal strokes when closed |
 | Front flaps | Two spring-driven polygons controlled by mouth openness |
@@ -74,9 +74,9 @@ sequenceDiagram
 | Pixel style | Overlay rendered at one-quarter linear resolution |
 | Composition | Upscaled alpha mask blends avatar without pixelating camera |
 
-Mirrored preview places `C` on screen-left and `K` on screen-right because those positions correspond
-to the user's anatomical right and left eyes respectively
-(`src/kardboard_vtuber/renderer/ps1_cardboard.py:167-235`,
+The visible logo order is always `K C` from screen-left to screen-right. In mirrored preview, each
+letter uses the eye openness for that visible screen side
+(`src/kardboard_vtuber/renderer/ps1_cardboard.py:284-339`,
 `src/kardboard_vtuber/tracking/models.py:103-137`).
 
 ## Motion
@@ -86,11 +86,16 @@ mouth and side planes (`src/kardboard_vtuber/motion/springs.py:26-85`,
 `src/kardboard_vtuber/renderer/ps1_cardboard.py:39-88`). This preserves the distinction between
 measurement smoothing and animation dynamics.
 
+MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
+The renderer therefore holds the last reliable pose for two seconds, avoiding an immediate
+disappearance during a quick extreme turn while still clearing the avatar when the user leaves.
+
 ## Validation
 
-- 41 unit tests pass under Python 3.12 and 3.13.
+- 45 unit tests pass under Python 3.12 and 3.13.
 - Tests cover no-face passthrough, bounded overlay region, mouth-dependent flap changes, and mirrored
-  anatomical eye placement (`tests/test_ps1_cardboard_renderer.py:1-86`).
+  visible K/C placement and short tracking-loss persistence
+  (`tests/test_ps1_cardboard_renderer.py:1-132`).
 - The private guided recording produced a 1,254-frame prototype video.
 - Contact-sheet inspection confirmed face coverage, pose following, K/C placement, closed-eye
   strokes, and open mouth flaps.

@@ -68,20 +68,20 @@ def test_mouth_openness_changes_front_flap_pixels() -> None:
     assert not np.array_equal(closed, opened)
 
 
-def test_mirrored_eye_mapping_changes_opposite_screen_side() -> None:
+def test_screen_left_k_follows_screen_left_eye_in_mirrored_preview() -> None:
     renderer = PS1CardboardRenderer(CardboardRendererConfig(mirrored=True))
     open_frame = np.zeros((720, 1280, 3), dtype=np.uint8)
     wink_frame = np.zeros((720, 1280, 3), dtype=np.uint8)
 
     renderer.render(open_frame, state(1))
-    renderer.render(wink_frame, state(34, left_eye=0.0))
+    renderer.render(wink_frame, state(34, right_eye=0.0))
 
     difference = cv_difference = np.abs(
         open_frame.astype(np.int16) - wink_frame.astype(np.int16)
     )
     left_half = cv_difference[:, :640].sum()
     right_half = difference[:, 640:].sum()
-    assert right_half > left_half
+    assert left_half > right_half
 
 
 def test_renderer_leaves_center_neck_opening_visible() -> None:
@@ -103,3 +103,25 @@ def test_renderer_front_panel_is_fully_opaque() -> None:
     renderer.render(bright, state(34))
 
     assert np.array_equal(dark[300, 640], bright[300, 640])
+
+
+def test_renderer_holds_last_pose_during_brief_tracking_loss() -> None:
+    renderer = PS1CardboardRenderer(CardboardRendererConfig(tracking_loss_hold_ms=2000))
+    tracked = np.zeros((720, 1280, 3), dtype=np.uint8)
+    briefly_lost = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+    renderer.render(tracked, state(1000))
+    renderer.render(briefly_lost, state(2500, detected=False))
+
+    assert np.count_nonzero(briefly_lost) > 0
+
+
+def test_renderer_stops_after_tracking_loss_hold_expires() -> None:
+    renderer = PS1CardboardRenderer(CardboardRendererConfig(tracking_loss_hold_ms=2000))
+    frame = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+    renderer.render(frame, state(1000))
+    frame.fill(0)
+    renderer.render(frame, state(3001, detected=False))
+
+    assert np.count_nonzero(frame) == 0
