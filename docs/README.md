@@ -2,8 +2,8 @@
 
 > **TL;DR** — This is the engineering book for a lightweight Python VTuber that keeps the real
 > camera image, tracks one face, and overlays a deliberately low-resolution PS1-style cardboard
-> head. The camera chapter is implemented and verified. Tracking and rendering chapters describe
-> the next planned systems and clearly label them as planned.
+> head. Camera ingestion, tracking, filtering, procedural fallback rendering, and textured GPU 3D
+> rendering are implemented and verified.
 
 This documentation is written to be read in sequence, used as an interview study guide, and reused
 as the technical backbone for a future development video. It explains not only **what** the code
@@ -21,10 +21,11 @@ The new application carries this visual identity into a camera-tracked PS1-style
 
 | Part | Status | Evidence |
 |---|---|---|
-| Camera ingestion | Implemented and verified | `src/kardboard_vtuber/camera/`, covered by the 37-test suite |
+| Camera ingestion | Implemented and verified | `src/kardboard_vtuber/camera/`, covered by the full test suite |
 | Android IP Webcam integration | Implemented and user-verified | 1080x1920 preview at about 28-30 FPS |
 | Face tracking | Implemented and live-validated | MediaPipe near 30 result FPS plus debounced action logs |
-| PS1 renderer | Hollow-box prototype implemented | Opaque shell, neck opening, K/C eyes, pose perspective; mouth flaps deferred |
+| Textured 3D renderer | Implemented as default | ModernGL mesh, texture atlas, lighting, hollow shell, flaps, headphones, K/C eyes |
+| Procedural renderer | Implemented fallback | Fail-closed opaque shell retained for GPU troubleshooting |
 | OBS integration | Planned | Initial Window Capture path selected |
 
 ## Reading paths
@@ -65,9 +66,9 @@ flowchart LR
     Network --> Capture["OpenCV capture<br/>implemented"]
     Capture --> Slot["Latest-frame slot<br/>implemented"]
     Slot --> Tracker["Face tracker<br/>implemented"]
-    Slot --> Composer["Full-resolution composer<br/>planned"]
+    Slot --> Composer["Full-resolution composer<br/>implemented"]
     Tracker --> Filter["One Euro + springs<br/>implemented"]
-    Filter --> Renderer["Low-resolution PS1 box<br/>planned"]
+    Filter --> Renderer["Textured GPU 3D box<br/>implemented"]
     Renderer --> Composer
     Composer --> Preview["Preview window"]
     Preview --> OBS["OBS Window Capture"]

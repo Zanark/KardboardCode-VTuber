@@ -252,6 +252,9 @@ class PS1CardboardRenderer:
         self._last_timestamp_ms = None
         self._last_safe_frame = None
 
+    def close(self) -> None:
+        """Release renderer resources."""
+
     def _render_tracking_loss(self, frame: ndarray) -> None:
         if self._last_safe_frame is None or self._last_safe_frame.shape != frame.shape:
             frame.fill(0)

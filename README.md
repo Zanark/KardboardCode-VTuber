@@ -12,7 +12,7 @@ open-eye/blinking states.
 
 ## Current milestone
 
-The first implemented subsystem is low-latency camera ingestion:
+The current working vertical slice includes:
 
 - Local Windows cameras.
 - Phone-hosted MJPEG/RTSP streams.
@@ -21,11 +21,15 @@ The first implemented subsystem is low-latency camera ingestion:
 - Automatic stream reconnection.
 - Negotiated-format and latency diagnostics.
 - Rotation and selfie-style mirroring.
+- MediaPipe face tracking, calibrated pose, and anatomical blink/wink controls.
+- A default ModernGL textured 3D cardboard character with corrugated edges, hollow underside,
+  front/side flaps, and low-poly headphones.
+- A privacy-safe procedural 2D fallback.
 
 The phone preview has been verified at 1080x1920 portrait output and approximately 28-30 FPS.
 
-Face tracking, facial action logs, and the connected face-mesh debug inset are implemented. Tracking
-calibration and the PS1 cardboard renderer are the next milestones.
+The phone preview has been verified around 28-30 FPS. The isolated GPU renderer measures about
+8.17 ms per 1080x1920 frame on the validated AMD Radeon 780M environment.
 
 ## Quick start
 
@@ -81,7 +85,8 @@ Render the current PS1-style cardboard prototype by adding:
 --render-cardboard
 ```
 
-This automatically enables face tracking and overlays the low-resolution K/C box and mouth flaps.
+This automatically enables face tracking and uses the textured 3D renderer. Add
+`--cardboard-renderer procedural-2d` to use the original fallback.
 
 ## Documentation
 

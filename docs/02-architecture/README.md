@@ -8,18 +8,21 @@
 - [System architecture](system-architecture.md) — components, boundaries, and future flow
 - [Domain and runtime data model](data-model.md) — every current structure and invariant
 - [Camera lifecycle](camera-lifecycle.md) — startup, running, failure, reconnect, and shutdown
-- [PS1 cardboard renderer](ps1-cardboard-renderer.md) — low-resolution geometry, K/C eyes, flaps, and composition
+- [Textured GPU 3D renderer](textured-3d-renderer.md) — default mesh, materials, lighting, pose, and compositing
+- [Procedural PS1 renderer](ps1-cardboard-renderer.md) — privacy-safe 2D fallback and original prototype
 
 ```mermaid
 flowchart TD
     Architecture --> System["System architecture"]
     Architecture --> Model["Data model"]
     Architecture --> Lifecycle["Camera lifecycle"]
-    Architecture --> Renderer["PS1 cardboard renderer"]
+    Architecture --> Renderer["Textured GPU 3D renderer"]
+    Architecture --> Fallback["Procedural 2D fallback"]
     System --> Future["Tracking + rendering boundaries"]
     Model --> Contracts["Typed contracts"]
     Lifecycle --> Runtime["Concurrent runtime behavior"]
     Renderer --> Composite["Low-resolution overlay composition"]
+    Fallback --> Composite
 ```
 
 ## Architectural style

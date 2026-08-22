@@ -1,8 +1,8 @@
 # 08 · Roadmap: from tracking to rendered VTuber
 
 > **TL;DR** — Camera ingestion, tracking, calibration, One Euro filtering, and spring dynamics are
-> complete. The next vertical slice is the low-resolution cardboard renderer, followed by
-> composition and OBS hardening.
+> complete. The first textured GPU 3D renderer is implemented. The next phase is art refinement
+> against the canonical target, followed by OBS hardening.
 
 ## Delivery sequence
 
@@ -10,8 +10,8 @@
 flowchart LR
     Done["1. Camera ingestion<br/>done"] --> Track["2. Face tracking<br/>done"]
     Track --> Filter["3. Filtering + springs<br/>done"]
-    Filter --> Render["4. PS1 renderer<br/>prototype done"]
-    Render --> Compose["5. Composition"]
+    Filter --> Render["4. Textured 3D renderer<br/>first pass done"]
+    Render --> Compose["5. Composition<br/>done"]
     Compose --> OBS["6. OBS integration"]
     OBS --> Polish["7. Calibration + packaging"]
 ```
@@ -51,19 +51,20 @@ One Euro filtering is wired into tracking. Damped spring dynamics are implemente
 renderer use. See [One Euro motion filtering](../03-algorithms-and-data-structures/one-euro-filtering.md)
 and [Damped spring integration](../03-algorithms-and-data-structures/damped-spring-integration.md).
 
-## Milestone 4 · PS1 renderer — prototype complete
+## Milestone 4 · PS1 renderer — textured 3D first pass complete
 
-The prototype now:
+The default renderer now:
 
-- models a procedural cardboard box with front, top, and side planes;
-- renders the avatar at quarter linear resolution;
-- uses nearest-neighbor upscale and separate alpha compositing;
-- drives anatomical K/C eyes;
-- uses a spring for side-plane secondary motion;
-- forms an opaque hollow shell with a central bottom neck opening and visible interior rim.
+- uses ModernGL and the Windows GPU for real depth-tested 3D rendering;
+- generates a textured box, flaps, corrugated edge layers, earcups, cushions, and headband;
+- drives calibrated pitch/yaw/roll and anatomical K/C wink states;
+- renders a transparent low-resolution framebuffer and composites it over the sharp camera;
+- preserves black-before-acquisition and last-safe-frame tracking-loss behavior;
+- falls back to the procedural renderer if OpenGL initialization fails.
 
-Texture art, ordered dithering, vertex snapping, and a more recognizable production mesh remain
-future renderer-polish work.
+The first pass is substantially closer to the canonical target, but production art refinement,
+better flap articulation, richer headphone geometry, vertex snapping, and scene-aware lighting
+remain.
 
 ```mermaid
 flowchart LR

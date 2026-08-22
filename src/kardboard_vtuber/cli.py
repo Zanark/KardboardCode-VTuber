@@ -91,6 +91,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Overlay the low-resolution PS1-style KardboardCode box on the tracked face.",
     )
     parser.add_argument(
+        "--cardboard-renderer",
+        choices=("textured-3d", "procedural-2d"),
+        default="textured-3d",
+        help="Cardboard renderer used with --render-cardboard (default: textured-3d).",
+    )
+    parser.add_argument(
         "--headless",
         action="store_true",
         help="Capture and print diagnostics without opening a preview window.",
@@ -204,6 +210,8 @@ def main(argv: list[str] | None = None) -> int:
         print(str(error), file=sys.stderr)
         return 1
     finally:
+        if renderer is not None:
+            renderer.close()
         if tracker is not None:
             tracker.close()
         camera.stop()
@@ -272,9 +280,23 @@ def _create_action_detector(args: argparse.Namespace) -> FaceActionDetector:
 
 
 def _create_renderer(args: argparse.Namespace) -> object:
-    from kardboard_vtuber.renderer import CardboardRendererConfig, PS1CardboardRenderer
+    from kardboard_vtuber.renderer import (
+        CardboardRendererConfig,
+        PS1CardboardRenderer,
+        Textured3DCardboardRenderer,
+        Textured3DRendererConfig,
+    )
 
-    return PS1CardboardRenderer(CardboardRendererConfig(mirrored=args.mirror))
+    if args.cardboard_renderer == "procedural-2d":
+        return PS1CardboardRenderer(CardboardRendererConfig(mirrored=args.mirror))
+    try:
+        return Textured3DCardboardRenderer(Textured3DRendererConfig(mirrored=args.mirror))
+    except RuntimeError as error:
+        print(
+            f"3D renderer unavailable ({error}); using privacy-safe 2D fallback",
+            file=sys.stderr,
+        )
+        return PS1CardboardRenderer(CardboardRendererConfig(mirrored=args.mirror))
 
 
 def _print_tracking_snapshot(tracker: MediaPipeFaceTracker) -> None:

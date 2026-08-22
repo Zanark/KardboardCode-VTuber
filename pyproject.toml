@@ -9,6 +9,7 @@ description = "A lightweight PS1-style camera-tracked KardboardCode avatar."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "moderngl>=5.12,<6",
     "numpy>=2.0,<3",
     "opencv-contrib-python>=5.0,<6",
 ]
