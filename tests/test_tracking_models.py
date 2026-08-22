@@ -175,6 +175,35 @@ def test_draw_tracking_debug_adds_black_face_mesh_inset() -> None:
     assert np.mean(frame[30:220, 900:1240]) < 80
 
 
+def test_face_mesh_inset_labels_pose_xyz_axes(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from kardboard_vtuber.tracking import mediapipe_tracker
+
+    labels: list[str] = []
+
+    def record_text(
+        _frame: np.ndarray,
+        text: str,
+        *_args: object,
+        **_kwargs: object,
+    ) -> None:
+        labels.append(text)
+
+    monkeypatch.setattr(mediapipe_tracker.cv2, "putText", record_text)
+    draw_tracking_debug(
+        np.zeros((720, 1280, 3), dtype=np.uint8),
+        normalize_face(
+            timestamp_ms=1,
+            landmarks=[FakeLandmark(0.5, 0.5, 0.0) for _ in range(478)],
+            blendshapes=[],
+            transformation_matrix=np.eye(4),
+        ),
+    )
+
+    assert {"POSE", "X", "Y", "Z"} <= set(labels)
+
+
 def test_face_mesh_inset_preserves_portrait_frame_aspect_ratio(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

@@ -73,8 +73,9 @@ sequenceDiagram
 | Composition | Upscaled alpha mask blends avatar without pixelating camera |
 
 MediaPipe landmarks bound the face, not the full hairstyle. The shell therefore uses additional
-vertical head clearance (`1.75x` tracked face height with an upward center bias) so the crown stays
-inside the opaque silhouette, especially while looking down.
+clearance in all three dimensions: `2.25x` tracked face width, `2.05x` tracked face height with a
+`12%` upward center bias, and a `1.25x` depth multiplier. This larger envelope keeps hair, chin,
+and side-profile pixels inside the opaque silhouette during combined pitch, yaw, and roll.
 
 The visible logo order is always `K C` from screen-left to screen-right. In mirrored preview, each
 letter retains its anatomical meaning: `K` follows the user's left eye and `C` follows the user's
@@ -110,12 +111,12 @@ opening exposes only the neck at every pitch.
 
 ## Validation
 
-- 50 unit tests pass under Python 3.12 and 3.13.
+- 53 unit tests pass under Python 3.12 and 3.13.
 - Tests cover black output before initial acquisition, bounded overlay region, mirrored visible
   K/C placement, full lower-face and chin-margin opacity, and
   fail-closed tracking-loss freezing, crown/hair coverage, calibrated anatomical winks, roll,
-  yaw-side perspective, and pitch-driven top/underside visibility
-  (`tests/test_ps1_cardboard_renderer.py:1-226`).
+  yaw-side perspective, pitch-driven top/underside visibility, enlarged XYZ dimensions, and an
+  extreme combined-pose privacy silhouette (`tests/test_ps1_cardboard_renderer.py:1-242`).
 - The private guided recording produced a 1,254-frame prototype video.
 - Contact-sheet inspection confirmed face coverage, pose following, K/C placement, and closed-eye
   arcs.

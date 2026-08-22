@@ -12,8 +12,10 @@ description: "How the tracking overlay and diagnostics prove real camera behavio
 ## Visual overlay
 
 `draw_tracking_debug()` renders every eighth landmark, a face bounding box, independent eye
-openness, mouth openness, pitch/yaw/roll, and a black face-mesh inset in the top-right corner
-(`src/kardboard_vtuber/tracking/mediapipe_tracker.py:191-328`).
+openness, mouth openness, pitch/yaw/roll, and a black face-mesh inset in the top-right corner. The
+inset reserves its left side for a pose-driven XYZ axis gizmo: X is red, Y is green, and Z is blue.
+The arrows rotate from the same pitch/yaw/roll values shown in the text diagnostics
+(`src/kardboard_vtuber/tracking/mediapipe_tracker.py:213-427`).
 
 The latest primary transition is shown directly below the pose values as
 `ACTION = <ACTION NAME>`. The CLI retains the first event from a multi-event update so a meaningful
@@ -27,7 +29,7 @@ flowchart TD
     State --> Bounds["Face bounds"]
     State --> Expression["L-eye, R-eye, mouth"]
     State --> Pose["Pitch, yaw, roll"]
-    State --> Inset["Connected face mesh<br>black background"]
+    State --> Inset["Connected face mesh + XYZ pose axes<br>black background"]
     Sparse --> Preview["Debug preview"]
     Bounds --> Preview
     Expression --> Preview

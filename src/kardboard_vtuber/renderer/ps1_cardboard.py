@@ -18,8 +18,9 @@ class CardboardRendererConfig:
     """Visual and motion tuning for the first PS1-style renderer."""
 
     pixel_scale: int = 4
-    box_width_multiplier: float = 2.05
-    box_height_multiplier: float = 1.75
+    box_width_multiplier: float = 2.25
+    box_height_multiplier: float = 2.05
+    box_depth_multiplier: float = 1.25
     opacity: float = 1.0
     mirrored: bool = False
     neutral_pitch_degrees: float = -10.0
@@ -27,7 +28,11 @@ class CardboardRendererConfig:
     def __post_init__(self) -> None:
         if self.pixel_scale < 1:
             raise ValueError("pixel_scale must be at least 1")
-        if self.box_width_multiplier <= 0 or self.box_height_multiplier <= 0:
+        if (
+            self.box_width_multiplier <= 0
+            or self.box_height_multiplier <= 0
+            or self.box_depth_multiplier <= 0
+        ):
             raise ValueError("box size multipliers must be positive")
         if not 0.0 <= self.opacity <= 1.0:
             raise ValueError("opacity must be between 0 and 1")
@@ -62,7 +67,7 @@ class PS1CardboardRenderer:
         center_y = state.center_y * low_height
         box_width = max(24.0, state.face_width * low_width * self._config.box_width_multiplier)
         box_height = max(28.0, state.face_height * low_height * self._config.box_height_multiplier)
-        center_y -= box_height * 0.10
+        center_y -= box_height * 0.12
         yaw = max(-1.0, min(1.0, state.head_pose.yaw_degrees / 45.0))
         pitch = max(
             -1.0,
@@ -99,9 +104,14 @@ class PS1CardboardRenderer:
         cardboard_dark = (58, 103, 139)
         outline = (24, 34, 43)
         full_alpha = round(255 * self._config.opacity)
-        top_depth = round(box_height * (0.025 * (1.0 - look_up) + 0.16 * look_down))
-        bottom_depth = round(box_height * 0.16 * look_up)
-        side_width = round(box_width * 0.22 * side_open)
+        depth_multiplier = self._config.box_depth_multiplier
+        top_depth = round(
+            box_height
+            * depth_multiplier
+            * (0.035 * (1.0 - look_up) + 0.18 * look_down)
+        )
+        bottom_depth = round(box_height * depth_multiplier * 0.18 * look_up)
+        side_width = round(box_width * depth_multiplier * 0.24 * side_open)
         depth_x = (
             -round(math.copysign(side_width, yaw))
             if side_open > 0.08 and abs(yaw) > 0.01

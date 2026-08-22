@@ -56,6 +56,14 @@ def test_renderer_overlays_only_tracked_head_region() -> None:
     assert np.count_nonzero(frame[:80, :80]) == 0
 
 
+def test_default_shell_has_enlarged_xyz_dimensions() -> None:
+    config = CardboardRendererConfig()
+
+    assert config.box_width_multiplier == 2.25
+    assert config.box_height_multiplier == 2.05
+    assert config.box_depth_multiplier == 1.25
+
+
 def test_screen_left_k_follows_anatomical_left_eye_in_mirrored_preview() -> None:
     renderer = PS1CardboardRenderer(CardboardRendererConfig(mirrored=True))
     open_frame = np.zeros((720, 1280, 3), dtype=np.uint8)
@@ -173,6 +181,16 @@ def test_downward_pitch_keeps_crown_inside_shell_silhouette() -> None:
     renderer.render(frame, state(1, pitch=20.0))
 
     assert np.count_nonzero(frame[60:150, 500:780]) > 0
+
+
+def test_combined_extreme_pose_keeps_head_inside_shell_silhouette() -> None:
+    renderer = PS1CardboardRenderer()
+    frame = np.full((720, 1280, 3), 91, dtype=np.uint8)
+
+    renderer.render(frame, state(1, pitch=32.2, yaw=26.5, roll=-7.5))
+
+    assert not np.all(frame[110, 640] == 91)
+    assert not np.all(frame[470, 640] == 91)
 
 
 def test_roll_rotates_complete_shell_around_face_center() -> None:

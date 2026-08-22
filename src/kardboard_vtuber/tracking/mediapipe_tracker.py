@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import threading
 import time
 from dataclasses import dataclass, field
@@ -312,10 +313,12 @@ def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:
         )
         return
 
-    padding_x = 24
+    axis_area_width = min(96, max(72, inset_width // 4))
+    padding_left = axis_area_width + 12
+    padding_right = 18
     padding_top = 34
     padding_bottom = 14
-    usable_width = inset_width - padding_x * 2
+    usable_width = inset_width - padding_left - padding_right
     usable_height = inset_height - padding_top - padding_bottom
     face_width_px = state.face_width * frame_width
     face_height_px = state.face_height * frame_height
@@ -323,7 +326,10 @@ def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:
         usable_width / max(face_width_px, 1e-6),
         usable_height / max(face_height_px, 1e-6),
     )
-    center_px = (origin_x + inset_width / 2, origin_y + padding_top + usable_height / 2)
+    center_px = (
+        origin_x + padding_left + usable_width / 2,
+        origin_y + padding_top + usable_height / 2,
+    )
 
     def point(index: int) -> tuple[int, int]:
         landmark = state.landmarks[index]
@@ -351,6 +357,69 @@ def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:
         px = round(center_px[0] + (landmark.x - state.center_x) * frame_width * scale)
         py = round(center_px[1] + (landmark.y - state.center_y) * frame_height * scale)
         cv2.circle(frame, (px, py), 1, (120, 120, 120), -1, cv2.LINE_AA)
+
+    _draw_pose_axis_gizmo(
+        frame,
+        state,
+        (origin_x + axis_area_width // 2 + 6, origin_y + inset_height // 2 + 12),
+        min(34, axis_area_width // 3),
+    )
+
+
+def _draw_pose_axis_gizmo(
+    frame: ndarray,
+    state: FaceTrackingState,
+    origin: tuple[int, int],
+    length: int,
+) -> None:
+    pitch = math.radians(state.head_pose.pitch_degrees)
+    yaw = math.radians(state.head_pose.yaw_degrees)
+    roll = math.radians(state.head_pose.roll_degrees)
+    sin_pitch, cos_pitch = math.sin(pitch), math.cos(pitch)
+    sin_yaw, cos_yaw = math.sin(yaw), math.cos(yaw)
+    sin_roll, cos_roll = math.sin(roll), math.cos(roll)
+    rotation_x = np.array(
+        ((1.0, 0.0, 0.0), (0.0, cos_pitch, -sin_pitch), (0.0, sin_pitch, cos_pitch))
+    )
+    rotation_y = np.array(
+        ((cos_yaw, 0.0, sin_yaw), (0.0, 1.0, 0.0), (-sin_yaw, 0.0, cos_yaw))
+    )
+    rotation_z = np.array(
+        ((cos_roll, -sin_roll, 0.0), (sin_roll, cos_roll, 0.0), (0.0, 0.0, 1.0))
+    )
+    rotation = rotation_z @ rotation_y @ rotation_x
+    axes = (
+        ("X", np.array((1.0, 0.0, 0.0)), (80, 80, 255)),
+        ("Y", np.array((0.0, 1.0, 0.0)), (80, 255, 80)),
+        ("Z", np.array((0.0, 0.0, 1.0)), (255, 180, 40)),
+    )
+    cv2.putText(
+        frame,
+        "POSE",
+        (origin[0] - 22, origin[1] - length - 14),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.4,
+        (200, 200, 200),
+        1,
+        cv2.LINE_AA,
+    )
+    for label, axis, color in axes:
+        vector = rotation @ axis
+        end = (
+            round(origin[0] + length * (vector[0] - 0.45 * vector[2])),
+            round(origin[1] + length * (vector[1] - 0.45 * vector[2])),
+        )
+        cv2.arrowedLine(frame, origin, end, color, 2, cv2.LINE_AA, tipLength=0.22)
+        cv2.putText(
+            frame,
+            label,
+            (end[0] + 3, end[1] - 3),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.42,
+            color,
+            1,
+            cv2.LINE_AA,
+        )
 
 
 def _draw_closed_path(
