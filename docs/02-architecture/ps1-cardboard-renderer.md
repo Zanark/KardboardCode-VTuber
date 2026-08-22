@@ -7,10 +7,11 @@ description: "Architecture of the procedural low-resolution KardboardCode head o
 
 > **Status: basic prototype implemented and offline-validated.**
 >
-> **TL;DR** — The first renderer creates one fixed procedural cardboard head at low resolution,
-> drives anatomical K/C eyes and front flaps from tracking, adds pose-dependent planes and spring
-> motion, upscales with nearest-neighbor sampling, and composites only the avatar over the sharp
-> camera frame (`src/kardboard_vtuber/renderer/ps1_cardboard.py:17-272`).
+> **TL;DR** — The renderer creates one fixed opaque hollow cardboard shell around the head at low
+> resolution, leaves the neck visible through a central bottom opening, drives anatomical K/C eyes
+> and front flaps from tracking, adds pose-dependent planes and spring motion, then composites only
+> the avatar over the sharp camera frame
+> (`src/kardboard_vtuber/renderer/ps1_cardboard.py:17-370`).
 
 ## Why the renderer is deliberately fixed
 
@@ -65,8 +66,11 @@ sequenceDiagram
 | Front panel | Skewed quadrilateral anchored to face center and bounds |
 | Top plane | Lighter cardboard polygon |
 | Side plane | Darker polygon selected from yaw direction |
+| Bottom opening | Wide central semicircular cutout exposing the real neck |
+| Interior rim | Dark lower-corner and opening surfaces that communicate hollow depth |
 | K/C eyes | Text when open, horizontal strokes when closed |
 | Front flaps | Two spring-driven polygons controlled by mouth openness |
+| Surface | Deterministic light/dark fiber pattern over fully opaque cardboard |
 | Pixel style | Overlay rendered at one-quarter linear resolution |
 | Composition | Upscaled alpha mask blends avatar without pixelating camera |
 
@@ -92,6 +96,11 @@ measurement smoothing and animation dynamics.
   strokes, and open mouth flaps.
 
 The private camera footage and rendered video are not committed.
+
+The initial flat face-sized rectangle was rejected during user review. The corrected design is
+approximately twice the tracked face width, extends around the head, remains fully opaque, and
+reveals camera pixels only through the intentional neck opening
+(`tests/test_ps1_cardboard_renderer.py:88-106`).
 
 ## Run it
 

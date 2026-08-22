@@ -24,7 +24,7 @@ The new application carries this visual identity into a camera-tracked PS1-style
 | Camera ingestion | Implemented and verified | `src/kardboard_vtuber/camera/`, covered by the 37-test suite |
 | Android IP Webcam integration | Implemented and user-verified | 1080x1920 preview at about 28-30 FPS |
 | Face tracking | Implemented and live-validated | MediaPipe near 30 result FPS plus debounced action logs |
-| PS1 renderer | Basic prototype implemented | Procedural pixel box, K/C eyes, mouth flaps, recorded-video validation |
+| PS1 renderer | Hollow-box prototype implemented | Opaque shell, neck opening, K/C eyes, mouth flaps, recorded-video validation |
 | OBS integration | Planned | Initial Window Capture path selected |
 
 ## Reading paths

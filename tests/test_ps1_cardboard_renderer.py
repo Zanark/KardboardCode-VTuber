@@ -82,3 +82,24 @@ def test_mirrored_eye_mapping_changes_opposite_screen_side() -> None:
     left_half = cv_difference[:, :640].sum()
     right_half = difference[:, 640:].sum()
     assert right_half > left_half
+
+
+def test_renderer_leaves_center_neck_opening_visible() -> None:
+    renderer = PS1CardboardRenderer()
+    frame = np.full((720, 1280, 3), 91, dtype=np.uint8)
+
+    renderer.render(frame, state(1))
+
+    assert np.all(frame[480, 640] == 91)
+    assert not np.all(frame[450, 500] == 91)
+
+
+def test_renderer_front_panel_is_fully_opaque() -> None:
+    renderer = PS1CardboardRenderer()
+    dark = np.zeros((720, 1280, 3), dtype=np.uint8)
+    bright = np.full((720, 1280, 3), 255, dtype=np.uint8)
+
+    renderer.render(dark, state(1))
+    renderer.render(bright, state(34))
+
+    assert np.array_equal(dark[300, 640], bright[300, 640])

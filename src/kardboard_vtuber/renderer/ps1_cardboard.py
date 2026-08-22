@@ -18,9 +18,9 @@ class CardboardRendererConfig:
     """Visual and motion tuning for the first PS1-style renderer."""
 
     pixel_scale: int = 4
-    box_width_multiplier: float = 1.55
-    box_height_multiplier: float = 1.45
-    opacity: float = 0.96
+    box_width_multiplier: float = 2.05
+    box_height_multiplier: float = 1.52
+    opacity: float = 1.0
     mirrored: bool = False
 
     def __post_init__(self) -> None:
@@ -61,8 +61,9 @@ class PS1CardboardRenderer:
         center_y = state.center_y * low_height
         box_width = max(24.0, state.face_width * low_width * self._config.box_width_multiplier)
         box_height = max(28.0, state.face_height * low_height * self._config.box_height_multiplier)
+        center_y -= box_height * 0.06
         yaw = max(-1.0, min(1.0, state.head_pose.yaw_degrees / 45.0))
-        skew = yaw * box_width * 0.14
+        skew = yaw * box_width * 0.08
         left = center_x - box_width / 2
         right = center_x + box_width / 2
         top = center_y - box_height / 2
@@ -82,17 +83,14 @@ class PS1CardboardRenderer:
         cardboard_dark = (58, 103, 139)
         outline = (24, 34, 43)
         full_alpha = round(255 * self._config.opacity)
-        cv2.fillConvexPoly(overlay, front, cardboard)
-        cv2.fillConvexPoly(alpha, front, full_alpha)
-        cv2.polylines(overlay, [front], True, outline, 2, cv2.LINE_8)
-
-        top_depth = max(4, round(box_height * 0.11))
+        top_depth = max(5, round(box_height * 0.13))
+        depth_x = round(-yaw * box_width * 0.10)
         top_plane = np.array(
             [
                 front[0],
                 front[1],
-                [front[1][0] - round(skew * 0.7), front[1][1] - top_depth],
-                [front[0][0] - round(skew * 0.7), front[0][1] - top_depth],
+                [front[1][0] + depth_x, front[1][1] - top_depth],
+                [front[0][0] + depth_x, front[0][1] - top_depth],
             ],
             dtype=np.int32,
         )
@@ -100,13 +98,13 @@ class PS1CardboardRenderer:
         cv2.fillConvexPoly(alpha, top_plane, full_alpha)
         cv2.polylines(overlay, [top_plane], True, outline, 2, cv2.LINE_8)
 
-        side_width = max(3, round(box_width * (0.06 + 0.08 * side_open)))
+        side_width = max(6, round(box_width * (0.15 + 0.07 * side_open)))
         if yaw >= 0:
             side = np.array(
                 [
                     front[1],
-                    [front[1][0] + side_width, front[1][1] + top_depth // 2],
-                    [front[2][0] + side_width, front[2][1] - top_depth // 2],
+                    [front[1][0] + side_width, front[1][1] - top_depth // 2],
+                    [front[2][0] + side_width, front[2][1] - top_depth // 5],
                     front[2],
                 ],
                 dtype=np.int32,
@@ -114,10 +112,10 @@ class PS1CardboardRenderer:
         else:
             side = np.array(
                 [
-                    [front[0][0] - side_width, front[0][1] + top_depth // 2],
+                    [front[0][0] - side_width, front[0][1] - top_depth // 2],
                     front[0],
                     front[3],
-                    [front[3][0] - side_width, front[3][1] - top_depth // 2],
+                    [front[3][0] - side_width, front[3][1] - top_depth // 5],
                 ],
                 dtype=np.int32,
             )
@@ -125,6 +123,18 @@ class PS1CardboardRenderer:
         cv2.fillConvexPoly(alpha, side, full_alpha)
         cv2.polylines(overlay, [side], True, outline, 2, cv2.LINE_8)
 
+        cv2.fillConvexPoly(overlay, front, cardboard)
+        cv2.fillConvexPoly(alpha, front, full_alpha)
+        cv2.polylines(overlay, [front], True, outline, 2, cv2.LINE_8)
+        self._add_cardboard_texture(overlay, alpha)
+        self._cut_neck_opening(
+            overlay,
+            alpha,
+            front,
+            box_width,
+            box_height,
+            full_alpha,
+        )
         self._draw_eyes(overlay, alpha, front, box_width, box_height, full_alpha, state)
         self._draw_flaps(
             overlay,
@@ -164,6 +174,103 @@ class PS1CardboardRenderer:
         self._last_timestamp_ms = timestamp_ms
         return delta_seconds
 
+    @staticmethod
+    def _add_cardboard_texture(overlay: ndarray, alpha: ndarray) -> None:
+        y_coordinates, x_coordinates = np.indices(alpha.shape)
+        covered = alpha > 0
+        light_fibers = covered & ((x_coordinates * 7 + y_coordinates * 11) % 37 == 0)
+        dark_fibers = covered & ((x_coordinates * 13 + y_coordinates * 5) % 53 == 0)
+        overlay[light_fibers] = np.minimum(
+            overlay[light_fibers].astype(np.int16) + 12,
+            255,
+        ).astype(np.uint8)
+        overlay[dark_fibers] = np.maximum(
+            overlay[dark_fibers].astype(np.int16) - 14,
+            0,
+        ).astype(np.uint8)
+
+    @staticmethod
+    def _cut_neck_opening(
+        overlay: ndarray,
+        alpha: ndarray,
+        front: ndarray,
+        box_width: float,
+        box_height: float,
+        full_alpha: int,
+    ) -> None:
+        center_x = round(float(front[:, 0].mean()))
+        bottom = round(float(front[:, 1].max()))
+        radius_x = max(9, round(box_width * 0.27))
+        radius_y = max(7, round(box_height * 0.20))
+        opening_center = (center_x, bottom + 2)
+        cv2.ellipse(
+            alpha,
+            opening_center,
+            (radius_x, radius_y),
+            0,
+            180,
+            360,
+            0,
+            -1,
+            cv2.LINE_8,
+        )
+        cv2.ellipse(
+            overlay,
+            opening_center,
+            (radius_x, radius_y),
+            0,
+            180,
+            360,
+            (0, 0, 0),
+            -1,
+            cv2.LINE_8,
+        )
+        rim_color = (42, 72, 92)
+        cv2.ellipse(
+            overlay,
+            opening_center,
+            (radius_x, radius_y),
+            0,
+            180,
+            360,
+            rim_color,
+            2,
+            cv2.LINE_8,
+        )
+        cv2.ellipse(
+            alpha,
+            opening_center,
+            (radius_x, radius_y),
+            0,
+            180,
+            360,
+            full_alpha,
+            2,
+            cv2.LINE_8,
+        )
+        left_interior = np.array(
+            [
+                front[3],
+                [center_x - radius_x, bottom],
+                [center_x - radius_x + 3, bottom - radius_y // 2],
+                [front[3][0] + round(box_width * 0.08), front[3][1] - 2],
+            ],
+            dtype=np.int32,
+        )
+        right_interior = np.array(
+            [
+                [center_x + radius_x, bottom],
+                front[2],
+                [front[2][0] - round(box_width * 0.08), front[2][1] - 2],
+                [center_x + radius_x - 3, bottom - radius_y // 2],
+            ],
+            dtype=np.int32,
+        )
+        for interior in (left_interior, right_interior):
+            cv2.fillConvexPoly(overlay, interior, rim_color)
+            cv2.fillConvexPoly(alpha, interior, full_alpha)
+            cv2.polylines(overlay, [interior], True, (24, 34, 43), 1, cv2.LINE_8)
+
     def _draw_eyes(
         self,
         overlay: ndarray,
@@ -176,7 +283,7 @@ class PS1CardboardRenderer:
     ) -> None:
         center_x = float(front[:, 0].mean())
         top = float(front[:, 1].min())
-        eye_y = round(top + box_height * 0.38)
+        eye_y = round(top + box_height * 0.41)
         screen_eyes = (
             (("C", state.right_eye_open), ("K", state.left_eye_open))
             if self._config.mirrored
@@ -203,8 +310,8 @@ class PS1CardboardRenderer:
                     cv2.LINE_8,
                 )
                 continue
-            font_scale = max(0.35, box_width / 145.0)
-            thickness = max(1, round(box_width / 80.0))
+            font_scale = max(0.45, box_width / 105.0)
+            thickness = max(2, round(box_width / 62.0))
             (text_width, text_height), _ = cv2.getTextSize(
                 letter,
                 cv2.FONT_HERSHEY_DUPLEX,

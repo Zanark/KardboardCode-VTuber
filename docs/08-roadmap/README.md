@@ -60,6 +60,7 @@ The prototype now:
 - uses nearest-neighbor upscale and separate alpha compositing;
 - drives anatomical K/C eyes and mouth flaps;
 - uses springs for flap/side-plane secondary motion.
+- forms an opaque hollow shell with a central bottom neck opening and visible interior rim.
 
 Texture art, ordered dithering, vertex snapping, and a more recognizable production mesh remain
 future renderer-polish work.

@@ -37,7 +37,8 @@ flowchart LR
 ## Why two buffers
 
 The color canvas stores cardboard pixels; the alpha mask records coverage. Keeping them separate
-allows opaque panels, transparent background, text-shaped eyes, and polygon flaps without
+allows fully opaque panels, a transparent background, an intentional neck cutout, text-shaped eyes,
+and polygon flaps without
 pixelating or recoloring the camera outside the avatar
 (`src/kardboard_vtuber/renderer/ps1_cardboard.py:51-59`,
 `src/kardboard_vtuber/renderer/ps1_cardboard.py:151-165`).
@@ -74,8 +75,9 @@ low-resolution mask, and their temporary full-resolution upscales.
 ## Validation
 
 The renderer leaves no-face frames unchanged, modifies only the tracked head region, changes flap
-pixels with mouth input, and maps anatomical eyes to the correct mirrored screen side
-(`tests/test_ps1_cardboard_renderer.py:38-86`). Spring behavior is independently covered
+pixels with mouth input, maps anatomical eyes to the correct mirrored screen side, preserves the
+camera through the bottom neck opening, and keeps the cardboard front fully opaque
+(`tests/test_ps1_cardboard_renderer.py:38-106`). Spring behavior is independently covered
 (`tests/test_motion_springs.py:18-72`), and CLI composition occurs before diagnostics
 (`src/kardboard_vtuber/cli.py:153-167`).
 
