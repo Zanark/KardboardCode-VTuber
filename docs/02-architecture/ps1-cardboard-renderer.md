@@ -104,8 +104,10 @@ Pitch-projected underside depth and mouth-flap hinges are intentionally separate
 move the underside's far edge downward, but the mouth flaps remain attached to the visible front
 lower contour into the V apex. As the mouth opens, they project mostly sideways beyond the shell
 instead of hanging vertically. The lighter flap layer is front-mounted above the underside, directly
-on the lower-face contour. Its shallow depth ends before the underside's far edge, leaving a dark
-underside strip visible below.
+on the lower-face contour. Each hinge begins at the exact bottom corner of the K/C front square—no
+inset or underside wedge is allowed between the face and flap—and follows the bottom edge into the
+V apex. Its shallow depth ends before the underside's far edge, leaving a dark underside strip
+visible below.
 
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
 Privacy is fail-closed: before the first valid detection the output is black, and after tracking
@@ -114,7 +116,7 @@ frame. The narrow V opening begins below the tracked face bounds and exposes onl
 
 ## Validation
 
-- 52 unit tests pass under Python 3.12 and 3.13.
+- 53 unit tests pass under Python 3.12 and 3.13.
 - Tests cover black output before initial acquisition, bounded overlay region, below-box
   mouth-dependent flap changes, mirrored visible K/C placement, full lower-face opacity, and
   fail-closed tracking-loss freezing, crown/hair coverage, calibrated anatomical winks, roll,

@@ -97,6 +97,17 @@ def test_open_mouth_flaps_project_outward_beyond_box_sides() -> None:
     assert np.count_nonzero(frame[460:550, 980:1160]) > 0
 
 
+def test_mouth_flaps_start_at_kc_front_face_bottom_corners() -> None:
+    renderer = PS1CardboardRenderer()
+    frame = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+    for timestamp_ms in range(0, 400, 33):
+        renderer.render(frame, state(timestamp_ms, mouth=0.59))
+
+    assert np.array_equal(frame[500, 300], np.array([95, 154, 195]))
+    assert np.array_equal(frame[500, 1000], np.array([90, 147, 188]))
+
+
 def test_screen_left_k_follows_anatomical_left_eye_in_mirrored_preview() -> None:
     renderer = PS1CardboardRenderer(CardboardRendererConfig(mirrored=True))
     open_frame = np.zeros((720, 1280, 3), dtype=np.uint8)

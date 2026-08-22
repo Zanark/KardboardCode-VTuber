@@ -429,13 +429,12 @@ class PS1CardboardRenderer:
         openness = max(0.0, min(1.0, mouth_open))
         drop = box_height * (0.015 + 0.14 * openness)
         spread = box_width * 0.40 * openness
-        outer_inset = box_width * 0.10
         inner_free_offset = box_width * 0.08
         left_flap = np.array(
             [
                 [round(center_x), neck_apex_y],
                 [round(center_x - neck_half_width), hinge_y],
-                [round(left + outer_inset), hinge_y],
+                [round(left), hinge_y],
                 [round(left - spread), round(hinge_y + drop * 0.65)],
                 [round(center_x - inner_free_offset), round(neck_apex_y + drop)],
             ],
@@ -445,7 +444,7 @@ class PS1CardboardRenderer:
             [
                 [round(center_x), neck_apex_y],
                 [round(center_x + neck_half_width), hinge_y],
-                [round(right - outer_inset), hinge_y],
+                [round(right), hinge_y],
                 [round(right + spread), round(hinge_y + drop * 0.65)],
                 [round(center_x + inner_free_offset), round(neck_apex_y + drop)],
             ],
