@@ -47,7 +47,7 @@ flowchart LR
 | `MediaPipeTrackerConfig` | Model path, input width, confidence thresholds | `src/kardboard_vtuber/tracking/mediapipe_tracker.py:23` |
 | `MediaPipeFaceTracker` | Async task ownership and latest-result diagnostics | `src/kardboard_vtuber/tracking/mediapipe_tracker.py:44` |
 | `FaceActionDetector` | Debounced blink, wink, eye, mouth, and face transitions | `src/kardboard_vtuber/tracking/events.py:73` |
-| `draw_tracking_debug()` | Sparse landmarks, connected mesh inset, bounds, expressions, and pose | `src/kardboard_vtuber/tracking/mediapipe_tracker.py:191` |
+| `draw_tracking_debug()` | Sparse landmarks, connected mesh inset, expressions, pose, and latest action | `src/kardboard_vtuber/tracking/mediapipe_tracker.py:191` |
 | Model downloader | Official URL plus SHA-256 verification | `scripts/download_face_landmarker_model.py:1` |
 | CLI integration | Flags, submission, diagnostics, and cleanup | `src/kardboard_vtuber/cli.py:1` |
 

@@ -188,7 +188,12 @@ class MediaPipeFaceTracker:
                 self._last_error = f"{type(error).__name__}: {error}"
 
 
-def draw_tracking_debug(frame: ndarray, state: FaceTrackingState) -> None:
+def draw_tracking_debug(
+    frame: ndarray,
+    state: FaceTrackingState,
+    *,
+    action: str | None = None,
+) -> None:
     """Draw sparse landmarks, face bounds, expression bars, and pose values."""
 
     height, width = frame.shape[:2]
@@ -245,6 +250,17 @@ def draw_tracking_debug(frame: ndarray, state: FaceTrackingState) -> None:
         2,
         cv2.LINE_AA,
     )
+    if action is not None:
+        cv2.putText(
+            frame,
+            f"ACTION = {action.replace('_', ' ').upper()}",
+            (16, 120),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.65,
+            (80, 255, 80),
+            2,
+            cv2.LINE_AA,
+        )
 
 
 def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:

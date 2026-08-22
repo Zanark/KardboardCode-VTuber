@@ -101,6 +101,7 @@ def main(argv: list[str] | None = None) -> int:
     started_at = time.monotonic()
     last_sequence: int | None = None
     last_report_at = 0.0
+    latest_action: str | None = None
     window_name = "KardboardCode Camera Preview"
 
     try:
@@ -124,7 +125,10 @@ def main(argv: list[str] | None = None) -> int:
                 tracker.submit(packet.frame, packet.captured_at_ns)
                 tracking_state = tracker.snapshot().state
                 if action_detector is not None:
-                    for event in action_detector.update(tracking_state):
+                    events = action_detector.update(tracking_state)
+                    if events:
+                        latest_action = events[0].action.value
+                    for event in events:
                         print(event.format_log(), flush=True)
             if now - last_report_at >= 2.0:
                 _print_snapshot(camera)
@@ -137,7 +141,11 @@ def main(argv: list[str] | None = None) -> int:
                 if tracker is not None:
                     from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
 
-                    draw_tracking_debug(frame, tracker.snapshot().state)
+                    draw_tracking_debug(
+                        frame,
+                        tracker.snapshot().state,
+                        action=latest_action,
+                    )
                 snapshot = camera.snapshot()
                 latency_ms = (time.monotonic_ns() - packet.captured_at_ns) / 1_000_000
                 label = (

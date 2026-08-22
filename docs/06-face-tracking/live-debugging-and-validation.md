@@ -15,6 +15,12 @@ description: "How the tracking overlay and diagnostics prove real camera behavio
 openness, mouth openness, pitch/yaw/roll, and a black face-mesh inset in the top-right corner
 (`src/kardboard_vtuber/tracking/mediapipe_tracker.py:191-328`).
 
+The latest primary transition is shown directly below the pose values as
+`ACTION = <ACTION NAME>`. The CLI retains the first event from a multi-event update so a meaningful
+transition such as `BLINK` is not immediately replaced by the accompanying `EYES OPEN` state
+(`src/kardboard_vtuber/cli.py:100-155`,
+`src/kardboard_vtuber/tracking/mediapipe_tracker.py:191-262`).
+
 ```mermaid
 flowchart TD
     State["FaceTrackingState"] --> Sparse["Every eighth landmark"]

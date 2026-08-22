@@ -111,6 +111,36 @@ def test_draw_tracking_debug_modifies_frame() -> None:
     assert np.count_nonzero(frame) > 0
 
 
+def test_draw_tracking_debug_displays_latest_action(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from kardboard_vtuber.tracking import mediapipe_tracker
+
+    labels: list[str] = []
+
+    def record_text(
+        _frame: np.ndarray,
+        text: str,
+        *_args: object,
+        **_kwargs: object,
+    ) -> None:
+        labels.append(text)
+
+    monkeypatch.setattr(mediapipe_tracker.cv2, "putText", record_text)
+    mediapipe_tracker.draw_tracking_debug(
+        np.zeros((240, 320, 3), dtype=np.uint8),
+        normalize_face(
+            timestamp_ms=1,
+            landmarks=[FakeLandmark(0.5, 0.5, 0.0)],
+            blendshapes=[],
+            transformation_matrix=np.eye(4),
+        ),
+        action="left_wink",
+    )
+
+    assert "ACTION = LEFT WINK" in labels
+
+
 def test_draw_tracking_debug_adds_black_face_mesh_inset() -> None:
     landmarks = [
         FakeLandmark(0.2 + (index % 20) * 0.03, 0.2 + (index // 20) * 0.02, 0.0)
