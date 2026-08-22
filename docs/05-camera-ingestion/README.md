@@ -37,6 +37,11 @@ python -m kardboard_vtuber `
 
 Press `Q` or Escape to stop.
 
+When `--source` resolves to a local video file, capture is paced at the file's negotiated FPS and
+stops at EOF rather than reconnecting. Use `--input-already-mirrored` for recordings captured from
+an already mirrored preview so anatomical eye mapping remains correct without flipping the pixels
+a second time.
+
 ## Verified result
 
 ```mermaid

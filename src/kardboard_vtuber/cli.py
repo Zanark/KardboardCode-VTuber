@@ -11,7 +11,13 @@ from typing import TYPE_CHECKING
 import cv2
 from numpy import ndarray
 
-from kardboard_vtuber.camera import CameraBackend, CameraConfig, CameraRotation, CameraSource
+from kardboard_vtuber.camera import (
+    CameraBackend,
+    CameraConfig,
+    CameraRotation,
+    CameraSource,
+    CaptureState,
+)
 from kardboard_vtuber.camera.stream import LatestFrameCamera
 
 if TYPE_CHECKING:
@@ -45,6 +51,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Rotate frames left, right, or 180 degrees after capture.",
     )
     parser.add_argument("--mirror", action="store_true", help="Mirror frames horizontally.")
+    parser.add_argument(
+        "--input-already-mirrored",
+        action="store_true",
+        help="Treat an already-mirrored recording as anatomical without flipping it again.",
+    )
     parser.add_argument(
         "--brightness",
         type=_brightness_offset,
@@ -111,14 +122,18 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    source = CameraSource.parse(args.source)
+    recorded_file = isinstance(source.value, str) and Path(source.value).is_file()
     config = CameraConfig(
-        source=CameraSource.parse(args.source),
+        source=source,
         backend=CameraBackend(args.backend),
         requested_width=args.width,
         requested_height=args.height,
         requested_fps=args.fps,
         rotation=CameraRotation(args.rotate),
         mirror=args.mirror,
+        realtime_playback=recorded_file,
+        stop_at_end=recorded_file,
     )
     camera = LatestFrameCamera(config)
     try:
@@ -148,6 +163,8 @@ def main(argv: list[str] | None = None) -> int:
                 )
                 if snapshot.state.value == "failed":
                     return 1
+                if snapshot.state is CaptureState.STOPPED and last_sequence is not None:
+                    break
                 continue
 
             last_sequence = packet.sequence
@@ -262,7 +279,7 @@ def _create_tracker(args: argparse.Namespace) -> MediaPipeFaceTracker:
         MediaPipeTrackerConfig(
             model_path=args.face_model,
             input_width=args.tracking_width,
-            swap_eyes=args.mirror,
+            swap_eyes=args.mirror or args.input_already_mirrored,
             motion_filtering=not args.no_motion_filter,
         )
     )

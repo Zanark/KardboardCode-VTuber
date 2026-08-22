@@ -166,6 +166,7 @@ class LatestFrameCamera:
 
     def _run(self) -> None:
         consecutive_failures = 0
+        next_playback_frame_at: float | None = None
         try:
             while not self._stop_event.is_set():
                 if self._capture is None or not self._capture.isOpened():
@@ -174,12 +175,18 @@ class LatestFrameCamera:
                             break
                         continue
                     consecutive_failures = 0
+                    next_playback_frame_at = time.monotonic()
 
                 capture = self._capture
                 if capture is None:
                     continue
                 ok, frame = capture.read()
                 if not ok or frame is None:
+                    if self._config.stop_at_end:
+                        with self._condition:
+                            self._state = CaptureState.STOPPED
+                            self._condition.notify_all()
+                        break
                     consecutive_failures += 1
                     with self._condition:
                         self._read_failures += 1
@@ -205,6 +212,16 @@ class LatestFrameCamera:
                     self._update_measured_fps(captured_at_ns)
                     self._state = CaptureState.RUNNING
                     self._condition.notify_all()
+                if self._config.realtime_playback and self._negotiated_fps > 0:
+                    frame_interval = 1.0 / self._negotiated_fps
+                    next_playback_frame_at = (
+                        next_playback_frame_at or time.monotonic()
+                    ) + frame_interval
+                    delay = next_playback_frame_at - time.monotonic()
+                    if delay > 0 and self._stop_event.wait(delay):
+                        break
+                    if delay < -frame_interval:
+                        next_playback_frame_at = time.monotonic()
         except Exception as error:
             with self._condition:
                 self._last_error = f"{type(error).__name__}: {error}"

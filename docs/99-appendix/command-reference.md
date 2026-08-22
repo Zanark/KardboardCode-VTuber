@@ -40,6 +40,22 @@ python -m kardboard_vtuber `
   --duration 30
 ```
 
+## Recorded calibration video
+
+Local video files are automatically paced at their recorded FPS and stop cleanly at EOF.
+The guided recording is already upright and mirrored:
+
+```powershell
+python -m kardboard_vtuber `
+  --source "C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\KardboardCode-tracking-calibration-guided-45s.mp4" `
+  --input-already-mirrored `
+  --render-cardboard `
+  --cardboard-renderer textured-3d
+```
+
+Do not add `--rotate left` or `--mirror` for this recording. Use
+`--cardboard-renderer procedural-2d` to compare the preserved original prototype.
+
 ## Quality checks
 
 ```powershell

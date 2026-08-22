@@ -104,6 +104,8 @@ class CameraConfig:
     buffer_size: int = 1
     max_consecutive_failures: int = 30
     reconnect_delay_seconds: float = 1.0
+    realtime_playback: bool = False
+    stop_at_end: bool = False
 
     def __post_init__(self) -> None:
         if self.requested_width is not None and self.requested_width <= 0:
