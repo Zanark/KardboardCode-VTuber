@@ -64,8 +64,9 @@ sequenceDiagram
 | Part | Implementation |
 |---|---|
 | Front panel | Skewed quadrilateral anchored to face center and bounds |
-| Top plane | Lighter cardboard polygon |
-| Side plane | Darker polygon selected from yaw direction |
+| Top plane | Lighter polygon that grows while looking down |
+| Underside | Two dark lower polygons around the neck opening that grow while looking up |
+| Side plane | Darker polygon shown opposite the screen direction of the face turn |
 | Bottom opening | Central V-shaped cutout exposing the real neck |
 | Interior rim | Dark lower-corner and opening surfaces that communicate hollow depth |
 | K/C eyes | Text when open, horizontal strokes when closed |
@@ -83,8 +84,11 @@ letter uses the eye openness for that visible screen side
 
 Filtered bounds and pose control the box, while damped springs add intentional follow-through to
 mouth and side planes (`src/kardboard_vtuber/motion/springs.py:26-85`,
-`src/kardboard_vtuber/renderer/ps1_cardboard.py:39-88`). This preserves the distinction between
-measurement smoothing and animation dynamics.
+`src/kardboard_vtuber/renderer/ps1_cardboard.py:39-88`). Positive/rightward yaw reveals the
+screen-left side; negative/leftward yaw reveals the screen-right side. The guided calibration
+established a pitch baseline near `-10` degrees: more-negative pitch means looking up and reveals
+the underside, while more-positive pitch means looking down and reveals the top. This preserves the
+distinction between measurement smoothing and animation dynamics.
 
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
 Privacy is fail-closed: before the first valid detection the output is black, and after tracking
@@ -93,11 +97,11 @@ frame. The narrow V opening begins below the tracked face bounds and exposes onl
 
 ## Validation
 
-- 45 unit tests pass under Python 3.12 and 3.13.
+- 47 unit tests pass under Python 3.12 and 3.13.
 - Tests cover black output before initial acquisition, bounded overlay region, below-box
   mouth-dependent flap changes, mirrored visible K/C placement, full lower-face opacity, and
-  fail-closed tracking-loss freezing
-  (`tests/test_ps1_cardboard_renderer.py:1-132`).
+  fail-closed tracking-loss freezing, yaw-side perspective, and pitch-driven top/underside
+  visibility (`tests/test_ps1_cardboard_renderer.py:1-166`).
 - The private guided recording produced a 1,254-frame prototype video.
 - Contact-sheet inspection confirmed face coverage, pose following, K/C placement, closed-eye
   strokes, and open mouth flaps.

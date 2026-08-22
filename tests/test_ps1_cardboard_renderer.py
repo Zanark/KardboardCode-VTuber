@@ -17,6 +17,8 @@ def state(
     left_eye: float = 1.0,
     right_eye: float = 1.0,
     mouth: float = 0.0,
+    pitch: float = -10.0,
+    yaw: float = 0.0,
 ) -> FaceTrackingState:
     if not detected:
         return FaceTrackingState.no_face(timestamp_ms)
@@ -31,7 +33,7 @@ def state(
         left_eye_open=left_eye,
         right_eye_open=right_eye,
         mouth_open=mouth,
-        head_pose=HeadPose.identity(),
+        head_pose=HeadPose(0.0, 0.0, 0.0, pitch, yaw, 0.0),
     )
 
 
@@ -127,3 +129,28 @@ def test_renderer_returns_to_black_fail_closed_state_after_reset() -> None:
     renderer.render(frame, state(2000, detected=False))
 
     assert np.count_nonzero(frame) == 0
+
+
+def test_positive_yaw_reveals_depth_on_screen_left() -> None:
+    right_turn = np.zeros((720, 1280, 3), dtype=np.uint8)
+    left_turn = np.zeros((720, 1280, 3), dtype=np.uint8)
+    right_renderer = PS1CardboardRenderer()
+    left_renderer = PS1CardboardRenderer()
+
+    for timestamp_ms in range(0, 400, 33):
+        right_renderer.render(right_turn, state(timestamp_ms, yaw=45.0))
+        left_renderer.render(left_turn, state(timestamp_ms, yaw=-45.0))
+
+    assert np.count_nonzero(right_turn[:, 300:430]) > np.count_nonzero(right_turn[:, 850:980])
+    assert np.count_nonzero(left_turn[:, 850:980]) > np.count_nonzero(left_turn[:, 300:430])
+
+
+def test_pitch_controls_top_and_underside_visibility() -> None:
+    looking_down = np.zeros((720, 1280, 3), dtype=np.uint8)
+    looking_up = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+    PS1CardboardRenderer().render(looking_down, state(1, pitch=20.0))
+    PS1CardboardRenderer().render(looking_up, state(1, pitch=-45.0))
+
+    assert np.count_nonzero(looking_down[80:180]) > np.count_nonzero(looking_up[80:180])
+    assert np.count_nonzero(looking_up[480:580]) > np.count_nonzero(looking_down[480:580])

@@ -46,7 +46,9 @@ pixelating or recoloring the camera outside the avatar
 ## Geometry mapping
 
 Face center and bounds are converted from normalized state into low-resolution coordinates. Yaw
-adds a bounded horizontal skew, while top and side polygons create a coarse pseudo-3D silhouette
+compresses the front and exposes the opposite screen-side depth plane. Pitch relative to the
+calibrated `-10` degree baseline grows either the top plane when looking down or the split underside
+around the neck opening when looking up
 (`src/kardboard_vtuber/tracking/models.py:55-80`,
 `src/kardboard_vtuber/renderer/ps1_cardboard.py:66-136`).
 
@@ -77,8 +79,9 @@ low-resolution mask, and their temporary full-resolution upscales.
 The renderer blacks initial no-face frames, modifies only the tracked head region after acquisition,
 changes only below-box flap pixels with mouth input, keeps visible `K C` ordering, preserves the
 camera only through the neck-safe V-shaped opening, keeps the lower face fully opaque, and freezes
-the last safely composited frame through tracking loss
-(`tests/test_ps1_cardboard_renderer.py:38-124`). Spring behavior is independently covered
+the last safely composited frame through tracking loss. Dedicated perspective tests verify that a
+rightward face turn exposes screen-left depth and that up/down pitch selects underside/top geometry
+(`tests/test_ps1_cardboard_renderer.py:38-166`). Spring behavior is independently covered
 (`tests/test_motion_springs.py:18-72`), and CLI composition occurs before diagnostics
 (`src/kardboard_vtuber/cli.py:153-167`).
 

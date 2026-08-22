@@ -22,6 +22,7 @@ class CardboardRendererConfig:
     box_height_multiplier: float = 1.52
     opacity: float = 1.0
     mirrored: bool = False
+    neutral_pitch_degrees: float = -10.0
 
     def __post_init__(self) -> None:
         if self.pixel_scale < 1:
@@ -30,6 +31,8 @@ class CardboardRendererConfig:
             raise ValueError("box size multipliers must be positive")
         if not 0.0 <= self.opacity <= 1.0:
             raise ValueError("opacity must be between 0 and 1")
+        if not math.isfinite(self.neutral_pitch_degrees):
+            raise ValueError("neutral_pitch_degrees must be finite")
 
 
 class PS1CardboardRenderer:
@@ -64,17 +67,27 @@ class PS1CardboardRenderer:
         box_height = max(28.0, state.face_height * low_height * self._config.box_height_multiplier)
         center_y -= box_height * 0.06
         yaw = max(-1.0, min(1.0, state.head_pose.yaw_degrees / 45.0))
-        skew = yaw * box_width * 0.08
-        left = center_x - box_width / 2
-        right = center_x + box_width / 2
-        top = center_y - box_height / 2
-        bottom = center_y + box_height / 2
+        pitch = max(
+            -1.0,
+            min(
+                1.0,
+                (state.head_pose.pitch_degrees - self._config.neutral_pitch_degrees) / 35.0,
+            ),
+        )
+        look_down = max(0.0, pitch)
+        look_up = max(0.0, -pitch)
+        front_width = box_width * (1.0 - 0.22 * abs(yaw))
+        front_height = box_height * (1.0 - 0.10 * abs(pitch))
+        top_half_width = front_width * (0.5 + 0.04 * pitch)
+        bottom_half_width = front_width * (0.5 - 0.04 * pitch)
+        top = center_y - front_height / 2
+        bottom = center_y + front_height / 2
         front = np.array(
             [
-                [round(left + skew), round(top)],
-                [round(right + skew), round(top)],
-                [round(right - skew), round(bottom)],
-                [round(left - skew), round(bottom)],
+                [round(center_x - top_half_width), round(top)],
+                [round(center_x + top_half_width), round(top)],
+                [round(center_x + bottom_half_width), round(bottom)],
+                [round(center_x - bottom_half_width), round(bottom)],
             ],
             dtype=np.int32,
         )
@@ -84,39 +97,45 @@ class PS1CardboardRenderer:
         cardboard_dark = (58, 103, 139)
         outline = (24, 34, 43)
         full_alpha = round(255 * self._config.opacity)
-        top_depth = max(5, round(box_height * 0.13))
-        depth_x = round(-yaw * box_width * 0.10)
-        top_plane = np.array(
-            [
-                front[0],
-                front[1],
-                [front[1][0] + depth_x, front[1][1] - top_depth],
-                [front[0][0] + depth_x, front[0][1] - top_depth],
-            ],
-            dtype=np.int32,
+        top_depth = round(box_height * (0.025 * (1.0 - look_up) + 0.16 * look_down))
+        bottom_depth = round(box_height * 0.16 * look_up)
+        side_width = round(box_width * 0.22 * side_open)
+        depth_x = (
+            -round(math.copysign(side_width, yaw))
+            if side_open > 0.08 and abs(yaw) > 0.01
+            else 0
         )
-        cv2.fillConvexPoly(overlay, top_plane, cardboard_light)
-        cv2.fillConvexPoly(alpha, top_plane, full_alpha)
-        cv2.polylines(overlay, [top_plane], True, outline, 2, cv2.LINE_8)
-
-        side_width = max(3, round(box_width * (0.02 + 0.20 * side_open)))
-        if side_open > 0.08 and yaw >= 0:
-            side = np.array(
+        if top_depth > 1:
+            top_plane = np.array(
                 [
+                    front[0],
                     front[1],
-                    [front[1][0] + side_width, front[1][1] - top_depth // 2],
-                    [front[2][0] + side_width, front[2][1] - top_depth // 5],
-                    front[2],
+                    [front[1][0] + depth_x, front[1][1] - top_depth],
+                    [front[0][0] + depth_x, front[0][1] - top_depth],
                 ],
                 dtype=np.int32,
             )
-        elif side_open > 0.08:
+            cv2.fillConvexPoly(overlay, top_plane, cardboard_light)
+            cv2.fillConvexPoly(alpha, top_plane, full_alpha)
+            cv2.polylines(overlay, [top_plane], True, outline, 2, cv2.LINE_8)
+
+        if side_open > 0.08 and yaw > 0:
             side = np.array(
                 [
-                    [front[0][0] - side_width, front[0][1] - top_depth // 2],
+                    [front[0][0] + depth_x, front[0][1] - top_depth],
                     front[0],
                     front[3],
-                    [front[3][0] - side_width, front[3][1] - top_depth // 5],
+                    [front[3][0] + depth_x, front[3][1] + bottom_depth],
+                ],
+                dtype=np.int32,
+            )
+        elif side_open > 0.08 and yaw < 0:
+            side = np.array(
+                [
+                    front[1],
+                    [front[1][0] + depth_x, front[1][1] - top_depth],
+                    [front[2][0] + depth_x, front[2][1] + bottom_depth],
+                    front[2],
                 ],
                 dtype=np.int32,
             )
@@ -126,6 +145,41 @@ class PS1CardboardRenderer:
             cv2.fillConvexPoly(overlay, side, cardboard_dark)
             cv2.fillConvexPoly(alpha, side, full_alpha)
             cv2.polylines(overlay, [side], True, outline, 2, cv2.LINE_8)
+
+        if bottom_depth > 1:
+            center_bottom_x = round(float(front[2:4, 0].mean()))
+            bottom_y = round(float(front[2:4, 1].mean()))
+            neck_half_width = round(box_width * 0.16)
+            underside_planes = (
+                np.array(
+                    [
+                        front[3],
+                        [center_bottom_x - neck_half_width, bottom_y],
+                        [
+                            center_bottom_x - neck_half_width + depth_x,
+                            bottom_y + bottom_depth,
+                        ],
+                        [front[3][0] + depth_x, front[3][1] + bottom_depth],
+                    ],
+                    dtype=np.int32,
+                ),
+                np.array(
+                    [
+                        [center_bottom_x + neck_half_width, bottom_y],
+                        front[2],
+                        [front[2][0] + depth_x, front[2][1] + bottom_depth],
+                        [
+                            center_bottom_x + neck_half_width + depth_x,
+                            bottom_y + bottom_depth,
+                        ],
+                    ],
+                    dtype=np.int32,
+                ),
+            )
+            for underside in underside_planes:
+                cv2.fillConvexPoly(overlay, underside, cardboard_dark)
+                cv2.fillConvexPoly(alpha, underside, full_alpha)
+                cv2.polylines(overlay, [underside], True, outline, 2, cv2.LINE_8)
 
         cv2.fillConvexPoly(overlay, front, cardboard)
         cv2.fillConvexPoly(alpha, front, full_alpha)
@@ -148,6 +202,8 @@ class PS1CardboardRenderer:
             box_height,
             full_alpha,
             mouth_open,
+            bottom_depth,
+            depth_x,
         )
 
         overlay_full = cv2.resize(
@@ -328,11 +384,13 @@ class PS1CardboardRenderer:
         box_height: float,
         full_alpha: int,
         mouth_open: float,
+        bottom_depth: int,
+        depth_x: int,
     ) -> None:
-        center_x = float(front[:, 0].mean())
-        left = float(front[:, 0].min())
-        right = float(front[:, 0].max())
-        hinge_y = round(float(front[:, 1].max()))
+        center_x = float(front[2:4, 0].mean()) + depth_x
+        left = float(front[3][0]) + depth_x
+        right = float(front[2][0]) + depth_x
+        hinge_y = round(float(front[2:4, 1].mean())) + bottom_depth
         neck_half_width = box_width * 0.16
         openness = max(0.0, min(1.0, mouth_open))
         drop = box_height * (0.025 + 0.16 * openness)
