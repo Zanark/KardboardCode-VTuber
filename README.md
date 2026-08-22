@@ -2,6 +2,14 @@
 
 A lightweight Python VTuber tool that places a low-poly, PS1-style KardboardCode box over the user's head in a real camera feed.
 
+<p align="center">
+  <img src="./assets/PNGTuberV1/reference/state-sheet.png" alt="KardboardCode PNGTuber V1 state sheet" width="760">
+</p>
+<p align="center"><em>
+The preserved first-generation KardboardCode avatar: independent idle/talking and
+open-eye/blinking states.
+</em></p>
+
 ## Current milestone
 
 The first implemented subsystem is low-latency camera ingestion:

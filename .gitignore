@@ -10,6 +10,7 @@ htmlcov/
 
 # Virtual environments
 .venv/
+.venv*/
 venv/
 env/
 
@@ -40,4 +41,3 @@ models/*
 .env.*
 !.env.example
 config.local.toml
-

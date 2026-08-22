@@ -2,6 +2,16 @@
 
 This directory is the preserved first-generation KardboardCode avatar package used by PNGTuber Plus. It includes the original editable layer PNGs, the original `KCAvatar.save`, reference renders, and a machine-readable behavior manifest.
 
+## Visual overview
+
+<p align="center">
+  <img src="./reference/state-sheet.png" alt="KardboardCode PNGTuber V1 four-state sheet" width="800">
+</p>
+<p align="center"><em>
+Figure 1 — The complete V1 behavior matrix. The columns separate idle and talking flap artwork;
+the rows separate open and blinking eyes. Speaking and blinking are independent state axes.
+</em></p>
+
 ## Character appearance
 
 KardboardCode is a seated character with:
@@ -14,6 +24,123 @@ KardboardCode is a seated character with:
 - Cardboard flaps around the bottom of the head.
 
 The character faces slightly toward screen-left while the headphones and right side of the box remain visible. The laptop occupies the lower-left foreground.
+
+## Source-layer gallery
+
+Every source layer below is a transparent `1920 x 1080` canvas. Large empty regions are intentional:
+all layers share the same origin and align when composited at `(0, 0)`.
+
+### Permanent base layer
+
+<p align="center">
+  <img src="./Full%20Body.png" alt="Full Body base layer" width="760">
+</p>
+<p align="center"><em>
+Figure 2 — <code>Full Body.png</code>. The permanent visual foundation: cardboard head, headphones,
+hoodie, arms, hands, laptop, and seated silhouette. Expression-specific eyes and moving flaps are
+not baked into this layer.
+</em></p>
+
+### Eye-expression layers
+
+<p align="center">
+  <img src="./Eyes%20Open.png" alt="Eyes Open KC lettering layer" width="680">
+</p>
+<p align="center"><em>
+Figure 3 — <code>Eyes Open.png</code>. The normal expression layer. The hand-drawn <code>K</code>
+and <code>C</code> function as the left and right eyes and sit above the flap layers.
+</em></p>
+
+<p align="center">
+  <img src="./Eyes%20Closed.png" alt="Eyes Closed blink layer" width="680">
+</p>
+<p align="center"><em>
+Figure 4 — <code>Eyes Closed.png</code>. The blink replacement for the KC lettering. It is mutually
+exclusive with the open-eye layer.
+</em></p>
+
+### Idle front-flap layers
+
+<p align="center">
+  <img src="./FrontFlap1-2.png" alt="Screen-left idle front flap" width="680">
+</p>
+<p align="center"><em>
+Figure 5 — <code>FrontFlap1-2.png</code>. Screen-left front flap used while the microphone-driven
+talking state is inactive.
+</em></p>
+
+<p align="center">
+  <img src="./FrontFlap2-2.png" alt="Screen-right idle front flap" width="680">
+</p>
+<p align="center"><em>
+Figure 6 — <code>FrontFlap2-2.png</code>. Screen-right idle partner. Together, Figures 5 and 6 form
+the closed/resting front of the cardboard head.
+</em></p>
+
+### Talking front-flap layers
+
+<p align="center">
+  <img src="./FrontFlap1.png" alt="Screen-left talking front flap" width="680">
+</p>
+<p align="center"><em>
+Figure 7 — <code>FrontFlap1.png</code>. Screen-left talking variant. Its original PNGTuber Plus
+motion uses a larger vertical amplitude than the opposite flap to preserve asymmetry.
+</em></p>
+
+<p align="center">
+  <img src="./FrontFlap2.png" alt="Screen-right talking front flap" width="680">
+</p>
+<p align="center"><em>
+Figure 8 — <code>FrontFlap2.png</code>. Screen-right talking variant. It moves with the same
+frequency but a smaller amplitude than Figure 7.
+</em></p>
+
+### Secondary-motion layer
+
+<p align="center">
+  <img src="./RightFlap1.png" alt="Right side secondary-motion flap" width="680">
+</p>
+<p align="center"><em>
+Figure 9 — <code>RightFlap1.png</code>. Always-visible side flap with constrained rotation and
+subtle independent physics. It supplies secondary motion even when the avatar is not speaking.
+</em></p>
+
+## Reconstructed-state gallery
+
+These images are generated documentation composites. They show which source layers are visible
+together, but they do not reproduce PNGTuber Plus timing, microphone thresholds, or live physics.
+
+<p align="center">
+  <img src="./reference/idle-open.png" alt="Idle open-eye reconstructed state" width="760">
+</p>
+<p align="center"><em>
+Figure 10 — Idle with open eyes: permanent body and side flap, idle front flaps, and the KC
+open-eye layer.
+</em></p>
+
+<p align="center">
+  <img src="./reference/talking-open.png" alt="Talking open-eye reconstructed state" width="760">
+</p>
+<p align="center"><em>
+Figure 11 — Talking with open eyes: the idle front flaps are replaced by their talking variants
+while the KC eye layer remains visible.
+</em></p>
+
+<p align="center">
+  <img src="./reference/idle-blink.png" alt="Idle blinking reconstructed state" width="760">
+</p>
+<p align="center"><em>
+Figure 12 — Idle blink: the closed-eye curves replace the KC lettering while the resting front
+flaps remain active.
+</em></p>
+
+<p align="center">
+  <img src="./reference/talking-blink.png" alt="Talking blinking reconstructed state" width="760">
+</p>
+<p align="center"><em>
+Figure 13 — Talking blink: both independent state axes are active at once—talking front flaps and
+closed eyes.
+</em></p>
 
 ## Directory contents
 

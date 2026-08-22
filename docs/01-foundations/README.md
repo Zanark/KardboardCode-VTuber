@@ -17,6 +17,15 @@ The application will:
 7. Composite it over the original high-resolution camera.
 8. Present an OBS-capturable output.
 
+<p align="center">
+  <img src="../../assets/PNGTuberV1/reference/state-sheet.png" alt="KardboardCode PNGTuber V1 state sheet" width="760">
+</p>
+<p align="center"><em>
+Figure 1 — The preserved source avatar and its independent talking/blinking state combinations.
+See the <a href="./visual-identity-and-source-avatar.md">visual identity chapter</a> for the full
+image-guided explanation.
+</em></p>
+
 ```mermaid
 mindmap
   root((KardboardCode VTuber))
@@ -82,6 +91,11 @@ calibration, OBS-specific output enhancements.
 - Preserved avatar behavior: `assets/PNGTuberV1/model-manifest.json:1`
 - Working camera package: `src/kardboard_vtuber/camera/`
 - CLI behavior: `src/kardboard_vtuber/cli.py:15-150`
+
+## Related foundation chapters
+
+- [Product requirements and constraints](product-requirements.md)
+- [Visual identity and source avatar](visual-identity-and-source-avatar.md)
 
 ---
 

@@ -9,6 +9,14 @@ This documentation is written to be read in sequence, used as an interview study
 as the technical backbone for a future development video. It explains not only **what** the code
 does, but also **why** each data structure, algorithm, boundary, and tradeoff exists.
 
+<p align="center">
+  <img src="../assets/PNGTuberV1/reference/state-sheet.png" alt="KardboardCode avatar state sheet" width="800">
+</p>
+<p align="center"><em>
+The preserved PNGTuber V1 model: idle/talking and open/blinking states form two independent axes.
+The new application carries this visual identity into a camera-tracked PS1-style cardboard head.
+</em></p>
+
 ## Book status
 
 | Part | Status | Evidence |
@@ -37,7 +45,7 @@ does, but also **why** each data structure, algorithm, boundary, and tradeoff ex
 | # | Chapter | Question answered |
 |---:|---|---|
 | 00 | [Onboarding](00-onboarding/README.md) | How should a newcomer or principal engineer approach this system? |
-| 01 | [Foundations](01-foundations/README.md) | What are we building, for whom, and under which constraints? |
+| 01 | [Foundations](01-foundations/README.md) | What are we building, what does the avatar look like, and under which constraints? |
 | 02 | [Architecture](02-architecture/README.md) | How do capture, tracking, rendering, and OBS fit together? |
 | 03 | [Algorithms and data structures](03-algorithms-and-data-structures/README.md) | Which algorithms preserve low latency and correctness? |
 | 04 | [Design principles](04-design-principles/README.md) | Which engineering principles shaped the implementation? |
