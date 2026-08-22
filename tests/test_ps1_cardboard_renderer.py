@@ -19,6 +19,7 @@ def state(
     mouth: float = 0.0,
     pitch: float = -10.0,
     yaw: float = 0.0,
+    roll: float = 0.0,
 ) -> FaceTrackingState:
     if not detected:
         return FaceTrackingState.no_face(timestamp_ms)
@@ -33,7 +34,7 @@ def state(
         left_eye_open=left_eye,
         right_eye_open=right_eye,
         mouth_open=mouth,
-        head_pose=HeadPose(0.0, 0.0, 0.0, pitch, yaw, 0.0),
+        head_pose=HeadPose(0.0, 0.0, 0.0, pitch, yaw, roll),
     )
 
 
@@ -70,13 +71,13 @@ def test_mouth_openness_changes_front_flap_pixels() -> None:
     assert not np.array_equal(closed[470:], opened[470:])
 
 
-def test_screen_left_k_follows_screen_left_eye_in_mirrored_preview() -> None:
+def test_screen_left_k_follows_anatomical_left_eye_in_mirrored_preview() -> None:
     renderer = PS1CardboardRenderer(CardboardRendererConfig(mirrored=True))
     open_frame = np.zeros((720, 1280, 3), dtype=np.uint8)
     wink_frame = np.zeros((720, 1280, 3), dtype=np.uint8)
 
     renderer.render(open_frame, state(1))
-    renderer.render(wink_frame, state(34, right_eye=0.0))
+    renderer.render(wink_frame, state(34, left_eye=0.56, right_eye=0.96))
 
     difference = cv_difference = np.abs(
         open_frame.astype(np.int16) - wink_frame.astype(np.int16)
@@ -84,6 +85,18 @@ def test_screen_left_k_follows_screen_left_eye_in_mirrored_preview() -> None:
     left_half = cv_difference[:, :640].sum()
     right_half = difference[:, 640:].sum()
     assert left_half > right_half
+
+
+def test_screen_right_c_follows_anatomical_right_eye_in_mirrored_preview() -> None:
+    renderer = PS1CardboardRenderer(CardboardRendererConfig(mirrored=True))
+    open_frame = np.zeros((720, 1280, 3), dtype=np.uint8)
+    wink_frame = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+    renderer.render(open_frame, state(1))
+    renderer.render(wink_frame, state(34, left_eye=0.98, right_eye=0.61))
+
+    difference = np.abs(open_frame.astype(np.int16) - wink_frame.astype(np.int16))
+    assert difference[:, 640:].sum() > difference[:, :640].sum()
 
 
 def test_renderer_leaves_center_neck_opening_visible() -> None:
@@ -163,3 +176,18 @@ def test_downward_pitch_keeps_crown_inside_shell_silhouette() -> None:
     renderer.render(frame, state(1, pitch=20.0))
 
     assert np.count_nonzero(frame[60:150, 500:780]) > 0
+
+
+def test_roll_rotates_complete_shell_around_face_center() -> None:
+    tilted_left = np.zeros((720, 1280, 3), dtype=np.uint8)
+    tilted_right = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+    PS1CardboardRenderer().render(tilted_left, state(1, roll=35.0))
+    PS1CardboardRenderer().render(tilted_right, state(1, roll=-35.0))
+
+    assert np.count_nonzero(tilted_left[40:180, 640:960]) > np.count_nonzero(
+        tilted_left[40:180, 320:640]
+    )
+    assert np.count_nonzero(tilted_right[40:180, 320:640]) > np.count_nonzero(
+        tilted_right[40:180, 640:960]
+    )

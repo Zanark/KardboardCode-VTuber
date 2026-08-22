@@ -69,7 +69,7 @@ sequenceDiagram
 | Side plane | Darker polygon shown opposite the screen direction of the face turn |
 | Bottom opening | Central V-shaped cutout exposing the real neck |
 | Interior rim | Dark lower-corner and opening surfaces that communicate hollow depth |
-| K/C eyes | Text when open, horizontal strokes when closed |
+| K/C eyes | Text when open, upward happy-eye arcs when closed or winking |
 | Lower flaps | Two spring-driven polygons hinged below the box and controlled by mouth openness |
 | Surface | Deterministic light/dark fiber pattern over fully opaque cardboard |
 | Pixel style | Overlay rendered at one-quarter linear resolution |
@@ -80,7 +80,9 @@ vertical head clearance (`1.75x` tracked face height with an upward center bias)
 inside the opaque silhouette, especially while looking down.
 
 The visible logo order is always `K C` from screen-left to screen-right. In mirrored preview, each
-letter uses the eye openness for that visible screen side
+letter retains its anatomical meaning: `K` follows the user's left eye and `C` follows the user's
+right eye. Closure uses the calibrated wink rule (`<= 0.70` with an open opposite eye and at least
+`0.15` asymmetry), plus the bilateral `<= 0.35` closed threshold
 (`src/kardboard_vtuber/renderer/ps1_cardboard.py:284-339`,
 `src/kardboard_vtuber/tracking/models.py:103-137`).
 
@@ -94,6 +96,10 @@ established a pitch baseline near `-10` degrees: more-negative pitch means looki
 the underside, while more-positive pitch means looking down and reveals the top. This preserves the
 distinction between measurement smoothing and animation dynamics.
 
+After all low-resolution planes, eyes, openings, and flaps are drawn, the complete color and alpha
+canvases rotate together around the tracked center using filtered roll. Positive roll produces the
+same counterclockwise screen tilt shown by the face mesh; roll is bounded to `+/-60` degrees.
+
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
 Privacy is fail-closed: before the first valid detection the output is black, and after tracking
 loss the renderer freezes the last safely composited frame instead of emitting a new raw camera
@@ -101,11 +107,12 @@ frame. The narrow V opening begins below the tracked face bounds and exposes onl
 
 ## Validation
 
-- 47 unit tests pass under Python 3.12 and 3.13.
+- 50 unit tests pass under Python 3.12 and 3.13.
 - Tests cover black output before initial acquisition, bounded overlay region, below-box
   mouth-dependent flap changes, mirrored visible K/C placement, full lower-face opacity, and
-  fail-closed tracking-loss freezing, crown/hair coverage, yaw-side perspective, and pitch-driven top/underside
-  visibility (`tests/test_ps1_cardboard_renderer.py:1-166`).
+  fail-closed tracking-loss freezing, crown/hair coverage, calibrated anatomical winks, roll,
+  yaw-side perspective, and pitch-driven top/underside visibility
+  (`tests/test_ps1_cardboard_renderer.py:1-215`).
 - The private guided recording produced a 1,254-frame prototype video.
 - Contact-sheet inspection confirmed face coverage, pose following, K/C placement, closed-eye
   strokes, and open mouth flaps.

@@ -205,6 +205,25 @@ class PS1CardboardRenderer:
             bottom_depth,
             depth_x,
         )
+        roll = max(-60.0, min(60.0, state.head_pose.roll_degrees))
+        if abs(roll) > 0.5:
+            rotation = cv2.getRotationMatrix2D((center_x, center_y), roll, 1.0)
+            overlay = cv2.warpAffine(
+                overlay,
+                rotation,
+                (low_width, low_height),
+                flags=cv2.INTER_NEAREST,
+                borderMode=cv2.BORDER_CONSTANT,
+                borderValue=(0, 0, 0),
+            )
+            alpha = cv2.warpAffine(
+                alpha,
+                rotation,
+                (low_width, low_height),
+                flags=cv2.INTER_NEAREST,
+                borderMode=cv2.BORDER_CONSTANT,
+                borderValue=0,
+            )
 
         overlay_full = cv2.resize(
             overlay,
@@ -320,26 +339,36 @@ class PS1CardboardRenderer:
         top = float(front[:, 1].min())
         eye_y = round(top + box_height * 0.41)
         screen_eyes = (
-            (("K", state.right_eye_open), ("C", state.left_eye_open))
-            if self._config.mirrored
-            else (("K", state.left_eye_open), ("C", state.right_eye_open))
+            ("K", state.left_eye_open, state.right_eye_open),
+            ("C", state.right_eye_open, state.left_eye_open),
         )
-        for direction, (letter, openness) in zip((-1, 1), screen_eyes, strict=True):
+        for direction, (letter, openness, other_openness) in zip(
+            (-1, 1),
+            screen_eyes,
+            strict=True,
+        ):
             eye_x = round(center_x + direction * box_width * 0.22)
-            if openness <= 0.45:
+            if self._eye_closed(openness, other_openness):
                 half_width = max(4, round(box_width * 0.08))
-                cv2.line(
+                arc_height = max(2, round(box_height * 0.025))
+                cv2.ellipse(
                     overlay,
-                    (eye_x - half_width, eye_y),
-                    (eye_x + half_width, eye_y),
+                    (eye_x, eye_y + arc_height),
+                    (half_width, arc_height * 2),
+                    0,
+                    180,
+                    360,
                     (18, 26, 33),
                     2,
                     cv2.LINE_8,
                 )
-                cv2.line(
+                cv2.ellipse(
                     alpha,
-                    (eye_x - half_width, eye_y),
-                    (eye_x + half_width, eye_y),
+                    (eye_x, eye_y + arc_height),
+                    (half_width, arc_height * 2),
+                    0,
+                    180,
+                    360,
                     full_alpha,
                     2,
                     cv2.LINE_8,
@@ -374,6 +403,14 @@ class PS1CardboardRenderer:
                 thickness,
                 cv2.LINE_8,
             )
+
+    @staticmethod
+    def _eye_closed(openness: float, other_openness: float) -> bool:
+        if openness <= 0.35:
+            return True
+        return openness <= 0.70 and other_openness >= 0.65 and (
+            other_openness - openness >= 0.15
+        )
 
     @staticmethod
     def _draw_flaps(

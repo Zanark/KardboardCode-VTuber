@@ -64,6 +64,7 @@ sequenceDiagram
     participant Camera
     State->>Geometry: center, bounds, yaw, eyes, mouth
     Geometry->>LowCanvas: polygons, text, lines, alpha
+    LowCanvas->>LowCanvas: rotate color + alpha by filtered roll
     LowCanvas->>Upscaler: color + alpha
     Upscaler->>Camera: full-size nearest-neighbor overlay
     Camera->>Camera: alpha composite in place
@@ -82,7 +83,8 @@ changes only below-box flap pixels with mouth input, keeps visible `K C` orderin
 camera only through the neck-safe V-shaped opening, keeps the lower face fully opaque, and freezes
 the last safely composited frame through tracking loss. Dedicated perspective tests verify that a
 rightward face turn exposes screen-left depth and that up/down pitch selects underside/top geometry
-(`tests/test_ps1_cardboard_renderer.py:38-166`). Spring behavior is independently covered
+while wink tests verify K/left and C/right anatomical closure and roll tests verify whole-shell
+rotation (`tests/test_ps1_cardboard_renderer.py:38-215`). Spring behavior is independently covered
 (`tests/test_motion_springs.py:18-72`), and CLI composition occurs before diagnostics
 (`src/kardboard_vtuber/cli.py:153-167`).
 
