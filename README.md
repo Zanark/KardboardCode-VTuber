@@ -49,7 +49,7 @@ Press `Q` or `Escape` to exit.
 
 ## Documentation
 
-- [Camera pipeline](docs/camera-pipeline.md) - architecture, data structures, threading, algorithms, diagnostics, security, and failure recovery.
+- [Engineering book](docs/README.md) - chaptered, diagram-first documentation covering onboarding, architecture, every current algorithm/data structure, design principles, camera operations, testing, roadmap, glossary, and source map.
 - [PNGTuber V1 model](assets/PNGTuberV1/README.md) - preserved original avatar layers and behavior.
 
 ## Assets
