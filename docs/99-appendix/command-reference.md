@@ -116,6 +116,33 @@ forearm pixels over the rendered avatar. This provides convincing foreground int
 hand is in front, but a monocular RGB camera cannot prove depth; a hand physically behind the
 avatar may also be treated as foreground.
 
+## Held-object depth occlusion
+
+For hands plus arbitrary held items, install the occlusion extra and download the verified
+49.6 MB Depth Anything V2 Small model:
+
+```powershell
+python -m pip install -e ".[occlusion]"
+python scripts\download_depth_occlusion_model.py
+```
+
+Run with depth occlusion instead of hand-only occlusion:
+
+```powershell
+python -m kardboard_vtuber `
+  --source "http://YOUR_USERNAME:YOUR_PASSWORD@PHONE_IP:8080/video" `
+  --backend auto `
+  --rotate left `
+  --mirror `
+  --render-cardboard `
+  --depth-occlusion
+```
+
+Depth inference runs asynchronously through DirectML at a default portrait input of 112x196.
+Detected hands seed connected pixels that are measurably nearer than the protected face/head depth.
+If depth separation is missing, stale, or ambiguous, compositing falls back to the privacy-safe
+hand-only mask rather than revealing the face.
+
 ## Quality checks
 
 ```powershell

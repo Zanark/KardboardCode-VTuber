@@ -21,6 +21,7 @@ from kardboard_vtuber.camera import (
 from kardboard_vtuber.camera.stream import LatestFrameCamera
 
 if TYPE_CHECKING:
+    from kardboard_vtuber.tracking.depth_occlusion import AsyncDepthEstimator
     from kardboard_vtuber.tracking.events import FaceActionDetector
     from kardboard_vtuber.tracking.hand_occlusion import MediaPipeHandOccluder
     from kardboard_vtuber.tracking.mediapipe_tracker import MediaPipeFaceTracker
@@ -132,6 +133,23 @@ def build_parser() -> argparse.ArgumentParser:
         help="Maximum frame width submitted to hand tracking (default: 320).",
     )
     parser.add_argument(
+        "--depth-occlusion",
+        action="store_true",
+        help="Extend hand occlusion to nearer held objects using asynchronous monocular depth.",
+    )
+    parser.add_argument(
+        "--depth-model",
+        type=Path,
+        default=Path("models/depth_anything_v2_small_fp16.onnx"),
+        help="Path to the Depth Anything V2 Small FP16 ONNX model.",
+    )
+    parser.add_argument(
+        "--depth-input-size",
+        type=_depth_input_size,
+        default=196,
+        help="Depth model long-side input, a multiple of 14 (default: 196).",
+    )
+    parser.add_argument(
         "--preview-height",
         type=_preview_height,
         help=(
@@ -154,8 +172,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    if args.hand_occlusion and not args.render_cardboard:
-        print("--hand-occlusion requires --render-cardboard", file=sys.stderr)
+    if (args.hand_occlusion or args.depth_occlusion) and not args.render_cardboard:
+        print("occlusion requires --render-cardboard", file=sys.stderr)
         return 2
     source = CameraSource.parse(args.source)
     recorded_file = isinstance(source.value, str) and Path(source.value).is_file()
@@ -177,7 +195,12 @@ def main(argv: list[str] | None = None) -> int:
             if args.track_face or args.render_cardboard or args.debug_face_preview
             else None
         )
-        hand_occluder = _create_hand_occluder(args) if args.hand_occlusion else None
+        hand_occluder = (
+            _create_hand_occluder(args)
+            if args.hand_occlusion or args.depth_occlusion
+            else None
+        )
+        depth_estimator = _create_depth_estimator(args) if args.depth_occlusion else None
         action_detector = _create_action_detector(args) if tracker is not None else None
         renderer = _create_renderer(args) if args.render_cardboard else None
     except (OSError, RuntimeError, ValueError) as error:
@@ -212,6 +235,9 @@ def main(argv: list[str] | None = None) -> int:
             if hand_occluder is not None:
                 hand_occluder.submit(camera_frame, packet.captured_at_ns)
                 hand_state = hand_occluder.snapshot()
+            if depth_estimator is not None:
+                depth_estimator.submit(camera_frame, packet.captured_at_ns)
+                depth_state = depth_estimator.snapshot()
             if tracker is not None:
                 tracker.submit(camera_frame, packet.captured_at_ns)
                 tracking_state = tracker.snapshot().raw_state
@@ -225,6 +251,11 @@ def main(argv: list[str] | None = None) -> int:
                 _print_snapshot(camera)
                 if tracker is not None:
                     _print_tracking_snapshot(tracker)
+                if depth_estimator is not None and depth_state.last_error is not None:
+                    print(
+                        f"depth_occlusion_error={depth_state.last_error}",
+                        file=sys.stderr,
+                    )
                 last_report_at = now
 
             if not args.headless:
@@ -240,7 +271,19 @@ def main(argv: list[str] | None = None) -> int:
                     tracking_state = tracker.snapshot().state
                     if renderer is not None:
                         renderer.render(frame, tracking_state)
-                        if hand_occluder is not None and foreground_source is not None:
+                        if depth_estimator is not None and foreground_source is not None:
+                            from kardboard_vtuber.tracking.depth_occlusion import (
+                                composite_depth_foreground,
+                            )
+
+                            composite_depth_foreground(
+                                frame,
+                                foreground_source,
+                                depth_state,
+                                hand_state,
+                                tracking_state,
+                            )
+                        elif hand_occluder is not None and foreground_source is not None:
                             from kardboard_vtuber.tracking.hand_occlusion import (
                                 composite_hand_foreground,
                             )
@@ -291,6 +334,8 @@ def main(argv: list[str] | None = None) -> int:
     finally:
         if renderer is not None:
             renderer.close()
+        if depth_estimator is not None:
+            depth_estimator.close()
         if hand_occluder is not None:
             hand_occluder.close()
         if tracker is not None:
@@ -311,6 +356,15 @@ def _preview_height(raw: str) -> int:
     value = int(raw)
     if value < 240:
         raise argparse.ArgumentTypeError("preview height must be at least 240")
+    return value
+
+
+def _depth_input_size(raw: str) -> int:
+    value = int(raw)
+    if value < 98 or value % 14:
+        raise argparse.ArgumentTypeError(
+            "depth input size must be a multiple of 14 and at least 98"
+        )
     return value
 
 
@@ -461,6 +515,22 @@ def _create_hand_occluder(args: argparse.Namespace) -> MediaPipeHandOccluder:
             input_width=args.hand_tracking_width,
         )
     )
+
+
+def _create_depth_estimator(args: argparse.Namespace) -> AsyncDepthEstimator:
+    from kardboard_vtuber.tracking.depth_occlusion import (
+        AsyncDepthEstimator,
+        DepthOcclusionConfig,
+    )
+
+    estimator = AsyncDepthEstimator(
+        DepthOcclusionConfig(
+            model_path=args.depth_model,
+            input_long_side=args.depth_input_size,
+        )
+    )
+    print(f"depth_occlusion_provider={estimator.provider}", flush=True)
+    return estimator
 
 
 def _create_renderer(args: argparse.Namespace) -> object:
