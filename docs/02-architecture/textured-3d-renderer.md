@@ -38,8 +38,9 @@ flowchart LR
 - a front shell with a protected V-shaped neck opening;
 - left, right, top, and rear depth surfaces;
 - a matching rear opening so the bottom remains hollow;
-- a faceted dark privacy volume positioned between the front and rear faces, hiding the real head
-  while allowing the real neck to emerge below it during upward pitch;
+- a faceted dark privacy volume positioned between the front and rear faces, with an elongated
+  lower silhouette and protected rear-panel channel that visually connect it to the real neck
+  during upward pitch without exposing hair, chin, or beard;
 - front and side cardboard flaps;
 - layered dark/light edge bars that suggest corrugated cardboard;
 - faceted earcups, cushions, and a segmented headphone band;

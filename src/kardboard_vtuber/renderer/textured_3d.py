@@ -363,21 +363,21 @@ def _build_character_mesh() -> ndarray:
         True,
     )
     builder.quad(
-        ((0.5, -0.38, -0.5), (-0.5, -0.38, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)),
+        ((0.5, -0.12, -0.5), (-0.5, -0.12, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)),
         (0.0, 0.0, -1.0),
         generic_uv,
         dark_cardboard,
         True,
     )
     builder.quad(
-        ((0.5, -0.5, -0.5), (0.18, -0.5, -0.5), (0.0, -0.38, -0.5), (0.5, -0.38, -0.5)),
+        ((-0.5, -0.5, -0.5), (-0.16, -0.5, -0.5), (-0.12, -0.12, -0.5), (-0.5, -0.12, -0.5)),
         (0.0, 0.0, -1.0),
         generic_uv,
         dark_cardboard,
         True,
     )
     builder.quad(
-        ((0.0, -0.38, -0.5), (-0.18, -0.5, -0.5), (-0.5, -0.5, -0.5), (-0.5, -0.38, -0.5)),
+        ((0.12, -0.12, -0.5), (0.16, -0.5, -0.5), (0.5, -0.5, -0.5), (0.5, -0.12, -0.5)),
         (0.0, 0.0, -1.0),
         generic_uv,
         dark_cardboard,
@@ -456,8 +456,8 @@ def _add_privacy_head_volume(
     builder: _MeshBuilder,
     color: tuple[float, float, float],
 ) -> None:
-    center = np.asarray((0.0, 0.03, 0.0), dtype=np.float64)
-    radii = np.asarray((0.41, 0.44, 0.30), dtype=np.float64)
+    center = np.asarray((0.0, -0.075, 0.0), dtype=np.float64)
+    radii = np.asarray((0.41, 0.545, 0.30), dtype=np.float64)
     latitude_segments = 8
     longitude_segments = 12
     uvs = ((0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0))

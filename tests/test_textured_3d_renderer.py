@@ -28,7 +28,7 @@ def test_character_mesh_contains_box_flaps_and_headphone_geometry() -> None:
         & (np.isclose(vertices[:, 10], 0.09))
     ]
     assert head_volume_vertices.shape[0] > 500
-    assert np.min(head_volume_vertices[:, 1]) <= -0.40
+    assert np.min(head_volume_vertices[:, 1]) <= -0.62
     assert np.max(head_volume_vertices[:, 1]) >= 0.46
     assert np.min(head_volume_vertices[:, 2]) <= -0.29
     assert np.max(head_volume_vertices[:, 2]) >= 0.29
