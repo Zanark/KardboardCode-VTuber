@@ -83,7 +83,9 @@ camera only through the neck-safe V-shaped opening, keeps the lower face fully o
 the last safely composited frame through tracking loss. Dedicated perspective tests verify that a
 rightward face turn exposes screen-left depth and that up/down pitch selects underside/top geometry
 while wink tests verify K/left and C/right anatomical closure and roll tests verify whole-shell
-rotation (`tests/test_ps1_cardboard_renderer.py:38-180`). Spring behavior is independently covered
+rotation. The V apex is clamped below the tracked face bottom plus `16%` of tracked face height,
+and pitch regression tests verify that this chin/beard safety band stays opaque while the neck
+remains visible (`tests/test_ps1_cardboard_renderer.py:38-191`). Spring behavior is independently covered
 (`tests/test_motion_springs.py:18-72`), and CLI composition occurs before diagnostics
 (`src/kardboard_vtuber/cli.py:153-167`).
 

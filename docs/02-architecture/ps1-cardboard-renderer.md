@@ -104,16 +104,18 @@ redesign.
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
 Privacy is fail-closed: before the first valid detection the output is black, and after tracking
 loss the renderer freezes the last safely composited frame instead of emitting a new raw camera
-frame. The narrow V opening begins below the tracked face bounds and exposes only the neck.
+frame. The narrow V opening apex is constrained below the tracked lower-face bound plus a
+`16%` face-height chin/beard safety margin. The shell extends downward when necessary so the
+opening exposes only the neck at every pitch.
 
 ## Validation
 
-- 49 unit tests pass under Python 3.12 and 3.13.
+- 50 unit tests pass under Python 3.12 and 3.13.
 - Tests cover black output before initial acquisition, bounded overlay region, mirrored visible
-  K/C placement, full lower-face opacity, and
+  K/C placement, full lower-face and chin-margin opacity, and
   fail-closed tracking-loss freezing, crown/hair coverage, calibrated anatomical winks, roll,
   yaw-side perspective, and pitch-driven top/underside visibility
-  (`tests/test_ps1_cardboard_renderer.py:1-215`).
+  (`tests/test_ps1_cardboard_renderer.py:1-226`).
 - The private guided recording produced a 1,254-frame prototype video.
 - Contact-sheet inspection confirmed face coverage, pose following, K/C placement, and closed-eye
   arcs.
@@ -123,7 +125,7 @@ The private camera footage and rendered video are not committed.
 The initial flat face-sized rectangle was rejected during user review. The corrected design is
 approximately twice the tracked face width, extends around the head, remains fully opaque, and
 reveals camera pixels only through the intentional neck opening
-(`tests/test_ps1_cardboard_renderer.py:88-106`).
+(`tests/test_ps1_cardboard_renderer.py:88-117`).
 
 ## Run it
 

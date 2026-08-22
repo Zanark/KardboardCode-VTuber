@@ -79,6 +79,11 @@ class PS1CardboardRenderer:
         bottom_half_width = front_width * (0.5 - 0.04 * pitch)
         top = center_y - front_height / 2
         bottom = center_y + front_height / 2
+        face_height = state.face_height * low_height
+        face_bottom = (state.center_y + state.face_height / 2) * low_height
+        safe_opening_apex = face_bottom + face_height * 0.16
+        desired_opening_height = max(5.0, box_height * 0.07)
+        bottom = max(bottom, safe_opening_apex + desired_opening_height)
         front = np.array(
             [
                 [round(center_x - top_half_width), round(top)],
@@ -189,6 +194,7 @@ class PS1CardboardRenderer:
             box_width,
             box_height,
             full_alpha,
+            safe_opening_apex,
         )
         self._draw_eyes(overlay, alpha, front, box_width, box_height, full_alpha, state)
         roll = max(-60.0, min(60.0, state.head_pose.roll_degrees))
@@ -269,15 +275,17 @@ class PS1CardboardRenderer:
         box_width: float,
         box_height: float,
         full_alpha: int,
+        safe_opening_apex: float,
     ) -> None:
         center_x = round(float(front[:, 0].mean()))
         bottom = round(float(front[:, 1].max()))
         radius_x = max(9, round(box_width * 0.16))
         radius_y = max(5, round(box_height * 0.07))
+        apex_y = max(bottom - radius_y, math.ceil(safe_opening_apex))
         opening = np.array(
             [
                 [center_x - radius_x, bottom + 2],
-                [center_x, bottom - radius_y],
+                [center_x, apex_y],
                 [center_x + radius_x, bottom + 2],
             ],
             dtype=np.int32,

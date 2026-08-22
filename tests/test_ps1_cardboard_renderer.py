@@ -90,8 +90,20 @@ def test_renderer_leaves_center_neck_opening_visible() -> None:
 
     renderer.render(frame, state(1))
 
-    assert np.all(frame[480, 640] == 91)
+    assert np.all(frame[500, 640] == 91)
+    assert not np.all(frame[470, 640] == 91)
     assert not np.all(frame[450, 500] == 91)
+
+
+def test_neck_opening_stays_below_chin_margin_during_pitch() -> None:
+    for pitch in (-45.0, 20.0):
+        renderer = PS1CardboardRenderer()
+        frame = np.full((720, 1280, 3), 91, dtype=np.uint8)
+
+        renderer.render(frame, state(1, pitch=pitch))
+
+        assert not np.all(frame[470, 640] == 91)
+        assert np.all(frame[500, 640] == 91)
 
 
 def test_renderer_front_panel_is_fully_opaque() -> None:
