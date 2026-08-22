@@ -91,7 +91,7 @@ python -m kardboard_vtuber `
 `--preview-height` changes only the displayed window size. Capture, tracking, and rendering remain
 at the source resolution and retain the full camera frame.
 
-## AR-style hand occlusion
+## Privacy-safe hand occlusion
 
 Download the verified official MediaPipe model once:
 
@@ -115,6 +115,11 @@ The hand tracker runs asynchronously at a 320-pixel input width and restores det
 forearm pixels over the rendered avatar. This provides convincing foreground interaction when a
 hand is in front, but a monocular RGB camera cannot prove depth; a hand physically behind the
 avatar may also be treated as foreground.
+
+This mode intentionally supports only the anatomical hand and forearm mask. Arbitrary held-object
+occlusion is not supported by the RGB-only camera pipeline. Inferred monocular depth was tested and
+removed because it could classify face pixels as foreground and violate fail-closed privacy.
+Reliable general-object occlusion requires an aligned hardware/AR depth stream.
 
 ## Quality checks
 
