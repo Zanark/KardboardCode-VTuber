@@ -70,7 +70,7 @@ sequenceDiagram
 | Bottom opening | Central V-shaped cutout exposing the real neck |
 | Interior rim | Dark lower-corner and opening surfaces that communicate hollow depth |
 | K/C eyes | Text when open, upward happy-eye arcs when closed or winking |
-| Lower flaps | Two spring-driven polygons hinged along the front lower contour into the V opening |
+| Lower flaps | Two broad, shallow spring-driven wings opening outward from the V |
 | Surface | Deterministic light/dark fiber pattern over fully opaque cardboard |
 | Pixel style | Overlay rendered at one-quarter linear resolution |
 | Composition | Upscaled alpha mask blends avatar without pixelating camera |
@@ -102,8 +102,9 @@ same counterclockwise screen tilt shown by the face mesh; roll is bounded to `+/
 
 Pitch-projected underside depth and mouth-flap hinges are intentionally separate. Looking up may
 move the underside's far edge downward, but the mouth flaps remain attached to the visible front
-lower contour: outer corner to inner bottom point to the V apex. This prevents detached dangling
-pieces beneath the box.
+lower contour into the V apex. As the mouth opens, they project mostly sideways beyond the shell
+instead of hanging vertically. The lighter flap layer is drawn behind the dark underside so some
+underside remains visible rather than being completely covered.
 
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
 Privacy is fail-closed: before the first valid detection the output is black, and after tracking
@@ -112,7 +113,7 @@ frame. The narrow V opening begins below the tracked face bounds and exposes onl
 
 ## Validation
 
-- 51 unit tests pass under Python 3.12 and 3.13.
+- 52 unit tests pass under Python 3.12 and 3.13.
 - Tests cover black output before initial acquisition, bounded overlay region, below-box
   mouth-dependent flap changes, mirrored visible K/C placement, full lower-face opacity, and
   fail-closed tracking-loss freezing, crown/hair coverage, calibrated anatomical winks, roll,

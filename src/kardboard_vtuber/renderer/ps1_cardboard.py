@@ -146,6 +146,16 @@ class PS1CardboardRenderer:
             cv2.fillConvexPoly(alpha, side, full_alpha)
             cv2.polylines(overlay, [side], True, outline, 2, cv2.LINE_8)
 
+        self._draw_flaps(
+            overlay,
+            alpha,
+            front,
+            box_width,
+            box_height,
+            full_alpha,
+            mouth_open,
+        )
+
         if bottom_depth > 1:
             center_bottom_x = round(float(front[2:4, 0].mean()))
             bottom_y = round(float(front[2:4, 1].mean()))
@@ -194,15 +204,6 @@ class PS1CardboardRenderer:
             full_alpha,
         )
         self._draw_eyes(overlay, alpha, front, box_width, box_height, full_alpha, state)
-        self._draw_flaps(
-            overlay,
-            alpha,
-            front,
-            box_width,
-            box_height,
-            full_alpha,
-            mouth_open,
-        )
         roll = max(-60.0, min(60.0, state.head_pose.roll_degrees))
         if abs(roll) > 0.5:
             rotation = cv2.getRotationMatrix2D((center_x, center_y), roll, 1.0)
@@ -427,15 +428,17 @@ class PS1CardboardRenderer:
         neck_half_width = box_width * 0.16
         neck_apex_y = hinge_y - max(5, round(box_height * 0.07))
         openness = max(0.0, min(1.0, mouth_open))
-        drop = box_height * (0.015 + 0.09 * openness)
-        spread = box_width * 0.05 * openness
+        drop = box_height * (0.015 + 0.30 * openness)
+        spread = box_width * 0.40 * openness
+        outer_inset = box_width * 0.10
+        inner_free_offset = box_width * 0.08
         left_flap = np.array(
             [
-                [round(left), hinge_y],
-                [round(center_x - neck_half_width), hinge_y],
                 [round(center_x), neck_apex_y],
-                [round(center_x - box_width * 0.035), round(neck_apex_y + drop)],
+                [round(center_x - neck_half_width), hinge_y],
+                [round(left + outer_inset), hinge_y],
                 [round(left - spread), round(hinge_y + drop * 0.65)],
+                [round(center_x - inner_free_offset), round(neck_apex_y + drop)],
             ],
             dtype=np.int32,
         )
@@ -443,13 +446,13 @@ class PS1CardboardRenderer:
             [
                 [round(center_x), neck_apex_y],
                 [round(center_x + neck_half_width), hinge_y],
-                [round(right), hinge_y],
+                [round(right - outer_inset), hinge_y],
                 [round(right + spread), round(hinge_y + drop * 0.65)],
-                [round(center_x + box_width * 0.035), round(neck_apex_y + drop)],
+                [round(center_x + inner_free_offset), round(neck_apex_y + drop)],
             ],
             dtype=np.int32,
         )
-        for flap, color in ((left_flap, (71, 126, 169)), (right_flap, (78, 134, 177))):
+        for flap, color in ((left_flap, (95, 154, 195)), (right_flap, (90, 147, 188))):
             cv2.fillPoly(overlay, [flap], color)
             cv2.fillPoly(alpha, [flap], full_alpha)
             cv2.polylines(overlay, [flap], True, (24, 34, 43), 1, cv2.LINE_8)

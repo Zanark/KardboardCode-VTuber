@@ -85,7 +85,8 @@ the last safely composited frame through tracking loss. Dedicated perspective te
 rightward face turn exposes screen-left depth and that up/down pitch selects underside/top geometry
 while wink tests verify K/left and C/right anatomical closure and roll tests verify whole-shell
 rotation. Flap tests verify that upward pitch does not move mouth hinges from the front V contour
-to the underside's projected far edge (`tests/test_ps1_cardboard_renderer.py:38-230`). Spring behavior is independently covered
+to the underside's projected far edge, that open wings extend beyond both box sides, and that dark
+underside pixels remain visible above them (`tests/test_ps1_cardboard_renderer.py:38-245`). Spring behavior is independently covered
 (`tests/test_motion_springs.py:18-72`), and CLI composition occurs before diagnostics
 (`src/kardboard_vtuber/cli.py:153-167`).
 

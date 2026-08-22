@@ -67,11 +67,11 @@ def test_mouth_openness_changes_front_flap_pixels() -> None:
         closed_renderer.render(closed, state(timestamp_ms, mouth=0.0))
         open_renderer.render(opened, state(timestamp_ms, mouth=1.0))
 
-    assert np.array_equal(closed[:470], opened[:470])
-    assert not np.array_equal(closed[470:], opened[470:])
+    assert np.array_equal(closed[:430], opened[:430])
+    assert not np.array_equal(closed[430:], opened[430:])
 
 
-def test_looking_up_keeps_mouth_flaps_hinged_to_front_lower_contour() -> None:
+def test_looking_up_preserves_visible_underside_above_open_flaps() -> None:
     closed_renderer = PS1CardboardRenderer()
     open_renderer = PS1CardboardRenderer()
     closed = np.zeros((720, 1280, 3), dtype=np.uint8)
@@ -81,8 +81,20 @@ def test_looking_up_keeps_mouth_flaps_hinged_to_front_lower_contour() -> None:
         closed_renderer.render(closed, state(timestamp_ms, mouth=0.0, pitch=-45.0))
         open_renderer.render(opened, state(timestamp_ms, mouth=1.0, pitch=-45.0))
 
-    difference = np.abs(opened.astype(np.int16) - closed.astype(np.int16))
-    assert difference[440:520].sum() > difference[560:640].sum()
+    assert np.array_equal(opened[500, 400], closed[500, 400])
+    assert np.count_nonzero(opened[500, 400]) > 0
+    assert not np.array_equal(opened[560, 400], closed[560, 400])
+
+
+def test_open_mouth_flaps_project_outward_beyond_box_sides() -> None:
+    renderer = PS1CardboardRenderer()
+    frame = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+    for timestamp_ms in range(0, 400, 33):
+        renderer.render(frame, state(timestamp_ms, mouth=1.0))
+
+    assert np.count_nonzero(frame[460:550, 120:300]) > 0
+    assert np.count_nonzero(frame[460:550, 980:1160]) > 0
 
 
 def test_screen_left_k_follows_anatomical_left_eye_in_mirrored_preview() -> None:
