@@ -154,3 +154,12 @@ def test_pitch_controls_top_and_underside_visibility() -> None:
 
     assert np.count_nonzero(looking_down[80:180]) > np.count_nonzero(looking_up[80:180])
     assert np.count_nonzero(looking_up[480:580]) > np.count_nonzero(looking_down[480:580])
+
+
+def test_downward_pitch_keeps_crown_inside_shell_silhouette() -> None:
+    renderer = PS1CardboardRenderer()
+    frame = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+    renderer.render(frame, state(1, pitch=20.0))
+
+    assert np.count_nonzero(frame[60:150, 500:780]) > 0

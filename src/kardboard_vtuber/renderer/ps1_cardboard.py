@@ -19,7 +19,7 @@ class CardboardRendererConfig:
 
     pixel_scale: int = 4
     box_width_multiplier: float = 2.05
-    box_height_multiplier: float = 1.52
+    box_height_multiplier: float = 1.75
     opacity: float = 1.0
     mirrored: bool = False
     neutral_pitch_degrees: float = -10.0
@@ -65,7 +65,7 @@ class PS1CardboardRenderer:
         center_y = state.center_y * low_height
         box_width = max(24.0, state.face_width * low_width * self._config.box_width_multiplier)
         box_height = max(28.0, state.face_height * low_height * self._config.box_height_multiplier)
-        center_y -= box_height * 0.06
+        center_y -= box_height * 0.10
         yaw = max(-1.0, min(1.0, state.head_pose.yaw_degrees / 45.0))
         pitch = max(
             -1.0,

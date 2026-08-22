@@ -75,6 +75,10 @@ sequenceDiagram
 | Pixel style | Overlay rendered at one-quarter linear resolution |
 | Composition | Upscaled alpha mask blends avatar without pixelating camera |
 
+MediaPipe landmarks bound the face, not the full hairstyle. The shell therefore uses additional
+vertical head clearance (`1.75x` tracked face height with an upward center bias) so the crown stays
+inside the opaque silhouette, especially while looking down.
+
 The visible logo order is always `K C` from screen-left to screen-right. In mirrored preview, each
 letter uses the eye openness for that visible screen side
 (`src/kardboard_vtuber/renderer/ps1_cardboard.py:284-339`,
@@ -100,7 +104,7 @@ frame. The narrow V opening begins below the tracked face bounds and exposes onl
 - 47 unit tests pass under Python 3.12 and 3.13.
 - Tests cover black output before initial acquisition, bounded overlay region, below-box
   mouth-dependent flap changes, mirrored visible K/C placement, full lower-face opacity, and
-  fail-closed tracking-loss freezing, yaw-side perspective, and pitch-driven top/underside
+  fail-closed tracking-loss freezing, crown/hair coverage, yaw-side perspective, and pitch-driven top/underside
   visibility (`tests/test_ps1_cardboard_renderer.py:1-166`).
 - The private guided recording produced a 1,254-frame prototype video.
 - Contact-sheet inspection confirmed face coverage, pose following, K/C placement, closed-eye

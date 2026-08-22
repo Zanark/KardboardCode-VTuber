@@ -45,7 +45,8 @@ pixelating or recoloring the camera outside the avatar
 
 ## Geometry mapping
 
-Face center and bounds are converted from normalized state into low-resolution coordinates. Yaw
+Face center and bounds are converted from normalized state into low-resolution coordinates, then
+expanded and shifted upward because facial landmarks do not include the hair/crown. Yaw
 compresses the front and exposes the opposite screen-side depth plane. Pitch relative to the
 calibrated `-10` degree baseline grows either the top plane when looking down or the split underside
 around the neck opening when looking up
