@@ -9,7 +9,7 @@ description: "Architecture of the procedural low-resolution KardboardCode head o
 >
 > **TL;DR** — The renderer creates one fixed opaque hollow cardboard shell around the head at low
 > resolution, leaves the neck visible through a central bottom opening, drives anatomical K/C eyes
-> and front flaps from tracking, adds pose-dependent planes and spring motion, then composites only
+> from tracking, adds pose-dependent planes and spring motion, then composites only
 > the avatar over the sharp camera frame
 > (`src/kardboard_vtuber/renderer/ps1_cardboard.py:17-370`).
 
@@ -28,9 +28,7 @@ flowchart LR
     Filtered["Filtered face state"] --> Geometry["Low-resolution box geometry"]
     Raw["Raw action state"] --> Labels["Action diagnostics"]
     Geometry --> Eyes["Anatomical K/C eyes"]
-    Geometry --> Flaps["Spring mouth flaps"]
     Eyes --> Upscale["Nearest-neighbor upscale"]
-    Flaps --> Upscale
     Upscale --> Composite
     Composite --> Preview["Camera preview / future OBS"]
 ```
@@ -52,8 +50,8 @@ sequenceDiagram
     participant Preview
     Camera-->>Tracker: transformed frame
     Tracker-->>Renderer: filtered FaceTrackingState
-    Renderer->>Renderer: step flap springs
-    Renderer->>Renderer: draw box, eyes, flaps at low resolution
+    Renderer->>Renderer: step side-plane spring
+    Renderer->>Renderer: draw box and eyes at low resolution
     Renderer->>Renderer: nearest-neighbor upscale and alpha composite
     Renderer-->>Debug: composed frame
     Debug-->>Preview: mesh, values, latest action
@@ -70,7 +68,6 @@ sequenceDiagram
 | Bottom opening | Central V-shaped cutout exposing the real neck |
 | Interior rim | Dark lower-corner and opening surfaces that communicate hollow depth |
 | K/C eyes | Text when open, upward happy-eye arcs when closed or winking |
-| Lower flaps | Two broad, shallow spring-driven wings opening outward from the V |
 | Surface | Deterministic light/dark fiber pattern over fully opaque cardboard |
 | Pixel style | Overlay rendered at one-quarter linear resolution |
 | Composition | Upscaled alpha mask blends avatar without pixelating camera |
@@ -88,28 +85,21 @@ right eye. Closure uses the calibrated wink rule (`<= 0.70` with an open opposit
 
 ## Motion
 
-Filtered bounds and pose control the box, while damped springs add intentional follow-through to
-mouth and side planes (`src/kardboard_vtuber/motion/springs.py:26-85`,
+Filtered bounds and pose control the box, while a damped spring adds intentional follow-through to
+the side plane (`src/kardboard_vtuber/motion/springs.py:26-85`,
 `src/kardboard_vtuber/renderer/ps1_cardboard.py:39-88`). Positive/rightward yaw reveals the
 screen-left side; negative/leftward yaw reveals the screen-right side. The guided calibration
 established a pitch baseline near `-10` degrees: more-negative pitch means looking up and reveals
 the underside, while more-positive pitch means looking down and reveals the top. This preserves the
 distinction between measurement smoothing and animation dynamics.
 
-After all low-resolution planes, eyes, openings, and flaps are drawn, the complete color and alpha
+After all low-resolution planes, eyes, and openings are drawn, the complete color and alpha
 canvases rotate together around the tracked center using filtered roll. Positive roll produces the
 same counterclockwise screen tilt shown by the face mesh; roll is bounded to `+/-60` degrees.
 
-Pitch-projected underside depth and mouth-flap hinges are intentionally separate. Looking up may
-move the underside's far edge downward, but the mouth flaps remain attached to the visible front
-lower contour into the V apex. As the mouth opens, they project mostly sideways beyond the shell
-instead of hanging vertically. The lighter flap layer is front-mounted above the underside, directly
-on the lower-face contour. Each hinge begins at the exact bottom corner of the K/C front square—no
-inset or underside wedge is allowed between the face and flap—and follows the bottom edge into the
-V apex. Its shallow depth ends before the underside's far edge, leaving a dark underside strip
-visible below. The shared face-to-flap hinge is painted continuously in flap color; only exposed
-free edges receive the dark outline. A dark line on the shared hinge makes the flap falsely read as
-coming from behind the box.
+Mouth-driven front flaps are intentionally deferred after visual review. The current prototype
+renders no mouth flap geometry; mouth tracking and action diagnostics remain available for a later
+redesign.
 
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
 Privacy is fail-closed: before the first valid detection the output is black, and after tracking
@@ -118,15 +108,15 @@ frame. The narrow V opening begins below the tracked face bounds and exposes onl
 
 ## Validation
 
-- 53 unit tests pass under Python 3.12 and 3.13.
-- Tests cover black output before initial acquisition, bounded overlay region, below-box
-  mouth-dependent flap changes, mirrored visible K/C placement, full lower-face opacity, and
+- 49 unit tests pass under Python 3.12 and 3.13.
+- Tests cover black output before initial acquisition, bounded overlay region, mirrored visible
+  K/C placement, full lower-face opacity, and
   fail-closed tracking-loss freezing, crown/hair coverage, calibrated anatomical winks, roll,
   yaw-side perspective, and pitch-driven top/underside visibility
   (`tests/test_ps1_cardboard_renderer.py:1-215`).
 - The private guided recording produced a 1,254-frame prototype video.
-- Contact-sheet inspection confirmed face coverage, pose following, K/C placement, closed-eye
-  strokes, and open mouth flaps.
+- Contact-sheet inspection confirmed face coverage, pose following, K/C placement, and closed-eye
+  arcs.
 
 The private camera footage and rendered video are not committed.
 

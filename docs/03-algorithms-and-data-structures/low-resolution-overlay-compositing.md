@@ -37,8 +37,7 @@ flowchart LR
 ## Why two buffers
 
 The color canvas stores cardboard pixels; the alpha mask records coverage. Keeping them separate
-allows fully opaque panels, a transparent background, an intentional neck cutout, text-shaped eyes,
-and polygon flaps without
+allows fully opaque panels, a transparent background, an intentional neck cutout, and text-shaped eyes without
 pixelating or recoloring the camera outside the avatar
 (`src/kardboard_vtuber/renderer/ps1_cardboard.py:51-59`,
 `src/kardboard_vtuber/renderer/ps1_cardboard.py:151-165`).
@@ -62,7 +61,7 @@ sequenceDiagram
     participant LowCanvas
     participant Upscaler
     participant Camera
-    State->>Geometry: center, bounds, yaw, eyes, mouth
+    State->>Geometry: center, bounds, yaw, pitch, roll, eyes
     Geometry->>LowCanvas: polygons, text, lines, alpha
     LowCanvas->>LowCanvas: rotate color + alpha by filtered roll
     LowCanvas->>Upscaler: color + alpha
@@ -79,16 +78,12 @@ low-resolution mask, and their temporary full-resolution upscales.
 ## Validation
 
 The renderer blacks initial no-face frames, modifies only the tracked head region after acquisition,
-changes only below-box flap pixels with mouth input, keeps visible `K C` ordering, preserves the
+keeps visible `K C` ordering, preserves the
 camera only through the neck-safe V-shaped opening, keeps the lower face fully opaque, and freezes
 the last safely composited frame through tracking loss. Dedicated perspective tests verify that a
 rightward face turn exposes screen-left depth and that up/down pitch selects underside/top geometry
 while wink tests verify K/left and C/right anatomical closure and roll tests verify whole-shell
-rotation. Flap tests verify that upward pitch does not move mouth hinges from the front V contour
-to the underside's projected far edge, that open wings extend beyond both box sides, and that dark
-underside pixels remain visible below the front-mounted flap layer
-and exact-corner tests prevent any inset between the K/C face and flap hinges
-(`tests/test_ps1_cardboard_renderer.py:38-260`). Spring behavior is independently covered
+rotation (`tests/test_ps1_cardboard_renderer.py:38-180`). Spring behavior is independently covered
 (`tests/test_motion_springs.py:18-72`), and CLI composition occurs before diagnostics
 (`src/kardboard_vtuber/cli.py:153-167`).
 

@@ -40,8 +40,6 @@ class PS1CardboardRenderer:
 
     def __init__(self, config: CardboardRendererConfig | None = None) -> None:
         self._config = config or CardboardRendererConfig()
-        flap_parameters = SpringParameters(frequency_hz=5.0, damping_ratio=0.62)
-        self._mouth_flap = DampedSpring(parameters=flap_parameters)
         self._side_flap = DampedSpring(parameters=SpringParameters(3.0, 0.48))
         self._last_timestamp_ms: int | None = None
         self._last_safe_frame: ndarray | None = None
@@ -57,7 +55,6 @@ class PS1CardboardRenderer:
         alpha = np.zeros((low_height, low_width), dtype=np.uint8)
 
         delta_seconds = self._delta_seconds(state.timestamp_ms)
-        mouth_open = self._mouth_flap.step(state.mouth_open, delta_seconds)
         side_target = min(1.0, abs(state.head_pose.yaw_degrees) / 35.0)
         side_open = self._side_flap.step(side_target, delta_seconds)
 
@@ -193,15 +190,6 @@ class PS1CardboardRenderer:
             box_height,
             full_alpha,
         )
-        self._draw_flaps(
-            overlay,
-            alpha,
-            front,
-            box_width,
-            box_height,
-            full_alpha,
-            mouth_open,
-        )
         self._draw_eyes(overlay, alpha, front, box_width, box_height, full_alpha, state)
         roll = max(-60.0, min(60.0, state.head_pose.roll_degrees))
         if abs(roll) > 0.5:
@@ -240,7 +228,6 @@ class PS1CardboardRenderer:
         self._last_safe_frame = frame.copy()
 
     def reset(self) -> None:
-        self._mouth_flap.reset(0.0)
         self._side_flap.reset(0.0)
         self._last_timestamp_ms = None
         self._last_safe_frame = None
@@ -409,58 +396,3 @@ class PS1CardboardRenderer:
         return openness <= 0.70 and other_openness >= 0.65 and (
             other_openness - openness >= 0.15
         )
-
-    @staticmethod
-    def _draw_flaps(
-        overlay: ndarray,
-        alpha: ndarray,
-        front: ndarray,
-        box_width: float,
-        box_height: float,
-        full_alpha: int,
-        mouth_open: float,
-    ) -> None:
-        center_x = float(front[2:4, 0].mean())
-        left = float(front[3][0])
-        right = float(front[2][0])
-        hinge_y = round(float(front[2:4, 1].mean()))
-        neck_half_width = box_width * 0.16
-        neck_apex_y = hinge_y - max(5, round(box_height * 0.07))
-        openness = max(0.0, min(1.0, mouth_open))
-        drop = box_height * (0.015 + 0.14 * openness)
-        spread = box_width * 0.40 * openness
-        inner_free_offset = box_width * 0.08
-        left_flap = np.array(
-            [
-                [round(center_x), neck_apex_y],
-                [round(center_x - neck_half_width), hinge_y],
-                [round(left), hinge_y],
-                [round(left - spread), round(hinge_y + drop * 0.65)],
-                [round(center_x - inner_free_offset), round(neck_apex_y + drop)],
-            ],
-            dtype=np.int32,
-        )
-        right_flap = np.array(
-            [
-                [round(center_x), neck_apex_y],
-                [round(center_x + neck_half_width), hinge_y],
-                [round(right), hinge_y],
-                [round(right + spread), round(hinge_y + drop * 0.65)],
-                [round(center_x + inner_free_offset), round(neck_apex_y + drop)],
-            ],
-            dtype=np.int32,
-        )
-        for flap, color in ((left_flap, (95, 154, 195)), (right_flap, (90, 147, 188))):
-            cv2.fillPoly(overlay, [flap], color)
-            cv2.fillPoly(alpha, [flap], full_alpha)
-            hinge = flap[:3]
-            exposed_edge = flap[[2, 3, 4, 0]]
-            cv2.polylines(overlay, [hinge], False, color, 2, cv2.LINE_8)
-            cv2.polylines(
-                overlay,
-                [exposed_edge],
-                False,
-                (24, 34, 43),
-                1,
-                cv2.LINE_8,
-            )

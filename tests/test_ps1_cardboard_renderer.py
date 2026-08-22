@@ -16,7 +16,6 @@ def state(
     detected: bool = True,
     left_eye: float = 1.0,
     right_eye: float = 1.0,
-    mouth: float = 0.0,
     pitch: float = -10.0,
     yaw: float = 0.0,
     roll: float = 0.0,
@@ -33,7 +32,7 @@ def state(
         face_height=0.34,
         left_eye_open=left_eye,
         right_eye_open=right_eye,
-        mouth_open=mouth,
+        mouth_open=0.0,
         head_pose=HeadPose(0.0, 0.0, 0.0, pitch, yaw, roll),
     )
 
@@ -55,57 +54,6 @@ def test_renderer_overlays_only_tracked_head_region() -> None:
 
     assert np.count_nonzero(frame[180:520, 400:880]) > 0
     assert np.count_nonzero(frame[:80, :80]) == 0
-
-
-def test_mouth_openness_changes_front_flap_pixels() -> None:
-    closed_renderer = PS1CardboardRenderer()
-    open_renderer = PS1CardboardRenderer()
-    closed = np.zeros((720, 1280, 3), dtype=np.uint8)
-    opened = np.zeros((720, 1280, 3), dtype=np.uint8)
-
-    for timestamp_ms in range(0, 300, 33):
-        closed_renderer.render(closed, state(timestamp_ms, mouth=0.0))
-        open_renderer.render(opened, state(timestamp_ms, mouth=1.0))
-
-    assert np.array_equal(closed[:430], opened[:430])
-    assert not np.array_equal(closed[430:], opened[430:])
-
-
-def test_looking_up_preserves_visible_underside_above_open_flaps() -> None:
-    closed_renderer = PS1CardboardRenderer()
-    open_renderer = PS1CardboardRenderer()
-    closed = np.zeros((720, 1280, 3), dtype=np.uint8)
-    opened = np.zeros((720, 1280, 3), dtype=np.uint8)
-
-    for timestamp_ms in range(0, 300, 33):
-        closed_renderer.render(closed, state(timestamp_ms, mouth=0.0, pitch=-45.0))
-        open_renderer.render(opened, state(timestamp_ms, mouth=1.0, pitch=-45.0))
-
-    assert not np.array_equal(opened[480, 400], closed[480, 400])
-    assert np.array_equal(opened[520, 400], closed[520, 400])
-    assert np.count_nonzero(opened[520, 400]) > 0
-
-
-def test_open_mouth_flaps_project_outward_beyond_box_sides() -> None:
-    renderer = PS1CardboardRenderer()
-    frame = np.zeros((720, 1280, 3), dtype=np.uint8)
-
-    for timestamp_ms in range(0, 400, 33):
-        renderer.render(frame, state(timestamp_ms, mouth=1.0))
-
-    assert np.count_nonzero(frame[460:550, 120:300]) > 0
-    assert np.count_nonzero(frame[460:550, 980:1160]) > 0
-
-
-def test_mouth_flaps_start_at_kc_front_face_bottom_corners() -> None:
-    renderer = PS1CardboardRenderer()
-    frame = np.zeros((720, 1280, 3), dtype=np.uint8)
-
-    for timestamp_ms in range(0, 400, 33):
-        renderer.render(frame, state(timestamp_ms, mouth=0.59))
-
-    assert np.array_equal(frame[500, 300], np.array([95, 154, 195]))
-    assert np.array_equal(frame[500, 1000], np.array([90, 147, 188]))
 
 
 def test_screen_left_k_follows_anatomical_left_eye_in_mirrored_preview() -> None:

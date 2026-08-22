@@ -44,7 +44,7 @@ Implemented signal groups use separate tuning:
 - Head translation and rotation.
 - Left `K` eye.
 - Right `C` eye.
-- Mouth/front flaps.
+- Mouth/front flaps — deferred for later visual redesign.
 - Side-flap secondary motion.
 
 One Euro filtering is wired into tracking. Damped spring dynamics are implemented and tested for
@@ -58,8 +58,8 @@ The prototype now:
 - models a procedural cardboard box with front, top, and side planes;
 - renders the avatar at quarter linear resolution;
 - uses nearest-neighbor upscale and separate alpha compositing;
-- drives anatomical K/C eyes and mouth flaps;
-- uses springs for flap/side-plane secondary motion.
+- drives anatomical K/C eyes;
+- uses a spring for side-plane secondary motion;
 - forms an opaque hollow shell with a central bottom neck opening and visible interior rim.
 
 Texture art, ordered dithering, vertex snapping, and a more recognizable production mesh remain
@@ -69,10 +69,8 @@ future renderer-polish work.
 flowchart LR
     Pose["Filtered pose"] --> Geometry["Low-poly box"]
     Eyes["Eye values"] --> KC["K/C materials or geometry"]
-    Mouth["Mouth value"] --> Flaps["Front flap hinges"]
     Geometry --> LowRes["Low-resolution target"]
     KC --> LowRes
-    Flaps --> LowRes
     LowRes --> Pixel["Nearest-neighbor upscale"]
 ```
 
