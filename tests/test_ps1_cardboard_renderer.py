@@ -35,14 +35,13 @@ def state(
     )
 
 
-def test_renderer_leaves_frame_unchanged_without_face() -> None:
+def test_renderer_blacks_frame_before_first_face_detection() -> None:
     renderer = PS1CardboardRenderer()
     frame = np.full((720, 1280, 3), 100, dtype=np.uint8)
-    before = frame.copy()
 
     renderer.render(frame, state(1, detected=False))
 
-    assert np.array_equal(frame, before)
+    assert np.count_nonzero(frame) == 0
 
 
 def test_renderer_overlays_only_tracked_head_region() -> None:
@@ -65,7 +64,8 @@ def test_mouth_openness_changes_front_flap_pixels() -> None:
         closed_renderer.render(closed, state(timestamp_ms, mouth=0.0))
         open_renderer.render(opened, state(timestamp_ms, mouth=1.0))
 
-    assert not np.array_equal(closed, opened)
+    assert np.array_equal(closed[:470], opened[:470])
+    assert not np.array_equal(closed[470:], opened[470:])
 
 
 def test_screen_left_k_follows_screen_left_eye_in_mirrored_preview() -> None:
@@ -103,25 +103,27 @@ def test_renderer_front_panel_is_fully_opaque() -> None:
     renderer.render(bright, state(34))
 
     assert np.array_equal(dark[300, 640], bright[300, 640])
+    assert np.array_equal(dark[450, 640], bright[450, 640])
 
 
-def test_renderer_holds_last_pose_during_brief_tracking_loss() -> None:
-    renderer = PS1CardboardRenderer(CardboardRendererConfig(tracking_loss_hold_ms=2000))
-    tracked = np.zeros((720, 1280, 3), dtype=np.uint8)
-    briefly_lost = np.zeros((720, 1280, 3), dtype=np.uint8)
+def test_renderer_freezes_last_safe_frame_during_tracking_loss() -> None:
+    renderer = PS1CardboardRenderer()
+    tracked = np.full((720, 1280, 3), 50, dtype=np.uint8)
+    exposed_camera = np.full((720, 1280, 3), 200, dtype=np.uint8)
 
     renderer.render(tracked, state(1000))
-    renderer.render(briefly_lost, state(2500, detected=False))
+    renderer.render(exposed_camera, state(5000, detected=False))
 
-    assert np.count_nonzero(briefly_lost) > 0
+    assert np.array_equal(exposed_camera, tracked)
 
 
-def test_renderer_stops_after_tracking_loss_hold_expires() -> None:
-    renderer = PS1CardboardRenderer(CardboardRendererConfig(tracking_loss_hold_ms=2000))
-    frame = np.zeros((720, 1280, 3), dtype=np.uint8)
+def test_renderer_returns_to_black_fail_closed_state_after_reset() -> None:
+    renderer = PS1CardboardRenderer()
+    frame = np.full((720, 1280, 3), 80, dtype=np.uint8)
 
     renderer.render(frame, state(1000))
-    frame.fill(0)
-    renderer.render(frame, state(3001, detected=False))
+    renderer.reset()
+    frame.fill(200)
+    renderer.render(frame, state(2000, detected=False))
 
     assert np.count_nonzero(frame) == 0

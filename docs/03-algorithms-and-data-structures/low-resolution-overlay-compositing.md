@@ -74,10 +74,11 @@ low-resolution mask, and their temporary full-resolution upscales.
 
 ## Validation
 
-The renderer leaves initial no-face frames unchanged, modifies only the tracked head region, changes
-flap pixels with mouth input, keeps visible `K C` ordering, preserves the camera through the
-V-shaped bottom neck opening, keeps the cardboard front fully opaque, and briefly holds the last
-pose through profile tracking loss (`tests/test_ps1_cardboard_renderer.py:38-132`). Spring behavior is independently covered
+The renderer blacks initial no-face frames, modifies only the tracked head region after acquisition,
+changes only below-box flap pixels with mouth input, keeps visible `K C` ordering, preserves the
+camera only through the neck-safe V-shaped opening, keeps the lower face fully opaque, and freezes
+the last safely composited frame through tracking loss
+(`tests/test_ps1_cardboard_renderer.py:38-124`). Spring behavior is independently covered
 (`tests/test_motion_springs.py:18-72`), and CLI composition occurs before diagnostics
 (`src/kardboard_vtuber/cli.py:153-167`).
 

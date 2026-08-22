@@ -69,7 +69,7 @@ sequenceDiagram
 | Bottom opening | Central V-shaped cutout exposing the real neck |
 | Interior rim | Dark lower-corner and opening surfaces that communicate hollow depth |
 | K/C eyes | Text when open, horizontal strokes when closed |
-| Front flaps | Two spring-driven polygons controlled by mouth openness |
+| Lower flaps | Two spring-driven polygons hinged below the box and controlled by mouth openness |
 | Surface | Deterministic light/dark fiber pattern over fully opaque cardboard |
 | Pixel style | Overlay rendered at one-quarter linear resolution |
 | Composition | Upscaled alpha mask blends avatar without pixelating camera |
@@ -87,14 +87,16 @@ mouth and side planes (`src/kardboard_vtuber/motion/springs.py:26-85`,
 measurement smoothing and animation dynamics.
 
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
-The renderer therefore holds the last reliable pose for two seconds, avoiding an immediate
-disappearance during a quick extreme turn while still clearing the avatar when the user leaves.
+Privacy is fail-closed: before the first valid detection the output is black, and after tracking
+loss the renderer freezes the last safely composited frame instead of emitting a new raw camera
+frame. The narrow V opening begins below the tracked face bounds and exposes only the neck.
 
 ## Validation
 
 - 45 unit tests pass under Python 3.12 and 3.13.
-- Tests cover no-face passthrough, bounded overlay region, mouth-dependent flap changes, and mirrored
-  visible K/C placement and short tracking-loss persistence
+- Tests cover black output before initial acquisition, bounded overlay region, below-box
+  mouth-dependent flap changes, mirrored visible K/C placement, full lower-face opacity, and
+  fail-closed tracking-loss freezing
   (`tests/test_ps1_cardboard_renderer.py:1-132`).
 - The private guided recording produced a 1,254-frame prototype video.
 - Contact-sheet inspection confirmed face coverage, pose following, K/C placement, closed-eye

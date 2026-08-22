@@ -22,7 +22,6 @@ class CardboardRendererConfig:
     box_height_multiplier: float = 1.52
     opacity: float = 1.0
     mirrored: bool = False
-    tracking_loss_hold_ms: int = 2000
 
     def __post_init__(self) -> None:
         if self.pixel_scale < 1:
@@ -31,8 +30,6 @@ class CardboardRendererConfig:
             raise ValueError("box size multipliers must be positive")
         if not 0.0 <= self.opacity <= 1.0:
             raise ValueError("opacity must be between 0 and 1")
-        if self.tracking_loss_hold_ms < 0:
-            raise ValueError("tracking_loss_hold_ms must not be negative")
 
 
 class PS1CardboardRenderer:
@@ -44,12 +41,11 @@ class PS1CardboardRenderer:
         self._mouth_flap = DampedSpring(parameters=flap_parameters)
         self._side_flap = DampedSpring(parameters=SpringParameters(3.0, 0.48))
         self._last_timestamp_ms: int | None = None
-        self._last_detected_state: FaceTrackingState | None = None
+        self._last_safe_frame: ndarray | None = None
 
     def render(self, frame: ndarray, state: FaceTrackingState) -> None:
-        state = self._state_for_rendering(state)
-        if state is None:
-            self.reset()
+        if not state.detected:
+            self._render_tracking_loss(frame)
             return
         frame_height, frame_width = frame.shape[:2]
         low_width = max(1, math.ceil(frame_width / self._config.pixel_scale))
@@ -168,38 +164,19 @@ class PS1CardboardRenderer:
             overlay_full.astype(np.float32) * alpha_full
             + frame.astype(np.float32) * (1.0 - alpha_full)
         ).astype(np.uint8)
+        self._last_safe_frame = frame.copy()
 
     def reset(self) -> None:
         self._mouth_flap.reset(0.0)
         self._side_flap.reset(0.0)
         self._last_timestamp_ms = None
-        self._last_detected_state = None
+        self._last_safe_frame = None
 
-    def _state_for_rendering(
-        self,
-        state: FaceTrackingState,
-    ) -> FaceTrackingState | None:
-        if state.detected:
-            self._last_detected_state = state
-            return state
-        if self._last_detected_state is None:
-            return None
-        elapsed_ms = state.timestamp_ms - self._last_detected_state.timestamp_ms
-        if elapsed_ms < 0 or elapsed_ms > self._config.tracking_loss_hold_ms:
-            return None
-        return FaceTrackingState(
-            timestamp_ms=state.timestamp_ms,
-            detected=True,
-            landmarks=self._last_detected_state.landmarks,
-            center_x=self._last_detected_state.center_x,
-            center_y=self._last_detected_state.center_y,
-            face_width=self._last_detected_state.face_width,
-            face_height=self._last_detected_state.face_height,
-            left_eye_open=self._last_detected_state.left_eye_open,
-            right_eye_open=self._last_detected_state.right_eye_open,
-            mouth_open=self._last_detected_state.mouth_open,
-            head_pose=self._last_detected_state.head_pose,
-        )
+    def _render_tracking_loss(self, frame: ndarray) -> None:
+        if self._last_safe_frame is None or self._last_safe_frame.shape != frame.shape:
+            frame.fill(0)
+            return
+        frame[:] = self._last_safe_frame
 
     def _delta_seconds(self, timestamp_ms: int) -> float:
         if self._last_timestamp_ms is None:
@@ -236,7 +213,7 @@ class PS1CardboardRenderer:
         center_x = round(float(front[:, 0].mean()))
         bottom = round(float(front[:, 1].max()))
         radius_x = max(9, round(box_width * 0.16))
-        radius_y = max(7, round(box_height * 0.17))
+        radius_y = max(5, round(box_height * 0.07))
         opening = np.array(
             [
                 [center_x - radius_x, bottom + 2],
@@ -353,25 +330,28 @@ class PS1CardboardRenderer:
         mouth_open: float,
     ) -> None:
         center_x = float(front[:, 0].mean())
-        top = float(front[:, 1].min())
-        hinge_y = round(top + box_height * 0.68)
-        half_width = box_width * 0.24
-        opening = box_height * 0.16 * max(0.0, min(1.0, mouth_open))
+        left = float(front[:, 0].min())
+        right = float(front[:, 0].max())
+        hinge_y = round(float(front[:, 1].max()))
+        neck_half_width = box_width * 0.16
+        openness = max(0.0, min(1.0, mouth_open))
+        drop = box_height * (0.025 + 0.16 * openness)
+        spread = box_width * 0.10 * openness
         left_flap = np.array(
             [
-                [round(center_x - half_width), hinge_y],
-                [round(center_x), hinge_y],
-                [round(center_x - box_width * 0.04), round(hinge_y + opening + 3)],
-                [round(center_x - half_width * 1.08), round(hinge_y + opening)],
+                [round(left), hinge_y],
+                [round(center_x - neck_half_width), hinge_y],
+                [round(center_x - neck_half_width - box_width * 0.03), round(hinge_y + drop)],
+                [round(left - spread), round(hinge_y + drop * 0.72)],
             ],
             dtype=np.int32,
         )
         right_flap = np.array(
             [
-                [round(center_x), hinge_y],
-                [round(center_x + half_width), hinge_y],
-                [round(center_x + half_width * 1.08), round(hinge_y + opening)],
-                [round(center_x + box_width * 0.04), round(hinge_y + opening + 3)],
+                [round(center_x + neck_half_width), hinge_y],
+                [round(right), hinge_y],
+                [round(right + spread), round(hinge_y + drop * 0.72)],
+                [round(center_x + neck_half_width + box_width * 0.03), round(hinge_y + drop)],
             ],
             dtype=np.int32,
         )
