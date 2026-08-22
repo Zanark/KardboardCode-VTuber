@@ -22,6 +22,11 @@ input and displayed camera frame. This improves eye-feature contrast in dim inpu
 the tracker and preview observe different images. `--brightness 0` disables the lift; values up to
 `100` are accepted for local tuning (`src/kardboard_vtuber/cli.py:28-190`).
 
+Optional film grain is deliberately different: `--film-grain 0..100` is applied only to the final
+frame passed to `cv2.imshow()`, after rendering and diagnostics. The frame submitted to MediaPipe
+never contains grain, so the visual effect cannot degrade face or eye tracking. The default is
+`0` (disabled).
+
 The latest primary transition is shown directly below the pose values as
 `ACTION = <ACTION NAME>`. The CLI retains the first event from a multi-event update so a meaningful
 transition such as `BLINK` is not immediately replaced by the accompanying `EYES OPEN` state

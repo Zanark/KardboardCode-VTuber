@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import cv2
+import numpy as np
 from numpy import ndarray
 
 from kardboard_vtuber.camera import CameraBackend, CameraConfig, CameraRotation, CameraSource
@@ -50,6 +51,12 @@ def build_parser() -> argparse.ArgumentParser:
         type=_brightness_offset,
         default=12,
         help="Brightness offset applied before tracking and preview, from 0 to 100 (default: 12).",
+    )
+    parser.add_argument(
+        "--film-grain",
+        type=_film_grain_strength,
+        default=0.0,
+        help="Display-only film-grain strength from 0 to 100 (default: 0).",
     )
     parser.add_argument(
         "--track-face",
@@ -127,6 +134,7 @@ def main(argv: list[str] | None = None) -> int:
     last_report_at = 0.0
     latest_action: str | None = None
     window_name = "KardboardCode Camera Preview"
+    grain_rng = np.random.default_rng()
 
     try:
         camera.start()
@@ -191,7 +199,8 @@ def main(argv: list[str] | None = None) -> int:
                     2,
                     cv2.LINE_AA,
                 )
-                cv2.imshow(window_name, frame)
+                display_frame = _apply_film_grain(frame, args.film_grain, grain_rng)
+                cv2.imshow(window_name, display_frame)
                 key = cv2.waitKey(1) & 0xFF
                 if key in {ord("q"), 27}:
                     break
@@ -222,6 +231,24 @@ def _apply_brightness(frame: ndarray, brightness: int) -> ndarray:
     if brightness == 0:
         return frame.copy()
     return cv2.convertScaleAbs(frame, alpha=1.0, beta=brightness)
+
+
+def _film_grain_strength(raw: str) -> float:
+    value = float(raw)
+    if not 0.0 <= value <= 100.0:
+        raise argparse.ArgumentTypeError("film grain must be between 0 and 100")
+    return value
+
+
+def _apply_film_grain(
+    frame: ndarray,
+    strength: float,
+    rng: np.random.Generator,
+) -> ndarray:
+    if strength == 0.0:
+        return frame
+    grain = rng.normal(0.0, strength, frame.shape[:2] + (1,))
+    return np.clip(frame.astype(np.float32) + grain, 0, 255).astype(np.uint8)
 
 
 def _print_snapshot(camera: LatestFrameCamera) -> None:
