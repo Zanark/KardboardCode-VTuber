@@ -90,7 +90,9 @@ point, no duplicate `eyes_open` or `mouth_closed` event is emitted
 The live phone probe detected the user's face while spectacles were worn and produced changing eye
 values plus a complete blink event. A later screenshot showed a real wink at `0.79` versus `0.60`,
 which the original absolute `0.35` closure rule missed. The relative rule was then live-validated
-with repeated `left_wink` transitions at closed-eye values between approximately `0.43` and `0.60`.
+with repeated `left_wink` transitions at closed-eye values between approximately `0.43` and `0.60`
+and a `right_wink` transition at `0.75` versus `0.43`. Mouth hysteresis was also validated with
+repeated openings around `0.65-0.73` and closures around `0.02-0.04`.
 This proves basic operation for that setup, not universal glasses compatibility. Strong
 reflections, tinted lenses, frame occlusion, and off-axis head pose can still require calibration
 (`src/kardboard_vtuber/tracking/models.py:93-151`,

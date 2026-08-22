@@ -97,6 +97,25 @@ pixel-level rendering is covered by an automated test, but its final placement s
 user-visible preview rather than a headless probe
 (`tests/test_tracking_models.py:114-131`).
 
+## Completed expression and pose calibration
+
+The guided live calibration was performed while the user wore spectacles:
+
+| Control | Observed evidence | Result |
+|---|---|---|
+| Left wink | Repeated events with the winked eye around `0.43-0.60` | Passed |
+| Right wink | Event at left `0.75`, right `0.43` | Passed |
+| Mouth open | Repeated events around `0.65-0.73` | Passed |
+| Mouth closed | Repeated events around `0.02-0.04` | Passed |
+| Yaw | Approximately `-48.8` to `+31.2` degrees | Responsive |
+| Pitch | Approximately `-46.1` to `+4.1` degrees | Responsive |
+| Roll | Approximately `-13.9` to `+12.6` degrees | Responsive |
+| Throughput | Generally near 30 camera and tracking FPS | Passed |
+
+Very large head turns or tilts briefly produced `face_lost`, followed by automatic recovery. This
+is expected when eyes and central facial features become too oblique or leave the useful camera
+view; smoothing cannot reconstruct a genuinely missing observation.
+
 ## Measurement cautions
 
 - Tracking FPS is callback throughput, not model-only inference time.
