@@ -91,6 +91,31 @@ python -m kardboard_vtuber `
 `--preview-height` changes only the displayed window size. Capture, tracking, and rendering remain
 at the source resolution and retain the full camera frame.
 
+## AR-style hand occlusion
+
+Download the verified official MediaPipe model once:
+
+```powershell
+python scripts\download_hand_landmarker_model.py
+```
+
+Then add `--hand-occlusion` to the textured renderer command:
+
+```powershell
+python -m kardboard_vtuber `
+  --source "http://YOUR_USERNAME:YOUR_PASSWORD@PHONE_IP:8080/video" `
+  --backend auto `
+  --rotate left `
+  --mirror `
+  --render-cardboard `
+  --hand-occlusion
+```
+
+The hand tracker runs asynchronously at a 320-pixel input width and restores detected hand and
+forearm pixels over the rendered avatar. This provides convincing foreground interaction when a
+hand is in front, but a monocular RGB camera cannot prove depth; a hand physically behind the
+avatar may also be treated as foreground.
+
 ## Quality checks
 
 ```powershell

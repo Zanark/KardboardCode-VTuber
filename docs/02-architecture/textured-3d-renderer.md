@@ -41,6 +41,8 @@ flowchart LR
 - a faceted dark privacy volume positioned between the front and rear faces, with an elongated
   lower silhouette and protected rear-panel channel that visually connect it to the real neck
   during upward pitch without exposing hair, chin, or beard;
+- optional asynchronous hand landmarks and an image-space hand/forearm mask that restore real
+  foreground pixels over the avatar for approximate monocular AR occlusion;
 - front and side cardboard flaps;
 - layered dark/light edge bars that suggest corrugated cardboard;
 - faceted earcups, cushions, and a segmented headphone band;

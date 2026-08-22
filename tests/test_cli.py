@@ -8,6 +8,7 @@ from kardboard_vtuber.cli import (
     _draw_debug_face_preview,
     _resize_preview,
     build_parser,
+    main,
 )
 from tests.test_ps1_cardboard_renderer import state
 
@@ -36,6 +37,8 @@ def test_raw_face_preview_is_disabled_by_default() -> None:
     args = build_parser().parse_args([])
 
     assert not args.debug_face_preview
+    assert not args.hand_occlusion
+    assert args.hand_tracking_width == 320
 
 
 def test_preview_height_reduces_only_display_dimensions() -> None:
@@ -60,3 +63,7 @@ def test_debug_face_preview_draws_source_crop_at_top_center() -> None:
 
     assert frame[40, 500].any()
     assert np.array_equal(frame[16, 480], (0, 0, 255))
+
+
+def test_hand_occlusion_requires_cardboard_rendering() -> None:
+    assert main(["--hand-occlusion", "--headless", "--duration", "0"]) == 2

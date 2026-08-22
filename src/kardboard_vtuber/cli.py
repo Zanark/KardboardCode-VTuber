@@ -22,6 +22,7 @@ from kardboard_vtuber.camera.stream import LatestFrameCamera
 
 if TYPE_CHECKING:
     from kardboard_vtuber.tracking.events import FaceActionDetector
+    from kardboard_vtuber.tracking.hand_occlusion import MediaPipeHandOccluder
     from kardboard_vtuber.tracking.mediapipe_tracker import MediaPipeFaceTracker
     from kardboard_vtuber.tracking.models import FaceTrackingState
 
@@ -114,6 +115,23 @@ def build_parser() -> argparse.ArgumentParser:
         help="Show an opt-in raw live face crop at the top center of the preview.",
     )
     parser.add_argument(
+        "--hand-occlusion",
+        action="store_true",
+        help="Composite detected hand/forearm pixels over the avatar for AR-style occlusion.",
+    )
+    parser.add_argument(
+        "--hand-model",
+        type=Path,
+        default=Path("models/hand_landmarker.task"),
+        help="Path to the MediaPipe Hand Landmarker .task model.",
+    )
+    parser.add_argument(
+        "--hand-tracking-width",
+        type=int,
+        default=320,
+        help="Maximum frame width submitted to hand tracking (default: 320).",
+    )
+    parser.add_argument(
         "--preview-height",
         type=_preview_height,
         help=(
@@ -136,6 +154,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.hand_occlusion and not args.render_cardboard:
+        print("--hand-occlusion requires --render-cardboard", file=sys.stderr)
+        return 2
     source = CameraSource.parse(args.source)
     recorded_file = isinstance(source.value, str) and Path(source.value).is_file()
     config = CameraConfig(
@@ -156,6 +177,7 @@ def main(argv: list[str] | None = None) -> int:
             if args.track_face or args.render_cardboard or args.debug_face_preview
             else None
         )
+        hand_occluder = _create_hand_occluder(args) if args.hand_occlusion else None
         action_detector = _create_action_detector(args) if tracker is not None else None
         renderer = _create_renderer(args) if args.render_cardboard else None
     except (OSError, RuntimeError, ValueError) as error:
@@ -187,6 +209,9 @@ def main(argv: list[str] | None = None) -> int:
 
             last_sequence = packet.sequence
             camera_frame = _apply_brightness(packet.frame, args.brightness)
+            if hand_occluder is not None:
+                hand_occluder.submit(camera_frame, packet.captured_at_ns)
+                hand_state = hand_occluder.snapshot()
             if tracker is not None:
                 tracker.submit(camera_frame, packet.captured_at_ns)
                 tracking_state = tracker.snapshot().raw_state
@@ -204,21 +229,31 @@ def main(argv: list[str] | None = None) -> int:
 
             if not args.headless:
                 frame = camera_frame
-                face_preview_source = frame.copy() if args.debug_face_preview else None
+                foreground_source = (
+                    frame.copy()
+                    if args.debug_face_preview or hand_occluder is not None
+                    else None
+                )
                 if tracker is not None:
                     from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
 
                     tracking_state = tracker.snapshot().state
                     if renderer is not None:
                         renderer.render(frame, tracking_state)
+                        if hand_occluder is not None and foreground_source is not None:
+                            from kardboard_vtuber.tracking.hand_occlusion import (
+                                composite_hand_foreground,
+                            )
+
+                            composite_hand_foreground(frame, foreground_source, hand_state)
                     draw_tracking_debug(
                         frame,
                         tracking_state,
                         action=latest_action,
                         draw_frame_geometry=renderer is None,
                     )
-                    if face_preview_source is not None:
-                        _draw_debug_face_preview(frame, face_preview_source, tracking_state)
+                    if args.debug_face_preview and foreground_source is not None:
+                        _draw_debug_face_preview(frame, foreground_source, tracking_state)
                 snapshot = camera.snapshot()
                 latency_ms = (time.monotonic_ns() - packet.captured_at_ns) / 1_000_000
                 label = (
@@ -256,6 +291,8 @@ def main(argv: list[str] | None = None) -> int:
     finally:
         if renderer is not None:
             renderer.close()
+        if hand_occluder is not None:
+            hand_occluder.close()
         if tracker is not None:
             tracker.close()
         camera.stop()
@@ -408,6 +445,20 @@ def _create_action_detector(args: argparse.Namespace) -> FaceActionDetector:
         ActionThresholds(
             hold_ms=args.action_hold_ms,
             eye_hold_ms=args.eye_action_hold_ms,
+        )
+    )
+
+
+def _create_hand_occluder(args: argparse.Namespace) -> MediaPipeHandOccluder:
+    from kardboard_vtuber.tracking.hand_occlusion import (
+        HandOcclusionConfig,
+        MediaPipeHandOccluder,
+    )
+
+    return MediaPipeHandOccluder(
+        HandOcclusionConfig(
+            model_path=args.hand_model,
+            input_width=args.hand_tracking_width,
         )
     )
 
