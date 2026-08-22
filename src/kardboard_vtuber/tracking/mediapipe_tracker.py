@@ -210,6 +210,7 @@ def draw_tracking_debug(
     state: FaceTrackingState,
     *,
     action: str | None = None,
+    draw_frame_geometry: bool = True,
 ) -> None:
     """Draw sparse landmarks, face bounds, expression bars, and pose values."""
 
@@ -228,15 +229,16 @@ def draw_tracking_debug(
         )
         return
 
-    for landmark in state.landmarks[::8]:
-        point = (round(landmark.x * width), round(landmark.y * height))
-        cv2.circle(frame, point, 1, (255, 180, 40), -1, cv2.LINE_AA)
+    if draw_frame_geometry:
+        for landmark in state.landmarks[::8]:
+            point = (round(landmark.x * width), round(landmark.y * height))
+            cv2.circle(frame, point, 1, (255, 180, 40), -1, cv2.LINE_AA)
 
-    x1 = round((state.center_x - state.face_width / 2) * width)
-    y1 = round((state.center_y - state.face_height / 2) * height)
-    x2 = round((state.center_x + state.face_width / 2) * width)
-    y2 = round((state.center_y + state.face_height / 2) * height)
-    cv2.rectangle(frame, (x1, y1), (x2, y2), (80, 255, 80), 2)
+        x1 = round((state.center_x - state.face_width / 2) * width)
+        y1 = round((state.center_y - state.face_height / 2) * height)
+        x2 = round((state.center_x + state.face_width / 2) * width)
+        y2 = round((state.center_y + state.face_height / 2) * height)
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (80, 255, 80), 2)
 
     pose = state.head_pose
     label = (

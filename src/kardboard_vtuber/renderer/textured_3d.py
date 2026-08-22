@@ -315,6 +315,7 @@ def _build_character_mesh() -> ndarray:
     cardboard = (0.72, 0.47, 0.23)
     dark_cardboard = (0.34, 0.20, 0.09)
     edge_cardboard = (0.50, 0.31, 0.13)
+    inner_liner = (0.18, 0.11, 0.06)
     white = (0.78, 0.75, 0.66)
     cushion = (0.13, 0.12, 0.10)
     generic_uv = ((0.0, 0.0), (0.5, 0.0), (0.5, 1.0), (0.0, 1.0))
@@ -381,6 +382,44 @@ def _build_character_mesh() -> ndarray:
         generic_uv,
         dark_cardboard,
         True,
+    )
+
+    liner_z = 0.16
+    builder.quad(
+        (
+            (-0.43, -0.40, liner_z),
+            (0.43, -0.40, liner_z),
+            (0.43, 0.40, liner_z),
+            (-0.43, 0.40, liner_z),
+        ),
+        (0.0, 0.0, 1.0),
+        generic_uv,
+        inner_liner,
+        False,
+    )
+    builder.quad(
+        (
+            (-0.43, -0.52, liner_z),
+            (-0.11, -0.52, liner_z),
+            (0.0, -0.40, liner_z),
+            (-0.43, -0.40, liner_z),
+        ),
+        (0.0, 0.0, 1.0),
+        generic_uv,
+        inner_liner,
+        False,
+    )
+    builder.quad(
+        (
+            (0.0, -0.40, liner_z),
+            (0.11, -0.52, liner_z),
+            (0.43, -0.52, liner_z),
+            (0.43, -0.40, liner_z),
+        ),
+        (0.0, 0.0, 1.0),
+        generic_uv,
+        inner_liner,
+        False,
     )
 
     builder.quad(

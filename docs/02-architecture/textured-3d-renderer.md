@@ -38,6 +38,8 @@ flowchart LR
 - a front shell with a protected V-shaped neck opening;
 - left, right, top, and rear depth surfaces;
 - a matching rear opening so the bottom remains hollow;
+- a close dark inner head liner that blocks the apparent empty cavity and leaves only a narrow neck
+  notch visible during upward pitch;
 - front and side cardboard flaps;
 - layered dark/light edge bars that suggest corrugated cardboard;
 - faceted earcups, cushions, and a segmented headphone band;
@@ -62,6 +64,10 @@ and roll drive the model matrix. The established calibration remains authoritati
 Before the first face detection the output is black. During tracking loss the renderer freezes the
 last safely composited frame. If the OpenGL context cannot be created, the CLI reports the failure
 and falls back to the procedural privacy-safe renderer.
+
+While the avatar is active, sparse full-frame landmarks and the green face rectangle are suppressed.
+The connected face mesh and XYZ pose axes remain available inside the dedicated top-right inset, so
+diagnostics do not visually appear inside the cardboard shell.
 
 ## Performance and validation
 

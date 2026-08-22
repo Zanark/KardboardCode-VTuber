@@ -196,6 +196,7 @@ def main(argv: list[str] | None = None) -> int:
                         frame,
                         tracking_state,
                         action=latest_action,
+                        draw_frame_geometry=renderer is None,
                     )
                 snapshot = camera.snapshot()
                 latency_ms = (time.monotonic_ns() - packet.captured_at_ns) / 1_000_000

@@ -111,7 +111,7 @@ opening exposes only the neck at every pitch.
 
 ## Validation
 
-- The full 62-test suite passes under Python 3.12 and 3.13.
+- The full 64-test suite passes under Python 3.12 and 3.13.
 - Tests cover black output before initial acquisition, bounded overlay region, mirrored visible
   K/C placement, full lower-face and chin-margin opacity, and
   fail-closed tracking-loss freezing, crown/hair coverage, calibrated anatomical winks, roll,

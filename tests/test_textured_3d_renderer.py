@@ -22,6 +22,11 @@ def test_character_mesh_contains_box_flaps_and_headphone_geometry() -> None:
     assert np.max(vertices[:, 0]) > 0.64
     assert np.max(vertices[:, 1]) > 0.75
     assert np.max(vertices[:, 2]) > 0.65
+    liner_vertices = vertices[
+        (np.isclose(vertices[:, 2], 0.16))
+        & (np.isclose(vertices[:, 8], 0.18))
+    ]
+    assert liner_vertices.shape[0] >= 18
 
 
 def test_cardboard_texture_changes_letters_into_wink_arcs() -> None:
@@ -56,4 +61,19 @@ def test_gpu_renderer_is_fail_closed_and_composites_model() -> None:
     frame.fill(220)
     renderer.render(frame, state(67, detected=False))
     assert np.array_equal(frame, safe_frame)
+    renderer.close()
+
+
+def test_upward_pitch_inner_liner_covers_head_but_leaves_neck_visible() -> None:
+    try:
+        renderer = Textured3DCardboardRenderer()
+    except RuntimeError as error:
+        pytest.skip(str(error))
+    frame = np.full((360, 640, 3), 91, dtype=np.uint8)
+
+    renderer.render(frame, state(1, pitch=-50.0))
+
+    assert not np.all(frame[220, 320] == 91)
+    assert not np.all(frame[260, 320] == 91)
+    assert np.all(frame[300, 320] == 91)
     renderer.close()

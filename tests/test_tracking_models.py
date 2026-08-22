@@ -204,6 +204,37 @@ def test_face_mesh_inset_labels_pose_xyz_axes(
     assert {"POSE", "X", "Y", "Z"} <= set(labels)
 
 
+def test_avatar_debug_hides_main_frame_face_bounds(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from kardboard_vtuber.tracking import mediapipe_tracker
+
+    rectangles: list[tuple[tuple[int, int], tuple[int, int]]] = []
+
+    def record_rectangle(
+        _frame: np.ndarray,
+        start: tuple[int, int],
+        end: tuple[int, int],
+        *_args: object,
+        **_kwargs: object,
+    ) -> None:
+        rectangles.append((start, end))
+
+    monkeypatch.setattr(mediapipe_tracker.cv2, "rectangle", record_rectangle)
+    draw_tracking_debug(
+        np.zeros((720, 1280, 3), dtype=np.uint8),
+        normalize_face(
+            timestamp_ms=1,
+            landmarks=[FakeLandmark(0.5, 0.5, 0.0)],
+            blendshapes=[],
+            transformation_matrix=np.eye(4),
+        ),
+        draw_frame_geometry=False,
+    )
+
+    assert len(rectangles) == 2
+
+
 def test_face_mesh_inset_preserves_portrait_frame_aspect_ratio(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
