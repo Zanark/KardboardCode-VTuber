@@ -56,6 +56,21 @@ python -m kardboard_vtuber `
 Do not add `--rotate left` or `--mirror` for this recording. Use
 `--cardboard-renderer procedural-2d` to compare the preserved original prototype.
 
+## Record a new canonical regression video
+
+```powershell
+python scripts\record_guided_regression.py `
+  --source "http://YOUR_USERNAME:YOUR_PASSWORD@PHONE_IP:8080/video" `
+  --backend auto `
+  --rotate left `
+  --mirror `
+  --brightness 12 `
+  --output-dir "C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files" `
+  --name "KardboardCode-canonical-regression"
+```
+
+Follow the 12 on-screen stages. The clean MP4 and synchronized CSV receive the same timestamp.
+
 ## Quality checks
 
 ```powershell

@@ -91,6 +91,16 @@ The live Nothing Phone stream remained near 30 FPS while tracking at 640-pixel i
 
 This was a twelve-second probe, not a long-duration soak test.
 
+## Canonical regression recording
+
+`scripts/record_guided_regression.py` records a clean 50-second camera video plus synchronized CSV
+telemetry. Its preview guides neutral pose, yaw, pitch, roll, blink, both winks, mouth movement,
+and combined motion. Preview instructions and debug graphics are never written into the saved MP4.
+
+The CSV stores raw and filtered expressions/pose, filtered bounds, stage names, frame numbers, and
+action events. Generated recordings belong in the private session artifact directory and must not
+be committed.
+
 ## Run it
 
 ```powershell
