@@ -73,6 +73,7 @@ Enable the live tracking overlay by adding:
 
 The tracker logs debounced face, eye, blink, wink, and mouth transitions. Use
 `--action-hold-ms 100` to tune how long a candidate action must remain stable before it is logged.
+One Euro smoothing is enabled by default; add `--no-motion-filter` to compare raw visual tracking.
 
 ## Documentation
 

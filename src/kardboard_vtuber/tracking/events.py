@@ -24,24 +24,27 @@ class FaceAction(StrEnum):
 class ActionThresholds:
     eye_closed: float = 0.35
     eye_open: float = 0.65
-    wink_closed: float = 0.65
+    wink_closed: float = 0.70
     wink_min_difference: float = 0.15
     mouth_open: float = 0.25
     mouth_closed: float = 0.12
     hold_ms: int = 100
+    eye_hold_ms: int = 40
     maximum_blink_ms: int = 500
 
     def __post_init__(self) -> None:
         if not 0.0 <= self.eye_closed < self.eye_open <= 1.0:
             raise ValueError("eye thresholds must satisfy 0 <= closed < open <= 1")
-        if not self.eye_closed < self.wink_closed <= self.eye_open:
-            raise ValueError("wink_closed must satisfy eye_closed < wink_closed <= eye_open")
+        if not self.eye_closed < self.wink_closed <= 1.0:
+            raise ValueError("wink_closed must satisfy eye_closed < wink_closed <= 1")
         if not 0.0 <= self.wink_min_difference <= 1.0:
             raise ValueError("wink_min_difference must be between 0 and 1")
         if not 0.0 <= self.mouth_closed < self.mouth_open <= 1.0:
             raise ValueError("mouth thresholds must satisfy 0 <= closed < open <= 1")
         if self.hold_ms < 0:
             raise ValueError("hold_ms cannot be negative")
+        if self.eye_hold_ms < 0:
+            raise ValueError("eye_hold_ms cannot be negative")
         if self.maximum_blink_ms < 0:
             raise ValueError("maximum_blink_ms cannot be negative")
 
@@ -108,7 +111,12 @@ class FaceActionDetector:
         eyes_action = self._classify_eyes(state)
         if eyes_action is not None:
             previous_eyes = self._eyes.stable
-            eyes_transition = self._transition(self._eyes, eyes_action, state.timestamp_ms)
+            eyes_transition = self._transition(
+                self._eyes,
+                eyes_action,
+                state.timestamp_ms,
+                hold_ms=self._thresholds.eye_hold_ms,
+            )
             if eyes_transition is not None:
                 if eyes_transition is FaceAction.EYES_CLOSED:
                     self._eyes_closed_since_ms = state.timestamp_ms
@@ -168,6 +176,8 @@ class FaceActionDetector:
         channel: _ChannelState,
         action: FaceAction,
         timestamp_ms: int,
+        *,
+        hold_ms: int | None = None,
     ) -> FaceAction | None:
         if channel.stable is action:
             channel.candidate = None
@@ -175,7 +185,8 @@ class FaceActionDetector:
         if channel.candidate is not action:
             channel.candidate = action
             channel.candidate_since_ms = timestamp_ms
-        if timestamp_ms - channel.candidate_since_ms < self._thresholds.hold_ms:
+        required_hold_ms = self._thresholds.hold_ms if hold_ms is None else hold_ms
+        if timestamp_ms - channel.candidate_since_ms < required_hold_ms:
             return None
         channel.stable = action
         channel.candidate = None

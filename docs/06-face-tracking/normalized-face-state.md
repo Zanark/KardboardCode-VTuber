@@ -40,6 +40,7 @@ classDiagram
     }
     class TrackingSnapshot {
       FaceTrackingState state
+      FaceTrackingState raw_state
       int submitted_frames
       int result_frames
       int detected_frames
@@ -94,15 +95,19 @@ The debug overlay needs spatial evidence that the model follows the face. Future
 selected landmarks for box scale, occlusion estimates, or calibration. The renderer should not
 consume MediaPipe landmark objects directly.
 
-## Future evolution
+## Raw and filtered states
 
-Filtering should produce a second contract rather than mutating raw observations:
+`TrackingSnapshot` retains the raw normalized observation and the filtered renderer/debug state:
 
 ```text
 FaceTrackingState (raw normalized observation)
-    -> FilteredFaceState (stable control targets)
+    -> One Euro filter
+    -> FaceTrackingState (stable control targets)
     -> AvatarControlState (renderer-specific values)
 ```
+
+Action detection consumes `raw_state`; visual geometry and future renderer controls consume
+filtered `state`. This prevents quick blinks from being hidden by smoothing.
 
 ## References
 

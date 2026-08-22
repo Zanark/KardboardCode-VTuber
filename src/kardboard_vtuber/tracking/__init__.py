@@ -6,6 +6,12 @@ from kardboard_vtuber.tracking.events import (
     FaceActionDetector,
     FaceActionEvent,
 )
+from kardboard_vtuber.tracking.filters import (
+    FaceMotionFilter,
+    FaceMotionFilterConfig,
+    OneEuroFilter,
+    OneEuroParameters,
+)
 from kardboard_vtuber.tracking.models import (
     FaceTrackingState,
     HeadPose,
@@ -19,7 +25,11 @@ __all__ = [
     "FaceAction",
     "FaceActionDetector",
     "FaceActionEvent",
+    "FaceMotionFilter",
+    "FaceMotionFilterConfig",
     "HeadPose",
     "NormalizedLandmark",
+    "OneEuroFilter",
+    "OneEuroParameters",
     "TrackingSnapshot",
 ]

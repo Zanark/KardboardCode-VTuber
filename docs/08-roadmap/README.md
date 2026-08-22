@@ -1,15 +1,15 @@
 # 08 · Roadmap: from tracking to rendered VTuber
 
-> **TL;DR** — Camera ingestion and raw face tracking are complete. The next vertical slice is
-> filtered control signals, followed by a low-resolution cardboard renderer, composition, and OBS
-> hardening.
+> **TL;DR** — Camera ingestion, tracking, calibration, One Euro filtering, and spring dynamics are
+> complete. The next vertical slice is the low-resolution cardboard renderer, followed by
+> composition and OBS hardening.
 
 ## Delivery sequence
 
 ```mermaid
 flowchart LR
     Done["1. Camera ingestion<br/>done"] --> Track["2. Face tracking<br/>done"]
-    Track --> Filter["3. Filtering + springs"]
+    Track --> Filter["3. Filtering + springs<br/>done"]
     Filter --> Render["4. PS1 renderer"]
     Render --> Compose["5. Composition"]
     Compose --> OBS["6. OBS integration"]
@@ -26,11 +26,11 @@ Implemented responsibilities:
 - Extract head pose, left/right eye openness, and mouth openness.
 - Emit live debug landmarks and diagnostics.
 
-Still pending within the next filtering milestone: neutral-pose and personal expression calibration.
-Tracking runs in `.venv312` because the optional dependency remains restricted below Python 3.13
+Personal expression calibration is complete. Tracking runs in `.venv312` because the optional
+dependency remains restricted below Python 3.13
 (`pyproject.toml:21-23`).
 
-## Milestone 3 · Filtering and motion
+## Milestone 3 · Filtering and motion — complete
 
 ```mermaid
 flowchart LR
@@ -39,13 +39,17 @@ flowchart LR
     Spring --> Control["Stable avatar control"]
 ```
 
-Separate signals will require different tuning:
+Implemented signal groups use separate tuning:
 
 - Head translation and rotation.
 - Left `K` eye.
 - Right `C` eye.
 - Mouth/front flaps.
 - Side-flap secondary motion.
+
+One Euro filtering is wired into tracking. Damped spring dynamics are implemented and tested for
+renderer use. See [One Euro motion filtering](../03-algorithms-and-data-structures/one-euro-filtering.md)
+and [Damped spring integration](../03-algorithms-and-data-structures/damped-spring-integration.md).
 
 ## Milestone 4 · PS1 renderer
 

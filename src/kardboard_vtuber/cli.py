@@ -68,6 +68,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="How long an expression must remain stable before an action log is emitted.",
     )
     parser.add_argument(
+        "--eye-action-hold-ms",
+        type=int,
+        default=40,
+        help="How long an eye state must remain stable before blink/wink logging.",
+    )
+    parser.add_argument(
+        "--no-motion-filter",
+        action="store_true",
+        help="Disable One Euro smoothing and expose raw tracking values.",
+    )
+    parser.add_argument(
         "--headless",
         action="store_true",
         help="Capture and print diagnostics without opening a preview window.",
@@ -123,7 +134,7 @@ def main(argv: list[str] | None = None) -> int:
             last_sequence = packet.sequence
             if tracker is not None:
                 tracker.submit(packet.frame, packet.captured_at_ns)
-                tracking_state = tracker.snapshot().state
+                tracking_state = tracker.snapshot().raw_state
                 if action_detector is not None:
                     events = action_detector.update(tracking_state)
                     if events:
@@ -213,6 +224,8 @@ def _create_tracker(args: argparse.Namespace) -> MediaPipeFaceTracker:
         MediaPipeTrackerConfig(
             model_path=args.face_model,
             input_width=args.tracking_width,
+            swap_eyes=args.mirror,
+            motion_filtering=not args.no_motion_filter,
         )
     )
 
@@ -220,7 +233,12 @@ def _create_tracker(args: argparse.Namespace) -> MediaPipeFaceTracker:
 def _create_action_detector(args: argparse.Namespace) -> FaceActionDetector:
     from kardboard_vtuber.tracking.events import ActionThresholds, FaceActionDetector
 
-    return FaceActionDetector(ActionThresholds(hold_ms=args.action_hold_ms))
+    return FaceActionDetector(
+        ActionThresholds(
+            hold_ms=args.action_hold_ms,
+            eye_hold_ms=args.eye_action_hold_ms,
+        )
+    )
 
 
 def _print_tracking_snapshot(tracker: MediaPipeFaceTracker) -> None:

@@ -64,6 +64,22 @@ def test_normalize_face_extracts_bounds_and_expressions() -> None:
     assert state.mouth_open == pytest.approx(0.4)
 
 
+def test_normalize_face_swaps_eye_semantics_for_mirrored_input() -> None:
+    state = normalize_face(
+        timestamp_ms=42,
+        landmarks=[FakeLandmark(0.5, 0.5, 0.0)],
+        blendshapes=[
+            FakeCategory("eyeBlinkLeft", 0.2),
+            FakeCategory("eyeBlinkRight", 0.8),
+        ],
+        transformation_matrix=np.eye(4),
+        swap_eyes=True,
+    )
+
+    assert state.left_eye_open == pytest.approx(0.2)
+    assert state.right_eye_open == pytest.approx(0.8)
+
+
 def test_normalize_face_returns_no_face_for_empty_landmarks() -> None:
     state = normalize_face(
         timestamp_ms=7,

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import threading
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +12,7 @@ import cv2
 import numpy as np
 from numpy import ndarray
 
+from kardboard_vtuber.tracking.filters import FaceMotionFilter, FaceMotionFilterConfig
 from kardboard_vtuber.tracking.models import (
     FaceTrackingState,
     TrackingSnapshot,
@@ -46,6 +47,9 @@ class MediaPipeTrackerConfig:
     min_face_detection_confidence: float = 0.5
     min_face_presence_confidence: float = 0.5
     min_tracking_confidence: float = 0.5
+    swap_eyes: bool = False
+    motion_filtering: bool = True
+    motion_filter: FaceMotionFilterConfig = field(default_factory=FaceMotionFilterConfig)
 
     def __post_init__(self) -> None:
         if self.input_width <= 0:
@@ -81,6 +85,7 @@ class MediaPipeFaceTracker:
         self._mp = mp
         self._lock = threading.Lock()
         self._state = FaceTrackingState.no_face()
+        self._raw_state = FaceTrackingState.no_face()
         self._submitted_frames = 0
         self._result_frames = 0
         self._detected_frames = 0
@@ -89,6 +94,9 @@ class MediaPipeFaceTracker:
         self._fps_window_started_ns = time.monotonic_ns()
         self._fps_window_frames = 0
         self._measured_fps = 0.0
+        self._motion_filter = (
+            FaceMotionFilter(config.motion_filter) if config.motion_filtering else None
+        )
 
         options = mp.tasks.vision.FaceLandmarkerOptions(
             base_options=mp.tasks.BaseOptions(model_asset_path=str(config.model_path.resolve())),
@@ -127,6 +135,7 @@ class MediaPipeFaceTracker:
         with self._lock:
             return TrackingSnapshot(
                 state=self._state,
+                raw_state=self._raw_state,
                 submitted_frames=self._submitted_frames,
                 result_frames=self._result_frames,
                 detected_frames=self._detected_frames,
@@ -159,19 +168,26 @@ class MediaPipeFaceTracker:
     def _on_result(self, result: Any, _output_image: Any, timestamp_ms: int) -> None:
         try:
             if not result.face_landmarks:
-                state = FaceTrackingState.no_face(timestamp_ms)
+                raw_state = FaceTrackingState.no_face(timestamp_ms)
             else:
                 blendshapes = result.face_blendshapes[0] if result.face_blendshapes else ()
                 matrices = result.facial_transformation_matrixes
                 matrix = matrices[0] if matrices else None
-                state = normalize_face(
+                raw_state = normalize_face(
                     timestamp_ms=timestamp_ms,
                     landmarks=result.face_landmarks[0],
                     blendshapes=blendshapes,
                     transformation_matrix=matrix,
+                    swap_eyes=self._config.swap_eyes,
                 )
+            state = (
+                self._motion_filter.filter(raw_state)
+                if self._motion_filter is not None
+                else raw_state
+            )
             now_ns = time.monotonic_ns()
             with self._lock:
+                self._raw_state = raw_state
                 self._state = state
                 self._result_frames += 1
                 if state.detected:

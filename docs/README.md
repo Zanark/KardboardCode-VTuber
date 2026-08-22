@@ -21,7 +21,7 @@ The new application carries this visual identity into a camera-tracked PS1-style
 
 | Part | Status | Evidence |
 |---|---|---|
-| Camera ingestion | Implemented and verified | `src/kardboard_vtuber/camera/`, covered by the 26-test suite |
+| Camera ingestion | Implemented and verified | `src/kardboard_vtuber/camera/`, covered by the 37-test suite |
 | Android IP Webcam integration | Implemented and user-verified | 1080x1920 preview at about 28-30 FPS |
 | Face tracking | Implemented and live-validated | MediaPipe near 30 result FPS plus debounced action logs |
 | PS1 renderer | Planned | Product requirements and source avatar documented |
@@ -66,7 +66,7 @@ flowchart LR
     Capture --> Slot["Latest-frame slot<br/>implemented"]
     Slot --> Tracker["Face tracker<br/>implemented"]
     Slot --> Composer["Full-resolution composer<br/>planned"]
-    Tracker --> Filter["One Euro + springs<br/>planned"]
+    Tracker --> Filter["One Euro + springs<br/>implemented"]
     Filter --> Renderer["Low-resolution PS1 box<br/>planned"]
     Renderer --> Composer
     Composer --> Preview["Preview window"]

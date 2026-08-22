@@ -89,6 +89,7 @@ class TrackingSnapshot:
     """Immutable tracker diagnostics plus the latest normalized result."""
 
     state: FaceTrackingState
+    raw_state: FaceTrackingState
     submitted_frames: int
     result_frames: int
     detected_frames: int
@@ -103,6 +104,7 @@ def normalize_face(
     landmarks: Iterable[object],
     blendshapes: Iterable[object],
     transformation_matrix: Sequence[Sequence[float]] | NDArray[np.floating] | None,
+    swap_eyes: bool = False,
 ) -> FaceTrackingState:
     """Convert MediaPipe-shaped values into stable project contracts."""
 
@@ -120,6 +122,10 @@ def normalize_face(
         if transformation_matrix is not None
         else HeadPose.identity()
     )
+    left_eye_open = 1.0 - _clamp01(scores.get("eyeBlinkLeft", 0.0))
+    right_eye_open = 1.0 - _clamp01(scores.get("eyeBlinkRight", 0.0))
+    if swap_eyes:
+        left_eye_open, right_eye_open = right_eye_open, left_eye_open
     return FaceTrackingState(
         timestamp_ms=timestamp_ms,
         detected=True,
@@ -128,8 +134,8 @@ def normalize_face(
         center_y=(min(ys) + max(ys)) / 2,
         face_width=max(xs) - min(xs),
         face_height=max(ys) - min(ys),
-        left_eye_open=1.0 - _clamp01(scores.get("eyeBlinkLeft", 0.0)),
-        right_eye_open=1.0 - _clamp01(scores.get("eyeBlinkRight", 0.0)),
+        left_eye_open=left_eye_open,
+        right_eye_open=right_eye_open,
         mouth_open=_clamp01(scores.get("jawOpen", 0.0)),
         head_pose=pose,
     )

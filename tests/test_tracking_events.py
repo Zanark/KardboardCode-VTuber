@@ -36,7 +36,7 @@ def actions(detector: FaceActionDetector, observation: FaceTrackingState) -> lis
 
 
 def test_detector_logs_initial_face_eyes_and_mouth_states() -> None:
-    detector = FaceActionDetector(ActionThresholds(hold_ms=0))
+    detector = FaceActionDetector(ActionThresholds(hold_ms=0, eye_hold_ms=0))
 
     assert actions(detector, state(1)) == [
         FaceAction.FACE_DETECTED,
@@ -46,7 +46,7 @@ def test_detector_logs_initial_face_eyes_and_mouth_states() -> None:
 
 
 def test_detector_distinguishes_left_and_right_winks() -> None:
-    detector = FaceActionDetector(ActionThresholds(hold_ms=0))
+    detector = FaceActionDetector(ActionThresholds(hold_ms=0, eye_hold_ms=0))
     detector.update(state(1))
 
     assert actions(detector, state(2, left_eye=0.1, right_eye=0.9)) == [FaceAction.LEFT_WINK]
@@ -55,7 +55,7 @@ def test_detector_distinguishes_left_and_right_winks() -> None:
 
 
 def test_detector_recognizes_asymmetric_wink_with_spectacle_glare() -> None:
-    detector = FaceActionDetector(ActionThresholds(hold_ms=0))
+    detector = FaceActionDetector(ActionThresholds(hold_ms=0, eye_hold_ms=0))
     detector.update(state(1))
 
     assert actions(detector, state(2, left_eye=0.79, right_eye=0.60)) == [
@@ -64,7 +64,9 @@ def test_detector_recognizes_asymmetric_wink_with_spectacle_glare() -> None:
 
 
 def test_detector_emits_blink_when_both_eyes_reopen_quickly() -> None:
-    detector = FaceActionDetector(ActionThresholds(hold_ms=0, maximum_blink_ms=500))
+    detector = FaceActionDetector(
+        ActionThresholds(hold_ms=0, eye_hold_ms=0, maximum_blink_ms=500)
+    )
     detector.update(state(100))
 
     assert actions(detector, state(200, left_eye=0.1, right_eye=0.1)) == [
@@ -74,7 +76,7 @@ def test_detector_emits_blink_when_both_eyes_reopen_quickly() -> None:
 
 
 def test_detector_logs_mouth_open_and_closed() -> None:
-    detector = FaceActionDetector(ActionThresholds(hold_ms=0))
+    detector = FaceActionDetector(ActionThresholds(hold_ms=0, eye_hold_ms=0))
     detector.update(state(1))
 
     assert actions(detector, state(2, mouth=0.8)) == [FaceAction.MOUTH_OPEN]
@@ -82,7 +84,7 @@ def test_detector_logs_mouth_open_and_closed() -> None:
 
 
 def test_detector_debounces_short_changes() -> None:
-    detector = FaceActionDetector(ActionThresholds(hold_ms=100))
+    detector = FaceActionDetector(ActionThresholds(hold_ms=100, eye_hold_ms=100))
 
     assert actions(detector, state(0)) == []
     assert actions(detector, state(50)) == []
@@ -94,7 +96,7 @@ def test_detector_debounces_short_changes() -> None:
 
 
 def test_detector_logs_face_loss_and_ignores_duplicate_timestamp() -> None:
-    detector = FaceActionDetector(ActionThresholds(hold_ms=0))
+    detector = FaceActionDetector(ActionThresholds(hold_ms=0, eye_hold_ms=0))
     detector.update(state(1))
 
     assert actions(detector, state(2, detected=False)) == [FaceAction.FACE_LOST]
@@ -102,7 +104,7 @@ def test_detector_logs_face_loss_and_ignores_duplicate_timestamp() -> None:
 
 
 def test_transient_tracking_loss_does_not_repeat_stable_actions() -> None:
-    detector = FaceActionDetector(ActionThresholds(hold_ms=100))
+    detector = FaceActionDetector(ActionThresholds(hold_ms=100, eye_hold_ms=100))
     detector.update(state(0))
     detector.update(state(100))
 
