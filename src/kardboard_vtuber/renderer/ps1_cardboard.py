@@ -202,8 +202,6 @@ class PS1CardboardRenderer:
             box_height,
             full_alpha,
             mouth_open,
-            bottom_depth,
-            depth_x,
         )
         roll = max(-60.0, min(60.0, state.head_pose.roll_degrees))
         if abs(roll) > 0.5:
@@ -421,36 +419,37 @@ class PS1CardboardRenderer:
         box_height: float,
         full_alpha: int,
         mouth_open: float,
-        bottom_depth: int,
-        depth_x: int,
     ) -> None:
-        center_x = float(front[2:4, 0].mean()) + depth_x
-        left = float(front[3][0]) + depth_x
-        right = float(front[2][0]) + depth_x
-        hinge_y = round(float(front[2:4, 1].mean())) + bottom_depth
+        center_x = float(front[2:4, 0].mean())
+        left = float(front[3][0])
+        right = float(front[2][0])
+        hinge_y = round(float(front[2:4, 1].mean()))
         neck_half_width = box_width * 0.16
+        neck_apex_y = hinge_y - max(5, round(box_height * 0.07))
         openness = max(0.0, min(1.0, mouth_open))
-        drop = box_height * (0.025 + 0.16 * openness)
-        spread = box_width * 0.10 * openness
+        drop = box_height * (0.015 + 0.09 * openness)
+        spread = box_width * 0.05 * openness
         left_flap = np.array(
             [
                 [round(left), hinge_y],
                 [round(center_x - neck_half_width), hinge_y],
-                [round(center_x - neck_half_width - box_width * 0.03), round(hinge_y + drop)],
-                [round(left - spread), round(hinge_y + drop * 0.72)],
+                [round(center_x), neck_apex_y],
+                [round(center_x - box_width * 0.035), round(neck_apex_y + drop)],
+                [round(left - spread), round(hinge_y + drop * 0.65)],
             ],
             dtype=np.int32,
         )
         right_flap = np.array(
             [
+                [round(center_x), neck_apex_y],
                 [round(center_x + neck_half_width), hinge_y],
                 [round(right), hinge_y],
-                [round(right + spread), round(hinge_y + drop * 0.72)],
-                [round(center_x + neck_half_width + box_width * 0.03), round(hinge_y + drop)],
+                [round(right + spread), round(hinge_y + drop * 0.65)],
+                [round(center_x + box_width * 0.035), round(neck_apex_y + drop)],
             ],
             dtype=np.int32,
         )
         for flap, color in ((left_flap, (71, 126, 169)), (right_flap, (78, 134, 177))):
-            cv2.fillConvexPoly(overlay, flap, color)
-            cv2.fillConvexPoly(alpha, flap, full_alpha)
+            cv2.fillPoly(overlay, [flap], color)
+            cv2.fillPoly(alpha, [flap], full_alpha)
             cv2.polylines(overlay, [flap], True, (24, 34, 43), 1, cv2.LINE_8)

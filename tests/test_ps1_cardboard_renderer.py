@@ -71,6 +71,20 @@ def test_mouth_openness_changes_front_flap_pixels() -> None:
     assert not np.array_equal(closed[470:], opened[470:])
 
 
+def test_looking_up_keeps_mouth_flaps_hinged_to_front_lower_contour() -> None:
+    closed_renderer = PS1CardboardRenderer()
+    open_renderer = PS1CardboardRenderer()
+    closed = np.zeros((720, 1280, 3), dtype=np.uint8)
+    opened = np.zeros((720, 1280, 3), dtype=np.uint8)
+
+    for timestamp_ms in range(0, 300, 33):
+        closed_renderer.render(closed, state(timestamp_ms, mouth=0.0, pitch=-45.0))
+        open_renderer.render(opened, state(timestamp_ms, mouth=1.0, pitch=-45.0))
+
+    difference = np.abs(opened.astype(np.int16) - closed.astype(np.int16))
+    assert difference[440:520].sum() > difference[560:640].sum()
+
+
 def test_screen_left_k_follows_anatomical_left_eye_in_mirrored_preview() -> None:
     renderer = PS1CardboardRenderer(CardboardRendererConfig(mirrored=True))
     open_frame = np.zeros((720, 1280, 3), dtype=np.uint8)
