@@ -44,9 +44,6 @@ flowchart LR
 - optional asynchronous hand landmarks and an image-space hand/forearm mask that restore real
   foreground pixels over the avatar for approximate monocular AR occlusion; the mask uses a palm
   polygon plus separate finger capsules so avatar pixels remain intact between fingers;
-- optional Depth Anything V2 Small inference through DirectML, combining protected face depth,
-  hand seeds, near-depth thresholding, and connected components to extend foreground restoration
-  from the hand into arbitrary held objects while failing back to the hand-only mask on ambiguity;
 - front and side cardboard flaps;
 - layered dark/light edge bars that suggest corrugated cardboard;
 - faceted earcups, cushions, and a segmented headphone band;

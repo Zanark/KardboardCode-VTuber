@@ -22,10 +22,6 @@ dev = [
 tracking = [
     "mediapipe>=0.10.35,<0.11; python_version < '3.13'",
 ]
-occlusion = [
-    "mediapipe>=0.10.35,<0.11; python_version < '3.13'",
-    "onnxruntime-directml>=1.24,<2; platform_system == 'Windows'",
-]
 
 [project.scripts]
 kardboard-camera = "kardboard_vtuber.cli:main"

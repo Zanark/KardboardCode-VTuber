@@ -38,9 +38,7 @@ def test_raw_face_preview_is_disabled_by_default() -> None:
 
     assert not args.debug_face_preview
     assert not args.hand_occlusion
-    assert not args.depth_occlusion
     assert args.hand_tracking_width == 320
-    assert args.depth_input_size == 196
 
 
 def test_preview_height_reduces_only_display_dimensions() -> None:
@@ -69,9 +67,3 @@ def test_debug_face_preview_draws_source_crop_at_top_center() -> None:
 
 def test_hand_occlusion_requires_cardboard_rendering() -> None:
     assert main(["--hand-occlusion", "--headless", "--duration", "0"]) == 2
-    assert main(["--depth-occlusion", "--headless", "--duration", "0"]) == 2
-
-
-def test_depth_input_size_requires_model_multiple() -> None:
-    with pytest.raises(SystemExit):
-        build_parser().parse_args(["--depth-input-size", "200"])
