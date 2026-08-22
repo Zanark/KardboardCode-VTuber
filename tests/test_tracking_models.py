@@ -109,3 +109,21 @@ def test_draw_tracking_debug_modifies_frame() -> None:
     draw_tracking_debug(frame, state)
 
     assert np.count_nonzero(frame) > 0
+
+
+def test_draw_tracking_debug_adds_black_face_mesh_inset() -> None:
+    landmarks = [
+        FakeLandmark(0.2 + (index % 20) * 0.03, 0.2 + (index // 20) * 0.02, 0.0)
+        for index in range(478)
+    ]
+    state = normalize_face(
+        timestamp_ms=1,
+        landmarks=landmarks,
+        blendshapes=[],
+        transformation_matrix=np.eye(4),
+    )
+    frame = np.full((720, 1280, 3), 255, dtype=np.uint8)
+
+    draw_tracking_debug(frame, state)
+
+    assert np.mean(frame[30:220, 900:1240]) < 80

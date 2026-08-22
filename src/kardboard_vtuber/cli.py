@@ -14,6 +14,7 @@ from kardboard_vtuber.camera import CameraBackend, CameraConfig, CameraRotation,
 from kardboard_vtuber.camera.stream import LatestFrameCamera
 
 if TYPE_CHECKING:
+    from kardboard_vtuber.tracking.events import FaceActionDetector
     from kardboard_vtuber.tracking.mediapipe_tracker import MediaPipeFaceTracker
 
 
@@ -61,6 +62,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Maximum frame width submitted to face tracking.",
     )
     parser.add_argument(
+        "--action-hold-ms",
+        type=int,
+        default=100,
+        help="How long an expression must remain stable before an action log is emitted.",
+    )
+    parser.add_argument(
         "--headless",
         action="store_true",
         help="Capture and print diagnostics without opening a preview window.",
@@ -87,6 +94,7 @@ def main(argv: list[str] | None = None) -> int:
     camera = LatestFrameCamera(config)
     try:
         tracker = _create_tracker(args) if args.track_face else None
+        action_detector = _create_action_detector(args) if tracker is not None else None
     except (OSError, RuntimeError, ValueError) as error:
         print(str(error), file=sys.stderr)
         return 1
@@ -114,6 +122,10 @@ def main(argv: list[str] | None = None) -> int:
             last_sequence = packet.sequence
             if tracker is not None:
                 tracker.submit(packet.frame, packet.captured_at_ns)
+                tracking_state = tracker.snapshot().state
+                if action_detector is not None:
+                    for event in action_detector.update(tracking_state):
+                        print(event.format_log(), flush=True)
             if now - last_report_at >= 2.0:
                 _print_snapshot(camera)
                 if tracker is not None:
@@ -195,6 +207,12 @@ def _create_tracker(args: argparse.Namespace) -> MediaPipeFaceTracker:
             input_width=args.tracking_width,
         )
     )
+
+
+def _create_action_detector(args: argparse.Namespace) -> FaceActionDetector:
+    from kardboard_vtuber.tracking.events import ActionThresholds, FaceActionDetector
+
+    return FaceActionDetector(ActionThresholds(hold_ms=args.action_hold_ms))
 
 
 def _print_tracking_snapshot(tracker: MediaPipeFaceTracker) -> None:

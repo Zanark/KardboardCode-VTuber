@@ -46,7 +46,8 @@ flowchart LR
 | `normalize_face()` | Landmark, bounds, blendshape, and pose conversion | `src/kardboard_vtuber/tracking/models.py:93` |
 | `MediaPipeTrackerConfig` | Model path, input width, confidence thresholds | `src/kardboard_vtuber/tracking/mediapipe_tracker.py:23` |
 | `MediaPipeFaceTracker` | Async task ownership and latest-result diagnostics | `src/kardboard_vtuber/tracking/mediapipe_tracker.py:44` |
-| `draw_tracking_debug()` | Sparse landmarks, bounds, expressions, and pose | `src/kardboard_vtuber/tracking/mediapipe_tracker.py:177` |
+| `FaceActionDetector` | Debounced blink, wink, eye, mouth, and face transitions | `src/kardboard_vtuber/tracking/events.py:73` |
+| `draw_tracking_debug()` | Sparse landmarks, connected mesh inset, bounds, expressions, and pose | `src/kardboard_vtuber/tracking/mediapipe_tracker.py:191` |
 | Model downloader | Official URL plus SHA-256 verification | `scripts/download_face_landmarker_model.py:1` |
 | CLI integration | Flags, submission, diagnostics, and cleanup | `src/kardboard_vtuber/cli.py:1` |
 
@@ -68,7 +69,8 @@ sequenceDiagram
     Callback->>Tracker: replace latest FaceTrackingState
     CLI->>Tracker: snapshot()
     Tracker-->>Preview: newest normalized state
-    Preview->>Preview: draw landmarks, bounds, eye/mouth/pose values
+    Preview->>Preview: draw landmarks, mesh, bounds, eye/mouth/pose values
+    CLI->>CLI: emit debounced facial action transitions
 ```
 
 ## Verified performance
@@ -84,6 +86,8 @@ The live Nothing Phone stream remained near 30 FPS while tracking at 640-pixel i
 | Tracking errors | None |
 | Independent eye values | Present and changing |
 | Mouth value | Present; near zero while mouth was closed |
+| Spectacles | Face detected and a complete blink transition observed |
+| Action transitions | Face detected, eyes closed/open, and blink emitted |
 
 This was a twelve-second probe, not a long-duration soak test.
 
@@ -106,6 +110,7 @@ python -m kardboard_vtuber `
 - [Asynchronous live inference](../03-algorithms-and-data-structures/asynchronous-live-inference.md)
 - [Blendshape normalization](../03-algorithms-and-data-structures/blendshape-normalization.md)
 - [Transformation-matrix decomposition](../03-algorithms-and-data-structures/transformation-matrix-decomposition.md)
+- [Facial action state machine](../03-algorithms-and-data-structures/facial-action-state-machine.md)
 
 ## References
 

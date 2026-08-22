@@ -24,7 +24,8 @@ The first implemented subsystem is low-latency camera ingestion:
 
 The phone preview has been verified at 1080x1920 portrait output and approximately 28-30 FPS.
 
-Face tracking and the PS1 cardboard renderer are the next milestones.
+Face tracking, facial action logs, and the connected face-mesh debug inset are implemented. Tracking
+calibration and the PS1 cardboard renderer are the next milestones.
 
 ## Quick start
 
@@ -69,6 +70,9 @@ Enable the live tracking overlay by adding:
 ```powershell
 --track-face
 ```
+
+The tracker logs debounced face, eye, blink, wink, and mouth transitions. Use
+`--action-hold-ms 100` to tune how long a candidate action must remain stable before it is logged.
 
 ## Documentation
 

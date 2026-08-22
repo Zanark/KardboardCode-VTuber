@@ -15,6 +15,7 @@
 | [Asynchronous live inference](asynchronous-live-inference.md) | Non-blocking submission + latest result | Keep inference out of the preview critical path |
 | [Blendshape normalization](blendshape-normalization.md) | Lookup, inversion, and clamping | Produce stable eye and mouth controls |
 | [Transformation matrix decomposition](transformation-matrix-decomposition.md) | 4x4 validation + 3x3 RQ decomposition | Expose renderer-friendly pose diagnostics |
+| [Facial action state machine](facial-action-state-machine.md) | Hysteresis + debounced finite-state channels | Convert continuous controls into blink, wink, and mouth events |
 
 ## Complexity summary
 
