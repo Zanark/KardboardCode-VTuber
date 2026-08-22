@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import math
 import time
 from dataclasses import dataclass
 from datetime import datetime
@@ -104,6 +105,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Output filename stem; a timestamp is appended.",
     )
     parser.add_argument("--countdown", type=float, default=3.0)
+    parser.add_argument(
+        "--preview-height",
+        type=int,
+        default=720,
+        help="Maximum preview window height in pixels; saved video keeps full resolution.",
+    )
     return parser
 
 
@@ -113,6 +120,8 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("--brightness must be between 0 and 100")
     if args.countdown < 0:
         raise SystemExit("--countdown cannot be negative")
+    if args.preview_height < 240:
+        raise SystemExit("--preview-height must be at least 240")
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -164,8 +173,11 @@ def main(argv: list[str] | None = None) -> int:
             if packet is None:
                 continue
             last_sequence = packet.sequence
-            preview = _brighten(packet.frame, args.brightness)
-            remaining = max(0, math_ceil(args.countdown - (time.monotonic() - countdown_started)))
+            preview = _resize_preview(
+                _brighten(packet.frame, args.brightness),
+                args.preview_height,
+            )
+            remaining = max(0, math.ceil(args.countdown - (time.monotonic() - countdown_started)))
             _draw_instruction(preview, f"RECORDING STARTS IN {remaining}", "")
             cv2.imshow(window_name, preview)
             if cv2.waitKey(1) & 0xFF in {ord("q"), 27}:
@@ -207,7 +219,7 @@ def main(argv: list[str] | None = None) -> int:
                 )
                 video_frame += 1
 
-                preview = tracking_input.copy()
+                preview = _resize_preview(tracking_input, args.preview_height)
                 draw_tracking_debug(preview, filtered)
                 _draw_instruction(
                     preview,
@@ -232,6 +244,18 @@ def main(argv: list[str] | None = None) -> int:
 
 def _brighten(frame: ndarray, brightness: int) -> ndarray:
     return cv2.convertScaleAbs(frame, alpha=1.0, beta=brightness)
+
+
+def _resize_preview(frame: ndarray, maximum_height: int) -> ndarray:
+    height, width = frame.shape[:2]
+    if height <= maximum_height:
+        return frame.copy()
+    scale = maximum_height / height
+    return cv2.resize(
+        frame,
+        (max(1, round(width * scale)), maximum_height),
+        interpolation=cv2.INTER_AREA,
+    )
 
 
 def _stage_at(elapsed: float) -> tuple[Stage, float]:
@@ -281,32 +305,62 @@ def _telemetry_row(
 
 
 def _draw_instruction(frame: ndarray, headline: str, detail: str) -> None:
-    height, width = frame.shape[:2]
-    cv2.rectangle(frame, (0, height - 132), (width, height), (0, 0, 0), -1)
+    _, width = frame.shape[:2]
+    margin = 12
+    panel_width = max(
+        1,
+        min(width - (margin * 2), max(260, round(width * 0.72))),
+    )
+    headline_scale = _fit_text_scale(headline, panel_width - 24, 0.82, 2)
+    detail_scale = _fit_text_scale(detail, panel_width - 24, 0.58, 1)
+    panel_height = 94 if detail else 62
+    cv2.rectangle(
+        frame,
+        (margin, margin),
+        (margin + panel_width, margin + panel_height),
+        (0, 0, 0),
+        -1,
+    )
     cv2.putText(
         frame,
         headline,
-        (28, height - 76),
+        (margin + 12, margin + 37),
         cv2.FONT_HERSHEY_SIMPLEX,
-        1.0,
+        headline_scale,
         (80, 255, 80),
-        3,
-        cv2.LINE_AA,
-    )
-    cv2.putText(
-        frame,
-        detail,
-        (28, height - 30),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.7,
-        (220, 220, 220),
         2,
         cv2.LINE_AA,
     )
+    if detail:
+        cv2.putText(
+            frame,
+            detail,
+            (margin + 12, margin + 76),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            detail_scale,
+            (220, 220, 220),
+            1,
+            cv2.LINE_AA,
+        )
 
 
-def math_ceil(value: float) -> int:
-    return int(-(-value // 1))
+def _fit_text_scale(
+    text: str,
+    maximum_width: int,
+    preferred_scale: float,
+    thickness: int,
+) -> float:
+    if not text:
+        return preferred_scale
+    width = cv2.getTextSize(
+        text,
+        cv2.FONT_HERSHEY_SIMPLEX,
+        preferred_scale,
+        thickness,
+    )[0][0]
+    if width <= maximum_width:
+        return preferred_scale
+    return max(0.35, preferred_scale * maximum_width / width)
 
 
 if __name__ == "__main__":

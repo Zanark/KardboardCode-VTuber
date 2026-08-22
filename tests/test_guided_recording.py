@@ -1,6 +1,13 @@
 from __future__ import annotations
 
-from scripts.record_guided_regression import STAGES, _stage_at
+import numpy as np
+
+from scripts.record_guided_regression import (
+    STAGES,
+    _draw_instruction,
+    _resize_preview,
+    _stage_at,
+)
 
 
 def test_guided_recording_covers_all_required_pose_and_expression_stages() -> None:
@@ -27,3 +34,20 @@ def test_guided_recording_stage_lookup_tracks_boundaries() -> None:
     assert _stage_at(0.0)[0].name == "neutral"
     assert _stage_at(4.0)[0].name == "yaw_right"
     assert _stage_at(44.0)[0].name == "combined"
+
+
+def test_guided_recording_preview_is_reduced_without_changing_aspect_ratio() -> None:
+    frame = np.zeros((1920, 1080, 3), dtype=np.uint8)
+
+    preview = _resize_preview(frame, 720)
+
+    assert preview.shape == (720, 405, 3)
+
+
+def test_guided_recording_instruction_panel_is_at_top_left() -> None:
+    frame = np.full((720, 405, 3), 255, dtype=np.uint8)
+
+    _draw_instruction(frame, "LOOK UP", "4.0s")
+
+    assert not frame[20, 20].any()
+    assert frame[-20, 20].all()

@@ -65,6 +65,7 @@ python scripts\record_guided_regression.py `
   --rotate left `
   --mirror `
   --brightness 12 `
+  --preview-height 720 `
   --output-dir "C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files" `
   --name "KardboardCode-canonical-regression"
 ```
