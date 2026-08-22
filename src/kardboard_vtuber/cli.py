@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 import cv2
+from numpy import ndarray
 
 from kardboard_vtuber.camera import CameraBackend, CameraConfig, CameraRotation, CameraSource
 from kardboard_vtuber.camera.stream import LatestFrameCamera
@@ -44,6 +45,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Rotate frames left, right, or 180 degrees after capture.",
     )
     parser.add_argument("--mirror", action="store_true", help="Mirror frames horizontally.")
+    parser.add_argument(
+        "--brightness",
+        type=_brightness_offset,
+        default=12,
+        help="Brightness offset applied before tracking and preview, from 0 to 100 (default: 12).",
+    )
     parser.add_argument(
         "--track-face",
         action="store_true",
@@ -138,8 +145,9 @@ def main(argv: list[str] | None = None) -> int:
                 continue
 
             last_sequence = packet.sequence
+            camera_frame = _apply_brightness(packet.frame, args.brightness)
             if tracker is not None:
-                tracker.submit(packet.frame, packet.captured_at_ns)
+                tracker.submit(camera_frame, packet.captured_at_ns)
                 tracking_state = tracker.snapshot().raw_state
                 if action_detector is not None:
                     events = action_detector.update(tracking_state)
@@ -154,7 +162,7 @@ def main(argv: list[str] | None = None) -> int:
                 last_report_at = now
 
             if not args.headless:
-                frame = packet.frame
+                frame = camera_frame
                 if tracker is not None:
                     from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
 
@@ -201,6 +209,19 @@ def main(argv: list[str] | None = None) -> int:
         camera.stop()
         cv2.destroyAllWindows()
     return 0
+
+
+def _brightness_offset(raw: str) -> int:
+    value = int(raw)
+    if not 0 <= value <= 100:
+        raise argparse.ArgumentTypeError("brightness must be between 0 and 100")
+    return value
+
+
+def _apply_brightness(frame: ndarray, brightness: int) -> ndarray:
+    if brightness == 0:
+        return frame.copy()
+    return cv2.convertScaleAbs(frame, alpha=1.0, beta=brightness)
 
 
 def _print_snapshot(camera: LatestFrameCamera) -> None:

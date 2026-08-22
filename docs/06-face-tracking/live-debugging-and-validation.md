@@ -17,6 +17,11 @@ inset reserves its left side for a pose-driven XYZ axis gizmo: X is red, Y is gr
 The arrows rotate from the same pitch/yaw/roll values shown in the text diagnostics
 (`src/kardboard_vtuber/tracking/mediapipe_tracker.py:213-427`).
 
+Before MediaPipe submission, the CLI applies a mild `+12` brightness offset to both the tracking
+input and displayed camera frame. This improves eye-feature contrast in dim input without making
+the tracker and preview observe different images. `--brightness 0` disables the lift; values up to
+`100` are accepted for local tuning (`src/kardboard_vtuber/cli.py:28-190`).
+
 The latest primary transition is shown directly below the pose values as
 `ACTION = <ACTION NAME>`. The CLI retains the first event from a multi-event update so a meaningful
 transition such as `BLINK` is not immediately replaced by the accompanying `EYES OPEN` state
