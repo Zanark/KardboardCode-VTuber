@@ -23,6 +23,7 @@ from kardboard_vtuber.camera.stream import LatestFrameCamera
 if TYPE_CHECKING:
     from kardboard_vtuber.tracking.events import FaceActionDetector
     from kardboard_vtuber.tracking.mediapipe_tracker import MediaPipeFaceTracker
+    from kardboard_vtuber.tracking.models import FaceTrackingState
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -108,6 +109,19 @@ def build_parser() -> argparse.ArgumentParser:
         help="Cardboard renderer used with --render-cardboard (default: textured-3d).",
     )
     parser.add_argument(
+        "--debug-face-preview",
+        action="store_true",
+        help="Show an opt-in raw live face crop at the top center of the preview.",
+    )
+    parser.add_argument(
+        "--preview-height",
+        type=_preview_height,
+        help=(
+            "Resize only the displayed preview to this maximum height; "
+            "processing stays full-size."
+        ),
+    )
+    parser.add_argument(
         "--headless",
         action="store_true",
         help="Capture and print diagnostics without opening a preview window.",
@@ -137,7 +151,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     camera = LatestFrameCamera(config)
     try:
-        tracker = _create_tracker(args) if args.track_face or args.render_cardboard else None
+        tracker = (
+            _create_tracker(args)
+            if args.track_face or args.render_cardboard or args.debug_face_preview
+            else None
+        )
         action_detector = _create_action_detector(args) if tracker is not None else None
         renderer = _create_renderer(args) if args.render_cardboard else None
     except (OSError, RuntimeError, ValueError) as error:
@@ -186,6 +204,7 @@ def main(argv: list[str] | None = None) -> int:
 
             if not args.headless:
                 frame = camera_frame
+                face_preview_source = frame.copy() if args.debug_face_preview else None
                 if tracker is not None:
                     from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
 
@@ -198,6 +217,8 @@ def main(argv: list[str] | None = None) -> int:
                         action=latest_action,
                         draw_frame_geometry=renderer is None,
                     )
+                    if face_preview_source is not None:
+                        _draw_debug_face_preview(frame, face_preview_source, tracking_state)
                 snapshot = camera.snapshot()
                 latency_ms = (time.monotonic_ns() - packet.captured_at_ns) / 1_000_000
                 label = (
@@ -215,7 +236,12 @@ def main(argv: list[str] | None = None) -> int:
                     2,
                     cv2.LINE_AA,
                 )
-                cv2.imshow(window_name, frame)
+                display_frame = (
+                    _resize_preview(frame, args.preview_height)
+                    if args.preview_height is not None
+                    else frame
+                )
+                cv2.imshow(window_name, display_frame)
                 key = cv2.waitKey(1) & 0xFF
                 if key in {ord("q"), 27}:
                     break
@@ -244,10 +270,99 @@ def _brightness_offset(raw: str) -> int:
     return value
 
 
+def _preview_height(raw: str) -> int:
+    value = int(raw)
+    if value < 240:
+        raise argparse.ArgumentTypeError("preview height must be at least 240")
+    return value
+
+
 def _apply_brightness(frame: ndarray, brightness: int) -> ndarray:
     if brightness == 0:
         return frame.copy()
     return cv2.convertScaleAbs(frame, alpha=1.0, beta=brightness)
+
+
+def _resize_preview(frame: ndarray, maximum_height: int) -> ndarray:
+    if maximum_height < 240:
+        raise ValueError("--preview-height must be at least 240")
+    height, width = frame.shape[:2]
+    if height <= maximum_height:
+        return frame
+    scale = maximum_height / height
+    return cv2.resize(
+        frame,
+        (max(1, round(width * scale)), maximum_height),
+        interpolation=cv2.INTER_AREA,
+    )
+
+
+def _draw_debug_face_preview(
+    frame: ndarray,
+    source_frame: ndarray,
+    state: FaceTrackingState,
+) -> None:
+    frame_height, frame_width = frame.shape[:2]
+    panel_width = min(250, max(120, frame_width // 3))
+    panel_height = round(panel_width * 1.08)
+    panel_x = min(
+        frame_width - panel_width - 12,
+        max(12, round(frame_width * 0.44)),
+    )
+    panel_y = 16
+    panel_bottom = min(frame_height - 1, panel_y + panel_height)
+    panel_height = panel_bottom - panel_y
+    if panel_height <= 0:
+        return
+
+    frame[panel_y:panel_bottom, panel_x : panel_x + panel_width] = 0
+    if state.detected:
+        source_height, source_width = source_frame.shape[:2]
+        crop_left = max(0, round((state.center_x - state.face_width * 0.72) * source_width))
+        crop_right = min(
+            source_width,
+            round((state.center_x + state.face_width * 0.72) * source_width),
+        )
+        crop_top = max(0, round((state.center_y - state.face_height * 0.90) * source_height))
+        crop_bottom = min(
+            source_height,
+            round((state.center_y + state.face_height * 0.90) * source_height),
+        )
+        if crop_right > crop_left and crop_bottom > crop_top:
+            crop = source_frame[crop_top:crop_bottom, crop_left:crop_right]
+            crop_aspect = crop.shape[1] / crop.shape[0]
+            panel_aspect = panel_width / panel_height
+            if crop_aspect > panel_aspect:
+                target_width = max(1, round(crop.shape[0] * panel_aspect))
+                start = (crop.shape[1] - target_width) // 2
+                crop = crop[:, start : start + target_width]
+            else:
+                target_height = max(1, round(crop.shape[1] / panel_aspect))
+                start = (crop.shape[0] - target_height) // 2
+                crop = crop[start : start + target_height, :]
+            frame[panel_y:panel_bottom, panel_x : panel_x + panel_width] = cv2.resize(
+                crop,
+                (panel_width, panel_height),
+                interpolation=cv2.INTER_AREA,
+            )
+
+    cv2.rectangle(
+        frame,
+        (panel_x, panel_y),
+        (panel_x + panel_width, panel_bottom),
+        (0, 0, 255),
+        5,
+    )
+    cv2.putText(
+        frame,
+        "RAW FACE DEBUG",
+        (panel_x + 10, panel_y + 24),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.55,
+        (0, 165, 255),
+        2,
+        cv2.LINE_AA,
+    )
 
 
 def _print_snapshot(camera: LatestFrameCamera) -> None:

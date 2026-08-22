@@ -72,6 +72,25 @@ python scripts\record_guided_regression.py `
 
 Follow the 12 on-screen stages. The clean MP4 and synchronized CSV receive the same timestamp.
 
+## Optional raw-face debug panel
+
+The raw face panel is disabled by default because it reveals the user's face. Enable it only for
+local debugging:
+
+```powershell
+python -m kardboard_vtuber `
+  --source "http://YOUR_USERNAME:YOUR_PASSWORD@PHONE_IP:8080/video" `
+  --backend auto `
+  --rotate left `
+  --mirror `
+  --render-cardboard `
+  --debug-face-preview `
+  --preview-height 900
+```
+
+`--preview-height` changes only the displayed window size. Capture, tracking, and rendering remain
+at the source resolution and retain the full camera frame.
+
 ## Quality checks
 
 ```powershell
