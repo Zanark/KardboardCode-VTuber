@@ -58,6 +58,10 @@ flowchart LR
   <img src="./images/kardboardcode-six-sides.png" alt="Six-sided turnaround of the textured cardboard avatar" width="1000">
 </p>
 
+<p align="center">
+  <img src="./images/kardboardcode-angle-gallery.png" alt="Nine-angle gallery of the current textured avatar" width="1000">
+</p>
+
 See [Textured GPU 3D renderer](02-architecture/textured-3d-renderer.md) for the detailed material,
 geometry, shader, privacy, decal, and animation specification.
 

@@ -17,6 +17,15 @@ description: "Complete visual, geometry, animation, privacy, and compositing spe
   <img src="../images/kardboardcode-hero.png" alt="Current textured KardboardCode avatar" width="1000">
 </p>
 
+<p align="center">
+  <img src="../images/kardboardcode-live-demo.gif" alt="Face-free animated avatar driven by recorded tracking telemetry" width="1000">
+</p>
+
+The animation uses filtered numeric pose and expression telemetry from the private regression
+recording, then renders every frame on a synthetic dark background with five-hinge physics enabled.
+No source-video pixels are decoded into or stored in the GIF
+(`scripts/generate_readme_animation.py:1`).
+
 ## Why this renderer exists
 
 The procedural OpenCV renderer proved tracking, pose signs, compositing, and fail-closed privacy,
@@ -58,6 +67,40 @@ flowchart LR
 The image is generated from the same `_build_character_mesh()` and shader path used at runtime; it
 contains no camera pixels (`src/kardboard_vtuber/renderer/textured_3d.py:532-748`).
 
+## Expanded angle gallery
+
+<p align="center">
+  <img src="../images/kardboardcode-angle-gallery.png" alt="Nine high low profile rear and rolled views" width="1000">
+</p>
+
+The gallery exercises positive and negative yaw, steep pitch in both directions, rear-quarter
+views, and roll. It makes the physical side labels, rear neck channel, top label, underside, and
+headphone depth visible in one face-free sheet.
+
+## Cinematic pose scenarios
+
+<p align="center">
+  <img src="../images/kardboardcode-cinematic-poses.png" alt="Curious hero side-eye looking-up and leaning poses" width="1000">
+</p>
+
+These poses combine pitch, yaw, and roll instead of isolating one axis. They demonstrate how the
+same fixed mesh reads as curious, heroic, skeptical, upward-looking, or leaning without a separate
+animation rig (`src/kardboard_vtuber/renderer/textured_3d.py:280-327`).
+
+## Mesh diagnostics
+
+<p align="center">
+  <img src="../images/kardboardcode-render-mesh-debug.png" alt="Wireframe mesh hinge groups privacy core and underside diagnostics" width="1000">
+</p>
+
+The runtime CLI does not currently expose a separate OpenGL wireframe window. This documentation
+sheet is generated directly from `_build_character_mesh()` and therefore reflects the same vertex
+positions and per-vertex hinge IDs uploaded to ModernGL. Static triangles are gray in the hinge
+view, hinge IDs `1..5` are color-coded, and the internal privacy volume is isolated in red
+(`src/kardboard_vtuber/renderer/textured_3d.py:154-169`,
+`src/kardboard_vtuber/renderer/textured_3d.py:532-747`,
+`scripts/generate_documentation_gallery.py:1`).
+
 ## Geometry inventory
 
 | Surface or part | Current implementation |
@@ -83,6 +126,10 @@ uniformly to X, Y, and Z, preserving a cubic shell
   <img src="../images/kardboardcode-detail-views.png" alt="Decal top and underside details" width="900">
 </p>
 
+<p align="center">
+  <img src="../images/kardboardcode-surface-tour.png" alt="Six-view tour of labels headphones top underside and rear" width="1000">
+</p>
+
 ### Texture atlas and aged decals
 
 The deterministic `1024 × 512` atlas contains cardboard noise, corrugation lines, tape, face
@@ -103,6 +150,10 @@ markings, dedicated side regions, and a top region
 
 <p align="center">
   <img src="../images/kardboardcode-expression-states.png" alt="Open left wink right wink and blink states" width="1000">
+</p>
+
+<p align="center">
+  <img src="../images/kardboardcode-performance-states.png" alt="Expressions combined with turns profiles and pitch" width="1000">
 </p>
 
 K and C are custom irregular painted paths, not font glyphs. They are rasterized on a seven-pixel
@@ -127,6 +178,10 @@ coarse mask, preserving independent anatomical left/right control
 
 <p align="center">
   <img src="../images/kardboardcode-flap-physics.png" alt="External flap hinge response during head turns" width="1000">
+</p>
+
+<p align="center">
+  <img src="../images/kardboardcode-flap-motion-sequence.png" alt="Five-frame external flap motion sequence" width="1000">
 </p>
 
 The springs use bounded semi-implicit Euler integration from the shared `DampedSpring` primitive.
@@ -227,6 +282,7 @@ The CLI exposes depth as `--box-depth-offset` and physics as `--physics`
 - `src/kardboard_vtuber/tracking/models.py:15-100`
 - `src/kardboard_vtuber/cli.py:32-652`
 - `tests/test_textured_3d_renderer.py:1-409`
+- `scripts/generate_documentation_gallery.py:1`
 
 ---
 

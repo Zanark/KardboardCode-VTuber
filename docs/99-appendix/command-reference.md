@@ -226,6 +226,28 @@ python -m pytest
 git --no-pager diff --check
 ```
 
+## Regenerate the face-free documentation gallery
+
+```powershell
+python scripts\generate_documentation_gallery.py
+```
+
+This recreates the expanded angle, scenario, performance, flap-motion, surface-tour, tracking
+debug, body-skeleton, and render-mesh sheets. Runtime debug functions receive synthetic landmarks,
+and every other image uses the runtime mesh on a solid dark background. The script never reads a
+camera frame.
+
+## Regenerate the animated README demo
+
+```powershell
+python scripts\generate_readme_animation.py `
+  --telemetry "C:\path\to\private-regression.csv"
+```
+
+Only numeric tracking telemetry is read. The generated
+`docs/images/kardboardcode-live-demo.gif` contains synthetic renderer output and text, never
+camera frames.
+
 ## CLI help
 
 ```powershell

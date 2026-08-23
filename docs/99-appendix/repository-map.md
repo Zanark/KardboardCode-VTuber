@@ -48,6 +48,8 @@ KardboardCode-VTuber/
 | `src/kardboard_vtuber/renderer/ps1_cardboard.py:35-370` | Procedural privacy-safe fallback |
 | `src/kardboard_vtuber/cli.py:32-213` | Command-line interface |
 | `src/kardboard_vtuber/cli.py:215-414` | Runtime orchestration and cleanup |
+| `scripts/generate_documentation_gallery.py:1` | Face-free angle, scenario, physics, surface, tracking, skeleton, and mesh-debug galleries |
+| `scripts/generate_readme_animation.py:1` | Face-free animated GIF driven by private numeric tracking telemetry |
 | `tests/test_camera_models.py:6-34` | Model tests |
 | `tests/test_camera_stream.py:13-98` | Fake adapter and worker tests |
 | `tests/test_textured_3d_renderer.py:1-409` | GPU geometry, decals, privacy, depth, and physics |

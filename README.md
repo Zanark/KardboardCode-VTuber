@@ -9,6 +9,16 @@ A lightweight Python VTuber tool that places a low-poly, PS1-style KardboardCode
 Current face-free synthetic render of the default textured GPU avatar.
 </em></p>
 
+## Live avatar demo
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-live-demo.gif" alt="Animated KardboardCode avatar demonstrating tracked head movement, expressions, and flap physics" width="1000">
+</p>
+<p align="center"><em>
+Real motion telemetry from the private regression recording drives this entirely synthetic render.
+The GIF contains no camera frames or human face pixels.
+</em></p>
+
 ## Current milestone
 
 The current working vertical slice includes:
@@ -50,6 +60,41 @@ Front, rear, left, right, top, and underside views generated without camera imag
 <p align="center">
   <img src="./docs/images/kardboardcode-expression-states.png" alt="K and C eye expression states" width="1000">
 </p>
+
+### More angles and scenarios
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-angle-gallery.png" alt="Nine-angle gallery of the textured cardboard avatar" width="1000">
+</p>
+<p align="center"><em>
+High, low, profile, rear-quarter, and rolled camera angles rendered from the runtime mesh.
+</em></p>
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-cinematic-poses.png" alt="Six cinematic pose scenarios for the cardboard avatar" width="1000">
+</p>
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-performance-states.png" alt="Pose and K C expression combinations" width="1000">
+</p>
+
+### Face-free debug views
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-tracking-debug-window.png" alt="Synthetic tracking-debug preview with face mesh inset" width="1000">
+</p>
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-render-mesh-debug.png" alt="Wireframe mesh hinge and privacy-volume diagnostics" width="900">
+</p>
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-body-skeleton-debug-window.png" alt="Synthetic 33-point body skeleton debug window" width="420">
+</p>
+
+The first and third images use the real runtime debug drawing functions with synthetic landmarks.
+The wireframe sheet is generated directly from the renderer's vertex buffer and color-codes the
+five hinge groups and internal privacy volume. None contains camera imagery.
 
 The complete visual breakdown—including decals, hinges, underside privacy geometry, materials,
 lighting, and depth settings—is documented in the
