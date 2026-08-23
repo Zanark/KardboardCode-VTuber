@@ -117,6 +117,31 @@ python -m kardboard_vtuber `
 `--preview-height` changes only the displayed window size. Capture, tracking, and rendering remain
 at the source resolution and retain the full camera frame.
 
+## Tune blink and wink sensitivity
+
+The default calibrated thresholds are:
+
+| Option | Default | Meaning |
+|---|---:|---|
+| `--blink-threshold` | `0.35` | Both eyes at or below this value count as closed |
+| `--wink-threshold` | `0.70` | The winked eye must be at or below this value |
+| `--eye-open-threshold` | `0.65` | The opposite eye must be at or above this value |
+| `--wink-min-difference` | `0.15` | Minimum openness difference between the eyes |
+
+For fewer false blinks and winks, start with:
+
+```powershell
+--blink-threshold 0.20 `
+--wink-threshold 0.50 `
+--eye-open-threshold 0.72 `
+--wink-min-difference 0.25
+```
+
+Lower closed-eye thresholds are less sensitive. Higher open-eye and difference requirements make
+winks stricter. Values must remain between `0` and `1`; the blink threshold must remain below both
+the open-eye and wink thresholds. The same settings drive action logs and the visible K/C state.
+If brief noise still survives, also raise `--eye-action-hold-ms` from `40` to `60` or `80`.
+
 ## Full-body avatar and skeleton
 
 Download and verify the official MediaPipe Pose Landmarker Lite model:

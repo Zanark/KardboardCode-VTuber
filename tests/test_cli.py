@@ -47,12 +47,41 @@ def test_raw_face_preview_is_disabled_by_default() -> None:
     assert args.pose_tracking_width == 480
     assert args.segmentation_width == 384
     assert args.box_depth_offset == 0.16
+    assert args.blink_threshold == 0.35
+    assert args.wink_threshold == 0.70
+    assert args.eye_open_threshold == 0.65
+    assert args.wink_min_difference == 0.15
 
 
 def test_tracking_debug_is_opt_in() -> None:
     args = build_parser().parse_args(["--tracking-debug"])
 
     assert args.tracking_debug
+
+
+def test_eye_sensitivity_thresholds_are_configurable() -> None:
+    args = build_parser().parse_args(
+        [
+            "--blink-threshold",
+            "0.25",
+            "--wink-threshold",
+            "0.55",
+            "--eye-open-threshold",
+            "0.72",
+            "--wink-min-difference",
+            "0.25",
+        ]
+    )
+
+    assert args.blink_threshold == 0.25
+    assert args.wink_threshold == 0.55
+    assert args.eye_open_threshold == 0.72
+    assert args.wink_min_difference == 0.25
+
+
+def test_eye_sensitivity_thresholds_reject_out_of_range_values() -> None:
+    with pytest.raises(SystemExit):
+        build_parser().parse_args(["--blink-threshold", "-0.1"])
 
 
 def test_box_depth_offset_can_restore_previous_position() -> None:

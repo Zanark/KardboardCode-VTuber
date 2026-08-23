@@ -103,6 +103,30 @@ def build_parser() -> argparse.ArgumentParser:
         help="How long an eye state must remain stable before blink/wink logging.",
     )
     parser.add_argument(
+        "--blink-threshold",
+        type=_unit_interval,
+        default=0.35,
+        help="Both eyes must be at or below this openness to blink (default: 0.35).",
+    )
+    parser.add_argument(
+        "--wink-threshold",
+        type=_unit_interval,
+        default=0.70,
+        help="A winked eye must be at or below this openness (default: 0.70).",
+    )
+    parser.add_argument(
+        "--eye-open-threshold",
+        type=_unit_interval,
+        default=0.65,
+        help="The opposite eye must be at or above this openness for a wink (default: 0.65).",
+    )
+    parser.add_argument(
+        "--wink-min-difference",
+        type=_unit_interval,
+        default=0.15,
+        help="Minimum openness difference between eyes for a wink (default: 0.15).",
+    )
+    parser.add_argument(
         "--no-motion-filter",
         action="store_true",
         help="Disable One Euro smoothing and expose raw tracking values.",
@@ -452,6 +476,13 @@ def _preview_height(raw: str) -> int:
     return value
 
 
+def _unit_interval(raw: str) -> float:
+    value = float(raw)
+    if not math.isfinite(value) or not 0.0 <= value <= 1.0:
+        raise argparse.ArgumentTypeError("value must be finite and between 0 and 1")
+    return value
+
+
 def _apply_brightness(frame: ndarray, brightness: int) -> ndarray:
     if brightness == 0:
         return frame.copy()
@@ -581,6 +612,10 @@ def _create_action_detector(args: argparse.Namespace) -> FaceActionDetector:
 
     return FaceActionDetector(
         ActionThresholds(
+            eye_closed=args.blink_threshold,
+            eye_open=args.eye_open_threshold,
+            wink_closed=args.wink_threshold,
+            wink_min_difference=args.wink_min_difference,
             hold_ms=args.action_hold_ms,
             eye_hold_ms=args.eye_action_hold_ms,
         )
@@ -638,13 +673,25 @@ def _create_renderer(args: argparse.Namespace) -> object:
     )
 
     if args.cardboard_renderer == "procedural-2d":
-        return PS1CardboardRenderer(CardboardRendererConfig(mirrored=args.mirror))
+        return PS1CardboardRenderer(
+            CardboardRendererConfig(
+                mirrored=args.mirror,
+                eye_closed_threshold=args.blink_threshold,
+                eye_open_threshold=args.eye_open_threshold,
+                wink_closed_threshold=args.wink_threshold,
+                wink_min_difference=args.wink_min_difference,
+            )
+        )
     try:
         return Textured3DCardboardRenderer(
             Textured3DRendererConfig(
                 mirrored=args.mirror,
                 physics_enabled=args.physics,
                 perspective_depth_offset=args.box_depth_offset,
+                eye_closed_threshold=args.blink_threshold,
+                eye_open_threshold=args.eye_open_threshold,
+                wink_closed_threshold=args.wink_threshold,
+                wink_min_difference=args.wink_min_difference,
             )
         )
     except RuntimeError as error:
@@ -656,7 +703,15 @@ def _create_renderer(args: argparse.Namespace) -> object:
             f"3D renderer unavailable ({error}); using privacy-safe 2D fallback",
             file=sys.stderr,
         )
-        return PS1CardboardRenderer(CardboardRendererConfig(mirrored=args.mirror))
+        return PS1CardboardRenderer(
+            CardboardRendererConfig(
+                mirrored=args.mirror,
+                eye_closed_threshold=args.blink_threshold,
+                eye_open_threshold=args.eye_open_threshold,
+                wink_closed_threshold=args.wink_threshold,
+                wink_min_difference=args.wink_min_difference,
+            )
+        )
 
 
 def _print_tracking_snapshot(tracker: MediaPipeFaceTracker) -> None:

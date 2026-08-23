@@ -119,6 +119,10 @@ class Textured3DRendererConfig:
     perspective_depth_offset: float = 0.16
     mirrored: bool = False
     physics_enabled: bool = False
+    eye_closed_threshold: float = 0.35
+    eye_open_threshold: float = 0.65
+    wink_closed_threshold: float = 0.70
+    wink_min_difference: float = 0.15
 
     def __post_init__(self) -> None:
         if self.pixel_scale < 1:
@@ -135,6 +139,12 @@ class Textured3DRendererConfig:
             or self.perspective_depth_offset < -1.0
         ):
             raise ValueError("perspective_depth_offset must be finite and at least -1")
+        if not 0.0 <= self.eye_closed_threshold < self.eye_open_threshold <= 1.0:
+            raise ValueError("eye thresholds must satisfy 0 <= closed < open <= 1")
+        if not self.eye_closed_threshold < self.wink_closed_threshold <= 1.0:
+            raise ValueError("wink threshold must be greater than the blink threshold")
+        if not 0.0 <= self.wink_min_difference <= 1.0:
+            raise ValueError("wink_min_difference must be between 0 and 1")
 
 
 class Textured3DCardboardRenderer:
@@ -275,8 +285,16 @@ class Textured3DCardboardRenderer:
 
     def _update_texture(self, state: FaceTrackingState) -> None:
         key = (
-            _eye_closed(state.left_eye_open, state.right_eye_open),
-            _eye_closed(state.right_eye_open, state.left_eye_open),
+            _eye_closed(
+                state.left_eye_open,
+                state.right_eye_open,
+                self._config,
+            ),
+            _eye_closed(
+                state.right_eye_open,
+                state.left_eye_open,
+                self._config,
+            ),
         )
         if key == self._eye_texture_key:
             return
@@ -1343,11 +1361,17 @@ def _paint_brush_stroke(
     texture[block_mask != 0] = color
 
 
-def _eye_closed(openness: float, other_openness: float) -> bool:
-    if openness <= 0.35:
+def _eye_closed(
+    openness: float,
+    other_openness: float,
+    config: Textured3DRendererConfig,
+) -> bool:
+    if openness <= config.eye_closed_threshold:
         return True
-    return openness <= 0.70 and other_openness >= 0.65 and (
-        other_openness - openness >= 0.15
+    return (
+        openness <= config.wink_closed_threshold
+        and other_openness >= config.eye_open_threshold
+        and other_openness - openness >= config.wink_min_difference
     )
 
 

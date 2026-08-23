@@ -173,6 +173,20 @@ eye, blink, wink, and mouth transitions. Use
 `--action-hold-ms 100` to tune how long a candidate action must remain stable before it is logged.
 One Euro smoothing is enabled by default; add `--no-motion-filter` to compare raw visual tracking.
 
+If eye tracking blinks or winks too easily, lower the closed-eye thresholds and require a larger
+difference between the two eyes:
+
+```powershell
+--blink-threshold 0.20 `
+--wink-threshold 0.50 `
+--eye-open-threshold 0.72 `
+--wink-min-difference 0.25
+```
+
+Lower blink/wink values are less sensitive. A higher open-eye threshold and wink difference also
+make accidental winks less likely. These settings affect both action detection and the rendered
+K/C expressions.
+
 Render the current PS1-style cardboard prototype by adding:
 
 ```powershell

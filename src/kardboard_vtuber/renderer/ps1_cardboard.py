@@ -24,6 +24,10 @@ class CardboardRendererConfig:
     opacity: float = 1.0
     mirrored: bool = False
     neutral_pitch_degrees: float = -10.0
+    eye_closed_threshold: float = 0.35
+    eye_open_threshold: float = 0.65
+    wink_closed_threshold: float = 0.70
+    wink_min_difference: float = 0.15
 
     def __post_init__(self) -> None:
         if self.pixel_scale < 1:
@@ -38,6 +42,12 @@ class CardboardRendererConfig:
             raise ValueError("opacity must be between 0 and 1")
         if not math.isfinite(self.neutral_pitch_degrees):
             raise ValueError("neutral_pitch_degrees must be finite")
+        if not 0.0 <= self.eye_closed_threshold < self.eye_open_threshold <= 1.0:
+            raise ValueError("eye thresholds must satisfy 0 <= closed < open <= 1")
+        if not self.eye_closed_threshold < self.wink_closed_threshold <= 1.0:
+            raise ValueError("wink threshold must be greater than the blink threshold")
+        if not 0.0 <= self.wink_min_difference <= 1.0:
+            raise ValueError("wink_min_difference must be between 0 and 1")
 
 
 class PS1CardboardRenderer:
@@ -414,10 +424,11 @@ class PS1CardboardRenderer:
                 cv2.LINE_8,
             )
 
-    @staticmethod
-    def _eye_closed(openness: float, other_openness: float) -> bool:
-        if openness <= 0.35:
+    def _eye_closed(self, openness: float, other_openness: float) -> bool:
+        if openness <= self._config.eye_closed_threshold:
             return True
-        return openness <= 0.70 and other_openness >= 0.65 and (
-            other_openness - openness >= 0.15
+        return (
+            openness <= self._config.wink_closed_threshold
+            and other_openness >= self._config.eye_open_threshold
+            and other_openness - openness >= self._config.wink_min_difference
         )

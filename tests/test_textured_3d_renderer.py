@@ -11,6 +11,7 @@ from kardboard_vtuber.renderer.textured_3d import (
     _build_character_mesh,
     _create_cardboard_texture,
     _draw_aged_sticker,
+    _eye_closed,
     _FlapPhysics,
 )
 from tests.test_ps1_cardboard_renderer import state
@@ -58,6 +59,21 @@ def test_front_face_is_one_complete_cardboard_square() -> None:
         area += abs(float(edge_0[0] * edge_1[1] - edge_0[1] * edge_1[0])) / 2.0
 
     assert area == pytest.approx(1.0)
+
+
+def test_textured_renderer_respects_less_sensitive_eye_thresholds() -> None:
+    default_config = Textured3DRendererConfig()
+    strict_config = Textured3DRendererConfig(
+        eye_closed_threshold=0.20,
+        eye_open_threshold=0.72,
+        wink_closed_threshold=0.50,
+        wink_min_difference=0.25,
+    )
+
+    assert _eye_closed(0.30, 0.30, default_config)
+    assert not _eye_closed(0.30, 0.30, strict_config)
+    assert _eye_closed(0.55, 0.80, default_config)
+    assert not _eye_closed(0.55, 0.80, strict_config)
 
 
 def test_headphone_band_is_enlarged_and_has_dark_beige_cushion() -> None:
