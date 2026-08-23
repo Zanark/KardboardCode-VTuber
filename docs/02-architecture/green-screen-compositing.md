@@ -12,6 +12,14 @@ description: "Person segmentation, fail-closed masking, and OBS chroma-key outpu
 > produce a fully green frame rather than exposing the room
 > (`src/kardboard_vtuber/tracking/green_screen.py:16-152`).
 
+<p align="center">
+  <img src="../images/kardboardcode-green-screen-demo.gif" alt="Black-hoodie green-screen demonstration with the face and hairline fully covered" width="420">
+</p>
+<p align="center"><em>
+User-approved camera example processed with the runtime compositing algorithm. The body remains
+visible; the cardboard shell and opaque backing cover the face and hairline.
+</em></p>
+
 ## Overview
 
 The mode exists for OBS chroma keying without requiring a physical green backdrop. It is separate
@@ -122,9 +130,10 @@ restricted to Python versions supported by the project tracking extra (`pyprojec
 ## Validation
 
 Tests prove person preservation, exact green background replacement, stale-mask rejection, and
-configuration validation (`tests/test_green_screen.py:1-47`). Runtime validation used the recorded
-portrait camera feed and produced a complete person silhouette over pure green without including
-that private camera frame in repository documentation.
+configuration validation (`tests/test_green_screen.py:1-47`). The documented animated example uses
+the user-approved black-hoodie recording, retains the segmented body over pure green, and covers
+the face and hairline with the avatar plus an opaque privacy backing
+(`scripts/generate_real_life_animation.py`).
 
 ## References
 

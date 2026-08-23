@@ -132,8 +132,8 @@ uniformly to X, Y, and Z, preserving a cubic shell
 
 ### Texture atlas and aged decals
 
-The deterministic `1024 × 512` atlas contains cardboard noise, corrugation lines, tape, face
-markings, dedicated side regions, and a top region
+The deterministic `1024 × 512` atlas contains cardboard noise, corrugation lines, one upper-front
+tape strip, face markings, dedicated side regions, and a top region
 (`src/kardboard_vtuber/renderer/textured_3d.py:984-1029`). The current labels use:
 
 - dirty beige paper rather than clean white;
@@ -142,7 +142,7 @@ markings, dedicated side regions, and a top region
 - non-repeating stain placement;
 - hard low-resolution barcode bars;
 - coarse nearest-neighbor lettering, including the red `FRAGILE` and `DO NOT DROP` text;
-- no red boxed-X stamp on the front face
+- no red boxed-X stamp or lower-center tape strip on the front face
   (`src/kardboard_vtuber/renderer/textured_3d.py:1030-1230`,
   `tests/test_textured_3d_renderer.py:245-322`).
 

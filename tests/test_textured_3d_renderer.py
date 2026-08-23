@@ -262,6 +262,13 @@ def test_front_texture_has_no_red_boxed_cross_stamp() -> None:
     assert not np.any(np.all(former_stamp == (50, 62, 180), axis=2))
 
 
+def test_front_texture_has_no_lower_center_tape_strip() -> None:
+    texture = _create_cardboard_texture(False, False)
+    former_tape = texture[395:512, 730:801]
+
+    assert not np.any(np.all(former_tape == (105, 112, 112), axis=2))
+
+
 def test_shipping_stickers_are_aged_torn_and_pixel_lettered() -> None:
     texture = _create_cardboard_texture(False, False)
     clean_white = np.all(texture == (190, 202, 205), axis=2)

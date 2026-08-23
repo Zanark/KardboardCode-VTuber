@@ -1002,7 +1002,6 @@ def _create_cardboard_texture(left_closed: bool, right_closed: bool) -> ndarray:
     front_x = width // 2
     tape = (105, 112, 112)
     cv2.rectangle(texture, (front_x + 220, 0), (front_x + 286, 92), tape, -1)
-    cv2.rectangle(texture, (front_x + 218, 395), (front_x + 288, 511), tape, -1)
     cv2.rectangle(texture, (front_x + 28, 28), (front_x + 110, 112), (52, 80, 102), 6)
     cv2.arrowedLine(
         texture,

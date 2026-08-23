@@ -248,6 +248,34 @@ Only numeric tracking telemetry is read. The generated
 `docs/images/kardboardcode-live-demo.gif` contains synthetic renderer output and text, never
 camera frames.
 
+## Regenerate the real-life black-hoodie demo
+
+```powershell
+python scripts\generate_real_life_animation.py `
+  --video "C:\path\to\private-black-hoodie-recording.mp4" `
+  --telemetry "C:\path\to\matching-private-telemetry.csv"
+```
+
+The private recording and telemetry remain outside the repository. The generator samples every
+recorded calibration stage, re-detects the face bounds, applies the synchronized filtered pose and
+expression values, verifies that the rendered avatar covers at least 98% of face landmarks, and
+adds an opaque head-region backing before writing
+`docs/images/kardboardcode-real-life-demo.gif`. The output contains the approved body and
+background camera pixels, but no visible face or hairline.
+
+Add `--green-screen` to process the same private source through person segmentation and write
+`docs/images/kardboardcode-green-screen-demo.gif`:
+
+```powershell
+python scripts\generate_real_life_animation.py `
+  --video "C:\path\to\private-black-hoodie-recording.mp4" `
+  --telemetry "C:\path\to\matching-private-telemetry.csv" `
+  --green-screen
+```
+
+Composition uses the runtime threshold, morphological cleanup, and exact BGR chroma color
+`(0, 255, 0)` before GIF palette encoding.
+
 ## CLI help
 
 ```powershell

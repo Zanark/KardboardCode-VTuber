@@ -75,7 +75,7 @@ flowchart LR
 
 ## Current automated coverage
 
-The latest validated suite contains 107 tests spanning camera contracts and lifecycle, face-state
+The latest validated suite contains 108 tests spanning camera contracts and lifecycle, face-state
 normalization and actions, One Euro filtering, spring integration, procedural and textured
 renderers, full-body rendering, hand occlusion, green-screen fail-closed behavior, and CLI option
 validation (`tests/`).

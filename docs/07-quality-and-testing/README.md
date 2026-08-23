@@ -5,7 +5,7 @@ description: "Deterministic tests, offscreen rendering checks, and scoped hardwa
 
 # 07 · Quality and testing
 
-> **Status: 107 camera, tracking, motion, renderer, segmentation, body, occlusion, and CLI tests
+> **Status: 108 camera, tracking, motion, renderer, segmentation, body, occlusion, and CLI tests
 > implemented and passing.**
 >
 > **TL;DR** — The project separates deterministic unit tests from hardware integration checks.

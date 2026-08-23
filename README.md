@@ -19,6 +19,26 @@ Real motion telemetry from the private regression recording drives this entirely
 The GIF contains no camera frames or human face pixels.
 </em></p>
 
+### Real-life body composite
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-real-life-demo.gif" alt="Real-life black-hoodie demonstration with the user's face and hairline fully covered by the KardboardCode avatar" width="420">
+</p>
+<p align="center"><em>
+User-approved camera example with the black hoodie and body visible.
+The cardboard shell and opaque head-region backing cover the face and hairline in every frame.
+</em></p>
+
+### Green-screen body composite
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-green-screen-demo.gif" alt="Green-screen black-hoodie demonstration with the user's face and hairline fully covered by the KardboardCode avatar" width="420">
+</p>
+<p align="center"><em>
+The same user-approved performance processed through the runtime person-segmentation compositor.
+The body remains visible while every background pixel becomes chroma green.
+</em></p>
+
 ## Current milestone
 
 The current working vertical slice includes:

@@ -119,6 +119,175 @@ def _write(name: str, image: np.ndarray) -> None:
     print(f"{path.name}: {image.shape[1]}x{image.shape[0]}")
 
 
+def _generate_hero() -> None:
+    hero = np.full((720, 1200, 3), BACKGROUND, dtype=np.uint8)
+    tracking_state = FaceTrackingState(
+        timestamp_ms=1,
+        detected=True,
+        landmarks=(),
+        center_x=0.29,
+        center_y=0.65,
+        face_width=0.125,
+        face_height=0.105,
+        left_eye_open=1.0,
+        right_eye_open=1.0,
+        mouth_open=0.0,
+        head_pose=HeadPose(
+            translation_x=0.0,
+            translation_y=0.0,
+            translation_z=0.0,
+            pitch_degrees=-18.0,
+            yaw_degrees=32.0,
+            roll_degrees=-2.0,
+        ),
+    )
+    renderer = Textured3DCardboardRenderer()
+    renderer.render(hero, tracking_state)
+    renderer.close()
+    cv2.putText(
+        hero,
+        "KARDBOARDCODE VTUBER",
+        (650, 92),
+        cv2.FONT_HERSHEY_DUPLEX,
+        1.18,
+        PRIMARY_TEXT,
+        2,
+        cv2.LINE_AA,
+    )
+    cv2.putText(
+        hero,
+        "Privacy-first PS1-style tracked avatar",
+        (654, 132),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.61,
+        SECONDARY_TEXT,
+        1,
+        cv2.LINE_AA,
+    )
+    cv2.putText(
+        hero,
+        "ModernGL  |  MediaPipe  |  OpenCV",
+        (654, 164),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.43,
+        SECONDARY_TEXT,
+        1,
+        cv2.LINE_AA,
+    )
+    _write("kardboardcode-hero.png", hero)
+
+
+def _generate_six_sides() -> None:
+    views = (
+        ("FRONT", 0.0, -10.0),
+        ("REAR", 180.0, -10.0),
+        ("LEFT SIDE", 90.0, -10.0),
+        ("RIGHT SIDE", -90.0, -10.0),
+        ("TOP", 0.0, 80.0),
+        ("UNDERSIDE", 0.0, -80.0),
+    )
+    panels = [
+        _label(
+            _render_panel(
+                480,
+                480,
+                _state(yaw=yaw, pitch=pitch, face_width=0.20, face_height=0.17),
+            ),
+            title,
+        )
+        for title, yaw, pitch in views
+    ]
+    _write(
+        "kardboardcode-six-sides.png",
+        np.vstack((np.hstack(panels[:3]), np.hstack(panels[3:]))),
+    )
+
+
+def _generate_expression_states() -> None:
+    expressions = (
+        ("OPEN", 1.0, 1.0),
+        ("LEFT WINK", 0.2, 1.0),
+        ("RIGHT WINK", 1.0, 0.2),
+        ("BLINK", 0.2, 0.2),
+    )
+    panels = [
+        _label(
+            _render_panel(
+                420,
+                420,
+                _state(
+                    left_eye=left_eye,
+                    right_eye=right_eye,
+                    face_width=0.20,
+                    face_height=0.17,
+                ),
+            ),
+            title,
+        )
+        for title, left_eye, right_eye in expressions
+    ]
+    _write("kardboardcode-expression-states.png", np.hstack(panels))
+
+
+def _generate_flap_physics_summary() -> None:
+    panels = []
+    for title, yaw in (("TURN LEFT", -16.0), ("NEUTRAL", 0.0), ("TURN RIGHT", 16.0)):
+        renderer = Textured3DCardboardRenderer(
+            Textured3DRendererConfig(physics_enabled=True)
+        )
+        frame = np.full((480, 480, 3), BACKGROUND, dtype=np.uint8)
+        renderer.render(
+            frame,
+            _state(timestamp_ms=1, face_width=0.20, face_height=0.17),
+        )
+        for index in range(1, 15):
+            frame = np.full((480, 480, 3), BACKGROUND, dtype=np.uint8)
+            renderer.render(
+                frame,
+                _state(
+                    timestamp_ms=1 + index * 33,
+                    yaw=yaw,
+                    face_width=0.20,
+                    face_height=0.17,
+                ),
+            )
+        assert renderer._flap_physics is not None
+        left_angle, right_angle = np.degrees(renderer._flap_physics.angles[3:])
+        renderer.close()
+        panels.append(
+            _label(
+                frame,
+                title,
+                f"outer hinges {left_angle:+.0f} / {right_angle:+.0f} deg",
+            )
+        )
+    _write("kardboardcode-flap-physics.png", np.hstack(panels))
+
+
+def _generate_detail_views() -> None:
+    views = (
+        ("AGED LEFT LABELS", 48.0, -10.0),
+        ("RIGHT SHIPPING MARKS", -48.0, -10.0),
+        ("FRAGILE TOP", 0.0, 48.0),
+        ("NECK-SAFE UNDERSIDE", 0.0, -55.0),
+    )
+    panels = [
+        _label(
+            _render_panel(
+                540,
+                540,
+                _state(yaw=yaw, pitch=pitch, face_width=0.22, face_height=0.18),
+            ),
+            title,
+        )
+        for title, yaw, pitch in views
+    ]
+    _write(
+        "kardboardcode-detail-views.png",
+        np.vstack((np.hstack(panels[:2]), np.hstack(panels[2:]))),
+    )
+
+
 def _generate_angle_gallery() -> None:
     views = (
         ("UP-RIGHT", 32.0, -22.0, -3.0),
@@ -493,6 +662,11 @@ def _generate_render_mesh_debug() -> None:
 
 def main() -> None:
     OUTPUT_DIRECTORY.mkdir(parents=True, exist_ok=True)
+    _generate_hero()
+    _generate_six_sides()
+    _generate_expression_states()
+    _generate_flap_physics_summary()
+    _generate_detail_views()
     _generate_angle_gallery()
     _generate_cinematic_poses()
     _generate_performance_states()
