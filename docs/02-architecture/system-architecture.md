@@ -1,10 +1,15 @@
+---
+title: "System Architecture"
+description: "The implemented end-to-end runtime and its independent timing, privacy, and rendering domains."
+---
+
 # System architecture
 
 > **TL;DR** — Capture, tracking, rendering, composition, and presentation are separate stages with
 > different performance characteristics. The system passes small contracts between stages rather
 > than allowing one library to own the entire application.
 
-## End-to-end target
+## End-to-end runtime
 
 ```mermaid
 flowchart LR
@@ -12,19 +17,24 @@ flowchart LR
       Local["Windows camera index"]
       Phone["Android IP Webcam"]
     end
-    subgraph Implemented["Implemented camera domain"]
+    subgraph Capture["Camera domain"]
       Open["OpenCV VideoCapture"]
       Worker["Capture worker"]
       Latest["Latest FramePacket"]
       Diag["CaptureSnapshot"]
     end
-    subgraph Planned["Planned avatar domain"]
+    subgraph Avatar["Tracking and avatar domain"]
       Resize["Tracking resize"]
       MP["MediaPipe Face Landmarker"]
-      Normalize["NormalizedFaceState"]
+      Normalize["FaceTrackingState"]
       Smooth["One Euro + springs"]
-      PS1["Low-resolution box renderer"]
+      PS1["Textured GPU or procedural renderer"]
       Compose["Full-resolution composer"]
+    end
+    subgraph Optional["Optional parallel inference"]
+      Pose["Pose Landmarker"]
+      Hands["Hand Landmarker"]
+      Person["Selfie Segmenter"]
     end
     Output["Preview / OBS"]
     Local --> Open
@@ -33,10 +43,16 @@ flowchart LR
     Worker --> Diag
     Latest --> Resize --> MP --> Normalize --> Smooth --> PS1 --> Compose
     Latest --> Compose
+    Latest --> Pose
+    Latest --> Hands
+    Latest --> Person
+    Pose --> Compose
+    Hands --> Compose
+    Person --> Compose
     Compose --> Output
 ```
 
-## Implemented component boundaries
+## Component boundaries
 
 ### Configuration boundary
 
@@ -55,8 +71,9 @@ lifecycle (`src/kardboard_vtuber/camera/stream.py:39-73`).
 
 ### Presentation boundary
 
-The CLI reads packets, prints snapshots, overlays diagnostics, and displays the preview
-(`src/kardboard_vtuber/cli.py:54-150`). It does not implement capture or reconnection.
+The CLI reads packets, submits optional asynchronous inference, orders green-screen/body/head/hand
+composition, gates diagnostics behind `--tracking-debug`, and displays the preview
+(`src/kardboard_vtuber/cli.py:215-414`). It does not implement capture or reconnection.
 
 ## Why not one giant loop?
 
@@ -93,12 +110,17 @@ Higher-level code depends on project abstractions. OpenCV-specific constants are
 `CameraBackend.opencv_id` and `CameraRotation.opencv_code`
 (`src/kardboard_vtuber/camera/models.py:15-48`).
 
-## Planned extension seams
+## Stable extension seams
 
-- A tracker should consume `FramePacket`, not reach into `VideoCapture`.
-- A renderer should consume normalized tracking state, not raw MediaPipe objects.
-- A composer should consume the current full frame plus rendered RGBA overlay.
+- Trackers consume transformed frame data, not `VideoCapture`.
+- Renderers consume normalized project-owned tracking state, not raw MediaPipe objects.
+- Compositors consume the current full frame plus project-owned masks or rendered overlays.
 - OBS transport should consume composed output and remain independent of tracking.
+
+These seams are implemented in the camera, tracking, renderer, and CLI packages
+(`src/kardboard_vtuber/tracking/models.py:15-100`,
+`src/kardboard_vtuber/renderer/__init__.py:1`,
+`src/kardboard_vtuber/tracking/green_screen.py:124-152`).
 
 ---
 

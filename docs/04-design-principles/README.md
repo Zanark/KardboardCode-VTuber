@@ -1,4 +1,22 @@
+---
+title: "Design Principles"
+description: "Architectural values governing latency, boundaries, state, and privacy."
+---
+
 # 04 · Design principles
+
+```mermaid
+flowchart LR
+    Principles["Design principles"] --> Fresh["Freshness"]
+    Principles --> Boundaries["Dependency boundaries"]
+    Principles --> State["Immutable observations"]
+    Principles --> Privacy["Fail-closed privacy"]
+    style Principles fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Fresh fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Boundaries fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style State fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Privacy fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **TL;DR** — The implementation is governed by four deliberate principles: freshness over
 > completeness, dependency inversion at hardware boundaries, immutable observation of mutable

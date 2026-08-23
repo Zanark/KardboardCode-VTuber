@@ -1,4 +1,20 @@
+---
+title: "Android IP Webcam Integration"
+description: "Connecting and operating a phone-hosted authenticated camera stream."
+---
+
 # Android IP Webcam integration
+
+```mermaid
+flowchart LR
+    Phone["Android IP Webcam"] --> Network["Wi-Fi or USB tethering"]
+    Network --> OpenCV["OpenCV FFmpeg/auto backend"]
+    OpenCV --> Preview["KardboardCode preview"]
+    style Phone fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Network fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style OpenCV fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Preview fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **Status: user-verified over Wi-Fi.**
 >

@@ -1,3 +1,8 @@
+---
+title: "Foundations"
+description: "Product scope, visual identity, implemented capabilities, and deliberate boundaries."
+---
+
 # 01 · Foundations
 
 > **TL;DR** — KardboardCode-VTuber is not a generic avatar engine. It is a focused application that
@@ -6,13 +11,13 @@
 
 ## Product statement
 
-The application will:
+The application:
 
 1. Read a local or Android-phone camera.
 2. Track one face and head pose.
 3. Map left/right eye state to the `K` and `C` markings.
-4. Map mouth movement to cardboard front flaps.
-5. Add restrained spring-driven secondary motion.
+4. Tracks mouth openness for expression events and future mouth-art refinement.
+5. Adds opt-in spring-driven motion to five physical flaps.
 6. Render the box at low internal resolution for a PS1 aesthetic.
 7. Composite it over the original high-resolution camera.
 8. Present an OBS-capturable output.
@@ -33,17 +38,17 @@ mindmap
     One fixed cardboard model
       K left eye
       C right eye
-      Mouth flaps
+      Mouth tracking
       Side-flap physics
     PS1 visual style
       Low-poly
       Low-resolution texture
       Nearest-neighbor upscale
-      Optional dithering and jitter
+      Quantized lighting and color
     Streaming
       Preview window
       OBS Window Capture
-      Future Spout2
+      Optional chroma key
 ```
 
 ## Scope boundaries
@@ -52,7 +57,7 @@ mindmap
 |---|---|
 | One face | Multi-person tracking |
 | One cardboard-head model | General model import |
-| Real background and body | Full-body synthetic avatar |
+| Real camera body or optional synthetic body | General character/model import |
 | Python source-run workflow | Unity-first distribution |
 | Window Capture for OBS | Custom OBS plugin |
 | Relative head pose | Metric depth reconstruction |
@@ -78,22 +83,26 @@ direction.
 
 ## Current truth versus future design
 
-**Implemented:** package, CLI, OpenCV capture, source parsing, authentication redaction, backend
-selection, latest-frame buffering, lifecycle, reconnects, rotation, mirroring, diagnostics, tests,
-and documentation.
+**Implemented:** camera ingestion and reconnection, credential-safe diagnostics, asynchronous
+MediaPipe face/pose/hand/person tracking, One Euro filtering, calibrated expression events,
+ModernGL textured rendering, five spring hinges, procedural fallback rendering, full-resolution
+composition, optional full-body output, bounded hand/forearm occlusion, fail-closed green-screen
+composition, and OBS Window Capture output.
 
-**Implemented:** MediaPipe adapter, normalized face state, asynchronous tracking, and live debug
-overlay.
+**Opt-in diagnostics:** `--tracking-debug` draws synthetic tracking evidence and performance text.
+`--debug-face-preview` is a separate privacy-sensitive raw camera panel.
 
-**Planned:** filters, springs, box geometry, compositing, calibration, and OBS-specific output
-enhancements.
+**Remaining production work:** long-duration soak testing, CI/documentation validation, packaging,
+and optional transport beyond Window Capture.
 
 ## Source anchors
 
-- Project metadata and dependencies: `pyproject.toml:5-26`
+- Project metadata and dependencies: `pyproject.toml:5-28`
 - Preserved avatar behavior: `assets/PNGTuberV1/model-manifest.json:1`
 - Working camera package: `src/kardboard_vtuber/camera/`
-- CLI behavior: `src/kardboard_vtuber/cli.py:15-150`
+- Runtime orchestration: `src/kardboard_vtuber/cli.py:32-652`
+- Default avatar: `src/kardboard_vtuber/renderer/textured_3d.py:111-1414`
+- Green-screen path: `src/kardboard_vtuber/tracking/green_screen.py:16-152`
 
 ## Related foundation chapters
 

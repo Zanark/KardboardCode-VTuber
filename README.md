@@ -3,11 +3,10 @@
 A lightweight Python VTuber tool that places a low-poly, PS1-style KardboardCode box over the user's head in a real camera feed.
 
 <p align="center">
-  <img src="./assets/PNGTuberV1/reference/state-sheet.png" alt="KardboardCode PNGTuber V1 state sheet" width="760">
+  <img src="./docs/images/kardboardcode-hero.png" alt="Current KardboardCode textured 3D avatar" width="1000">
 </p>
 <p align="center"><em>
-The preserved first-generation KardboardCode avatar: independent idle/talking and
-open-eye/blinking states.
+Current face-free synthetic render of the default textured GPU avatar.
 </em></p>
 
 ## Current milestone
@@ -22,14 +21,39 @@ The current working vertical slice includes:
 - Negotiated-format and latency diagnostics.
 - Rotation and selfie-style mirroring.
 - MediaPipe face tracking, calibrated pose, and anatomical blink/wink controls.
+- Optional MediaPipe 33-point full-body tracking with a separate skeleton diagnostic window.
+- An opt-in low-resolution pose-driven body whose neck extends beneath the cardboard head.
 - A default ModernGL textured 3D cardboard character with corrugated edges, hollow underside,
-  front/side flaps, and low-poly headphones.
+  front/side flaps, low-poly headphones, side shipping stickers and barcodes, and a top `FRAGILE`
+  label. The paper decals use dirty beige stock, torn corners, stains, and coarse pixel lettering.
+  The two left-side labels use separate irregular tear silhouettes rather than mirrored cuts.
+- Optional underdamped hinge physics for three underside flaps and both external side tabs.
+- Optional person segmentation that preserves the camera-visible body over pure chroma green.
+- Clean output by default; face mesh, pose, action, FPS, and latency overlays require
+  `--tracking-debug`.
+- Fail-closed privacy: black before safe face acquisition, frozen last-safe output after face loss,
+  and fully green output before a fresh segmentation mask.
 - A privacy-safe procedural 2D fallback.
-
-The phone preview has been verified at 1080x1920 portrait output and approximately 28-30 FPS.
 
 The phone preview has been verified around 28-30 FPS. The isolated GPU renderer measures about
 8.17 ms per 1080x1920 frame on the validated AMD Radeon 780M environment.
+
+## Current avatar
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-six-sides.png" alt="Six-sided turnaround of the current cardboard avatar" width="1000">
+</p>
+<p align="center"><em>
+Front, rear, left, right, top, and underside views generated without camera imagery.
+</em></p>
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-expression-states.png" alt="K and C eye expression states" width="1000">
+</p>
+
+The complete visual breakdown—including decals, hinges, underside privacy geometry, materials,
+lighting, and depth settings—is documented in the
+[textured renderer chapter](docs/02-architecture/textured-3d-renderer.md).
 
 ## Quick start
 
@@ -48,6 +72,9 @@ py -3.12 -m venv .venv312
 .\.venv312\Scripts\Activate.ps1
 python -m pip install -e ".[dev,tracking]"
 python scripts\download_face_landmarker_model.py
+python scripts\download_pose_landmarker_model.py
+python scripts\download_hand_landmarker_model.py
+python scripts\download_selfie_segmenter_model.py
 ```
 
 Preview the integrated laptop camera:
@@ -72,10 +99,12 @@ Press `Q` or `Escape` to exit.
 Enable the live tracking overlay by adding:
 
 ```powershell
---track-face
+--tracking-debug
 ```
 
-The tracker logs debounced face, eye, blink, wink, and mouth transitions. Use
+This opt-in flag shows the face mesh and pose inset plus action, pose, FPS, and latency text.
+Without it, cardboard rendering remains visually clean. The tracker still logs debounced face,
+eye, blink, wink, and mouth transitions. Use
 `--action-hold-ms 100` to tune how long a candidate action must remain stable before it is logged.
 One Euro smoothing is enabled by default; add `--no-motion-filter` to compare raw visual tracking.
 
@@ -87,6 +116,41 @@ Render the current PS1-style cardboard prototype by adding:
 
 This automatically enables face tracking and uses the textured 3D renderer. Add
 `--cardboard-renderer procedural-2d` to use the original fallback.
+
+Add `--physics` to automatically enable the textured cardboard renderer and give all three
+underside flaps spring hinge motion. The two external side tabs are especially sensitive to
+left-right head turns and swing independently around the box-side hinges.
+
+The textured box defaults to a small `0.16` perspective Z offset away from the camera. Use
+`--box-depth-offset 0` to restore its previous depth instantly, or provide any finite positive
+value to move it farther away. Large values can make the box too small to preserve head coverage.
+
+Add `--full-body` to render the pose-driven body beneath the cardboard head and open the
+independent 33-point skeleton window. The complete body must be visible to the camera for reliable
+limb tracking.
+
+For a camera-visible body over a chroma background, download the verified segmentation model once:
+
+```powershell
+python scripts\download_selfie_segmenter_model.py
+```
+
+Then add `--green-screen`. The detected person remains visible while all non-person pixels become
+pure green `(0, 255, 0)` for OBS chroma keying. Before the first fresh segmentation mask, output is
+entirely green rather than exposing the room.
+
+A representative full command is:
+
+```powershell
+python -m kardboard_vtuber `
+  --source "YOUR_CAMERA_URL" `
+  --backend auto `
+  --rotate left `
+  --mirror `
+  --physics `
+  --green-screen `
+  --preview-height 900
+```
 
 ## Documentation
 

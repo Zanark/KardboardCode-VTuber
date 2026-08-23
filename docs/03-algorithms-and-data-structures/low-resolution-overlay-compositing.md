@@ -8,8 +8,10 @@ description: "How a pixelated avatar is rendered and alpha-composited without de
 > **Status: implemented.**
 >
 > **TL;DR** — Avatar color and alpha are drawn on a small canvas, enlarged with nearest-neighbor
-> interpolation, and blended over the original camera frame. Only the box becomes pixelated
-> (`src/kardboard_vtuber/renderer/ps1_cardboard.py:45-165`).
+> interpolation, and blended over the original camera frame. Both renderer backends preserve a
+> sharp camera image while pixelating only synthetic avatar output
+> (`src/kardboard_vtuber/renderer/ps1_cardboard.py:45-165`,
+> `src/kardboard_vtuber/renderer/textured_3d.py:180-279`).
 
 ## Algorithm
 
@@ -77,17 +79,19 @@ low-resolution mask, and their temporary full-resolution upscales.
 
 ## Validation
 
-The renderer blacks initial no-face frames, modifies only the tracked head region after acquisition,
-keeps visible `K C` ordering, preserves the
-camera only through the neck-safe V-shaped opening, keeps the lower face fully opaque, and freezes
+The procedural fallback blacks initial no-face frames, modifies only the tracked head region after
+acquisition, keeps visible `K C` ordering, preserves the camera only through its fallback-specific
+neck-safe V-shaped opening, keeps the lower face fully opaque, and freezes
 the last safely composited frame through tracking loss. Dedicated perspective tests verify that a
 rightward face turn exposes screen-left depth and that up/down pitch selects underside/top geometry
 while wink tests verify K/left and C/right anatomical closure and roll tests verify whole-shell
 rotation. The V apex is clamped below the tracked face bottom plus `16%` of tracked face height,
 and pitch regression tests verify that this chin/beard safety band stays opaque while the neck
 remains visible (`tests/test_ps1_cardboard_renderer.py:38-191`). Spring behavior is independently covered
-(`tests/test_motion_springs.py:18-72`), and CLI composition occurs before diagnostics
-(`src/kardboard_vtuber/cli.py:153-167`).
+(`tests/test_motion_springs.py:18-71`), and CLI composition occurs before diagnostics
+(`src/kardboard_vtuber/cli.py:215-414`). The default textured renderer instead has a complete
+rectangular front face and an underside neck channel
+(`tests/test_textured_3d_renderer.py:351-409`).
 
 ## References
 
@@ -96,7 +100,7 @@ remains visible (`tests/test_ps1_cardboard_renderer.py:38-191`). Spring behavior
 - `src/kardboard_vtuber/motion/springs.py:26-85`
 - `src/kardboard_vtuber/cli.py:153-167`
 - `tests/test_ps1_cardboard_renderer.py:1-86`
-- `tests/test_motion_springs.py:1-72`
+- `tests/test_motion_springs.py:1-71`
 
 ---
 

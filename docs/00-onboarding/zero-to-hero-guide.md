@@ -1,3 +1,8 @@
+---
+title: "Zero-to-Hero Learning Path"
+description: "A guided introduction to the stack, architecture, runtime, and extension points."
+---
+
 # Zero-to-hero learning path
 
 > **TL;DR** — This path starts with Python and video basics, then introduces this repository's

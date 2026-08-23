@@ -1,3 +1,8 @@
+---
+title: "Domain and Runtime Data Model"
+description: "Immutable configuration, frame, tracking, and diagnostics contracts."
+---
+
 # Domain and runtime data model
 
 > **TL;DR** — The current model separates user intent, one captured frame, lifecycle state, and

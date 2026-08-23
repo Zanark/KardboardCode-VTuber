@@ -5,13 +5,14 @@ description: "Architecture of the procedural low-resolution KardboardCode head o
 
 # PS1 cardboard renderer
 
-> **Status: basic prototype implemented and offline-validated.**
+> **Status: implemented and retained as the `procedural-2d` fallback.**
 >
-> **TL;DR** — The renderer creates one fixed opaque hollow cardboard shell around the head at low
+> **TL;DR** — This legacy fallback creates one fixed opaque hollow cardboard shell around the head at low
 > resolution, leaves the neck visible through a central bottom opening, drives anatomical K/C eyes
 > from tracking, adds pose-dependent planes and spring motion, then composites only
 > the avatar over the sharp camera frame
-> (`src/kardboard_vtuber/renderer/ps1_cardboard.py:17-370`).
+> (`src/kardboard_vtuber/renderer/ps1_cardboard.py:17-370`). Its V-shaped bottom opening is specific
+to this fallback and is not the geometry of the default textured renderer.
 
 ## Why the renderer is deliberately fixed
 
@@ -65,7 +66,7 @@ sequenceDiagram
 | Top plane | Lighter polygon that grows while looking down |
 | Underside | Two dark lower polygons around the neck opening that grow while looking up |
 | Side plane | Darker polygon shown opposite the screen direction of the face turn |
-| Bottom opening | Central V-shaped cutout exposing the real neck |
+| Bottom opening | Central V-shaped cutout exposing the real neck; fallback-specific |
 | Interior rim | Dark lower-corner and opening surfaces that communicate hollow depth |
 | K/C eyes | Text when open, upward happy-eye arcs when closed or winking |
 | Surface | Deterministic light/dark fiber pattern over fully opaque cardboard |
@@ -98,14 +99,14 @@ After all low-resolution planes, eyes, and openings are drawn, the complete colo
 canvases rotate together around the tracked center using filtered roll. Positive roll produces the
 same counterclockwise screen tilt shown by the face mesh; roll is bounded to `+/-60` degrees.
 
-Mouth-driven front flaps are intentionally deferred after visual review. The current prototype
+Mouth-driven front flaps are intentionally deferred after visual review. This fallback
 renders no mouth flap geometry; mouth tracking and action diagnostics remain available for a later
 redesign.
 
 MediaPipe can lose the face when a full left or right profile hides too many frontal landmarks.
 Privacy is fail-closed: before the first valid detection the output is black, and after tracking
 loss the renderer freezes the last safely composited frame instead of emitting a new raw camera
-frame. The narrow V opening apex is constrained below the tracked lower-face bound plus a
+frame. In this fallback only, the narrow V opening apex is constrained below the tracked lower-face bound plus a
 `16%` face-height chin/beard safety margin. The shell extends downward when necessary so the
 opening exposes only the neck at every pitch.
 
@@ -118,7 +119,7 @@ opening exposes only the neck at every pitch.
   yaw-side perspective, pitch-driven top/underside visibility, enlarged XYZ dimensions, and an
   extreme combined-pose privacy silhouette. Default opaque composition uses a masked-copy fast
   path, while partial opacity retains tested alpha blending
-  (`tests/test_ps1_cardboard_renderer.py:1-253`).
+  (`tests/test_ps1_cardboard_renderer.py:1-219`).
 - The private guided recording produced a 1,254-frame prototype video.
 - Contact-sheet inspection confirmed face coverage, pose following, K/C placement, and closed-eye
   arcs.

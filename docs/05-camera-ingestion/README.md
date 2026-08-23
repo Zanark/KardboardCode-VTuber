@@ -1,4 +1,22 @@
+---
+title: "Camera Ingestion"
+description: "Implemented device and network capture, transformations, recovery, and diagnostics."
+---
+
 # 05 · Camera ingestion
+
+```mermaid
+flowchart LR
+    Source["Device or URL"] --> Open["Open source"]
+    Open --> Worker["Capture worker"]
+    Worker --> Transform["Rotate and mirror"]
+    Transform --> Latest["Publish latest frame"]
+    style Source fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Open fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Worker fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Transform fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Latest fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **Status: implemented and verified.**
 >

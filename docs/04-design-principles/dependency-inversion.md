@@ -1,4 +1,20 @@
+---
+title: "Dependency Inversion"
+description: "Hardware-independent contracts around OpenCV camera access."
+---
+
 # Design principle: dependency inversion at the capture boundary
+
+```mermaid
+flowchart LR
+    Worker["LatestFrameCamera"] --> Protocol["VideoCaptureLike"]
+    OpenCV["OpenCV VideoCapture"] --> Protocol
+    Fake["FakeCapture"] --> Protocol
+    style Worker fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Protocol fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style OpenCV fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Fake fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **Rule:** Core lifecycle logic should depend on the behavior it needs, not directly on a physical
 > camera or a concrete OpenCV object.

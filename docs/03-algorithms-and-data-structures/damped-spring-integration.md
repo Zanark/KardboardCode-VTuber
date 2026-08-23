@@ -5,7 +5,7 @@ description: "Bounded-step spring dynamics for head following and cardboard flap
 
 # Damped spring integration
 
-> **Status: dynamics implemented and tested; renderer wiring is the next milestone.**
+> **Status: dynamics implemented, tested, and wired into all five textured flap hinges.**
 >
 > **TL;DR** — A damped harmonic oscillator gives the cardboard head and flaps controlled lag,
 > settling, and optional overshoot. `DampedSpring` uses semi-implicit Euler integration with bounded
@@ -61,22 +61,26 @@ stateDiagram-v2
     Settled --> Following: target changes
 ```
 
-## Intended renderer use
+## Current renderer use
 
-- Critically or near-critically damped springs for head translation and scale.
-- Restrained underdamped springs for cardboard side flaps.
-- Mouth value as the front-flap target, with spring dynamics providing hinge follow-through.
-- Reset springs on prolonged tracking loss rather than integrating toward stale targets.
+- Two inward underside closure-panel springs respond to roll, yaw, and horizontal movement.
+- One broad front underside flap responds to pitch and vertical movement.
+- Two lower external side tabs use faster, lower-damping springs and amplified yaw targets.
+- Sustained yaw drives the external tabs in opposite directions.
+- Long frame gaps reset the five springs rather than integrating stale movement.
 
-These consumers are not yet wired because the low-resolution renderer does not exist. The tested
-primitive is ready for that milestone (`src/kardboard_vtuber/motion/__init__.py:1-5`,
-`docs/08-roadmap/README.md`).
+The shader rotates only vertices carrying hinge IDs `1..5`; the internal privacy volume keeps hinge
+ID `0` and never follows decorative flap motion
+(`src/kardboard_vtuber/renderer/textured_3d.py:15-89`,
+`src/kardboard_vtuber/renderer/textured_3d.py:329-472`,
+`tests/test_textured_3d_renderer.py:118-243`).
 
 ## Validation
 
-Tests prove critical damping converges without overshoot, underdamping produces secondary
-overshoot, bounded substeps keep 30 and 120 FPS results close, reset establishes a new state, and
-negative time fails explicitly (`tests/test_motion_springs.py:1-72`).
+Primitive tests prove convergence, underdamped overshoot, frame-rate consistency, reset behavior,
+and explicit negative-time failure (`tests/test_motion_springs.py:1-71`). Renderer tests separately
+prove all hinge IDs exist and small yaw produces visible opposite-direction external-tab response
+(`tests/test_textured_3d_renderer.py:118-243`).
 
 ## Complexity
 
@@ -90,7 +94,9 @@ O(`ceil(dt / maximum_step_seconds)`), which is normally four steps at 30 FPS.
 - `src/kardboard_vtuber/tracking/filters.py:1-175`
 - `src/kardboard_vtuber/tracking/models.py:55-100`
 - `src/kardboard_vtuber/tracking/mediapipe_tracker.py:88-199`
-- `tests/test_motion_springs.py:1-72`
+- `tests/test_motion_springs.py:1-71`
+- `src/kardboard_vtuber/renderer/textured_3d.py:329-472`
+- `tests/test_textured_3d_renderer.py:118-243`
 
 ---
 

@@ -1,4 +1,20 @@
+---
+title: "Diagnostics and Performance"
+description: "Capture counters, negotiated format, throughput, frame age, and measurement limits."
+---
+
 # Diagnostics and performance interpretation
+
+```mermaid
+flowchart LR
+    Source["Negotiated source"] --> Receive["Received FPS"]
+    Receive --> Publish["Latest-frame publication"]
+    Publish --> Age["Post-decode frame age"]
+    style Source fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Receive fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Publish fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Age fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **TL;DR** — Diagnostics distinguish what the source claims, what the worker actually receives,
 > and how quickly the current packet reaches the preview after decode.

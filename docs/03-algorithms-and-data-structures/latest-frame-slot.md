@@ -1,3 +1,8 @@
+---
+title: "The Single Latest-Frame Slot"
+description: "Why live video overwrites stale frames instead of accumulating latency."
+---
+
 # The single latest-frame slot
 
 > **TL;DR** — The application stores one current frame, not a queue. New frames overwrite unread

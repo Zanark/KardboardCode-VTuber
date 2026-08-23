@@ -76,7 +76,7 @@ asset guide explicitly distinguishes permanent body artwork from expression laye
 </p>
 <p align="center"><em>
 Figure 3 — The letters are not a logo placed near the eyes; they are the open-eye expression
-itself. Future tracking maps the user's left eye to K and right eye to C.
+itself. Current tracking maps the user's left eye to K and right eye to C.
 </em></p>
 
 <p align="center">
@@ -84,7 +84,7 @@ itself. Future tracking maps the user's left eye to K and right eye to C.
 </p>
 <p align="center"><em>
 Figure 4 — Closed-eye curves replace both letters during the original binary blink state. The
-future renderer will support independent left/right values while preserving this visual language.
+current renderer supports independent left/right values while preserving this visual language.
 </em></p>
 
 ## Mouth and flap identity
@@ -101,7 +101,7 @@ The two talking flaps intentionally use unequal amplitudes in the original model
 (`assets/PNGTuberV1/model-manifest.json:71-111`). The 3D version should therefore avoid perfectly
 mirrored hinge motion.
 
-## Mapping V1 semantics to the planned model
+## Mapping V1 semantics to the current model
 
 ```mermaid
 flowchart LR
@@ -109,8 +109,8 @@ flowchart LR
     V1Flaps["V1 idle/talking layers"] --> MouthSignal["mouth_open"]
     V1Side["V1 side flap physics"] --> Accel["head acceleration"]
     EyeSignals --> KC3D["K/C eye geometry or texture"]
-    MouthSignal --> Hinges["Two asymmetric flap hinges"]
-    Accel --> Spring["Side-flap spring"]
+    MouthSignal --> Events["Mouth action events"]
+    Accel --> Spring["Five flap springs"]
     style V1Eyes fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
     style V1Flaps fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
     style V1Side fill:#2d333b,stroke:#6d5dfc,color:#e6edf3

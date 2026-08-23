@@ -1,11 +1,11 @@
 ---
 title: "Normalized Face State"
-description: "The library-neutral tracking contract consumed by debugging and future rendering."
+description: "The library-neutral tracking contract consumed by debugging and current renderers."
 ---
 
 # Normalized face state
 
-> **TL;DR** — `FaceTrackingState` is the anti-corruption layer between MediaPipe and the planned
+> **TL;DR** — `FaceTrackingState` is the anti-corruption layer between MediaPipe and the current
 > renderer. It preserves only stable concepts the application owns.
 
 ## Contract shape
@@ -91,9 +91,8 @@ flowchart LR
 
 ## Why retain landmarks?
 
-The debug overlay needs spatial evidence that the model follows the face. Future rendering may use
-selected landmarks for box scale, occlusion estimates, or calibration. The renderer should not
-consume MediaPipe landmark objects directly.
+The opt-in debug overlay uses landmarks as spatial evidence. Current renderers use normalized
+bounds, center, expressions, and pose rather than consuming MediaPipe objects directly.
 
 ## Raw and filtered states
 
@@ -106,7 +105,7 @@ FaceTrackingState (raw normalized observation)
     -> AvatarControlState (renderer-specific values)
 ```
 
-Action detection consumes `raw_state`; visual geometry and future renderer controls consume
+Action detection consumes `raw_state`; visual geometry and current renderer controls consume
 filtered `state`. This prevents quick blinks from being hidden by smoothing.
 
 ## References

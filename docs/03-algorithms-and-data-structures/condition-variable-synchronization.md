@@ -1,4 +1,21 @@
+---
+title: "Condition-Variable Synchronization"
+description: "How producers and consumers coordinate without polling or unbounded queues."
+---
+
 # Condition-variable synchronization
+
+```mermaid
+%%{init: {"theme": "base", "themeVariables": {"primaryColor": "#2d333b", "primaryBorderColor": "#6d5dfc", "primaryTextColor": "#e6edf3", "lineColor": "#8b949e", "secondaryColor": "#161b22", "tertiaryColor": "#2d333b"}}}%%
+sequenceDiagram
+    autonumber
+    participant Consumer
+    participant Condition
+    participant Capture
+    Consumer->>Condition: wait for sequence newer than N
+    Capture->>Condition: publish latest frame and notify
+    Condition-->>Consumer: return newest packet
+```
 
 > **TL;DR** — One `threading.Condition` protects shared capture state and lets consumers sleep until
 > a new frame or lifecycle change occurs. This avoids both unsafe races and wasteful polling.

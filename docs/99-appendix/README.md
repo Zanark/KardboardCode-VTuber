@@ -1,4 +1,20 @@
+---
+title: "Appendix"
+description: "Commands, vocabulary, repository navigation, and evidence references."
+---
+
 # 99 · Appendix
+
+```mermaid
+flowchart LR
+    Appendix["Appendix"] --> Commands["Command reference"]
+    Appendix --> Terms["Glossary"]
+    Appendix --> Map["Repository map"]
+    style Appendix fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Commands fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Terms fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Map fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **TL;DR** — Quick references for commands, vocabulary, repository navigation, and evidence.
 

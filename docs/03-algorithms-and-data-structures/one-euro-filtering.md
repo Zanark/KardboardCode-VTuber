@@ -112,7 +112,7 @@ filter state. This remains bounded because the application tracks exactly one fa
 - `src/kardboard_vtuber/tracking/mediapipe_tracker.py:43-199`
 - `src/kardboard_vtuber/tracking/events.py:73-181`
 - `src/kardboard_vtuber/cli.py:45-230`
-- `tests/test_tracking_filters.py:1-93`
+- `tests/test_tracking_filters.py:1-92`
 
 ---
 

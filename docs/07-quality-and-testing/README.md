@@ -1,10 +1,16 @@
+---
+title: "Quality and Testing"
+description: "Deterministic tests, offscreen rendering checks, and scoped hardware evidence."
+---
+
 # 07 · Quality and testing
 
-> **Status: camera tests implemented and passing.**
+> **Status: 107 camera, tracking, motion, renderer, segmentation, body, occlusion, and CLI tests
+> implemented and passing.**
 >
 > **TL;DR** — The project separates deterministic unit tests from hardware integration checks.
-> `FakeCapture` proves buffering and transformation behavior without a camera; real probes verify
-> backend and device behavior that mocks cannot establish.
+> Fakes prove deterministic contracts without hardware, offscreen rendering tests exercise GPU
+> output, and real probes verify device behavior that mocks cannot establish.
 
 ## Test pyramid
 

@@ -1,4 +1,22 @@
+---
+title: "Monotonic Timing and FPS Estimation"
+description: "Stable duration, frame-age, and sliding-window throughput measurement."
+---
+
 # Monotonic timing and FPS estimation
+
+```mermaid
+flowchart LR
+    Tick["Monotonic timestamp"] --> Window["Sliding measurement window"]
+    Frame["Received frame"] --> Count["Frame count"]
+    Window --> FPS["Measured FPS"]
+    Count --> FPS
+    style Tick fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Window fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Frame fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Count fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style FPS fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **TL;DR** — The subsystem uses monotonic time because durations must not jump when the wall clock
 > changes. It measures received FPS over repeated windows of at least one second.

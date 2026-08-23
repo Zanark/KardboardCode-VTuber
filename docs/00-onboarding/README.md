@@ -1,4 +1,22 @@
+---
+title: "Onboarding"
+description: "Reading paths for operators, contributors, and senior engineers."
+---
+
 # 00 · Onboarding
+
+```mermaid
+flowchart LR
+    Start["Choose a reading path"] --> Principal["Principal engineer guide"]
+    Start --> Beginner["Zero-to-hero guide"]
+    Principal --> Architecture["Architecture and tradeoffs"]
+    Beginner --> Run["Run and extend the project"]
+    style Start fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Principal fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Beginner fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Architecture fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Run fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **TL;DR** — Choose the principal guide when you want architecture and tradeoffs quickly. Choose
 > zero-to-hero when you want to learn the stack from first principles and run the project yourself.

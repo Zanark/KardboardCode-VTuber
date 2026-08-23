@@ -1,3 +1,8 @@
+---
+title: "Camera Runtime Flow"
+description: "The capture worker loop from open through publication, recovery, and shutdown."
+---
+
 # Camera runtime flow
 
 > **TL;DR** — The CLI constructs immutable configuration, starts the worker, waits for newer

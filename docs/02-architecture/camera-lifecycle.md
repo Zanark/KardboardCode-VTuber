@@ -1,3 +1,8 @@
+---
+title: "Camera Lifecycle"
+description: "Capture startup, running, reconnecting, failure, and shutdown states."
+---
+
 # Camera lifecycle
 
 > **TL;DR** — Capture is modeled as a finite-state lifecycle rather than a Boolean “open” flag.

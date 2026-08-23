@@ -1,3 +1,8 @@
+---
+title: "KardboardCode VTuber Engineering Book"
+description: "Architecture, algorithms, operations, privacy, and visual reference for the current VTuber."
+---
+
 # KardboardCode VTuber Engineering Book
 
 > **TL;DR** — This is the engineering book for a lightweight Python VTuber that keeps the real
@@ -10,12 +15,27 @@ as the technical backbone for a future development video. It explains not only *
 does, but also **why** each data structure, algorithm, boundary, and tradeoff exists.
 
 <p align="center">
-  <img src="../assets/PNGTuberV1/reference/state-sheet.png" alt="KardboardCode avatar state sheet" width="800">
+  <img src="./images/kardboardcode-hero.png" alt="Current KardboardCode textured 3D avatar" width="1000">
 </p>
 <p align="center"><em>
-The preserved PNGTuber V1 model: idle/talking and open/blinking states form two independent axes.
-The new application carries this visual identity into a camera-tracked PS1-style cardboard head.
+The current default GPU-rendered avatar, generated entirely from synthetic geometry.
 </em></p>
+
+```mermaid
+flowchart LR
+    NoFace["No safe face"] --> Black["Black"]
+    Tracked["Tracked face"] --> Avatar["Textured avatar"]
+    Lost["Tracking lost"] --> Freeze["Last safe frame"]
+    NoMask["No fresh person mask"] --> Green["Fully green"]
+    style NoFace fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Tracked fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Lost fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style NoMask fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Black fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Avatar fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Freeze fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Green fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+```
 
 ## Book status
 
@@ -24,9 +44,22 @@ The new application carries this visual identity into a camera-tracked PS1-style
 | Camera ingestion | Implemented and verified | `src/kardboard_vtuber/camera/`, covered by the full test suite |
 | Android IP Webcam integration | Implemented and user-verified | 1080x1920 preview at about 28-30 FPS |
 | Face tracking | Implemented and live-validated | MediaPipe near 30 result FPS plus debounced action logs |
-| Textured 3D renderer | Implemented as default | ModernGL mesh, texture atlas, lighting, hollow shell, flaps, headphones, K/C eyes |
+| Textured 3D renderer | Implemented as default | ModernGL mesh, cubic shell, complete front, neck-safe underside, headphones, decals, K/C eyes |
+| Flap physics | Implemented and opt-in | Five independent shader hinges driven by bounded damped springs |
+| Full-body mode | Implemented and opt-in | 33-point pose tracker, synthetic body, and separate skeleton window |
+| Green-screen mode | Implemented and opt-in | Person mask preserves the body and replaces the room with chroma green |
+| Hand occlusion | Implemented and opt-in | Hand/forearm-only foreground restoration over the avatar |
 | Procedural renderer | Implemented fallback | Fail-closed opaque shell retained for GPU troubleshooting |
-| OBS integration | Planned | Initial Window Capture path selected |
+| OBS integration | Operational through Window Capture | Clean preview output; chroma-key mode available with `--green-screen` |
+
+## Current visual reference
+
+<p align="center">
+  <img src="./images/kardboardcode-six-sides.png" alt="Six-sided turnaround of the textured cardboard avatar" width="1000">
+</p>
+
+See [Textured GPU 3D renderer](02-architecture/textured-3d-renderer.md) for the detailed material,
+geometry, shader, privacy, decal, and animation specification.
 
 ## Reading paths
 
@@ -38,6 +71,8 @@ The new application carries this visual identity into a camera-tracked PS1-style
 | Learn every data structure | [Domain and runtime data model](02-architecture/data-model.md) |
 | Study every current algorithm | [Algorithms and data structures](03-algorithms-and-data-structures/README.md) |
 | Understand tracking | [Face tracking](06-face-tracking/README.md) |
+| Understand green-screen compositing | [Green-screen compositing](02-architecture/green-screen-compositing.md) |
+| Inspect every current avatar surface | [Textured GPU 3D renderer](02-architecture/textured-3d-renderer.md) |
 | Understand testing | [Quality and testing](07-quality-and-testing/README.md) |
 | Understand what comes next | [Roadmap](08-roadmap/README.md) |
 | Look up a term or file | [Glossary](99-appendix/glossary.md) → [Repository map](99-appendix/repository-map.md) |
@@ -54,7 +89,7 @@ The new application carries this visual identity into a camera-tracked PS1-style
 | 05 | [Camera ingestion](05-camera-ingestion/README.md) | How does the implemented subsystem work and how is it operated? |
 | 06 | [Face tracking](06-face-tracking/README.md) | How are landmarks, expressions, and head pose produced? |
 | 07 | [Quality and testing](07-quality-and-testing/README.md) | How do we verify behavior without depending only on hardware? |
-| 08 | [Roadmap](08-roadmap/README.md) | How will filtering, PS1 rendering, and OBS output be added? |
+| 08 | [Roadmap](08-roadmap/README.md) | Which production-hardening tasks remain after the working avatar milestone? |
 | 99 | [Appendix](99-appendix/README.md) | Where are commands, terms, source files, and quick references? |
 
 ## The system in one picture
@@ -65,11 +100,13 @@ flowchart LR
     Laptop["Integrated camera"] --> Capture
     Network --> Capture["OpenCV capture<br/>implemented"]
     Capture --> Slot["Latest-frame slot<br/>implemented"]
-    Slot --> Tracker["Face tracker<br/>implemented"]
+    Slot --> Tracker["Face + optional pose/hand/person trackers<br/>implemented"]
     Slot --> Composer["Full-resolution composer<br/>implemented"]
     Tracker --> Filter["One Euro + springs<br/>implemented"]
-    Filter --> Renderer["Textured GPU 3D box<br/>implemented"]
+    Filter --> Renderer["Textured GPU 3D box + flap physics<br/>implemented"]
     Renderer --> Composer
+    Slot --> Segment["Person segmentation<br/>optional"]
+    Segment --> Composer
     Composer --> Preview["Preview window"]
     Preview --> OBS["OBS Window Capture"]
 ```

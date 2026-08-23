@@ -1,4 +1,22 @@
+---
+title: "Algorithms and Data Structures"
+description: "Freshness, synchronization, filtering, motion, timing, and compositing algorithms."
+---
+
 # 03 · Algorithms and data structures
+
+```mermaid
+flowchart LR
+    Fresh["Latest frame"] --> Sync["Condition variable"]
+    Sync --> Filter["One Euro filter"]
+    Filter --> Spring["Damped springs"]
+    Spring --> Composite["Low-resolution composition"]
+    style Fresh fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Sync fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Filter fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Spring fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Composite fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **TL;DR** — The current subsystem uses four important ideas: a single latest-value slot, a
 > condition variable, a finite-state machine, and monotonic sliding-window timing. Each has its own

@@ -1,4 +1,19 @@
+---
+title: "Latency over Completeness"
+description: "Why a live avatar drops stale work to preserve responsiveness."
+---
+
 # Design principle: latency over completeness
+
+```mermaid
+flowchart LR
+    Camera["30 FPS producer"] --> Slot["One latest-frame slot"]
+    Slot --> Consumer["Variable-rate consumer"]
+    Camera -. overwrite stale .-> Slot
+    style Camera fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Slot fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Consumer fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **Rule:** In an interactive camera pipeline, process the newest useful observation rather than
 > preserving every historical observation.

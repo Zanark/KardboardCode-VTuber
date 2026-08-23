@@ -1,3 +1,8 @@
+---
+title: "Principal Engineer Guide"
+description: "System boundaries, tradeoffs, risks, and recommended technical reading path."
+---
+
 # Principal engineer guide
 
 > **TL;DR** — The core architectural insight is that **video frames are expiring state, not durable
@@ -40,7 +45,7 @@ flowchart TB
       Condition["Condition + one FramePacket"]
       Snapshot["Immutable diagnostics"]
     end
-    subgraph Future["Planned processing boundary"]
+    subgraph Processing["Implemented processing boundary"]
       Tracking["Downscaled asynchronous tracking"]
       Render["Low-resolution PS1 rendering"]
       Compose["Full-resolution composition"]
@@ -118,13 +123,13 @@ classDiagram
 
 1. **End-to-end latency confusion.** `frame age` starts after OpenCV returns a decoded frame; it does
    not measure phone exposure, encoding, network, or decoder buffering.
-2. **Python version split.** Camera code is verified on Python 3.13, while the planned MediaPipe
-   dependency is constrained below 3.13 in `pyproject.toml:21-23`.
+2. **Python version split.** Core camera/render code supports Python 3.11+, while the implemented
+   MediaPipe tracking extra is constrained below Python 3.13 in `pyproject.toml:21-23`.
 3. **Credential handling.** Authenticated URLs are convenient but can leak into shell history.
    Diagnostics redact them through `CameraSource.redacted()` at
    `src/kardboard_vtuber/camera/models.py:80-87`.
-4. **Premature renderer complexity.** A single cardboard head does not justify a general scene
-   engine or rigid-body simulation.
+4. **Renderer scope discipline.** A single cardboard head does not justify a general scene engine
+   or rigid-body simulation; five bounded decorative hinges are sufficient.
 
 ## Where to go deep
 

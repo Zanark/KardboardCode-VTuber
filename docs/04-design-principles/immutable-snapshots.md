@@ -1,4 +1,18 @@
+---
+title: "Immutable Snapshots"
+description: "Safe observation of mutable concurrent runtime state."
+---
+
 # Design principle: immutable observations of mutable state
+
+```mermaid
+flowchart LR
+    Worker["Mutable worker state"] --> Snapshot["Frozen snapshot"]
+    Snapshot --> CLI["Read-only consumer"]
+    style Worker fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Snapshot fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style CLI fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **Rule:** The worker may own mutable runtime state, but readers receive immutable point-in-time
 > values rather than references they can change.

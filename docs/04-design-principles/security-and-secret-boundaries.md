@@ -1,4 +1,20 @@
+---
+title: "Security and Secret Boundaries"
+description: "Credential handling, redaction, privacy output, and documentation safety."
+---
+
 # Design principle: security and secret boundaries
+
+```mermaid
+flowchart LR
+    URL["Authenticated source URL"] --> Config["Private runtime configuration"]
+    Config --> Redact["Credential redaction"]
+    Redact --> Logs["Safe logs and snapshots"]
+    style URL fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Config fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Redact fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+    style Logs fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+```
 
 > **Rule:** A camera source may contain credentials, but logs, diagnostics, documentation, tests,
 > and commits must not expose real credential values.
