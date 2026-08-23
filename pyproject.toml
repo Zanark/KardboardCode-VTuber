@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kardboard-vtuber"
+version = "0.1.0"
+description = "A lightweight PS1-style camera-tracked KardboardCode avatar."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "moderngl>=5.12,<6",
+    "numpy>=2.0,<3",
+    "opencv-contrib-python>=5.0,<6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3,<9",
+    "ruff>=0.9,<1",
+]
+tracking = [
+    "mediapipe>=0.10.35,<0.11; python_version < '3.13'",
+]
+
+[project.scripts]
+kardboard-camera = "kardboard_vtuber.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/kardboard_vtuber"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]

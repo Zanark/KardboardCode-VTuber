@@ -1,0 +1,71 @@
+---
+title: "Algorithms and Data Structures"
+description: "Freshness, synchronization, filtering, motion, timing, and compositing algorithms."
+---
+
+# 03 · Algorithms and data structures
+
+```mermaid
+flowchart LR
+    Fresh["Latest frame"] --> Sync["Condition variable"]
+    Sync --> Filter["One Euro filter"]
+    Filter --> Spring["Damped springs"]
+    Spring --> Composite["Low-resolution composition"]
+    style Fresh fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Sync fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Filter fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Spring fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
+    style Composite fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
+```
+
+> **TL;DR** — The current subsystem uses four important ideas: a single latest-value slot, a
+> condition variable, a finite-state machine, and monotonic sliding-window timing. Each has its own
+> chapter because each solves a different real-time systems problem.
+
+## Current algorithm catalogue
+
+| Chapter | Data structure / algorithm | Problem solved |
+|---|---|---|
+| [Latest-frame slot](latest-frame-slot.md) | One mutable reference + sequence | Prevent latency-producing queues |
+| [Condition-variable synchronization](condition-variable-synchronization.md) | `threading.Condition` | Coordinate producer, consumers, lifecycle, and timeouts |
+| [Finite-state lifecycle](finite-state-lifecycle.md) | Enum state machine + retry threshold | Make recovery behavior explicit |
+| [Monotonic timing and FPS](monotonic-timing-and-fps.md) | Monotonic timestamp + time window | Measure age and throughput safely |
+| [Asynchronous live inference](asynchronous-live-inference.md) | Non-blocking submission + latest result | Keep inference out of the preview critical path |
+| [Blendshape normalization](blendshape-normalization.md) | Lookup, inversion, and clamping | Produce stable eye and mouth controls |
+| [Transformation matrix decomposition](transformation-matrix-decomposition.md) | 4x4 validation + 3x3 RQ decomposition | Expose renderer-friendly pose diagnostics |
+| [Facial action state machine](facial-action-state-machine.md) | Hysteresis + debounced finite-state channels | Convert continuous controls into blink, wink, and mouth events |
+| [One Euro motion filtering](one-euro-filtering.md) | Adaptive low-pass filter bank | Reduce jitter while retaining fast motion |
+| [Damped spring integration](damped-spring-integration.md) | Bounded-step harmonic oscillator | Produce controlled head/flap secondary motion |
+| [Low-resolution overlay compositing](low-resolution-overlay-compositing.md) | Separate color/alpha buffers + nearest-neighbor upscale | Pixelate only the avatar |
+
+## Complexity summary
+
+| Operation | Time | Additional space |
+|---|---:|---:|
+| Publish frame | O(1) reference replacement | O(1) frames |
+| Read latest without copy | O(1) | O(1) |
+| Read latest with copy | O(width × height) | One frame copy |
+| Snapshot diagnostics | O(1) | O(1) |
+| Update FPS window | O(1) | O(1) |
+
+```mermaid
+flowchart LR
+    Frame["Decoded frame"] --> Transform["Rotate/mirror<br/>O(pixels)"]
+    Transform --> Publish["Replace latest reference<br/>O(1)"]
+    Publish --> ReadNoCopy["CLI read<br/>O(1)"]
+    Publish --> ReadCopy["Safe consumer copy<br/>O(pixels)"]
+```
+
+## Future algorithm chapters
+
+When implemented, the book will add dedicated chapters for:
+
+- Quaternion smoothing.
+- Ordered dithering and optional vertex snapping.
+
+These are not yet implemented and should not be presented as current behavior.
+
+---
+
+⬅️ [Architecture](../02-architecture/README.md) · ➡️
+[Design principles](../04-design-principles/README.md)

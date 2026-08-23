@@ -1,0 +1,46 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+.venv*/
+venv/
+env/
+
+# Packaging output
+build/
+dist/
+*.egg-info/
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Runtime output
+logs/
+recordings/
+captures/
+*.log
+
+# Downloaded machine-learning models
+models/*
+!models/.gitkeep
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+config.local.toml
+
+# Local YouTube production package
+/YTScript/

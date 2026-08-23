@@ -1,0 +1,174 @@
+{
+  "name": "KardboardCode PNGTuber V1",
+  "application": {
+    "name": "PNGTuber Plus",
+    "observedVersion": "1.4.5"
+  },
+  "canvas": {
+    "width": 1920,
+    "height": 1080,
+    "mode": "RGBA",
+    "alignment": "shared full-canvas origin"
+  },
+  "rootLayerId": 3452965169,
+  "layers": [
+    {
+      "file": "Full Body.png",
+      "id": 3452965169,
+      "parentId": null,
+      "role": "permanent root and base illustration",
+      "zIndex": -1,
+      "showTalk": 0,
+      "showBlink": 0,
+      "position": [15, 226],
+      "offset": [-15, -226],
+      "motion": {
+        "drag": 18,
+        "rotationDrag": 0,
+        "rotationLimit": [-180, 180],
+        "stretchAmount": 1,
+        "xAmplitude": 0,
+        "xFrequency": 0,
+        "yAmplitude": 0,
+        "yFrequency": 0
+      }
+    },
+    {
+      "file": "Eyes Open.png",
+      "id": 2668782109,
+      "parentId": 3452965169,
+      "role": "normal open-eye KC lettering",
+      "zIndex": 1,
+      "showTalk": 0,
+      "showBlink": 1,
+      "position": [-114, -294],
+      "offset": [27, -10]
+    },
+    {
+      "file": "Eyes Closed.png",
+      "id": 3531045988,
+      "parentId": 3452965169,
+      "role": "blink eye expression",
+      "zIndex": 1,
+      "showTalk": 0,
+      "showBlink": 2,
+      "position": [-97, -278],
+      "offset": [45, -28]
+    },
+    {
+      "file": "FrontFlap1-2.png",
+      "id": 3839644171,
+      "parentId": 3452965169,
+      "role": "screen-left idle front flap",
+      "zIndex": 0,
+      "showTalk": 2,
+      "showBlink": 0,
+      "position": [-208, -59],
+      "offset": [193, -167]
+    },
+    {
+      "file": "FrontFlap2-2.png",
+      "id": 1956358513,
+      "parentId": 3452965169,
+      "role": "screen-right idle front flap",
+      "zIndex": 0,
+      "showTalk": 2,
+      "showBlink": 0,
+      "position": [82, -34],
+      "offset": [-97, -192]
+    },
+    {
+      "file": "FrontFlap1.png",
+      "id": 573431133,
+      "parentId": 3452965169,
+      "role": "screen-left talking front flap",
+      "zIndex": 0,
+      "showTalk": 1,
+      "showBlink": 0,
+      "position": [-201, -60],
+      "offset": [186, -166],
+      "motion": {
+        "stretchAmount": 3.25,
+        "yAmplitude": 4,
+        "yFrequency": 0.037
+      }
+    },
+    {
+      "file": "FrontFlap2.png",
+      "id": 3444366280,
+      "parentId": 3452965169,
+      "role": "screen-right talking front flap",
+      "zIndex": 0,
+      "showTalk": 1,
+      "showBlink": 0,
+      "position": [77, -42],
+      "offset": [-95, -189],
+      "motion": {
+        "stretchAmount": 3.25,
+        "yAmplitude": 2,
+        "yFrequency": 0.037
+      }
+    },
+    {
+      "file": "RightFlap1.png",
+      "id": 162753989,
+      "parentId": 3452965169,
+      "role": "always-visible secondary-motion side flap",
+      "zIndex": 0,
+      "showTalk": 0,
+      "showBlink": 0,
+      "position": [262, -87],
+      "offset": [-277, -139],
+      "motion": {
+        "rotationDrag": 2,
+        "rotationLimit": [-4, 3],
+        "stretchAmount": 3.75,
+        "yAmplitude": 3,
+        "yFrequency": 0.038
+      }
+    }
+  ],
+  "states": {
+    "idle-open": [
+      "Full Body.png",
+      "RightFlap1.png",
+      "FrontFlap1-2.png",
+      "FrontFlap2-2.png",
+      "Eyes Open.png"
+    ],
+    "talking-open": [
+      "Full Body.png",
+      "RightFlap1.png",
+      "FrontFlap1.png",
+      "FrontFlap2.png",
+      "Eyes Open.png"
+    ],
+    "idle-blink": [
+      "Full Body.png",
+      "RightFlap1.png",
+      "FrontFlap1-2.png",
+      "FrontFlap2-2.png",
+      "Eyes Closed.png"
+    ],
+    "talking-blink": [
+      "Full Body.png",
+      "RightFlap1.png",
+      "FrontFlap1.png",
+      "FrontFlap2.png",
+      "Eyes Closed.png"
+    ]
+  },
+  "obsIntegration": {
+    "sourceType": "window_capture",
+    "sourceName": "PNGTuber+",
+    "windowTarget": "PNGTuberPlus:Engine:PNGTUBER PLUS 1.4.5 WINDOWS.exe",
+    "backgroundRemoval": "OBS chroma_key_filter"
+  },
+  "notes": [
+    "KCAvatar.save is JSON and embeds base64 copies of all eight sprites.",
+    "The save's historical user://KC Sprites paths may not exist on another machine.",
+    "The external PNG files differ byte-for-byte from their embedded copies; preserve both.",
+    "Reference renders are generated documentation and are not runtime layers.",
+    "A production VTube Studio model requires additional artwork separation and Live2D Cubism rigging."
+  ]
+}
