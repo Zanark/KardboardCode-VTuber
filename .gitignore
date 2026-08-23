@@ -41,3 +41,6 @@ models/*
 .env.*
 !.env.example
 config.local.toml
+
+# Local YouTube production package
+/YTScript/
