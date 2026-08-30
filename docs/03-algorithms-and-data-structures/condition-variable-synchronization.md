@@ -32,7 +32,7 @@ sequenceDiagram
     participant Condition
     participant Worker
     Consumer->>Condition: acquire
-    Consumer->>Condition: sequence not newer; wait(timeout)
+    Consumer->>Condition: sequence not newer, wait with timeout
     Condition-->>Consumer: releases lock while sleeping
     Worker->>Condition: acquire
     Worker->>Condition: replace packet and state

@@ -21,6 +21,13 @@ does, but also **why** each data structure, algorithm, boundary, and tradeoff ex
 The current default GPU-rendered avatar, generated entirely from synthetic geometry.
 </em></p>
 
+## Printable edition
+
+The complete documentation is also generated as
+[`KardboardCode-VTuber-Engineering-Handbook.pdf`](KardboardCode-VTuber-Engineering-Handbook.pdf).
+Its reproducible Markdown-to-PDF pipeline and build instructions live in
+[`book/`](book/README.md).
+
 ```mermaid
 flowchart LR
     NoFace["No safe face"] --> Black["Black"]
