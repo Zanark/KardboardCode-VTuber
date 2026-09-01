@@ -5,6 +5,7 @@ import pytest
 
 from kardboard_vtuber.cli import (
     _apply_brightness,
+    _create_full_body_tracker,
     _draw_debug_face_preview,
     _resize_preview,
     _ShutdownSignal,
@@ -40,6 +41,8 @@ def test_raw_face_preview_is_disabled_by_default() -> None:
     assert not args.debug_face_preview
     assert not args.hand_occlusion
     assert not args.full_body
+    assert not args.body_head_fallback
+    assert not args.hood_marker_tracking
     assert not args.physics
     assert not args.tracking_debug
     assert not args.green_screen
@@ -57,6 +60,65 @@ def test_tracking_debug_is_opt_in() -> None:
     args = build_parser().parse_args(["--tracking-debug"])
 
     assert args.tracking_debug
+
+
+def test_body_head_fallback_is_opt_in() -> None:
+    args = build_parser().parse_args(["--body-head-fallback"])
+
+    assert args.body_head_fallback
+
+
+def test_hood_marker_tracking_is_opt_in() -> None:
+    args = build_parser().parse_args(["--hood-marker-tracking"])
+
+    assert args.hood_marker_tracking
+
+
+def test_body_fallback_and_hood_markers_are_mutually_exclusive(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    exit_code = main(["--body-head-fallback", "--hood-marker-tracking"])
+
+    assert exit_code == 2
+    assert "cannot be combined" in capsys.readouterr().err
+
+
+def test_body_head_fallback_uses_throttled_low_resolution_pose_tracking(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from kardboard_vtuber.tracking import full_body
+
+    monkeypatch.setattr(
+        full_body,
+        "MediaPipeFullBodyTracker",
+        lambda config: config,
+    )
+    args = build_parser().parse_args(["--body-head-fallback"])
+
+    config = _create_full_body_tracker(args)
+
+    assert config.input_width == 256
+    assert config.minimum_submit_interval_ms == 125
+
+
+def test_full_body_mode_preserves_requested_pose_tracking_rate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from kardboard_vtuber.tracking import full_body
+
+    monkeypatch.setattr(
+        full_body,
+        "MediaPipeFullBodyTracker",
+        lambda config: config,
+    )
+    args = build_parser().parse_args(
+        ["--full-body", "--pose-tracking-width", "400"]
+    )
+
+    config = _create_full_body_tracker(args)
+
+    assert config.input_width == 400
+    assert config.minimum_submit_interval_ms == 0
 
 
 def test_eye_sensitivity_thresholds_are_configurable() -> None:

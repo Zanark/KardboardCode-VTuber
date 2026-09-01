@@ -80,6 +80,42 @@ Those require integration or manual validation.
 Current verified result: Ruff passes and all fifteen tests pass in both the Python 3.12 tracking
 environment and Python 3.13 base environment.
 
+## Guided full-body regression recording
+
+`scripts/record_guided_regression.py --full-body` records a private 93-second routine covering
+front calibration, complete clockwise and counterclockwise rotations, both profiles, two back
+holds, leaning, crouching, raised arms, head occlusion, and free motion. The ignored `recordings/`
+directory receives:
+
+- the unmodified full-resolution MP4;
+- synchronized face telemetry;
+- synchronized 33-point pose telemetry encoded in the CSV `pose_landmarks` field.
+
+The preview shows instructions over the camera and opens a separate synthetic body-skeleton
+window. Pose inference defaults to 320-pixel input at no more than 10 FPS so recording and face
+tracking retain most of the camera throughput.
+
+```powershell
+.\.venv312\Scripts\python.exe scripts\record_guided_regression.py `
+  --source "YOUR_CAMERA_URL" `
+  --mirror `
+  --full-body `
+  --name "KardboardCode-full-body-rotation"
+```
+
+For an unguided recording with coloured clothing markers, add `--free-recording` and choose the
+duration:
+
+```powershell
+.\.venv312\Scripts\python.exe scripts\record_guided_regression.py `
+  --source "YOUR_CAMERA_URL" `
+  --mirror `
+  --full-body `
+  --free-recording `
+  --duration 90 `
+  --name "KardboardCode-colour-marker-session"
+```
+
 ## Definition of done for a new behavior
 
 1. Model/config contract updated.

@@ -11,6 +11,7 @@ from kardboard_vtuber.tracking.full_body import (
     FullBodyPoseState,
     FullBodyTrackerConfig,
     PoseLandmark,
+    pose_torso_is_plausible,
     render_pose_skeleton_debug,
 )
 from tests.test_ps1_cardboard_renderer import state
@@ -52,6 +53,8 @@ def pose_state() -> FullBodyPoseState:
 def test_full_body_config_rejects_invalid_values() -> None:
     with pytest.raises(ValueError, match="positive"):
         FullBodyTrackerConfig(input_width=0)
+    with pytest.raises(ValueError, match="minimum_submit_interval_ms"):
+        FullBodyTrackerConfig(minimum_submit_interval_ms=-1)
     with pytest.raises(ValueError, match="minimum_visibility"):
         FullBodyRendererConfig(minimum_visibility=1.1)
 
@@ -64,6 +67,24 @@ def test_skeleton_debug_renders_all_pose_landmarks_on_black() -> None:
     assert np.count_nonzero(np.all(image == (80, 255, 80), axis=2)) >= 33
 
 
+def sideways_pose_state() -> FullBodyPoseState:
+    pose = pose_state()
+    landmarks = list(pose.landmarks)
+    landmarks[11] = PoseLandmark(0.35, 0.35, 0.0, 1.0, 1.0)
+    landmarks[12] = PoseLandmark(0.35, 0.65, 0.0, 1.0, 1.0)
+    landmarks[23] = PoseLandmark(0.70, 0.40, 0.0, 1.0, 1.0)
+    landmarks[24] = PoseLandmark(0.70, 0.60, 0.0, 1.0, 1.0)
+    return FullBodyPoseState(pose.timestamp_ms, tuple(landmarks))
+
+
+def test_sideways_torso_hallucination_is_rejected() -> None:
+    pose = sideways_pose_state()
+
+    assert not pose_torso_is_plausible(pose)
+    image = render_pose_skeleton_debug(pose)
+    assert np.count_nonzero(np.all(image == (60, 60, 255), axis=2)) > 0
+
+
 def test_full_body_renderer_draws_torso_limbs_and_neck_into_head() -> None:
     frame = np.full((720, 405, 3), 91, dtype=np.uint8)
 
@@ -72,3 +93,11 @@ def test_full_body_renderer_draws_torso_limbs_and_neck_into_head() -> None:
     assert np.all(frame[40, 40] == 91)
     assert not np.all(frame[430, 202] == 91)
     assert not np.all(frame[324, 202] == 91)
+
+
+def test_full_body_renderer_ignores_sideways_torso_hallucination() -> None:
+    frame = np.full((720, 405, 3), 91, dtype=np.uint8)
+
+    FullBodyAvatarRenderer().render(frame, sideways_pose_state(), state(1))
+
+    assert np.all(frame == 91)

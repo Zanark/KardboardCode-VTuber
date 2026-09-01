@@ -37,8 +37,9 @@ python -m pip install -e ".[dev]"
 python -m kardboard_vtuber --source 0 --backend auto --mirror
 ```
 
-Camera frames receive a mild brightness lift of `12` before tracking and preview. Override it with
-`--brightness 0..100`, for example `--brightness 20` in a darker room.
+Tracker inputs receive a mild brightness lift of `12`; the displayed and OBS-captured preview
+retains the original camera brightness. Override internal processing with `--brightness 0..100`,
+for example `--brightness 20` in a darker room.
 
 ## Android IP Webcam
 
@@ -162,11 +163,52 @@ python -m kardboard_vtuber `
   --preview-height 900
 ```
 
-`--full-body` automatically enables face tracking and cardboard rendering. It draws a
-low-resolution pose-driven body before the cardboard head, allowing the synthetic neck to overlap
-inside the box. A separate `KardboardCode Full Body Skeleton` window shows the 33 numbered pose
-landmarks and their connections on black. The tracker supports one person and can only track body
-parts visible in the camera frame.
+`--full-body` automatically enables face tracking and cardboard rendering. A separate
+`KardboardCode Full Body Skeleton` window shows the 33 numbered pose landmarks and line
+connections on black. The skeleton is not filled or composited into the camera preview. The
+tracker supports one person and can only track body parts visible in the camera frame.
+
+To keep only the cardboard head moving when the face turns away, use:
+
+```powershell
+python -m kardboard_vtuber `
+  --source "YOUR_CAMERA_URL" `
+  --rotate left `
+  --mirror `
+  --body-head-fallback
+```
+
+`--body-head-fallback` automatically enables cardboard, face, and pose tracking but does not
+render the synthetic body or open the skeleton window. While the face is visible, it learns the
+relationship between the face and shoulders. During face loss, it uses confident shoulder
+landmarks to estimate head position, size, roll, and continuing yaw with neutral expressions. If
+the initial calibration has not completed or the shoulders are also lost, rendering falls back to
+the existing frozen privacy-safe frame. To protect preview performance, fallback-only pose
+tracking runs at no more than 256-pixel input and 8 FPS; `--full-body` retains the requested pose
+resolution and unrestricted submission rate.
+
+Begin the session facing the camera normally for about one second. The fallback deliberately
+refuses to invent a generic head size until it has collected enough paired face-and-shoulder
+observations. During that startup period, the preview keeps the lower body visible, blacks out
+everything above the detected shoulders, and displays calibration progress. If body pose is not
+available either, the entire camera image remains opaque behind the instructions.
+
+For the colour-square hood:
+
+```powershell
+python -m kardboard_vtuber `
+  --source $env:KARDBOARD_CAMERA_URL `
+  --mirror `
+  --physics `
+  --hood-marker-tracking `
+  --tracking-debug
+```
+
+The marker tracker recognizes green on the wearer's anatomical left and blue on the anatomical
+right. Red and pink are ignored. Face plus body tracking selects front view; body tracking without
+face tracking or either side marker selects rear view. Side markers preserve the latest
+face/body-derived head dimensions to prevent the cardboard box from enlarging during profile
+turns. `--tracking-debug` outlines accepted squares and prints marker state.
 
 ## Enable flap hinge physics
 

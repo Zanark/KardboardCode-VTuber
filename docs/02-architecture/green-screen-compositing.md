@@ -24,12 +24,12 @@ visible; the cardboard shell and opaque backing cover the face and hairline.
 
 The mode exists for OBS chroma keying without requiring a physical green backdrop. It is separate
 from face tracking: green-screen mode can run by itself, with the cardboard head, or with flap
-physics. The CLI submits the original brightness-adjusted camera frame to segmentation before it
-mutates the preview for composition (`src/kardboard_vtuber/cli.py:272-348`).
+physics. The CLI submits a brightness-adjusted processing frame to segmentation, then applies the
+resulting mask to an original-brightness preview copy (`src/kardboard_vtuber/cli.py`).
 
 ```mermaid
 flowchart LR
-    Camera["Brightness-adjusted camera"] --> Segment["MediaPipe Selfie Segmenter"]
+    Camera["Brightness-adjusted processing frame"] --> Segment["MediaPipe Selfie Segmenter"]
     Segment --> Confidence["Latest person-confidence mask"]
     Confidence --> Guard{"Fresh mask?"}
     Guard -->|No| Green["Fully chroma-green frame"]

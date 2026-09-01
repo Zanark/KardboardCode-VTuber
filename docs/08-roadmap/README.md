@@ -84,9 +84,9 @@ flowchart LR
 
 ## Milestone 5 · Composition — complete
 
-The high-resolution camera frame remains sharp while the avatar stays pixelated. Optional
-full-body rendering runs behind the head, hand/forearm masking can restore a bounded foreground,
-and person segmentation can replace the room with chroma green.
+The high-resolution camera frame remains sharp while the avatar stays pixelated. Full-body pose
+appears only in a separate line-skeleton diagnostic window, hand/forearm masking can restore a
+bounded foreground, and person segmentation can replace the room with chroma green.
 
 ## Milestone 6 · OBS — operational
 

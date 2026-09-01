@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import threading
 from dataclasses import dataclass
 from pathlib import Path
@@ -73,10 +74,40 @@ class FullBodyPoseState:
         return cls(timestamp_ms=timestamp_ms, landmarks=())
 
 
+def pose_torso_is_plausible(
+    state: FullBodyPoseState,
+    *,
+    minimum_confidence: float = 0.35,
+    maximum_tilt_degrees: float = 60.0,
+) -> bool:
+    """Reject high-confidence torso estimates that are effectively sideways."""
+
+    if not state.detected:
+        return False
+    torso = tuple(state.landmarks[index] for index in (11, 12, 23, 24))
+    if any(
+        value < minimum_confidence
+        for point in torso
+        for value in (point.visibility, point.presence)
+    ):
+        return True
+    shoulder_x = (torso[0].x + torso[1].x) / 2.0
+    shoulder_y = (torso[0].y + torso[1].y) / 2.0
+    hip_x = (torso[2].x + torso[3].x) / 2.0
+    hip_y = (torso[2].y + torso[3].y) / 2.0
+    delta_x = hip_x - shoulder_x
+    delta_y = hip_y - shoulder_y
+    if delta_y <= 0.0 or math.hypot(delta_x, delta_y) < 0.04:
+        return False
+    tilt_degrees = math.degrees(math.atan2(abs(delta_x), delta_y))
+    return tilt_degrees <= maximum_tilt_degrees
+
+
 @dataclass(frozen=True, slots=True)
 class FullBodyTrackerConfig:
     model_path: Path = Path("models/pose_landmarker_lite.task")
     input_width: int = 480
+    minimum_submit_interval_ms: int = 0
     min_detection_confidence: float = 0.5
     min_presence_confidence: float = 0.5
     min_tracking_confidence: float = 0.5
@@ -84,6 +115,8 @@ class FullBodyTrackerConfig:
     def __post_init__(self) -> None:
         if self.input_width <= 0:
             raise ValueError("pose input width must be positive")
+        if self.minimum_submit_interval_ms < 0:
+            raise ValueError("minimum_submit_interval_ms cannot be negative")
         for name in (
             "min_detection_confidence",
             "min_presence_confidence",
@@ -128,6 +161,17 @@ class MediaPipeFullBodyTracker:
         self._landmarker = mp.tasks.vision.PoseLandmarker.create_from_options(options)
 
     def submit(self, frame_bgr: ndarray, captured_at_ns: int) -> None:
+        timestamp_ms = captured_at_ns // 1_000_000
+        with self._lock:
+            if (
+                self._last_submitted_timestamp_ms >= 0
+                and timestamp_ms - self._last_submitted_timestamp_ms
+                < self._config.minimum_submit_interval_ms
+            ):
+                return
+            timestamp_ms = max(timestamp_ms, self._last_submitted_timestamp_ms + 1)
+            self._last_submitted_timestamp_ms = timestamp_ms
+
         height, width = frame_bgr.shape[:2]
         if width > self._config.input_width:
             scale = self._config.input_width / width
@@ -137,10 +181,6 @@ class MediaPipeFullBodyTracker:
                 interpolation=cv2.INTER_AREA,
             )
         frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
-        timestamp_ms = captured_at_ns // 1_000_000
-        with self._lock:
-            timestamp_ms = max(timestamp_ms, self._last_submitted_timestamp_ms + 1)
-            self._last_submitted_timestamp_ms = timestamp_ms
         image = self._mp.Image(
             image_format=self._mp.ImageFormat.SRGB,
             data=np.ascontiguousarray(frame_rgb),
@@ -168,7 +208,10 @@ class MediaPipeFullBodyTracker:
                 )
                 for point in result.pose_landmarks[0]
             )
-            state = FullBodyPoseState(timestamp_ms=timestamp_ms, landmarks=landmarks)
+            state = FullBodyPoseState(
+                timestamp_ms=timestamp_ms,
+                landmarks=landmarks,
+            )
         with self._lock:
             self._state = state
 
@@ -199,6 +242,18 @@ def render_pose_skeleton_debug(
             (12, 52),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.65,
+            (60, 60, 255),
+            2,
+            cv2.LINE_AA,
+        )
+        return canvas
+    if not pose_torso_is_plausible(state):
+        cv2.putText(
+            canvas,
+            "UNRELIABLE TORSO ANGLE",
+            (12, 52),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.54,
             (60, 60, 255),
             2,
             cv2.LINE_AA,

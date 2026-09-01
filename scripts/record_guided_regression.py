@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import math
 import time
 from dataclasses import dataclass
@@ -16,6 +17,12 @@ from numpy import ndarray
 from kardboard_vtuber.camera import CameraBackend, CameraConfig, CameraRotation, CameraSource
 from kardboard_vtuber.camera.stream import LatestFrameCamera
 from kardboard_vtuber.tracking.events import FaceActionDetector, FaceActionEvent
+from kardboard_vtuber.tracking.full_body import (
+    FullBodyPoseState,
+    FullBodyTrackerConfig,
+    MediaPipeFullBodyTracker,
+    render_pose_skeleton_debug,
+)
 from kardboard_vtuber.tracking.mediapipe_tracker import (
     MediaPipeFaceTracker,
     MediaPipeTrackerConfig,
@@ -46,6 +53,28 @@ STAGES = (
     Stage("combined", "COMBINE TURNS / TILTS / EXPRESSIONS", 6.0),
 )
 
+FULL_BODY_STAGES = (
+    Stage("front_neutral", "FACE FRONT / ARMS RELAXED", 5.0),
+    Stage("clockwise_right_quarter", "TURN RIGHT TO 45 DEGREES", 4.0),
+    Stage("clockwise_right_profile", "CONTINUE TO RIGHT PROFILE", 4.0),
+    Stage("clockwise_back", "CONTINUE UNTIL BACK FACES CAMERA", 5.0),
+    Stage("back_hold_clockwise", "HOLD BACK VIEW / ARMS RELAXED", 4.0),
+    Stage("clockwise_left_profile", "CONTINUE TO LEFT PROFILE", 5.0),
+    Stage("clockwise_front", "COMPLETE TURN TO FACE FRONT", 5.0),
+    Stage("front_reset", "HOLD FRONT / RESET POSTURE", 3.0),
+    Stage("counter_left_quarter", "TURN LEFT TO 45 DEGREES", 4.0),
+    Stage("counter_left_profile", "CONTINUE TO LEFT PROFILE", 4.0),
+    Stage("counter_back", "CONTINUE UNTIL BACK FACES CAMERA", 5.0),
+    Stage("back_hold_counter", "HOLD BACK VIEW / ARMS RELAXED", 4.0),
+    Stage("counter_right_profile", "CONTINUE TO RIGHT PROFILE", 5.0),
+    Stage("counter_front", "COMPLETE TURN TO FACE FRONT", 5.0),
+    Stage("lean", "LEAN LEFT / CENTER / RIGHT / CENTER", 6.0),
+    Stage("crouch", "CROUCH SLOWLY / HOLD / STAND", 6.0),
+    Stage("arms_up", "RAISE BOTH ARMS / LOWER THEM", 5.0),
+    Stage("head_occlusion", "MOVE HANDS AROUND HOOD AND HEAD", 6.0),
+    Stage("free_motion", "FREE SLOW TURNS / LEANS / CROUCH", 8.0),
+)
+
 CSV_FIELDS = (
     "elapsed_seconds",
     "stage",
@@ -70,6 +99,9 @@ CSV_FIELDS = (
     "filtered_yaw",
     "filtered_roll",
     "actions",
+    "pose_timestamp_ms",
+    "pose_detected",
+    "pose_landmarks",
 )
 
 
@@ -90,9 +122,37 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--brightness", type=int, default=12)
     parser.add_argument("--tracking-width", type=int, default=640)
     parser.add_argument(
+        "--full-body",
+        action="store_true",
+        help="Record 33-point pose telemetry and open the body-skeleton preview.",
+    )
+    parser.add_argument(
+        "--free-recording",
+        action="store_true",
+        help="Record without guided stages; only show elapsed and remaining time.",
+    )
+    parser.add_argument(
+        "--duration",
+        type=float,
+        default=60.0,
+        help="Free-recording duration in seconds (default: 60).",
+    )
+    parser.add_argument(
         "--face-model",
         type=Path,
         default=Path("models/face_landmarker.task"),
+    )
+    parser.add_argument(
+        "--pose-model",
+        type=Path,
+        default=Path("models/pose_landmarker_lite.task"),
+    )
+    parser.add_argument("--pose-tracking-width", type=int, default=320)
+    parser.add_argument(
+        "--pose-tracking-fps",
+        type=float,
+        default=10.0,
+        help="Maximum pose submissions per second during full-body recording.",
     )
     parser.add_argument(
         "--output-dir",
@@ -122,6 +182,12 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("--countdown cannot be negative")
     if args.preview_height < 240:
         raise SystemExit("--preview-height must be at least 240")
+    if args.pose_tracking_width <= 0:
+        raise SystemExit("--pose-tracking-width must be positive")
+    if args.pose_tracking_fps <= 0:
+        raise SystemExit("--pose-tracking-fps must be positive")
+    if args.duration <= 0:
+        raise SystemExit("--duration must be positive")
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -144,11 +210,28 @@ def main(argv: list[str] | None = None) -> int:
             swap_eyes=args.mirror,
         )
     )
+    body_tracker = (
+        MediaPipeFullBodyTracker(
+            FullBodyTrackerConfig(
+                model_path=args.pose_model,
+                input_width=args.pose_tracking_width,
+                minimum_submit_interval_ms=round(1000.0 / args.pose_tracking_fps),
+            )
+        )
+        if args.full_body
+        else None
+    )
     detector = FaceActionDetector()
     writer: cv2.VideoWriter | None = None
-    window_name = "KardboardCode Guided Regression Recording"
+    window_name = (
+        "KardboardCode Free Recording"
+        if args.free_recording
+        else "KardboardCode Guided Regression Recording"
+    )
     last_sequence: int | None = None
     video_frame = 0
+    stages = _recording_stages(args.full_body, args.free_recording, args.duration)
+    skeleton_window_name = "KardboardCode Recording Body Skeleton"
 
     try:
         camera.start()
@@ -187,7 +270,7 @@ def main(argv: list[str] | None = None) -> int:
             csv_writer = csv.DictWriter(telemetry_file, fieldnames=CSV_FIELDS)
             csv_writer.writeheader()
             recording_started = time.monotonic()
-            total_duration = sum(stage.duration_seconds for stage in STAGES)
+            total_duration = sum(stage.duration_seconds for stage in stages)
 
             while True:
                 elapsed = time.monotonic() - recording_started
@@ -197,13 +280,20 @@ def main(argv: list[str] | None = None) -> int:
                 if packet is None:
                     continue
                 last_sequence = packet.sequence
-                stage, stage_remaining = _stage_at(elapsed)
+                stage, stage_remaining = _stage_at(elapsed, stages)
                 tracking_input = _brighten(packet.frame, args.brightness)
                 tracker.submit(tracking_input, packet.captured_at_ns)
                 snapshot = tracker.snapshot()
                 raw = snapshot.raw_state
                 filtered = snapshot.state
                 events = detector.update(raw)
+                if body_tracker is not None:
+                    body_tracker.submit(tracking_input, packet.captured_at_ns)
+                    body_state = body_tracker.snapshot()
+                else:
+                    body_state = FullBodyPoseState.empty(
+                        packet.captured_at_ns // 1_000_000
+                    )
 
                 writer.write(packet.frame)
                 csv_writer.writerow(
@@ -215,6 +305,7 @@ def main(argv: list[str] | None = None) -> int:
                         raw,
                         filtered,
                         events,
+                        body_state,
                     )
                 )
                 video_frame += 1
@@ -223,15 +314,22 @@ def main(argv: list[str] | None = None) -> int:
                 draw_tracking_debug(preview, filtered)
                 _draw_instruction(
                     preview,
-                    stage.instruction,
+                    "FREE RECORDING" if args.free_recording else stage.instruction,
                     f"{stage_remaining:0.1f}s  FRAME {video_frame}",
                 )
                 cv2.imshow(window_name, preview)
+                if body_tracker is not None:
+                    cv2.imshow(
+                        skeleton_window_name,
+                        render_pose_skeleton_debug(body_state),
+                    )
                 if cv2.waitKey(1) & 0xFF in {ord("q"), 27}:
                     break
     finally:
         if writer is not None:
             writer.release()
+        if body_tracker is not None:
+            body_tracker.close()
         tracker.close()
         camera.stop()
         cv2.destroyAllWindows()
@@ -239,6 +337,8 @@ def main(argv: list[str] | None = None) -> int:
     print(f"video={video_path.resolve()}")
     print(f"telemetry={telemetry_path.resolve()}")
     print(f"frames={video_frame}")
+    print(f"routine={'full-body' if args.full_body else 'face'}")
+    print(f"guided={not args.free_recording}")
     return 0
 
 
@@ -258,14 +358,27 @@ def _resize_preview(frame: ndarray, maximum_height: int) -> ndarray:
     )
 
 
-def _stage_at(elapsed: float) -> tuple[Stage, float]:
+def _stage_at(
+    elapsed: float,
+    stages: tuple[Stage, ...] = STAGES,
+) -> tuple[Stage, float]:
     cursor = 0.0
-    for stage in STAGES:
+    for stage in stages:
         stage_end = cursor + stage.duration_seconds
         if elapsed < stage_end:
             return stage, stage_end - elapsed
         cursor = stage_end
-    return STAGES[-1], 0.0
+    return stages[-1], 0.0
+
+
+def _recording_stages(
+    full_body: bool,
+    free_recording: bool,
+    duration: float,
+) -> tuple[Stage, ...]:
+    if free_recording:
+        return (Stage("free_session", "", duration),)
+    return FULL_BODY_STAGES if full_body else STAGES
 
 
 def _telemetry_row(
@@ -276,6 +389,7 @@ def _telemetry_row(
     raw: FaceTrackingState,
     filtered: FaceTrackingState,
     events: tuple[FaceActionEvent, ...],
+    body: FullBodyPoseState,
 ) -> dict[str, object]:
     return {
         "elapsed_seconds": f"{elapsed:.6f}",
@@ -301,6 +415,21 @@ def _telemetry_row(
         "filtered_yaw": f"{filtered.head_pose.yaw_degrees:.6f}",
         "filtered_roll": f"{filtered.head_pose.roll_degrees:.6f}",
         "actions": "|".join(event.action.value for event in events),
+        "pose_timestamp_ms": body.timestamp_ms,
+        "pose_detected": body.detected,
+        "pose_landmarks": json.dumps(
+            [
+                [
+                    round(point.x, 7),
+                    round(point.y, 7),
+                    round(point.z, 7),
+                    round(point.visibility, 7),
+                    round(point.presence, 7),
+                ]
+                for point in body.landmarks
+            ],
+            separators=(",", ":"),
+        ),
     }
 
 

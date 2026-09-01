@@ -52,7 +52,7 @@ The current working vertical slice includes:
 - Rotation and selfie-style mirroring.
 - MediaPipe face tracking, calibrated pose, and anatomical blink/wink controls.
 - Optional MediaPipe 33-point full-body tracking with a separate skeleton diagnostic window.
-- An opt-in low-resolution pose-driven body whose neck extends beneath the cardboard head.
+- An opt-in separate 33-point line-skeleton diagnostic window.
 - A default ModernGL textured 3D cardboard character with corrugated edges, hollow underside,
   front/side flaps, low-poly headphones, side shipping stickers and barcodes, and a top `FRAGILE`
   label. The paper decals use dirty beige stock, torn corners, stains, and coarse pixel lettering.
@@ -204,9 +204,31 @@ The textured box defaults to a small `0.16` perspective Z offset away from the c
 `--box-depth-offset 0` to restore its previous depth instantly, or provide any finite positive
 value to move it farther away. Large values can make the box too small to preserve head coverage.
 
-Add `--full-body` to render the pose-driven body beneath the cardboard head and open the
-independent 33-point skeleton window. The complete body must be visible to the camera for reliable
-limb tracking.
+Add `--full-body` to open the independent 33-point line-skeleton window. The skeleton is
+diagnostic-only and is not composited into the camera preview beneath the cardboard head. The
+complete body must be visible to the camera for reliable limb tracking.
+
+Add `--body-head-fallback` to enable cardboard rendering and keep the head attached to a
+shoulder-derived anchor when the face turns away or face tracking is briefly lost. The option
+automatically starts face and pose tracking without rendering the synthetic full body or opening
+its skeleton window. It first learns several normal face-to-shoulder observations while the face is
+visible, then uses neutral expressions during fallback. It will not guess a generic head size
+before calibration and returns to the existing frozen fail-safe if both shoulders cannot be
+tracked confidently. Fallback-only pose inference is capped at 256-pixel input and 8 FPS to avoid
+starving camera capture and face tracking.
+
+Start each session facing the camera normally for about one second so the fallback can collect its
+initial calibration before you turn away. Until calibration completes, the preview keeps the lower
+body visible, masks everything above the detected shoulders, and displays calibration progress
+instead of showing an unexplained black frame.
+
+For a hoodie carrying a green square on the wearer's anatomical left and a blue square on the
+anatomical right, use `--hood-marker-tracking`. It automatically enables cardboard, face, and
+low-rate pose tracking. Face landmarks plus body pose mean front-facing; a side square selects the
+corresponding profile; body pose without face landmarks or either side square selects the rear.
+Side markers change orientation and position while retaining the most recent face/body-derived
+head size. Red and pink are not marker colours. Recent side-marker motion is held briefly through
+occlusion, then the existing privacy-safe freeze resumes if body tracking is also lost.
 
 For a camera-visible body over a chroma background, download the verified segmentation model once:
 
