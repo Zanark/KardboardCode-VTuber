@@ -15,6 +15,29 @@ from kardboard_vtuber.cli import (
 from tests.test_ps1_cardboard_renderer import state
 
 
+@pytest.mark.parametrize("source", ["", " \t "])
+@pytest.mark.parametrize("virtual_camera", [False, True])
+def test_empty_source_reports_how_to_set_camera_url(
+    source: str,
+    virtual_camera: bool,
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def unexpected_capture(config: object) -> None:
+        pytest.fail("Empty input must be rejected before creating camera resources")
+
+    monkeypatch.setattr("kardboard_vtuber.cli.LatestFrameCamera", unexpected_capture)
+    args = ["--source", source]
+    if virtual_camera:
+        args.append("--virtual-camera")
+
+    assert main(args) == 2
+    message = capsys.readouterr().err
+    assert "Invalid --source: camera source cannot be empty" in message
+    assert "$env:KARDBOARD_CAMERA_URL" in message
+    assert "this PowerShell session" in message
+
+
 def test_camera_brightness_defaults_to_mild_lift() -> None:
     args = build_parser().parse_args([])
 

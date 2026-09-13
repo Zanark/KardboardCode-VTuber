@@ -63,6 +63,47 @@ python -m kardboard_vtuber `
   --duration 30
 ```
 
+## Direct virtual camera for calling apps (Windows)
+
+Install OBS Studio once for its camera component. The OBS application can remain closed:
+
+```powershell
+.\.venv312\Scripts\python.exe -m pip install -e ".[tracking,virtual-camera]"
+$env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
+.\.venv312\Scripts\python.exe -m kardboard_vtuber `
+  --source $env:KARDBOARD_CAMERA_URL `
+  --mirror `
+  --physics `
+  --tracking-width 1280 `
+  --brightness 30 `
+  --virtual-camera
+```
+
+Set `KARDBOARD_CAMERA_URL` in the same PowerShell terminal before running; session assignments
+do not carry over to new terminals. Then select **OBS Virtual Camera** in Discord, Teams,
+Meet, or another camera-capable app. Stop any other producer of that device, including OBS's
+**Start Virtual Camera** output. There is only one OBS camera instance; this mode does not install
+or rename a driver. It uses [pyvirtualcam](https://github.com/letmaik/pyvirtualcam#supported-virtual-cameras)
+to send composed frames directly.
+
+`--virtual-camera` enables cardboard rendering and face tracking even without `--physics`.
+`--headless` suppresses local windows, not rendering or camera delivery. Only the clean composite
+is sent; all local debug overlays and the opt-in raw-face preview are excluded. In face-only
+mode, startup is black and lost or stale face tracking freezes the last safe frame. Capture interruptions repeat that
+composite, never the unprocessed input. `--brightness` does not brighten exported video.
+
+| Option | Default | Meaning |
+|---|---|---|
+| `--virtual-camera-width` | `1280` | Fixed output width, positive even number |
+| `--virtual-camera-height` | `720` | Fixed output height, positive even number |
+| `--virtual-camera-fps` | `30` | Advertised FPS (1-60); actual motion follows source/processing speed |
+
+Portrait or differently shaped input is fitted with black bars. Changes to capture resolution do
+not change the camera's output format mid-call. `--preview-height` affects only the local window.
+Microphone audio remains a separate device. If the device is missing, check OBS's camera-component
+installation and restart the calling app; app permissions or managed-device policies may also
+restrict camera access.
+
 ## Recorded calibration video
 
 Local video files are automatically paced at their recorded FPS and stop cleanly at EOF.

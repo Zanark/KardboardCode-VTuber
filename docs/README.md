@@ -58,6 +58,7 @@ flowchart LR
 | Hand occlusion | Implemented and opt-in | Hand/forearm-only foreground restoration over the avatar |
 | Procedural renderer | Implemented fallback | Fail-closed opaque shell retained for GPU troubleshooting |
 | OBS integration | Operational through Window Capture | Clean preview output; chroma-key mode available with `--green-screen` |
+| Virtual camera | Opt-in direct Windows output | `--virtual-camera` sends the clean composite to the installed OBS camera component; OBS need not run |
 
 ## Current visual reference
 

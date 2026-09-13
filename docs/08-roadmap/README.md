@@ -91,7 +91,9 @@ bounded foreground, and person segmentation can replace the room with chroma gre
 ## Milestone 6 · OBS — operational
 
 Window Capture consumes the clean preview today. `--green-screen` provides a straightforward OBS
-chroma-key workflow. Spout2 remains optional rather than required.
+chroma-key workflow. `--virtual-camera` can also send the composed output directly to the installed
+Windows OBS camera component for calling apps, without OBS running. Spout2 remains optional
+rather than required.
 
 ## Remaining work
 

@@ -64,9 +64,56 @@ The current working vertical slice includes:
 - Fail-closed privacy: black before safe face acquisition, frozen last-safe output after face loss,
   and fully green output before a fresh segmentation mask.
 - A privacy-safe procedural 2D fallback.
+- Direct Windows virtual-camera output through the installed OBS camera component, without
+  running OBS or capturing a preview window.
 
 The phone preview has been verified around 28-30 FPS. The isolated GPU renderer measures about
 8.17 ms per 1080x1920 frame on the validated AMD Radeon 780M environment.
+
+## Use as a camera in Discord, Teams, or Meet
+
+On Windows, install OBS Studio once to register **OBS Virtual Camera**, then install the optional
+Python dependency:
+
+```powershell
+.\.venv312\Scripts\python.exe -m pip install -e ".[tracking,virtual-camera]"
+```
+
+Run the tool with your camera source. Set `KARDBOARD_CAMERA_URL` in the same terminal;
+an assignment in another terminal does not populate this one:
+
+```powershell
+$env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
+.\.venv312\Scripts\python.exe -m kardboard_vtuber `
+  --source $env:KARDBOARD_CAMERA_URL `
+  --mirror `
+  --physics `
+  --tracking-width 1280 `
+  --brightness 30 `
+  --virtual-camera
+```
+
+Select **OBS Virtual Camera** in the calling application's camera settings. OBS does **not**
+need to run: Python sends the composed frames directly to its installed camera component.
+Do not start OBS's virtual-camera output or another sender at the same time; the OBS backend
+has only one camera instance. This is an existing Windows camera device, not a new custom-named
+KardboardCode device. App permissions or organizational policies can restrict virtual cameras.
+
+`--virtual-camera` automatically enables face tracking and cardboard rendering. With face-only
+tracking, output is black before the first face acquisition and freezes on the last safe frame
+when face tracking is lost or its result becomes stale. Debug text, face-mesh panels, and even `--debug-face-preview` stay
+local; they are never sent to the virtual camera. Processing-only brightness remains internal.
+Video output defaults to **1280x720 at an advertised 30 FPS**; delivered motion depends on capture
+and tracking speed. Input is fitted with black bars if necessary, not stretched or cropped.
+Use `--virtual-camera-width`, `--virtual-camera-height` (positive even values), and
+`--virtual-camera-fps` (1-60) to change the output format. These are separate from capture settings
+and `--preview-height`.
+
+Add `--headless` to send video without opening any preview windows. Use Ctrl+C to stop and
+release the device. Select your microphone separately in the calling application; this output
+carries video only. Window Capture in OBS remains available when you do not use this mode.
+
+Backend details: [pyvirtualcam supported cameras](https://github.com/letmaik/pyvirtualcam#supported-virtual-cameras).
 
 ## Current avatar
 
