@@ -65,6 +65,7 @@ def stylesheet(dark: bool) -> str:
     assets = Path(__file__).parent / "assets"
     tick = (assets / ("check-ink.svg" if dark else "check-cream.svg")).as_posix()
     disabled_tick = (assets / "check-cream.svg").as_posix()
+    slider_accent = "#d5a568" if dark else accent
     return f"""
         QMainWindow, QDialog {{ background:{bg}; color:{text}; }}
         QWidget {{ color:{text}; font-family:'Segoe UI'; font-size:12px; }}
@@ -121,8 +122,8 @@ def stylesheet(dark: bool) -> str:
         QCheckBox::indicator:checked:disabled {{ background:#667260;
             image:url("{disabled_tick}"); }}
         QSlider::groove:horizontal {{ height:5px; background:{border}; border-radius:2px; }}
-        QSlider::sub-page:horizontal {{ background:{accent}; border-radius:2px; }}
-        QSlider::handle:horizontal {{ width:15px; margin:-6px 0; background:{accent};
+        QSlider::sub-page:horizontal {{ background:{slider_accent}; border-radius:2px; }}
+        QSlider::handle:horizontal {{ width:15px; margin:-6px 0; background:{slider_accent};
             border:1px solid {border}; border-radius:7px; }}
         QSlider::sub-page:horizontal:disabled {{ background:{disabled}; }}
         QSlider::handle:horizontal:disabled {{ background:{disabled_bg}; border-color:{disabled}; }}

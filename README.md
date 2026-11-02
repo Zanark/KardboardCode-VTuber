@@ -16,7 +16,8 @@
 
 ![Actual KardboardCode Studio with live eye sliders and a synthetic avatar preview](docs/images/kardboardcode-studio-dark.png)
 
-*The real Windows Studio, running a labelled synthetic demo. No camera or video output.*
+*Cardboard-brown sliders on forest green. Real Windows widgets on a labelled synthetic stage;
+no camera input or published video.*
 
 ## Current milestone
 
@@ -28,7 +29,7 @@
 
 <a href="docs/images/kardboardcode-studio-light.png"><img src="docs/images/kardboardcode-studio-light.png" alt="Studio in its light theme" width="100%"></a>
 
-*Same controls. A lighter workbench.*
+*Same controls, warm paper and contrasting green sliders. A lighter workbench.*
 
 <a href="docs/images/kardboardcode-studio-native-camera.png"><img src="docs/images/kardboardcode-studio-native-camera.png" alt="Native laptop and USB camera selection with illustrative device names" width="100%"></a>
 
@@ -36,7 +37,7 @@
 
 <a href="docs/images/kardboardcode-studio-compact.png"><img src="docs/images/kardboardcode-studio-compact.png" alt="Compact Studio layout with anatomical eye calibration" width="100%"></a>
 
-*A smaller desk. The same live eye controls.*
+*A smaller desk. The same cardboard-brown live eye controls.*
 
 <a href="docs/images/kardboardcode-studio-tutorial.png"><img src="docs/images/kardboardcode-studio-tutorial.png" alt="Built-in tutorial explaining left and right eye calibration" width="100%"></a>
 

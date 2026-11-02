@@ -111,6 +111,9 @@ identity is inferred from equal names. The current automatic/manual route remain
 Both themes follow the top banner: forest ink, mint, kraft and cream. The dark theme uses forest
 surfaces; the light theme uses warm paper. Checked boxes have an explicit contrasting tick;
 unchecked boxes are empty bordered squares, and disabled states remain distinguishable.
+Dark slider handles and filled tracks use cardboard brown (`#d5a568`) so frequently touched
+controls echo the box material. Mint remains reserved for checked/live/primary states rather
+than making every accent brown. Light sliders retain their deeper green for contrast on cream.
 Video pixels are never recolored by the UI. The theme button includes both a sun and a moon icon.
 The window/application/header icon uses the user's supplied voxel **KC cardboard-box artwork**.
 Its canonical PNG stays unchanged; optical bounds discard near-invisible outer noise in derived
