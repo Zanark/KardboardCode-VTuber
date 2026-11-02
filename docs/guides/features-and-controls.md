@@ -41,6 +41,8 @@ secondary controls without removing them; field help is available in tooltips/ac
 descriptions. The main preview sits directly beside the inspector. Selected raw-face diagnostics
 appear above face/pose or body in a resizable right-hand rail, simultaneously visible without Tools.
 **Tools** / **Ctrl+J** opens a bounded Logs/CLI/numeric Signals drawer, closed by default.
+Four performance/output data cards stay below the preview beside Tools, whether the drawer
+is open or closed. The drawer occupies only the viewer column, keeping settings full-height.
 Raw face, mesh and body views never occupy or cover the program image.
 **Show clean output** remains available in Live mode to reopen the separate controls-free window
 after closing it; **Auto-open** is an independent startup preference.

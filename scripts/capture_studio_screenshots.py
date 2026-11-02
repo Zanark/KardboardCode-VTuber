@@ -140,6 +140,8 @@ def main() -> int:
             window.face_mesh.image = face_image.copy()
             window.face_mesh.update()
             window.diagnostic_tabs.setCurrentIndex(0)
+            window.tools_action.setChecked(True)
+            window.console_tabs.setCurrentIndex(0)
             window.status.setText("SYNTHETIC DIAGNOSTIC LAYOUT / NO CAMERA INPUT")
         elif number == 7:
             path = args.output_dir / "kardboardcode-studio-diagnostics.png"

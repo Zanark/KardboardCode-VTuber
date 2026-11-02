@@ -25,8 +25,11 @@ LESSONS = (
         "Use it to explore the layout and live eye sliders.<br><br>"
         "Settings stay in the <b>left inspector</b>; the main preview sits directly beside it. "
         "Selected visual diagnostics stack in a <b>right-hand column</b>. "
+        "Four compact cards below the preview keep camera FPS, tracking FPS, internal frame "
+        "age and output state visible. "
         "Expand a labelled section for more controls. <b>Tools</b> or <b>Ctrl+J</b> opens "
-        "Logs, CLI equivalent and numeric Signals without covering the preview.<br><br>"
+        "Logs, CLI equivalent and numeric Signals below the viewer, without covering the preview "
+        "or shortening the settings column.<br><br>"
         "<b>LIVE</b> controls apply to the next processed frame. "
         "Dimmed controls show <b>LOCKED / STOP TO EDIT</b>. Other settings unlock after Stop.",
     ),
@@ -166,7 +169,7 @@ LESSONS = (
         "command copying. It substitutes a local environment variable "
         "so copying a command does not copy credentials.<br><br>"
         "The <b>Logs</b> tab remains selectable and bounded, and continues collecting when "
-        "Tools is closed. "
+        "Tools is closed. The performance/output cards stay visible beside the Tools toggle. "
         "Missing model? Open Models. No image? Check source, backend and face visibility. "
         "Virtual output unavailable? Check installation and competing producer. "
         "Distant detection remains a known limitation, not a solved slider setting.<br><br>"

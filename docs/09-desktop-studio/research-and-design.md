@@ -443,6 +443,24 @@ skipped; Ruff passes. Actual synthetic native screenshots show the revised arran
 These results establish the tested geometry/lifecycle, not owner usability approval or live
 camera/tracking qualification.
 
+### Owner preference: preserve the metric cards
+
+The owner explicitly preferred the earlier rounded data cards and rejected the flattened
+metric text row. Decluttering had removed useful visual grouping. The follow-up illustration
+places camera FPS, tracking FPS, internal frame age and output cards below the preview beside
+Tools, with the drawer under the viewer only and the settings column full-height.
+
+The v1.2.3 implementation restores that grouping with compact captions and stronger values,
+reusing the existing telemetry bindings. Cards stay visible with Tools open or closed. The
+selected diagnostic rail's real minimum height propagates into its horizontal splitter so
+footer content cannot clip its images. Native tests inspect actual borders, real-font text
+fit, unchanged settings height and whole preview/diagnostic regions at three window sizes
+and Qt 100/125/150%. Offscreen Qt's placeholder font engine is not native text-fit evidence;
+the isolated Segoe UI proof explicitly skips there and runs on Windows.
+
+The original card preference is recorded; visual approval of the restored implementation is
+still separate. Do not equate reducing clutter with stripping out a grouping the owner likes.
+
 ### Primary references for this revision
 
 Read on 2026-11-03. NN/g disclosure/heuristic pages were retrieved over normal verified HTTPS

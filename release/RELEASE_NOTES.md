@@ -1,10 +1,23 @@
-# v1.2.2 - Readable Diagnostics and Reopenable Clean Output
+# v1.2.3 - Metric Cards and Full-height Settings
 
 A quieter, preview-first native workspace with every operating option retained. Online Windows
 setup, cardboard-brown dark sliders, Live/Video processing and automatic playback remain included.
 v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 
 ## 2026-11-03
+
+### Preferred metric cards, always in view
+
+- Restored the rounded **Camera FPS**, **Tracking FPS**, **Internal frame age** and **Video
+  output** cards below the preview, beside Tools. They remain visible with the drawer open
+  or closed, rather than flattening these values into a text row inside Signals.
+- Tools now opens below the viewer only. The settings inspector keeps its full height;
+  Logs, CLI and detailed eye/pose Signals remain available without covering program pixels.
+- Existing metric values/units, honest unavailable/demo states, stacked diagnostic images,
+  clean-output recovery and all settings/data bindings remain unchanged.
+- Native regressions check actual card borders, real-font text fit, full-height settings and
+  whole preview/diagnostic containment at compact sizes and 100/125/150% Qt scaling.
+- Refreshed native README/gallery screenshots and the operating guide/handbook.
 
 ### Readable side diagnostics and clean-output access
 

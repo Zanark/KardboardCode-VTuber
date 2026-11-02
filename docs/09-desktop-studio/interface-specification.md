@@ -14,6 +14,10 @@ opening Tools; disabling their channels returns space to the main preview.
 Labelled disclosure sections retain every option without expanding every form.
 **Tools** / **Ctrl+J** opens a bounded bottom drawer containing **Logs**, **CLI equivalent**
 and numeric **Signals**. The drawer starts closed, not the preview or selected diagnostics.
+Four compact, rounded **Camera FPS**, **Tracking FPS**, **Internal frame age** and **Video
+output** cards stay beneath the preview beside Tools. They are outside the drawer, not a
+flattened text row in Signals. Tools opens under the viewer column only, so the settings
+inspector remains full-height.
 
 Why these positions:
 
@@ -46,6 +50,9 @@ Why these positions:
   not a first-run modal that blocks the interface or disappears forever.
 - **Logs remain selectable plain text:** no HTML interpretation, bounded history, explicit clearing
   and safe copying. Closing Tools does not stop log collection.
+- **Metric cards preserve useful grouping:** small captions and stronger values make performance/
+  output state scannable without opening Tools. Demo/unavailable values stay honest; internal
+  post-decode age is not end-to-end camera latency.
 - **Presets are a menu:** Save/Load/Reset remain reachable in the inspector and File menu without
   a permanent row of three extra buttons. Load/Reset/model jobs visibly disable during work.
 - **Errors do not consume the stage:** the bounded plain-text error surface remains visible and

@@ -23,7 +23,7 @@ illustrative. No raw camera footage or private face imagery is included.
 
 ![Compact 16:9 Studio with a protected preview, stacked diagnostics and anatomical eye controls](images/kardboardcode-studio-compact.png)
 
-*The main preview and selected diagnostic images stay visible on a smaller desk; settings remain in labelled sections.*
+*The preview, selected diagnostics and compact metric cards stay visible on a smaller desk; settings remain in labelled sections.*
 
 ### Built-in tutorial
 
@@ -114,6 +114,9 @@ Read the [renderer chapter](02-architecture/textured-3d-renderer.md) for geometr
 *The right-hand rail keeps raw and tracking image areas readable together without opening Tools.
 Its dividers resize the panels; disabled channels return space to the main preview. The raw
 pattern is synthetic, explicitly not a face, and never enters clean output.*
+
+*The preferred metric cards stay beside Tools. Its open Logs drawer sits below the viewer,
+not under the full-height settings column.*
 
 ### Face mesh and pose
 

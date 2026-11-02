@@ -104,6 +104,11 @@ affects analysis only; width/brightness are not proven distance-tracking fixes.
 
 ## 5. Avatar, effects and separate diagnostics
 
+Four compact data cards below the preview show camera FPS, tracking FPS, internal frame age
+and output state. They remain visible beside Tools when its drawer is closed or open.
+Tools opens below the viewer only; your settings column keeps its full height. Detailed
+eye/pose numbers stay under **Tools → Signals**.
+
 Expand **Avatar setup**. Textured 3D is canonical; disable physics before selecting procedural 2D for comparison.
 Depth offset changes perspective placement and supports direct numeric entry without an
 artificial positive cap. Preview resizing does not crop or change source processing resolution.

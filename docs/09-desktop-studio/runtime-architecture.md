@@ -80,7 +80,10 @@ collapsing either. `debug_face_preview`, `tracking_debug` and `full_body` contro
 panels; disabled channels reclaim their space. Headless/Video states hide this Live-only rail.
 
 Logs/CLI/numeric Signals are inside a closed-by-default `QScrollArea` drawer with a height cap.
-It can shrink and scroll when space is tight. A fixed-height dock was not sufficient: the old
+The drawer belongs to the viewer column, not the entire window, so opening it does not shorten
+the inspector. Four persistent footer cards reuse the existing metric QLabel bindings and
+remain visible beside the Tools toggle. The drawer can shrink and scroll when space is tight.
+A fixed-height dock was not sufficient: the old
 220px canvas could be clipped to 76px by its parent at 1120x780. Raising only the child's
 minimum repeats that defect. Error messages are a bounded, scrollable plain-text surface;
 video progress stays in the program workspace rather than the inspector page. Tools has an
@@ -97,15 +100,16 @@ flowchart TD
     Rail --> Raw["Upper: raw face / local only"]
     Rail --> Tracking["Lower: face-pose or body tabs"]
     Work --> Progress["Video progress remains visible across categories"]
-    Optional["Tools toggle / Ctrl+J"] --> Drawer["Bounded scrollable secondary drawer"]
+    Work --> Footer["Viewer footer: four metric cards / Tools toggle"]
+    Footer --> Drawer["Viewer-only scrollable drawer / Ctrl+J"]
     Drawer --> Tabs["Logs / CLI / numeric Signals"]
     Rail --> Separate["Private channels never become program pixels"]
     classDef default fill:#19332b,stroke:#d5a568,color:#fff4db
 ```
 
 Runtime polling updates owned raw/mesh/body buffers independently of Tools visibility. Compact
-eye decisions remain near eye tuning; full numeric signals and performance values are in
-Tools > Signals. The shared preset
+eye decisions remain near eye tuning; full eye/pose signals are in Tools > Signals, while
+camera/tracker rates, internal frame age and output state remain in the footer cards. The shared preset
 actions and model buttons visibly reflect busy state. Logging continues regardless of drawer
 visibility, and the explicit headless option leaves an explanatory workspace.
 
@@ -115,6 +119,9 @@ changes, splitter dragging, both image orientations and controlled Qt scaling. T
 establish containment on the tested platform, not universal hardware or live-camera accuracy.
 Diagnostic regressions also inspect actual aspect-fitted image area, rather than treating a
 visible but unusably small thumbnail as a successful design.
+The selected rail's real minimum height propagates explicitly into its horizontal splitter;
+footer content cannot override the diagnostic image minima. Card regressions inspect borders,
+native-font text fit and unchanged inspector height with Tools open, not only object names.
 
 The persistent **Show clean output** button and View entry share one QAction. Closing the
 controls-free window hides it without stopping the worker; runtime polling continues updating

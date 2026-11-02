@@ -31,9 +31,17 @@ Completion evidence:
   explicitly skips that font-only proof; border/layout checks still run there.
   The selected diagnostic rail's minimum height now propagates explicitly into its horizontal
   splitter, so new footer content cannot override its actual visible image area.
-  Final complete-suite, visual capture/docs and release-snapshot handoff remain pending.
+  Final current-source complete suite:313passed,2skipped (unsupported offscreen widescreen
+  work area and unavailable native Segoe UI font metrics); Ruff and diff checks pass.
+  Eight actual native screenshots and banner refreshed for v1.2.3. Contact sheet and full
+  dark/diagnostic views reviewed: restored cards and full-height settings match the illustration.
+  README retains7images with all3GIFs below banner/hero; gallery24images; media/navigation
+  links resolve. In-app/source guides updated; handbook274pages/103diagrams, zero failures/
+  overflow. Current source/MSI snapshot and completed continuity handoff remain pending.
   Owner approval of the new implementation remains separate from automated evidence.
 
 Completion log:
   2026-11-03: User explicitly preferred the earlier card view over plain metric text and
   supplied the desired footer placement below the preview, beside Tools.
+  2026-11-03: Card footer/full-height settings committed as20542ad; real native text/border/
+  geometry proof passes at all3scales. Final current source and visual documentation verified.
