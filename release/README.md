@@ -15,6 +15,9 @@ source/documentation changes; it always represents the latest exported tool, not
 
 This is **not a standalone Windows executable/installer**. Python and the selected optional
 dependencies are installed on the receiving machine. Downloaded models are intentionally excluded.
+Release text uses canonical LF line endings through `.gitattributes`; keep that format when
+editing these instructions or notes. Do not edit generated files manually, because that would
+invalidate their checksums. ZIP files are always binary.
 The source ZIP includes these instructions and the notes, but not a nested copy of the generated
 release archive/context/manifest/checksums. Regenerate those from a Git checkout when contributing.
 

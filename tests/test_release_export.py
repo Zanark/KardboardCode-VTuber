@@ -17,7 +17,7 @@ def command(root: Path, *args: str) -> None:
 def write(root: Path, name: str, text: str) -> None:
     path = root / name
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
 
 
 @pytest.fixture
@@ -26,6 +26,7 @@ def repository(tmp_path: Path) -> Path:
     command(tmp_path, "config", "user.name", "Export Tests")
     command(tmp_path, "config", "user.email", "export-tests@example.invalid")
     for name, text in {
+        ".gitattributes": "/release/** text eol=lf\n/release/*.zip -text\n",
         "pyproject.toml": '[project]\nname = "kardboard-vtuber"\nversion = "0.2.0"\n',
         "src/kardboard_vtuber/__init__.py": '__version__ = "0.2.0"\n',
         "scripts/example.py": 'print("source")\n',
@@ -73,6 +74,11 @@ def test_export_contains_public_source_only_and_is_repeatable(repository: Path) 
     check_export(repository, snapshot(repository))
     command(repository, "add", ".")
     command(repository, "commit", "-qm", "Generated release files")
+    for path in folder.iterdir():
+        if path.is_file():
+            name = path.relative_to(repository).as_posix()
+            stored = subprocess.check_output(["git", "-C", str(repository), "show", "HEAD:" + name])
+            assert stored == path.read_bytes()
     assert not export(repository)
     assert (folder / ARCHIVE).read_bytes() == original
 

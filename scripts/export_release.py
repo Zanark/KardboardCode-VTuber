@@ -114,6 +114,8 @@ def snapshot(root: Path) -> SourceSnapshot:
         if not path.is_file():
             raise ValueError(f"Tracked source is missing: {name}; stage its deletion first")
         files[name] = path.read_bytes()
+        if name.startswith("release/") and b"\r\n" in files[name]:
+            raise ValueError(f"Release text must use LF line endings: {name}")
     if "pyproject.toml" not in files or "src/kardboard_vtuber/__init__.py" not in files:
         raise ValueError("This is not a complete KardboardCode source checkout")
     version = tomllib.loads(files["pyproject.toml"].decode("utf-8"))["project"]["version"]
@@ -273,6 +275,7 @@ def export(root: Path) -> bool:
         (staging / "manifest.json").write_text(
             json.dumps(manifest, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
+            newline="\n",
         )
         (staging / "RELEASE_CONTEXT.md").write_bytes(context)
         checksum_payloads = dict(
@@ -284,6 +287,7 @@ def export(root: Path) -> bool:
                 f"{sha256(data)}  {name}\n" for name, data in sorted(checksum_payloads.items())
             ),
             encoding="utf-8",
+            newline="\n",
         )
         if snapshot(root).fingerprint != source.fingerprint:
             raise ValueError("Source changed during export; retry after edits finish")

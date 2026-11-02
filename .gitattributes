@@ -1,0 +1,3 @@
+# Canonical text bytes keep exported checksums stable across Git checkouts.
+/release/** text eol=lf
+/release/*.zip -text
