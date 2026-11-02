@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kardboard-vtuber"
-version = "1.1.0"
+version = "1.1.1"
 description = "A lightweight PS1-style camera-tracked KardboardCode avatar."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -18,6 +18,7 @@ dependencies = [
 dev = [
     "Pillow>=12,<13",
     "fonttools>=4.60,<5",
+    "packaging>=25,<27",
     "pytest>=8.3,<9",
     "ruff>=0.9,<1",
 ]
@@ -42,6 +43,14 @@ kardboard-studio = "kardboard_vtuber.gui:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/kardboard_vtuber"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"scripts/download_face_landmarker_model.py" = "kardboard_vtuber/_tools/download_face_landmarker_model.py"
+"scripts/download_hand_landmarker_model.py" = "kardboard_vtuber/_tools/download_hand_landmarker_model.py"
+"scripts/download_pose_landmarker_model.py" = "kardboard_vtuber/_tools/download_pose_landmarker_model.py"
+"scripts/download_selfie_segmenter_model.py" = "kardboard_vtuber/_tools/download_selfie_segmenter_model.py"
+"scripts/list_local_cameras.py" = "kardboard_vtuber/_tools/list_local_cameras.py"
+"scripts/record_guided_regression.py" = "kardboard_vtuber/_tools/record_guided_regression.py"
 
 [tool.pytest.ini_options]
 addopts = "-q"

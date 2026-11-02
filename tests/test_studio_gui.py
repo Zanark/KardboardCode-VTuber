@@ -103,6 +103,19 @@ def test_preset_import_does_not_restore_source_or_raw_consent(
     assert window.worker is None
 
 
+def test_unwritable_user_data_reports_error_without_starting_a_helper(
+    window: StudioWindow, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    blocked = tmp_path / "not-a-directory"
+    blocked.write_text("Existing user file", encoding="utf-8")
+    monkeypatch.setattr("kardboard_vtuber.gui.window.data_root", lambda: blocked)
+    window._save_preset_dialog()
+    assert "Cannot create the preset folder" in window.error_label.text()
+    with pytest.raises(OSError):
+        window._start_job("cameras", Path(__file__), [])
+    assert window.job is None
+
+
 def test_tutorial_can_jump_to_every_task_without_starting_camera(
     app: QApplication,
     window: StudioWindow,

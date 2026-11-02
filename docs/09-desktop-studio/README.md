@@ -39,6 +39,7 @@ flowchart TD
 - [Interface specification](interface-specification.md): every control and its placement rationale.
 - [Runtime architecture](runtime-architecture.md): threading, ownership, errors, shutdown and calibration.
 - [Video processing](video-processing.md): synchronous frames, lossless/lossy formats, timing/audio and safety.
+- [Windows installation](windows-installation.md): online MSI, private Python, integrity and resource ownership.
 - [Tutorial](tutorial.md): both modes, clean window, calibration, private capture and troubleshooting.
 
 Research findings describe the pre-GUI source; implementation/evidence sections are updated as

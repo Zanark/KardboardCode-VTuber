@@ -10,10 +10,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TypeAlias
 
+from kardboard_vtuber.app_paths import RESOURCE_ROOT, command_prefix, data_root, recordings_root
 from kardboard_vtuber.cli import build_parser, validate_options
 
 SettingValue: TypeAlias = bool | int | float | str | None
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = RESOURCE_ROOT
 LIVE_FIELDS = frozenset(
     {
         "brightness",
@@ -212,7 +213,7 @@ def namespace(values: dict[str, SettingValue]) -> argparse.Namespace:
                 if "://" in value:
                     raise ValueError("expected a local model file, not a URL")
                 path = Path(value).expanduser()
-                converted[name] = path if path.is_absolute() else ROOT / path
+                converted[name] = path if path.is_absolute() else data_root() / path
             elif action.type is not None:
                 if not isinstance(value, (int, float)):
                     raise ValueError("expected a number")
@@ -259,7 +260,7 @@ def command_preview(values: dict[str, SettingValue]) -> str:
             '$env:KARDBOARD_CAMERA_URL = Read-Host "Camera source (kept out of presets)"',
         ]
     )
-    lines.append(r".\.venv312\Scripts\python.exe -m kardboard_vtuber `")
+    lines.append(command_prefix("kardboard_vtuber") + " `")
     for index, value in enumerate(argv):
         if value.startswith("--"):
             part = value
@@ -340,7 +341,7 @@ class RecordingOptions:
     duration: float = 90.0
     pose_tracking_width: int = 320
     pose_tracking_fps: float = 10.0
-    output_dir: str = str(ROOT / "recordings")
+    output_dir: str = str(recordings_root())
     name: str = "KardboardCode-studio-session"
     countdown: float = 3.0
     preview_height: int = 720

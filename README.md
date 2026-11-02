@@ -1,6 +1,6 @@
 # KardboardCode Studio
 
-[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.1.0 source edition.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
+[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.1.1.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
 
 ![The actual textured 3D avatar, presented in the forest-green and kraft-paper banner palette](docs/images/kardboardcode-hero.png)
 
@@ -9,6 +9,7 @@
 **A real 3D cardboard head for your real camera.**
 
 [Get started](docs/guides/getting-started.md) ·
+[Windows setup](release/KardboardCode-Studio-windows-x64.msi) ·
 [Features & controls](docs/guides/features-and-controls.md) ·
 [Camera setup](docs/guides/camera-and-virtual-output.md) ·
 [Engineering book](docs/README.md) ·
@@ -21,7 +22,7 @@ no camera input or published video.*
 
 ## Current milestone
 
-**v1.1.0 — Live + Video workspaces.** [What's included →](release/RELEASE_NOTES.md)
+**v1.1.1 — Windows setup, cardboard sliders and automatic video playback.** [What's included →](release/RELEASE_NOTES.md)
 
 ## Inside the Studio
 
@@ -134,7 +135,10 @@ no camera input or published video.*
 
 ![05: Unbox your setup. Quick start, camera output and the engineering book.](docs/images/readme/start.svg)
 
-**Already installed?**
+**Windows:** [Download setup](release/KardboardCode-Studio-windows-x64.msi), install, then open
+**KardboardCode Studio** from Start. First launch offers verified component downloads; no Python setup.
+
+**Source checkout:**
 
 ```powershell
 .\.venv312\Scripts\kardboard-studio.exe
@@ -150,7 +154,7 @@ no camera input or published video.*
 [Original PNGTuber assets](assets/PNGTuberV1/README.md) ·
 [Release package & notes](release/README.md)
 
-*Source release, not an installer. Face-only loss freezes the last-safe frame; real calling-app
+*Online, unsigned Windows x64 setup; source ZIP also available. Face-only loss freezes the last-safe frame; real calling-app
 qualification remains unconfirmed. [Privacy and known limits →](docs/guides/camera-and-virtual-output.md#troubleshooting-and-known-limits)*
 
 ![Handle with character. Built in Python, wrapped in cardboard.](docs/images/readme/footer.svg)

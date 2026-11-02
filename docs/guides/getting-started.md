@@ -9,11 +9,25 @@ description: "Install KardboardCode Studio, explore safely, verify models and st
 [Camera and virtual output](camera-and-virtual-output.md)
 
 This is the operating information moved out of the visual front README. Start with the native
-Studio; the CLI remains available. The tracked release is **source code**, not a standalone
-Windows installer. Python 3.11+ is the package floor; Python 3.12 is the established tracking
-environment (`pyproject.toml:6-35`).
+Studio; the CLI remains available. Choose the online Windows setup for normal use or the
+source ZIP for development. Python 3.11+ is the source-package floor; Python 3.12 is the
+established tracking environment.
 
-## Install and launch Studio
+## Windows setup: no manual Python
+
+1. Download [KardboardCode-Studio-windows-x64.msi](../../release/KardboardCode-Studio-windows-x64.msi).
+2. Install for your Windows account, then open **KardboardCode Studio** from Start.
+3. Choose **Install components** in the first-launch window. Internet is required; wait until
+   the verified downloads finish and Studio opens. Failure is explicit and can be retried.
+4. Choose **Try demo**, then follow **Tutorial**. Download needed AI models explicitly in Models.
+
+The MSI includes patched private Python; it does not change system Python or PATH. It is an
+**online, unsigned Windows x64** setup, not an offline package. It targets Windows 10/11 with
+an OpenGL 3.3-capable graphics driver. Verified HTTPS package mirrors are supported; bypassing
+TLS or device policy is not. Models, cameras and OBS components never start/install here.
+See [installation architecture and troubleshooting](../09-desktop-studio/windows-installation.md).
+
+## Source checkout / source ZIP
 
 Extract the source package or open your checkout, then run in its project root:
 
@@ -41,7 +55,8 @@ inference, record or publish virtual-camera output. **Tutorial** opens the in-ap
 
 ```mermaid
 flowchart TD
-    Install["Install Python 3.12 and selected extras"] --> Open["Open Studio"]
+    Setup["Windows setup + explicit component download"] --> Open["Open Studio"]
+    Install["Or source: Python 3.12 and selected extras"] --> Open
     Open --> Demo["Try demo: no camera"]
     Demo --> Guide["Open the built-in Tutorial"]
     Guide --> Models["Verify the required models explicitly"]

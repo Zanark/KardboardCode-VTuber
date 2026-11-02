@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: Documentary DONE; Windows setup PAUSED; preceding Studio workstreams DONE
+Status: Windows setup IN PROGRESS; all other Studio workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
