@@ -24,6 +24,12 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-02: Replaced the text-heavy README with a visual showcase: 29 images, eight local
+  kraft/mint graphics, Silkscreen + Barlow Condensed typography and 324 visible browser words.
+  Setup, features and camera/output explanations moved into three named guides. Existing
+  images/CLI flags retained. 1120px/390px previews show no broken images or horizontal overflow.
+  All six guide diagrams render; 87 relative references and 11 targeted tests/Ruff passed.
+  Both OFL licenses and a reproducible asset generator are included in the source release.
   2026-11-02: Adopted the supplied voxel KC box PNG unchanged as official tool identity.
   Derived 256px PNG and seven-size Windows ICO; refreshed actual GUI screenshots and README.
   First official source version is v1.0.0; earlier v0.2.0 was unpublished local staging.

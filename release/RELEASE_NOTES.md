@@ -36,8 +36,11 @@ unpublished local staging exports, not official releases.
 
 ### Documentation
 
-- Illustrated README, source-grounded GUI research/design rationale, control-placement
-  decisions, architecture, algorithm/design chapters, and native-camera tutorial.
+- Image-first README with 29 images, eight coordinated kraft-paper banners/cards, and licensed
+  Silkscreen / Barlow Condensed typography. Setup, feature and camera/output details live in
+  clearly named linked guides instead of long front-page explanations.
+- Source-grounded GUI research/design rationale, control-placement decisions, architecture,
+  algorithm/design chapters, and native-camera tutorial.
 - Updated 247-page engineering handbook with 97 diagrams and refreshed branded screenshots.
 - Versioned release export tooling, checksums, source manifest and manual-publishing context.
 

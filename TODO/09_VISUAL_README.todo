@@ -1,0 +1,39 @@
+Status: DONE
+Milestone: Image-first README with cohesive cardboard typography
+Dependencies: 08_OFFICIAL_LOGO_RELEASE.todo
+Purpose: Replace the text-heavy front page with a polished visual showcase without losing operating information.
+
+Tasks:
+  [x] Inventory public images and inspect one contact sheet.
+  [x] Select pinned, openly licensed pixel/industrial typefaces and cardboard/mint art direction.
+  [x] Build reproducible banners using the unchanged official logo.
+  [x] Move verbose setup, feature, output and troubleshooting text into named guides.
+  [x] Assemble an image-rich README with short captions and useful navigation.
+  [x] Verify layouts, links and information preservation; prepare updated release/context handoff.
+
+Acceptance criteria:
+  README is primarily visual, with no long feature/command explanation blocks.
+  Typography renders on GitHub without custom CSS or external font/image services.
+  Existing useful setup/safety/experimental-mode information remains reachable.
+  Every image has meaningful alternative text and a short provenance-aware caption.
+  One actual tool screenshot remains above Current milestone; branding images are separate.
+  No new private camera imagery is exported and the supplied logo master stays unchanged.
+  Release source and current context are refreshed; remote publication is not performed.
+
+Completion evidence:
+  README now contains 29 images; visible browser text is 324 words.
+  Source prose is approximately 75% smaller (466 versus 1,858 approximate words including alt text).
+  Eight generated graphics total 356,129 bytes. Fonts are local, pinned and accompanied by OFL licenses.
+  Desktop 1120px/mobile 390px previews: all images load, no page/table overflow.
+  All six guide diagrams parse; 87 relative references, old CLI flags and screenshot order verified.
+  Ruff and 11 targeted branding/export tests passed, including unchanged-master/repeatability checks.
+  All six guide diagrams rendered to SVG. All 16 previous front-page images retained.
+  Release candidate includes all eight graphics, four fonts, both licenses and three guides;
+  exact master-logo hash, README bytes and private-context exclusions verified.
+  Final provenance uses a clean public-input commit before regenerating artifacts.
+  User visual approval remains unrecorded.
+Completion log:
+  2026-11-02: User requested much less front-page text, many more attractive images/banners,
+  fonts matching the cardboard/voxel identity, and appropriately named files for extra text.
+  2026-11-02: Visual implementation and source candidate verified. Publication remains manual;
+  the current repository context/mesh is refreshed at the final handoff.

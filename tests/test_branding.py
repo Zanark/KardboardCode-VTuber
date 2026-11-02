@@ -64,3 +64,36 @@ def test_build_preserves_master_and_emits_repeatable_decodable_ico(tmp_path: Pat
     assert source.read_bytes() == original
     assert (folder / "kardboardcode-icon.ico").read_bytes() == ico
     assert (folder / "kardboardcode-icon.png").read_bytes() == png
+
+
+def test_readme_art_rebuild_keeps_master_and_is_repeatable(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from PIL import Image
+
+    from scripts import build_readme_art
+
+    source = tmp_path / ASSETS / "kardboardcode-logo.png"
+    source.parent.mkdir(parents=True)
+    Image.new("RGBA", (40, 30), (180, 130, 70, 200)).save(source)
+    original = source.read_bytes()
+    (tmp_path / "pyproject.toml").write_text('[project]\nversion = "1.2.3"\n')
+    destination = tmp_path / "artwork"
+    monkeypatch.setattr(build_readme_art, "ROOT", tmp_path)
+    monkeypatch.setattr(build_readme_art, "OUTPUT", destination)
+    build_readme_art.build()
+    before = {path.name: path.read_bytes() for path in destination.iterdir()}
+    build_readme_art.build()
+    assert {path.name: path.read_bytes() for path in destination.iterdir()} == before
+    assert source.read_bytes() == original
+    with Image.open(destination / "hero.png") as hero:
+        assert hero.size[0] > hero.size[1] > 0
+
+
+def test_readme_banner_rejects_text_that_would_be_clipped() -> None:
+    from PIL import Image
+
+    from scripts.build_readme_art import text
+
+    with pytest.raises(ValueError, match="overflow"):
+        text(Image.new("RGB", (150, 100)), (50, 20), "TOO WIDE FOR THIS LABEL", 50)
