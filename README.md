@@ -2,12 +2,6 @@
 
 A lightweight Python VTuber tool that places a low-poly, PS1-style KardboardCode box over the user's head in a real camera feed.
 
-## Native desktop studio
-
-The optional **PySide6 desktop GUI** exposes every camera CLI option, live independent left/right
-eye calibration, virtual-camera output, green screen, hands, experimental tracking, private
-recording, model setup, redacted logs, and a nine-part built-in tutorial. The CLI remains available.
-
 <p align="center">
   <img src="./docs/images/kardboardcode-studio-dark.png" alt="KardboardCode Studio native GUI with live left/right blink sliders and a synthetic cardboard avatar preview" width="1200">
 </p>
@@ -15,6 +9,45 @@ recording, model setup, redacted logs, and a nine-part built-in tutorial. The CL
 Actual desktop widgets running the real textured renderer on a labelled synthetic stage.
 No live camera, raw face image, or virtual output was used for this screenshot.
 </em></p>
+
+## Current milestone
+
+The current working vertical slice includes:
+
+- Local Windows cameras.
+- Phone-hosted MJPEG/RTSP streams.
+- Android USB-tethered streams without a Windows vendor camera client.
+- Latest-frame-only buffering.
+- Automatic stream reconnection.
+- Negotiated-format and latency diagnostics.
+- Rotation and selfie-style mirroring.
+- MediaPipe face tracking, calibrated pose, and anatomical blink/wink controls.
+- Optional MediaPipe 33-point full-body tracking with a separate skeleton diagnostic window.
+- An opt-in separate 33-point line-skeleton diagnostic window.
+- A default ModernGL textured 3D cardboard character with corrugated edges, hollow underside,
+  front/side flaps, low-poly headphones, side shipping stickers and barcodes, and a top `FRAGILE`
+  label. The paper decals use dirty beige stock, torn corners, stains, and coarse pixel lettering.
+  The two left-side labels use separate irregular tear silhouettes rather than mirrored cuts.
+- Optional underdamped hinge physics for three underside flaps and both external side tabs.
+- Optional person segmentation that preserves the camera-visible body over pure chroma green.
+- Clean output by default; face mesh, pose, action, FPS, and latency overlays require
+  `--tracking-debug`.
+- Fail-closed privacy: black before safe face acquisition, frozen last-safe output after face loss,
+  and fully green output before a fresh segmentation mask.
+- A privacy-safe procedural 2D fallback.
+- Direct Windows virtual-camera output through the installed OBS camera component, without
+  running OBS or capturing a preview window.
+- An optional native desktop studio with complete CLI controls, live per-eye calibration,
+  source-free presets, a synthetic demo, and built-in tutorial.
+
+The phone preview has been verified around 28-30 FPS. The isolated GPU renderer measures about
+8.17 ms per 1080x1920 frame on the validated AMD Radeon 780M environment.
+
+## Native desktop studio
+
+The optional **PySide6 desktop GUI** exposes every camera CLI option, live independent left/right
+eye calibration, virtual-camera output, green screen, hands, experimental tracking, private
+recording, model setup, redacted logs, and a nine-part built-in tutorial. The CLI remains available.
 
 From `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber`:
 
@@ -65,12 +98,19 @@ Read the [studio tutorial](docs/09-desktop-studio/tutorial.md),
 [GUI/runtime architecture](docs/09-desktop-studio/runtime-architecture.md).
 The numbered implementation workstreams and evidence live in [`TODO`](TODO/00_INDEX.todo).
 
-<p align="center">
-  <img src="./docs/images/kardboardcode-hero.png" alt="Current KardboardCode textured 3D avatar" width="1000">
-</p>
-<p align="center"><em>
-Current face-free synthetic render of the default textured GPU avatar.
-</em></p>
+## Release export
+
+The tracked [`release`](release/README.md) folder contains the latest source ZIP, release text,
+provenance and checksums for manual GitHub publication. It is a source release, not a standalone
+Windows installer. Private context, credentials, recordings, environments and downloaded models
+are excluded.
+
+After staging new public files, regenerate and verify it from the repository root:
+
+```powershell
+.\.venv312\Scripts\python.exe scripts\export_release.py
+.\.venv312\Scripts\python.exe scripts\export_release.py --check
+```
 
 ## Live avatar demo
 
@@ -101,39 +141,6 @@ The cardboard shell and opaque head-region backing cover the face and hairline i
 The same user-approved performance processed through the runtime person-segmentation compositor.
 The body remains visible while every background pixel becomes chroma green.
 </em></p>
-
-## Current milestone
-
-The current working vertical slice includes:
-
-- Local Windows cameras.
-- Phone-hosted MJPEG/RTSP streams.
-- Android USB-tethered streams without a Windows vendor camera client.
-- Latest-frame-only buffering.
-- Automatic stream reconnection.
-- Negotiated-format and latency diagnostics.
-- Rotation and selfie-style mirroring.
-- MediaPipe face tracking, calibrated pose, and anatomical blink/wink controls.
-- Optional MediaPipe 33-point full-body tracking with a separate skeleton diagnostic window.
-- An opt-in separate 33-point line-skeleton diagnostic window.
-- A default ModernGL textured 3D cardboard character with corrugated edges, hollow underside,
-  front/side flaps, low-poly headphones, side shipping stickers and barcodes, and a top `FRAGILE`
-  label. The paper decals use dirty beige stock, torn corners, stains, and coarse pixel lettering.
-  The two left-side labels use separate irregular tear silhouettes rather than mirrored cuts.
-- Optional underdamped hinge physics for three underside flaps and both external side tabs.
-- Optional person segmentation that preserves the camera-visible body over pure chroma green.
-- Clean output by default; face mesh, pose, action, FPS, and latency overlays require
-  `--tracking-debug`.
-- Fail-closed privacy: black before safe face acquisition, frozen last-safe output after face loss,
-  and fully green output before a fresh segmentation mask.
-- A privacy-safe procedural 2D fallback.
-- Direct Windows virtual-camera output through the installed OBS camera component, without
-  running OBS or capturing a preview window.
-- An optional native desktop studio with complete CLI controls, live per-eye calibration,
-  source-free presets, a synthetic demo, and built-in tutorial.
-
-The phone preview has been verified around 28-30 FPS. The isolated GPU renderer measures about
-8.17 ms per 1080x1920 frame on the validated AMD Radeon 780M environment.
 
 ## Use as a camera in Discord, Teams, or Meet
 
@@ -181,6 +188,13 @@ carries video only. Window Capture in OBS remains available when you do not use 
 Backend details: [pyvirtualcam supported cameras](https://github.com/letmaik/pyvirtualcam#supported-virtual-cameras).
 
 ## Current avatar
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-hero.png" alt="Current KardboardCode textured 3D avatar" width="1000">
+</p>
+<p align="center"><em>
+Current face-free synthetic render of the default textured GPU avatar.
+</em></p>
 
 <p align="center">
   <img src="./docs/images/kardboardcode-six-sides.png" alt="Six-sided turnaround of the current cardboard avatar" width="1000">

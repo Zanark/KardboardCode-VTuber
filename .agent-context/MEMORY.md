@@ -62,6 +62,12 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Native studio conventions
 
+- Keep the tracked root `release` folder synchronized with the latest public source/docs export.
+  Run `python scripts\export_release.py` and `--check` after relevant changes; stage new public files first.
+  `AGENTS.md` and `release\README.md` are the contributor contract.
+- Release bundles are source-only unless packaging scope is explicitly expanded. Never include
+  agent context, credentials/local config, raw media, downloaded models, environments or the
+  generated archive inside itself. Commit public inputs and regenerate before manual publication.
 - Native source selection uses Windows metadata in an owned subprocess, never VideoCapture frame probing. Always preserve the enumerated backend/index pair; CAP_ANY indices and explicit API indices are not interchangeable. Device paths/serials are not stored.
 - Computer-camera and custom URL/file modes retain separate source/backend values in memory only. Numeric index 0 is a manual fallback, not a universal laptop-camera identity. Refresh/reselect after hardware changes; missing previous selections must not silently retarget.
 - GUI scope is every existing operational feature, including experimental/raw modes, with a built-in tutorial; the selected default remains face-only. The user explicitly requested deep research, TODOs, layout/design rationale, and README screenshots.

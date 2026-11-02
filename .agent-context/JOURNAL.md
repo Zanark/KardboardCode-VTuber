@@ -4,6 +4,16 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - README layout and local source release preparation
+
+- User requested moving GUI text/gallery below Current milestone while leaving one tool screenshot above it. Reordered the existing sections without discarding the other avatar/demo images.
+- GitHub reported read-only repository authorization and no existing releases. User explicitly redirected to a separate tracked local release folder that remains current with the latest tool export. No account switch or publishing workaround was attempted.
+- Prepared v0.2.0 package/version alignment, release notes, manual setup/publication context, and a standard-library public-source ZIP exporter. Added AGENTS release-freshness guidance and workstream 07.
+- Export excludes private context, local credentials/config, recordings, models, environments, caches and generated self-recursion. Authored release instructions/notes stay inside source packages so README links work.
+- Full suite passed 241 tests and Ruff. Verified stale/tampered detection, staged-file gating, repeatability and clean-commit provenance refresh. README order has exactly one tool image before the milestone.
+- A candidate archive was extracted privately and launched both help entry points and the real synthetic GUI preview from its extracted root. No camera capture, model download or private imagery was used.
+- Final handoff uses a public-input commit followed by a clean-provenance archive/export commit. Remote publication remains the owner's action; no tag, release, merge or push has been created.
+
 ## 2026-11-02 - Explicit native machine camera selection
 
 - User requested a native machine/laptop camera option. Existing capture already accepted numeric devices; added a discoverable computer-camera input mode and named selector instead of requiring a masked index.

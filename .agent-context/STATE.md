@@ -7,6 +7,12 @@
 
 ## Current focus
 
+The user requested README reordering and a release, then explicitly chose a tracked local
+`release` folder for manual publication because current GitHub authorization is read-only.
+README now keeps one tool screenshot above Current milestone and the GUI text/gallery below it.
+Source release v0.2.0 is prepared with an exporter, release notes, public provenance and checksums;
+final clean-source export/persistence is being completed. This is not a standalone installer.
+
 The native PySide6 studio is delivered. The user's follow-up request for explicit native machine/laptop camera selection is also implemented: Camera now separates computer cameras from custom URL/file/index sources, with asynchronous named Windows device discovery. Selection pairs the proper backend/index; refreshing/selecting does not open a stream. All 45 runtime options, live eye calibration, KC icon, recording/model actions, presets, themes, logs and tutorial remain available. No live camera has been opened by this agent; user appearance and physical-device capture qualification remain pending.
 
 The user still chose **face mesh tracking with a frozen last-safe frame on face loss** as the default after unreliable body/hood-marker experiments. Exposing every feature in the GUI does not replace that choice. Actual Discord/Teams/Meet use and reliable distant-face tracking remain unconfirmed.
@@ -23,6 +29,22 @@ Before starting or resuming VTuber work, read all four context files (`README.md
 This is the user's explicit 2026-10-11 instruction. The older store is required context, not optional background. Keep it unchanged and reconcile its historical notes against later verified decisions here.
 
 ## Threads
+
+### Latest release staging - v0.2.0
+
+- Canonical handoff folder: `release` at this repository root, outside `src`. The user wants it
+  refreshed with the latest export after future public source/docs changes.
+- `scripts\export_release.py` packages tracked/staged public working-tree content, with authored
+  release instructions/notes but no generated self-recursion. Untracked public source fails
+  explicitly; private context, credentials/config, raw recordings, models, environments and caches are excluded.
+- Regenerate with `python scripts\export_release.py`; verify with `--check`. Source fingerprints,
+  per-file hashes, asset checksums, archive CRC/content and version alignment are checked.
+- `AGENTS.md` records the release freshness contract. Package metadata and `__version__` are 0.2.0.
+  If inputs were uncommitted, commit them and re-export before publication to update provenance.
+- Candidate validation passed: 241 tests/Ruff, README ordering, exact archive checks, and extracted
+  CLI/GUI help plus a real synthetic GUI preview. No camera/model download was involved.
+- No remote release/tag/merge/push is authorized for this local-preparation follow-up. The owner
+  will publish using the notes/context and an account with repository Write access.
 
 ### Native desktop studio - delivered; awaiting owner review
 

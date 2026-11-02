@@ -24,6 +24,10 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-02: README now has one tool screenshot above Current milestone and GUI guide/gallery below.
+  Added tracked release staging for v0.2.0, guarded source ZIP export, notes/context/checksums and
+  contributor freshness rules. 241 tests/Ruff passed; extracted CLI and synthetic GUI launch verified.
+  Publication remains the owner's action because current repository authorization is read-only.
   2026-11-02: Added explicit native-camera selection; 236 tests/Ruff passed. Discovery used
   Windows metadata only. Selected device/backend pairs and source-mode restoration verified.
   Engineering work complete. Native synthetic demo opened for review; no visual acceptance supplied.

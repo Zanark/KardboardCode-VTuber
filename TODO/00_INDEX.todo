@@ -11,6 +11,7 @@ Workstreams:
   04_DOCUMENTATION_AND_DELIVERY.todo
   05_DEVELOPMENT_LEDGER.todo
   06_NATIVE_CAMERA_SELECTION.todo
+  07_RELEASE_STAGING.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
