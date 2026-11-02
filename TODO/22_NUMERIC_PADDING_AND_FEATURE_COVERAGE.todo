@@ -1,4 +1,4 @@
-Status: IN PROGRESS
+Status: DONE
 Milestone: Proper numeric-editor inset and verified GUI feature coverage
 Dependencies: 21_METRIC_CARD_FOOTER.todo
 Purpose: Fix border-hugging numeric text and answer the owner's exhaustive-feature question
@@ -11,8 +11,8 @@ Tasks:
   [x] Audit 22 Video processing settings, file/quality/mirroring controls and mode restrictions.
   [x] Audit private-recorder options, four model helpers and GUI-only operating actions.
   [x] Verify native text raster inset, disabled/theme/DPI states and existing GUI behaviour.
-  [ ] Document complete audited scope and limitations; update current screenshots/handbook.
-  [ ] Refresh current snapshots, commit work and persist only the owned context.
+  [x] Document complete audited scope and limitations; update current screenshots/handbook.
+  [x] Refresh current snapshots, commit work and persist only the owned context.
 
 Acceptance criteria:
   Numeric value text has visible inset from its left border in both themes; typed values,
@@ -46,7 +46,10 @@ Completion evidence:
   crop reviewed. All45runtime options explicitly named in the coverage table; operating scope
   and developer/hardware/input limits documented. README7/GIF-first/gallery24 links preserved.
   Handbook rebuilt:275pages/103diagrams, zero Mermaid failures/overflow. No global font/layout
-  change. Current source/MSI snapshots and completed continuity handoff remain pending.
+  change. Current1.2.4source/MSI snapshots pass both checks. Actual extracted native wheel outside
+  checkout verifies matching GUI/resources, painted text inset, all45controls, working preview-
+  height integer and canonical Video restrictions. Final evidence/artifact/context commits
+  preserve the handoff separately. No new MSI lifecycle, camera or publication is claimed.
   Owner perception/usability and hardware qualification are separate from automated evidence.
 
 Completion log:
@@ -56,3 +59,6 @@ Completion log:
   2026-11-03: Core837b557 fixes real numeric padding and preview-height forwarding. Video
   scope derives from its shared inventory; actual Live/recording bindings and native inset
   pass. Current coverage documentation and275-page handbook verified.
+  2026-11-03: Current source/installer and actual native extracted-package checks pass.
+  Complete coverage means current user-facing operating features, not every developer/future
+  utility or all conceivable input/hardware cases.

@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: Workstream 22 IN PROGRESS; earlier Studio workstreams DONE
+Status: All Studio workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -46,7 +46,7 @@ Tasks:
   [x] Make numeric +/- controls readable and remove the stray mode-strip baseline (workstream 19).
   [x] Deliver readable stacked side diagnostics and a persistent clean-output button (workstream 20).
   [x] Restore the preferred metric cards in the viewer footer beside Tools (workstream 21).
-  [ ] Fix numeric text padding and verify current GUI feature coverage (workstream 22).
+  [x] Fix numeric text padding and verify current GUI feature coverage (workstream 22).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -56,7 +56,13 @@ Acceptance criteria:
   Completed evidence is separate from user approval.
 
 Completion evidence:
-  Current v1.2.3 handoff restores the preferred four metric cards below the preview beside
+  Current v1.2.4 handoff fixes embedded numeric padding and custom preview-height binding,
+  with canonical Video scope and verified45Live/22Video/17recorder/4model-helper coverage.
+  Native padding/forwarding/scope/approved-layout set22passed at each100/125/150%; full suite
+  315passed/3explicit offscreen limitations skipped;Ruff. Actual native extracted-wheel proof
+  works outside checkout. Eight native captures/banner and275page/103diagram handbook updated;
+  zero failures/overflow. Current source/MSI checks pass; developer utilities remain CLI-only.
+  Earlier v1.2.3 handoff restores the preferred four metric cards below the preview beside
   Tools, with its drawer in the viewer column and settings full-height. Full suite313passed/
   2explicit offscreen limitations skipped; Ruff. Native card/font/border/containment/channel/
   actions/Tools set18passed at each100/125/150%. Actual extracted native wheel proof passes
@@ -80,6 +86,9 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-03: Workstream22 delivered as v1.2.4: properly inset numeric text, corrected preview-
+  height integer forwarding, truthful Video-mode controls and actual operating-feature audit.
+  Approved layout/fonts/cards retained; current screenshots/docs/handbook/snapshots verified.
   2026-11-03: Workstream21 delivered as v1.2.3: restored data-card grouping, persistent below-
   preview placement beside Tools and viewer-only drawer. Actual card/text/native geometry,
   current screenshots/guide/handbook and source/MSI snapshots verified.
