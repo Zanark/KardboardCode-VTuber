@@ -1,4 +1,4 @@
-Status: IN PROGRESS
+Status: DONE
 Milestone: Readable side-by-side diagnostics and persistent clean-output access
 Dependencies: 16_PREVIEW_FIRST_STUDIO.todo, 19_NUMERIC_CONTROL_CLARITY.todo
 Purpose: Follow the user's illustrated settings/preview/stacked-diagnostics layout instead of
@@ -12,7 +12,7 @@ Tasks:
   [x] Add a persistent Live-mode action/button to show or reopen clean output after closing it.
   [x] Verify image area, containment, settings access, privacy and real close/reopen behaviour.
   [x] Update native dark/light README captures, gallery, guide and engineering handbook.
-  [ ] Refresh current source/MSI artifacts, commit completed work and offload own context.
+  [x] Refresh current source/MSI artifacts, commit completed work and offload own context.
 
 Acceptance criteria:
   With the relevant settings enabled, raw face and a tracking diagnostic are simultaneously
@@ -49,7 +49,11 @@ Completion evidence:
   In-app tutorial, operating guides, architecture and design rationale match the user-directed
   layout. Handbook rebuilt: 274 pages/103 diagrams, zero Mermaid failures and zero overflow.
   Final current-source full suite: 310 passed/one existing skip; Ruff and diff checks pass.
-  Source/MSI snapshot and completed context handoff are still pending.
+  Current v1.2.2 source/MSI snapshots rebuilt; both --check commands pass. Actual wheel GUI/
+  resource bytes match source, and its extracted package outside the checkout renders readable
+  diagnostics and safe clean output with button/menu reopening in both themes.
+  Final completion-input/artifact/context commits preserve the handoff separately. No new MSI
+  lifecycle is claimed; existing installer qualification remains dated to its actual baseline.
   User usability approval remains separate from automated/synthetic evidence.
 
 Completion log:
@@ -60,3 +64,5 @@ Completion log:
   2026-11-03: Layout 342c4cb and persistent clean-output action 973dc1d implemented/committed.
   Native image/containment/lifecycle checks and current full suite pass; actual screenshots,
   tutorial, guide and 274-page engineering handbook updated for v1.2.2.
+  2026-11-03: Current installer/source checks and actual packaged-GUI proof pass. Completed
+  evidence is recorded separately from owner approval; no camera/portrait/remote publication.

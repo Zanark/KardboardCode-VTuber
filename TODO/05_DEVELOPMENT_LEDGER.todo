@@ -30,7 +30,9 @@ Completion log:
   310 passed/one existing offscreen-widescreen skip; Ruff. Native image/containment/channel/
   close-reopen/primary-action set16passed at each100/125/150%. Eight native screenshots and
   minimal README/gallery refreshed; handbook274pages/103diagrams, zero failures/overflow.
-  Final current snapshots and own continuity handoff remain pending; no remote publication.
+  Current1.2.2 snapshots pass both checks. Actual packaged GUI/resource bytes match source and
+  extracted-wheel side panels/clean-channel/reopen proof works in both themes outside checkout.
+  Separate final evidence/artifact/context commits preserve the handoff; no remote publication.
   2026-11-03: v1.2.1 numeric-affordance patch completed. Full suite 302 passed/one unsupported
   offscreen-widescreen case skipped; Ruff. Native glyph/shape/click/bounds/baseline set 5 passed
   at each Qt factor 1/1.25/1.5. Actual wheel resolves all six glyph SVGs outside checkout.

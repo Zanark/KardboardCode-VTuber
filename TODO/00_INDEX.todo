@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: Workstream 20 IN PROGRESS; earlier Studio workstreams DONE
+Status: All Studio workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -42,7 +42,7 @@ Tasks:
   [x] Add cardboard-tool identity to this session's unobscured portrait (workstream 17).
   [x] Keep the main README animation-first and move detailed imagery to a gallery (workstream 18).
   [x] Make numeric +/- controls readable and remove the stray mode-strip baseline (workstream 19).
-  [ ] Deliver readable stacked side diagnostics and a persistent clean-output button (workstream 20).
+  [x] Deliver readable stacked side diagnostics and a persistent clean-output button (workstream 20).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -52,7 +52,13 @@ Acceptance criteria:
   Completed evidence is separate from user approval.
 
 Completion evidence:
-  Current v1.1.1 handoff includes online unsigned Windows x64 setup with private Python 3.12.16.
+  Current v1.2.2 handoff includes the owner-directed right diagnostic rail and persistent Live
+  Show clean output button with independent Auto-open preference. Full suite310passed/one
+  existing skip; Ruff. Native image/containment/channel/close-reopen/primary-action set16passed
+  at each100/125/150%. Actual wheel proof works outside checkout in both themes.
+  Eight native captures and minimal README/gallery refreshed; handbook274pages/103diagrams,
+  zero failures/overflow. Current source/MSI snapshots pass their independent checks.
+  Earlier v1.1.1 baseline includes online unsigned Windows x64 setup with private Python 3.12.16.
   Final suite: 285 passed/Ruff. Real final-MSI online setup, native application/helpers/video
   and complete uninstall passed; saved user preset/model bytes survived unchanged.
   Current engineering handbook: 263 pages/101 diagrams, zero failures/overflow.
@@ -64,6 +70,10 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-03: Workstream20 delivered as v1.2.2: raw face above Face/pose or Body in a readable,
+  resizable right-hand rail, main preview snug beside the inspector, and a persistent clean-
+  output reopen button. Updated native README/gallery, guide/handbook and current snapshots.
+  User usability approval remains separate; no camera/portrait/remote publication.
   2026-11-03: Workstream 19 delivered as v1.2.1: explicit contrasted +/- numeric controls,
   muted disabled/boundary states and no trailing mode-strip line. Actual raster/click/DPI/
   wheel-resource checks pass. Screenshots, guide, handbook and patch artifacts refreshed.
