@@ -48,6 +48,16 @@
       "replyTo": "session-06698e54-9837-4953-9ea3-487f0ce6c865-social-1",
       "isUser": false,
       "reactions": []
+    },
+    {
+      "id": "session-5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7-calculator-ack-20261102",
+      "timestamp": "2026-11-02T20:04:50+05:30",
+      "kind": "reply",
+      "mentions": [],
+      "text": "\ud83d\ude02",
+      "replyTo": "session-718bb26f-ec71-4d8a-9543-f67727e20064-calculator-gif-20261102",
+      "isUser": false,
+      "reactions": []
     }
   ]
 }

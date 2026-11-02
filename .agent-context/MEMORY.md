@@ -11,12 +11,16 @@ No personal identities, device credentials, face imagery, or personal calibratio
 - Keep the front README image-first: cohesive cardboard/pixel banners, actual UI/demo galleries,
   short captions and navigation. Put detailed setup/features/camera/troubleshooting text in
   clearly named `docs\guides` files rather than rebuilding long front-page explanations.
-- README artwork uses Silkscreen and Barlow Condensed, rendered into PNGs by
-  `scripts\build_readme_art.py`; GitHub does not load a custom stylesheet/web font for it.
+- README artwork uses Silkscreen and Barlow Condensed. The top banner/runtime hero use PNG;
+  decorative section/footer lettering is transparent SVG with outlined fonts, not raster UI
+  cards or a solid canvas. No milestone image cards. The runtime hero follows the top banner.
+  `scripts\build_readme_art.py` owns this artwork; GitHub loads no custom stylesheet/web font.
   Preserve the bundled OFL licenses and unchanged logo master. Rebuild on package-version
   changes because the hero reads its version label from pyproject.
 - Build one fixed KardboardCode cardboard-head character over the real camera feed. The source-runnable Python prototype is not a general model importer or replacement full-body-avatar product.
 - Face-only tracking with fail-closed loss handling is the selected workflow. Body/hood fallback remains experimental and must not become the default without a new user decision.
+- LIVE and VIDEO are distinct front-level modes. VIDEO means avatar-processing an existing
+  recording, not collecting raw camera footage. Old private RAW capture is an advanced Live-only utility.
 - Preserve the PS1 visual identity: real low-poly textured 3D, low-resolution avatar rendering, nearest-neighbor scaling, sharp source camera, corrugated edges, aged asymmetric labels, headphones, and hollow neck-safe silhouette. Canonical specification: `docs\02-architecture\textured-3d-renderer.md`; overview: `README.md:54-60,118-168`.
 - Keep visible letters in K/C order; K corresponds to anatomical left-eye control and C to anatomical right. Preserve established pose conventions rather than guessing from mirrored screen coordinates.
 - Skeleton diagnostics are separate outlines, not filled geometry on the final composite. Source: `src\kardboard_vtuber\cli.py:500-599`.
@@ -28,7 +32,12 @@ No personal identities, device credentials, face imagery, or personal calibratio
 ## Privacy and frame ownership
 
 - Face-only output must be black before safe acquisition and reuse a copied last-safe composite on face loss, never fresh raw camera pixels. This is a fail-closed design requirement, not proof that every detected pose masks every identifying pixel.
-- Synthetic face-mesh/XYZ diagnostics are the normal inspection path. `--debug-face-preview` explicitly exposes raw face imagery locally and must remain opt-in.
+- Synthetic face-mesh/XYZ diagnostics are the normal inspection path. `--debug-face-preview`
+  exposes raw face imagery locally and stays opt-in. Studio places raw/mesh/body in separate
+  side panels, never over the clean program image. CLI local overlays remain available.
+- The separate clean output window is for OBS Window Capture and is independent of OBS Virtual
+  Camera. It receives only owned clean frames, never raw/debug/body-calibration text. Unmasked
+  camera modes do not populate that channel. Windows controls native icon-slot size.
 - Never restore arbitrary foreground using inferred monocular depth. Earlier experiments exposed face regions and were removed; general object occlusion requires aligned real depth.
 - Optional hand occlusion uses conservative anatomical regions rather than a whole-hand convex hull; gaps must not restore face pixels. On effective tracking loss, do not composite fresh hand pixels over the frozen frame.
 - Direct-camera export must happen before all local debug text, insets, raw-face preview, and preview resizing. Source: `cli.py:500-599`.
@@ -69,6 +78,21 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Native studio conventions
 
+- Both GUI palettes follow the banner: forest/mint dark and kraft/cream light. Checkboxes need
+  visible contrasting ticks and distinct unchecked/disabled states; lock/live-only badges explain
+  unavailable controls. Native OS title colors are per-window, not global Windows settings.
+- Eye rendering uses raw closure signals with filtered geometry. Guided OPEN/BOTH-CLOSED samples
+  derive the whole compatible threshold tuple; overlapping ranges fail explicitly. Raise blink
+  thresholds for missed closures, lower for false closures. No face images are saved by calibration.
+- VIDEO defaults to lossless FFV1/MKV; user explicitly chose optional high-quality H.264/MP4
+  CRF17 as a lossy alternative. Preserve every frame, source dimensions/timing within container
+  precision and compatible audio packets. Never silently downconvert unsupported inputs or
+  overwrite input/existing output. Synchronous MediaPipe VIDEO mode, not live/latest-frame capture.
+- Current video support is opaque progressive square-pixel 8-bit SDR; HDR/alpha/rotation/interlaced/
+  invalid timing and extra stream cases fail visibly. Lossless means processed RGB pixels, not
+  byte-identical modified source. Hard-link publication needs a supporting destination filesystem.
+- Output dimensions in Studio use standard/monitor presets. Offline exports always inherit input
+  dimensions; moving monitors does not change an active virtual stream. CLI width/height remain.
 - Official tool branding is the supplied voxel KC box PNG at
   `src\kardboard_vtuber\gui\assets\kardboardcode-logo.png`, retained byte-for-byte. Derive its
   transparent application PNG and seven-size Windows ICO using `scripts\build_branding.py`.

@@ -4,6 +4,49 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Fifteen-point Studio feedback completed as v1.1.0
+
+- User supplied actual-use screenshots and requested a coherent layout/workflow refinement.
+  Raw-face/debug overlays obscure the preview, disabled and checked states are unclear,
+  closed-eye output is unreliable, and the clean OBS-capturable output window is missing.
+- Required two front-level modes: live camera and processing an existing video into a new
+  cardboard-avatar output. Existing private raw capture is an advanced utility, not that mode.
+- User selected both export formats with lossless MKV default; MP4 must be labelled high-quality
+  but lossy. Preserve source dimensions/timing/audio where supported and reject unsupported
+  quality conversions explicitly. No source/camera access is authorized automatically.
+- README milestone cards should go; transparent SVG is preferred for decorative UI art.
+  The runtime-avatar hero belongs directly below the top banner and should share its palette.
+- Created workstream 10 and began direct source tracing. No private screenshots copied into
+  public documentation; older context and sibling stores remain read-only.
+- Implementation milestone: both banner-derived palettes, visible tick/lock states, separate
+  diagnostic buffers, full-resolution clean output window, bottom CLI/log tabs, preset resolutions,
+  clarified camera routes, guided eye calibration and raw-eye rendering are implemented.
+- Added synchronous VIDEO processing with lossless MKV / optional high-quality MP4, preserved
+  dimensions/PTS and copied compatible audio. No-overwrite publication, cancel cleanup, HDR/extra
+  stream refusal and a Qt-free video CLI are included. Advanced RAW capture remains Live-only.
+- Full suite passed 266 tests and Ruff. Real private 30-frame MediaPipe VIDEO + GPU export at
+  1080x1920 completed with face detection; temporary files removed. Synthetic encoded tests cover
+  lossless pixels, VFR spacing, PCM/AAC packet identity and concurrent destination safety.
+- Refreshed/inspected eight native synthetic UI views, tighter icons and the fully framed hero.
+  Fixed an actual missing checkbox-tick resource issue exposed by native review; pixel-level
+  regression now checks it. Body-calibration text is also excluded from clean program output.
+- UI demo service intervals after warm-up: 161 samples, p95 31ms/max 32ms on this machine.
+  This is not end-to-end video latency or real-camera qualification. Finishing handbook/export.
+- Completed handbook: 256 pages/99 diagrams, zero failures/overflow. Actual extracted v1.1.0
+  source launches all three help entry points, renders Studio/clean output and opens VIDEO mode.
+- Public inputs committed as `11a0e2b2aa261875f89534612194137584fd67fe`; final artifacts as
+  `c803653`. ZIP 33,145,546 bytes, sourceModified=false, fingerprint
+  `34f7fd0e9bddea186631cf296612a38e7fc8c641654ea548a0fecdde7c7bf1bd`.
+  Export freshness and all six committed release-file bytes are verified.
+- No live camera or user Studio process was touched; no remote tag/push/merge/publication.
+  Owner must restart Studio to load changes and calibrate actual open/closed eye scores.
+  Unsupported video formats remain explicit limitations; real calling-app/privacy qualification
+  and the old private recorder's fixed-FPS duration issue are not claimed solved.
+- Read the current-day shared chat, latest general history and recent mentions; acknowledged
+  the new reply to this persona with an emoji in its own file only. No routine work post.
+- Persisted the completed handoff as zmem `ep_844`; after store/episode persistence, advanced
+  the exact full-offload marker to `2026-11-02T20:07:23+05:30`.
+
 ## 2026-11-02 - Explicit post-delivery context refresh
 
 - User requested a fresh offload after the visual README delivery. Reconciled current state,

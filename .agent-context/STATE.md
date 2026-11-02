@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - Explicit post-delivery context refresh; completed README/release handoff reconciled.
-> **Last context offload:** 2026-11-02T18:12:06+05:30
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - All fifteen Studio feedback items completed as v1.1.0; local source release ready.
+> **Last context offload:** 2026-11-02T20:07:23+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,18 +7,38 @@
 
 ## Current focus
 
-The user explicitly requested another context refresh after delivery. The work remains complete:
-public source `4b85fad`, release artifacts `f607adc`, preceding context commit `4219b61`.
-No public source, app behavior, assets or release contents changed during this context-only turn.
-Await owner review or manual publication; do not restart completed implementation work.
+All fifteen live-use feedback items are implemented and verified as **v1.1.0**. Workstream 10
+is complete. Public source is `11a0e2b`; final source artifacts are `c803653`. The complete suite
+passes 266 tests/Ruff, and a real private 30-frame synchronous MediaPipe VIDEO/GPU export at
+1080x1920 completed without a camera. The rebuilt handbook is 256 pages/99 diagrams, zero
+diagram failures/overflow. The actual extracted source launches camera CLI, Studio and video CLI;
+its demo/clean window/video workspace were checked. No implementation/packaging work remains.
+
+The GUI now has forest/mint and kraft/cream themes, explicit contrasting checkbox ticks,
+LOCKED/live-only states, standard/monitor resolution choices, clearer capture-backend labels,
+bottom Logs/CLI-copy tabs, dedicated raw/mesh/body side panels and a separate **KardboardCode -
+Clean Output** window for OBS Window Capture. That full-resolution clean channel is independent
+from OBS Virtual Camera and never receives raw/debug/calibration text.
+
+Eyes use guided OPEN/BOTH-CLOSED numeric sampling and actual rendered decision readouts.
+Raw eye signals drive closure while geometry stays filtered. The user must calibrate their
+real current setup; automated/synthetic score regressions are not personal live-camera approval.
+Icons use tighter optical bounds without changing the supplied master.
+
+Front work modes are LIVE and VIDEO. VIDEO processes every source frame synchronously at
+original dimensions/timestamp spacing within container precision, copying compatible audio.
+User chose lossless FFV1/MKV by default and optional high-quality H.264/MP4 CRF17 (lossy).
+Supported input is opaque, progressive, square-pixel 8-bit SDR with valid timing/rate metadata;
+HDR/alpha/rotation/interlacing/extra subtitle-data-attachment streams fail explicitly. Never claim
+byte-identical modified video or silently convert quality. Old private RAW capture is a Live-only
+advanced utility, not the meaning of prerecorded-video processing.
 
 The user requested much less front README text, many more attractive images/banners, and fonts
-matching the cardboard/voxel aesthetic. The visual redesign is complete: 29 images, eight
-coordinated kraft/deep-green/mint graphics, Silkscreen and Barlow Condensed typography rendered
-into PNGs, and three named operational guides. Local desktop/mobile previews have no broken
-images or horizontal overflow. Public source is committed as `4b85fad`, generated artifacts
-as `f607adc`. No implementation or packaging work remains. Runtime/GUI fonts and behavior were
-not redesigned; the new typography is for the README's local image assets.
+matching the cardboard/voxel aesthetic. Subsequent feedback removed milestone image cards,
+converted decorative section/footer art to transparent SVG font outlines and moved the restyled
+runtime-avatar hero immediately under the top banner. Actual screenshots now show both work
+modes, separate diagnostics and clean output. Desktop/mobile previews load all 31 images with
+no horizontal overflow. Three named guides remain under `docs\guides`.
 
 The supplied voxel KC box artwork is now the official tool logo. Its original 1345x1169 RGBA
 PNG is preserved byte-for-byte; derived transparent PNG/Windows ICO resources supply the
@@ -26,7 +46,7 @@ application, window/taskbar and header identity. The 3D avatar itself is unchang
 v1.0.0 is the first official release version; v0.2.0 was unpublished local staging.
 
 The completed source-release handoff is in the tracked root `release` folder. Clean public
-inputs are committed as `4b85fad`; generated v1.0.0 artifacts as `f607adc`. The manifest has
+inputs are committed as `11a0e2b`; generated v1.1.0 artifacts as `c803653`. The manifest has
 `sourceModified=false` and the current source fingerprint. All six release files match their
 committed Git blobs exactly. README preserves one tool screenshot above Current milestone,
 with separate logo branding above it and the GUI guide/gallery below. No remote publication,
@@ -51,7 +71,7 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
-### Latest release handoff - v1.0.0, first official version
+### Latest release handoff - v1.1.0 Studio Workspaces
 
 - Canonical handoff folder: `release` at this repository root, outside `src`. The user wants it
   refreshed with the latest export after future public source/docs changes.
@@ -60,27 +80,29 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
   explicitly; private context, credentials/config, raw recordings, models, environments and caches are excluded.
 - Regenerate with `python scripts\export_release.py`; verify with `--check`. Source fingerprints,
   per-file hashes, asset checksums, archive CRC/content and version alignment are checked.
-- `AGENTS.md` records the release freshness contract. Package metadata and `__version__` are 1.0.0.
+- `AGENTS.md` records the release freshness contract. Package metadata and `__version__` are 1.1.0.
   If inputs were uncommitted, commit them and re-export before publication to update provenance.
-- Earlier full runtime/logo checkpoint: 245 tests/Ruff, exact original-logo bytes, seven native
-  Qt ICO sizes and extracted CLI/GUI synthetic preview. The README redesign separately passed
-  Ruff/11 targeted branding-export tests, 1120px/390px browser layout, 87 file references and all
-  six new guide SVG renders. All 16 former README images are retained.
-- Handbook remains 247 pages/97 diagrams with zero diagram failures/overflow. The six new user-guide
-  diagrams are separate from that existing PDF edition. No camera/model download was involved.
-- Final export passed `--check` after committing its public inputs as `4b85fad`; manifest
+- Current validation: 266 tests/Ruff, real checkbox tick pixels in both palettes, separate owned
+  program/raw/debug channels, calibration on both renderers, real encoded VFR/PCM/AAC cases,
+  no-overwrite/cancel/HDR safety and actual extracted-source GUI/video CLI launch.
+- Handbook is 256 pages/99 diagrams with zero failures/overflow. Native captions accepted both
+  palette setters. A post-warmup demo heartbeat had p95 31ms/max 32ms across 161 intervals;
+  that is local UI service time, not end-to-end video latency or real-camera qualification.
+- Final export passed `--check` after committing its public inputs as `11a0e2b`; manifest
   `sourceModified` is false. Generated release/context files are committed afterward and do not
   change the public-source fingerprint. Current ZIP is about 30 MB, below the regular Git file limit.
 - `.gitattributes` pins release text to LF and leaves ZIPs binary. Final artifact commit is
-  `f607adc`; all six release files were compared against their committed Git blobs byte-for-byte.
-  Final archive size is 32,592,509 bytes. The five exporter tests also cover committed-byte integrity.
+  `c803653`; all six release files match their committed Git blobs byte-for-byte.
+  Final archive size is 33,145,546 bytes. Source fingerprint:
+  `34f7fd0e9bddea186631cf296612a38e7fc8c641654ea548a0fecdde7c7bf1bd`.
 - `gui\assets\kardboardcode-logo.png` is the unchanged supplied master. Derive PNG/ICO assets
   with `python scripts\build_branding.py`, without redrawing or altering the avatar. The old
   `kc-box.svg` is retired. User visual approval of the refreshed application is not recorded.
 - Visual README assets: `docs\images\readme`, generator `scripts\build_readme_art.py`, font
   provenance/licenses `docs\branding`. Three clear guides live under `docs\guides`.
-  The eight graphics total 356,129 bytes; visible browser text is 324 words. The source prose
-  estimate is about 75% lower. Hero version text comes from pyproject; rebuild on version changes.
+  Top-banner version text comes from pyproject; rebuild on version changes. Decorative
+  section/footer output is transparent SVG, not raster cards. The separate runtime hero uses
+  `scripts\build_readme_art.py --avatar-hero` and real GPU rendering, never camera imagery.
 - No remote release/tag/merge/push is authorized for this local-preparation follow-up. The owner
   will publish using the notes/context and an account with repository Write access.
 
@@ -169,8 +191,10 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-The requested supplied-logo/v1.0.0 and visual README work is complete locally; context is the final
-handoff. Wait for actual owner feedback or manual publication. Do not repeat completed builds,
+The requested fifteen-point v1.1.0 feedback pass is complete locally; context is the final
+handoff. The user's previously running Studio was not terminated; they must restart it to load
+new code/icons and run guided eye calibration for their setup. Wait for owner review/publication.
+Do not repeat completed builds,
 launch another window, connect a camera or publish automatically. Future public changes must
 refresh `release`; preserve CLI compatibility, read both context stores, and write new context
 only here. Distant tracking, real calling-app qualification and recording timing remain open.
@@ -190,7 +214,8 @@ only here. Distant tracking, real calling-app qualification and recording timing
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_841` (explicit post-delivery context-only refresh).
+- Latest cross-base receipt: `ep_844` (completed fifteen-point v1.1.0 Studio/video feedback pass).
+  Previous receipt: `ep_841` (explicit post-delivery context-only refresh).
   Detailed delivery receipt: `ep_840` (visual README, named guides and refreshed export).
   Previous receipt: `ep_838` (supplied-logo/first official v1.0.0 handoff).
   Previous receipts: `ep_837` (Git-stable v0.2.0 staging bytes) and `ep_836`
