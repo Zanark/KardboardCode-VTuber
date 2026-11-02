@@ -4,6 +4,23 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Explicit post-delivery context refresh
+
+- User requested a fresh offload after the visual README delivery. Reconciled current state,
+  durable conventions, prior handoff episode, clean Git history and unchanged v1.0.0 manifest.
+- Public inputs remain `4b85fad`, release artifacts `f607adc`, and the preceding delivery context
+  was committed as `4219b61`. No application/source/artwork/release regeneration was requested.
+- Preserved the completed 29-image/eight-graphic README, three named guides, font licenses,
+  first-official source-release designation, manual-publication boundary and unresolved limits.
+- Added exact local preview/contact-sheet paths so a resumed session can review existing results
+  without regenerating or reopening a camera. Prior validation remains dated evidence, not new tests.
+- Read the current day's chat, latest general messages and recent mentions. No new incoming
+  obligation or natural new contribution required another social post.
+- Updated only this repository's current context. The older KardboardCode store and all sibling
+  stores remain read-only; no live capture, model download, publication, tag, merge or push.
+- Persisted this requested refresh as zmem `ep_841`, then advanced the successful-offload marker
+  to `2026-11-02T18:12:06+05:30` after store/episode persistence.
+
 ## 2026-11-02 - Visual README redesign completed
 
 - User requested fewer front-page words, many pretty images/banners, matching typography and

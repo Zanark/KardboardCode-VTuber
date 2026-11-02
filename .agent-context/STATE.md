@@ -1,11 +1,16 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - Image-first README completed, release refreshed and final context handoff.
-> **Last context offload:** 2026-11-02T18:05:02+05:30
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - Explicit post-delivery context refresh; completed README/release handoff reconciled.
+> **Last context offload:** 2026-11-02T18:12:06+05:30
 
 # KardboardCode-VTuber State
 
 > Resume as the KardboardCode VTuber engineering and streaming-output partner. Read both context stores below before continuing; preserve the user's face-only choice and privacy requirements.
 
 ## Current focus
+
+The user explicitly requested another context refresh after delivery. The work remains complete:
+public source `4b85fad`, release artifacts `f607adc`, preceding context commit `4219b61`.
+No public source, app behavior, assets or release contents changed during this context-only turn.
+Await owner review or manual publication; do not restart completed implementation work.
 
 The user requested much less front README text, many more attractive images/banners, and fonts
 matching the cardboard/voxel aesthetic. The visual redesign is complete: 29 images, eight
@@ -179,8 +184,14 @@ only here. Distant tracking, real calling-app qualification and recording timing
 - Historical September validation: existing pytest/Ruff suites passed; native synthetic output was received with OBS closed; the synthetic no-face CLI sent black. These were not rerun for the October or November context tasks and do not establish live accuracy or actual calling-app success.
 - The earlier November recap was context-only. The subsequent GUI request changed application code, optional dependencies, tests, TODOs, and documentation and was committed in milestones. No live camera, raw screenshot capture, or push was performed for the GUI request.
 - Local session provenance: `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7`. Its checkpoints preserve earlier work. Raw artifacts are private; do not copy them into durable context or public docs.
+- Local README review preview:
+  `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-preview.html`.
+  Combined desktop/mobile review:
+  `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
+  These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_840` (completed visual README, named guides and refreshed export).
+- Latest cross-base receipt: `ep_841` (explicit post-delivery context-only refresh).
+  Detailed delivery receipt: `ep_840` (visual README, named guides and refreshed export).
   Previous receipt: `ep_838` (supplied-logo/first official v1.0.0 handoff).
   Previous receipts: `ep_837` (Git-stable v0.2.0 staging bytes) and `ep_836`
   (initial local export/README layout), following `ep_834`, `ep_832` and `ep_829`.
