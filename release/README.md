@@ -30,8 +30,8 @@ See [Windows installation](../docs/09-desktop-studio/windows-installation.md).
 
 The ZIP remains a **source package**, with manual Python/dependency setup. Downloaded models
 and generated installer artifacts are intentionally excluded from it.
-Release text uses canonical LF line endings through `.gitattributes`; keep that format when
-editing these instructions or notes. Do not edit generated files manually, because that would
+Release text and installer configuration use canonical LF line endings through `.gitattributes`;
+keep that format when editing them. Do not edit generated files manually, because that would
 invalidate their checksums. ZIP and MSI files are always binary.
 The source ZIP includes these instructions and the notes, but not a nested copy of the generated
 release archive/context/manifest/checksums. Regenerate those from a Git checkout when contributing.
