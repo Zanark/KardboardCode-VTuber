@@ -73,7 +73,7 @@ def stylesheet(dark: bool) -> str:
     return f"""
         QMainWindow, QDialog {{ background:{bg}; color:{text}; }}
         QWidget {{ color:{text}; font-family:'Segoe UI'; font-size:12px; }}
-        QFrame#panel, QFrame#toolsPanel, QFrame#diagnosticCard, QGroupBox {{
+        QFrame#panel, QFrame#toolsPanel, QFrame#diagnosticCard, QFrame#metric, QGroupBox {{
             background:{panel}; border:1px solid {border}; border-radius:9px;
         }}
         QGroupBox {{ margin-top:10px; padding:14px 10px 8px; }}
@@ -83,6 +83,7 @@ def stylesheet(dark: bool) -> str:
         QLabel#appTitle {{ font-size:17px; font-weight:700; }}
         QLabel#panelTitle {{ font-size:14px; font-weight:600; }}
         QLabel#eyebrow {{ color:{muted}; font-size:10px; font-weight:600; }}
+        QLabel#metricValue {{ font-size:14px; font-weight:600; }}
         QLabel#hint, QLabel#sectionIntro {{ color:{muted}; font-size:11px; }}
         QLabel#status {{ background:{panel}; border-left:4px solid {accent};
             padding:5px 9px; font-weight:600; }}

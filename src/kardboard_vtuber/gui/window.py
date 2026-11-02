@@ -269,19 +269,6 @@ class StudioWindow(QMainWindow):
         self.workspace_split.setStretchFactor(1, 1)
         self.workspace_split.setSizes([340, 1000])
         root.addWidget(self.workspace_split, 1)
-        self._build_console()
-        footer = QHBoxLayout()
-        footer.addWidget(self.tools_button)
-        tools_hint = QLabel("Logs / CLI / Signals")
-        tools_hint.setObjectName("hint")
-        footer.addWidget(tools_hint)
-        self.session_summary = QLabel("No input / not publishing")
-        self.session_summary.setObjectName("hint")
-        self.session_summary.setAlignment(Qt.AlignmentFlag.AlignRight)
-        self.session_summary.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed)
-        footer.addWidget(self.session_summary, 1)
-        root.addLayout(footer)
-        root.addWidget(self.tools_drawer)
         self.setCentralWidget(central)
         self._build_menu()
 
@@ -811,7 +798,7 @@ class StudioWindow(QMainWindow):
         workspace.setObjectName("previewWorkspace")
         layout = QVBoxLayout(workspace)
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(8)
+        layout.setSpacing(6)
         top = QHBoxLayout()
         heading = QLabel("Preview")
         heading.setObjectName("panelTitle")
@@ -876,7 +863,50 @@ class StudioWindow(QMainWindow):
         self.command.setMinimumSize(0, 0)
         self.command.setLineWrapMode(QPlainTextEdit.LineWrapMode.NoWrap)
         self.command.setObjectName("command")
+        self._build_console()
+        footer = QHBoxLayout()
+        footer.setSpacing(6)
+        footer.addWidget(self.tools_button)
+        self.metrics_strip = self._build_metrics()
+        footer.addWidget(self.metrics_strip, 3)
+        self.session_summary = QLabel("No input / not publishing")
+        self.session_summary.setObjectName("hint")
+        self.session_summary.setAlignment(Qt.AlignmentFlag.AlignRight)
+        self.session_summary.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed)
+        footer.addWidget(self.session_summary, 1)
+        layout.addLayout(footer)
+        layout.addWidget(self.tools_drawer)
         return workspace
+
+    def _build_metrics(self) -> QWidget:
+        strip = QWidget()
+        strip.setAccessibleName("Live performance and output cards")
+        strip.setMaximumWidth(720)
+        row = QHBoxLayout(strip)
+        row.setContentsMargins(0, 0, 0, 0)
+        row.setSpacing(4)
+        self.metrics: dict[str, QLabel] = {}
+        for name, title in (
+            ("camera", "CAMERA FPS"), ("tracking", "TRACKING FPS"),
+            ("age", "INTERNAL FRAME AGE"), ("output", "VIDEO OUTPUT"),
+        ):
+            card = QFrame()
+            card.setObjectName("metric")
+            card.setAccessibleName(title)
+            card.setMinimumWidth(124 if name in ("age", "output") else 116)
+            card_layout = QVBoxLayout(card)
+            card_layout.setContentsMargins(8, 3, 8, 3)
+            card_layout.setSpacing(1)
+            caption = QLabel(title)
+            caption.setObjectName("eyebrow")
+            value = QLabel("--")
+            value.setObjectName("metricValue")
+            value.setAccessibleName(title + " value")
+            self.metrics[name] = value
+            card_layout.addWidget(caption)
+            card_layout.addWidget(value)
+            row.addWidget(card, 1)
+        return strip
 
     def _build_diagnostics(self) -> QWidget:
         self.raw_face = VideoCanvas("No face observation.\nNever included in clean output.")
@@ -930,6 +960,10 @@ class StudioWindow(QMainWindow):
         self.diagnostic_tabs.setTabVisible(1, body)
         self.diagnostic_tabs.setVisible(mesh or body)
         self.diagnostic_panel.setVisible(raw or mesh or body)
+        self.preview_split.setMinimumHeight(max(
+            self.preview.minimumHeight(),
+            self.diagnostic_panel.minimumSizeHint().height() if raw or mesh or body else 0,
+        ))
         if opening:
             self.preview_split.setSizes([max(320, self.preview_split.width() - 324), 320])
         if opening or stacking:
@@ -940,19 +974,6 @@ class StudioWindow(QMainWindow):
         layout = QVBoxLayout(panel)
         layout.setContentsMargins(6, 4, 6, 4)
         layout.setSpacing(6)
-        self.metrics: dict[str, QLabel] = {}
-        metrics_row = QHBoxLayout()
-        for name, title in (
-            ("camera", "Camera FPS"), ("tracking", "Tracking FPS"),
-            ("age", "Frame age"), ("output", "Output"),
-        ):
-            caption = QLabel(title)
-            caption.setObjectName("hint")
-            value = QLabel("--")
-            self.metrics[name] = value
-            metrics_row.addWidget(caption)
-            metrics_row.addWidget(value, 1)
-        layout.addLayout(metrics_row)
         signals_page = QWidget()
         signals = QGridLayout(signals_page)
         signals.setContentsMargins(6, 4, 6, 4)

@@ -11,9 +11,9 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 pytest.importorskip("PySide6")
 
 from PySide6.QtCore import QPoint, QRect, Qt, QTimer
-from PySide6.QtGui import QRegion
+from PySide6.QtGui import QFontDatabase, QRegion
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QLineEdit, QScrollArea
+from PySide6.QtWidgets import QApplication, QFrame, QLabel, QLineEdit, QScrollArea
 
 from kardboard_vtuber.camera.devices import LocalCameraDevice
 from kardboard_vtuber.gui import settings
@@ -656,6 +656,74 @@ def test_tools_toggle_is_keyboard_reachable_and_keeps_background_logs(
     app.processEvents()
     assert not window.tools_drawer.isVisible()
     assert window.preview.isVisible()
+
+
+@pytest.mark.parametrize("size", [(1440, 810), (1280, 720), (960, 600)])
+def test_metric_cards_stay_readable_below_preview_and_tools_do_not_shorten_settings(
+    app: QApplication, window: StudioWindow, size: tuple[int, int],
+) -> None:
+    window.resize(*size)
+    window.page_selector.setCurrentText("Tracking labs")
+    for field in ("debug_face_preview", "tracking_debug", "full_body"):
+        window.controls[field].set_value(True)
+    window._refresh_settings()
+    inspector = window.workspace_split.widget(0)
+    assert inspector is not None
+    for _ in range(2):
+        for mode in (0, 1):
+            window.work_mode.setCurrentIndex(mode)
+            app.processEvents()
+            closed_height = inspector.height()
+            for tools in (False, True):
+                window.tools_action.setChecked(tools)
+                for error in (False, True):
+                    window.error_label.setVisible(error)
+                    window.metrics["camera"].setText("-- / demo")
+                    window.metrics["tracking"].setText("59.9")
+                    window.metrics["age"].setText("9999.9 ms")
+                    window.metrics["output"].setText("Video file export")
+                    app.processEvents()
+                    assert_whole_preview_visible(window)
+                    for label in window.metrics.values():
+                        card = label.parentWidget()
+                        assert isinstance(card, QFrame)
+                        assert QRegion(card.rect()).subtracted(card.visibleRegion()).isEmpty()
+                        image = card.grab().toImage()
+                        ratio = image.devicePixelRatio()
+                        border = image.pixelColor(image.width() // 2, 0)
+                        surface = image.pixelColor(round(4 * ratio), image.height() // 2)
+                        assert border != surface, "Each metric must retain its visible card border."
+                    if tools:
+                        assert window.tools_drawer.mapTo(window, QPoint()).x() > (
+                            inspector.mapTo(window, QPoint()).x() + inspector.width()
+                        )
+                window.error_label.hide()
+                app.processEvents()
+                assert inspector.height() == closed_height
+        window.toggle_theme()
+
+
+def test_metric_card_text_fits_the_native_font_engine(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    if "Segoe UI" not in QFontDatabase.families():
+        pytest.skip("This Qt platform lacks native Segoe UI metrics; checked on Windows.")
+    for size in ((1440, 810), (1280, 720), (960, 600)):
+        window.resize(*size)
+        for _ in range(2):
+            window.metrics["camera"].setText("-- / demo")
+            window.metrics["tracking"].setText("59.9")
+            window.metrics["age"].setText("9999.9 ms")
+            window.metrics["output"].setText("Video file export")
+            app.processEvents()
+            for value in window.metrics.values():
+                card = value.parentWidget()
+                assert isinstance(card, QFrame)
+                for label in card.findChildren(QLabel):
+                    assert label.fontMetrics().horizontalAdvance(label.text()) <= (
+                        label.contentsRect().width()
+                    )
+            window.toggle_theme()
 
 
 def test_explicit_headless_keeps_a_visible_explanatory_workspace(
