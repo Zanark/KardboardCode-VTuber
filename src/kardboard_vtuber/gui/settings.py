@@ -248,12 +248,18 @@ def arguments(values: dict[str, SettingValue]) -> list[str]:
 
 
 def command_preview(values: dict[str, SettingValue]) -> str:
-    safe = dict(values, source="$env:KARDBOARD_CAMERA_URL")
+    source = values["source"]
+    local = isinstance(source, str) and source.isdecimal()
+    safe = dict(values, source=source if local else "$env:KARDBOARD_CAMERA_URL")
     argv = arguments(safe)
-    lines = [
-        '$env:KARDBOARD_CAMERA_URL = Read-Host "Camera source (kept out of presets)"',
-        r".\.venv312\Scripts\python.exe -m kardboard_vtuber `",
-    ]
+    lines = (
+        []
+        if local
+        else [
+            '$env:KARDBOARD_CAMERA_URL = Read-Host "Camera source (kept out of presets)"',
+        ]
+    )
+    lines.append(r".\.venv312\Scripts\python.exe -m kardboard_vtuber `")
     for index, value in enumerate(argv):
         if value.startswith("--"):
             part = value

@@ -49,6 +49,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from kardboard_vtuber.camera.devices import LocalCameraDevice, decode_camera_inventory
 from kardboard_vtuber.cli import live_tuning
 from kardboard_vtuber.gui import settings
 from kardboard_vtuber.gui.settings import (
@@ -80,6 +81,14 @@ class StudioWindow(QMainWindow):
         self.bridge: RuntimeBridge | None = None
         self.job: QProcess | None = None
         self._job_kind = ""
+        self._camera_output = ""
+        self._native_devices: tuple[LocalCameraDevice, ...] = ()
+        self._native_pair_shown: tuple[str, str] | None = None
+        self._source_mode = 0
+        self._local_source = "0"
+        self._local_backend = "auto"
+        self._custom_source = ""
+        self._custom_backend = "auto"
         self._job_error = False
         self._job_stop: Path | None = None
         self._job_temp: tempfile.TemporaryDirectory[str] | None = None
@@ -93,6 +102,7 @@ class StudioWindow(QMainWindow):
         self._tutorial: TutorialDialog | None = None
         self._model_status: dict[str, QLabel] = {}
         self._build_ui()
+        self._sync_source_mode()
         self._apply_theme()
         self._refresh_settings()
         self.timer = QTimer(self)
@@ -257,6 +267,8 @@ class StudioWindow(QMainWindow):
                 field for field in fields if field.name not in LIVE_FIELDS
             )
         for field in fields:
+            if field.name == "source":
+                self._build_source_selector(layout)
             control = OptionControl(field, actions[field.name], self.values[field.name])
             self.controls[field.name] = control
             control.changed.connect(self._refresh_settings)
@@ -278,6 +290,121 @@ class StudioWindow(QMainWindow):
                 )
                 row.addWidget(download)
                 layout.addLayout(row)
+
+    def _build_source_selector(self, layout: QVBoxLayout) -> None:
+        layout.addWidget(QLabel("Input type"))
+        self.input_type = QComboBox()
+        self.input_type.setAccessibleName("Camera input type")
+        self.input_type.addItems(
+            [
+                "This computer's camera",
+                "Phone stream / video file / manual source",
+            ]
+        )
+        self.input_type.currentIndexChanged.connect(self._input_type_changed)
+        layout.addWidget(self.input_type)
+        self.native_panel = QWidget()
+        native_layout = QVBoxLayout(self.native_panel)
+        native_layout.setContentsMargins(0, 0, 0, 0)
+        native_layout.addWidget(QLabel("Laptop / USB / installed camera device"))
+        row = QHBoxLayout()
+        self.native_camera = QComboBox()
+        self.native_camera.setAccessibleName("Native camera device")
+        self.native_camera.setMinimumContentsLength(12)
+        self.native_camera.setSizeAdjustPolicy(
+            QComboBox.SizeAdjustPolicy.AdjustToMinimumContentsLengthWithIcon,
+        )
+        self.native_camera.currentIndexChanged.connect(self._native_camera_selected)
+        row.addWidget(self.native_camera, 1)
+        self.refresh_cameras_button = QPushButton("Refresh")
+        self.refresh_cameras_button.clicked.connect(self.refresh_native_cameras)
+        row.addWidget(self.refresh_cameras_button)
+        native_layout.addLayout(row)
+        self.native_hint = QLabel(
+            "Refresh lists camera names without opening them. Choose your laptop/USB camera, "
+            "then Start camera. Virtual cameras can also appear.",
+        )
+        self.native_hint.setWordWrap(True)
+        self.native_hint.setObjectName("hint")
+        native_layout.addWidget(self.native_hint)
+        layout.addWidget(self.native_panel)
+
+    def _sync_source_mode(self) -> None:
+        source = self.controls["source"].value()
+        backend = self.controls["backend"].value()
+        assert isinstance(source, str) and isinstance(backend, str)
+        self._source_mode = 0 if source.isdecimal() else 1
+        if self._source_mode == 0:
+            self._local_source, self._local_backend = source, backend
+        else:
+            self._custom_source, self._custom_backend = source, backend
+        self.input_type.blockSignals(True)
+        self.input_type.setCurrentIndex(self._source_mode)
+        self.input_type.blockSignals(False)
+        self._show_source_mode()
+        self._populate_native_cameras()
+
+    def _show_source_mode(self) -> None:
+        local = self._source_mode == 0
+        self.native_panel.setVisible(local)
+        self.controls["source"].setVisible(not local)
+        self.source_environment_button.setVisible(not local)
+
+    def _input_type_changed(self, index: int) -> None:
+        if index == self._source_mode:
+            return
+        source = self.controls["source"].value()
+        backend = self.controls["backend"].value()
+        assert isinstance(source, str) and isinstance(backend, str)
+        if index == 0:
+            self._custom_source, self._custom_backend = source, backend
+            self.controls["source"].set_value(self._local_source)
+            self.controls["backend"].set_value(self._local_backend)
+        else:
+            self._local_source, self._local_backend = source, backend
+            self.controls["source"].set_value(self._custom_source)
+            self.controls["backend"].set_value(self._custom_backend)
+        self._source_mode = index
+        self._show_source_mode()
+        self._populate_native_cameras()
+        self._refresh_settings()
+
+    def _populate_native_cameras(self) -> None:
+        source = self.controls["source"].value()
+        backend = self.controls["backend"].value()
+        assert isinstance(source, str) and isinstance(backend, str)
+        self.native_camera.blockSignals(True)
+        self.native_camera.clear()
+        if source.isdecimal():
+            self.native_camera.addItem(f"Device index {source} / {backend} (manual)", None)
+        else:
+            self.native_camera.addItem("Select a local camera", None)
+        selected = 0
+        for device in self._native_devices:
+            self.native_camera.addItem(device.label, device)
+            if source == str(device.index) and backend == device.backend:
+                selected = self.native_camera.count() - 1
+        self.native_camera.setCurrentIndex(selected)
+        self.native_camera.blockSignals(False)
+        self._native_pair_shown = (source, backend)
+
+    def _native_camera_selected(self, index: int) -> None:
+        device = self.native_camera.itemData(index)
+        if not isinstance(device, LocalCameraDevice):
+            return
+        self.controls["source"].set_value(str(device.index))
+        self.controls["backend"].set_value(device.backend)
+        self._local_source, self._local_backend = str(device.index), device.backend
+        self._refresh_settings()
+
+    def refresh_native_cameras(self) -> None:
+        if self.worker is not None or self.job is not None:
+            self._show_error("Stop the current session/job before refreshing the device list.")
+            return
+        try:
+            self._start_job("cameras", ROOT / "scripts" / "list_local_cameras.py", [])
+        except (ValueError, OSError) as error:
+            self._show_error(str(error))
 
     def _build_workspace(self) -> QWidget:
         workspace = QWidget()
@@ -306,7 +433,7 @@ class StudioWindow(QMainWindow):
         self.tabs = QTabWidget()
         self.tabs.addTab(self.preview, "Preview")
         self.tabs.addTab(self.skeleton, "Skeleton")
-        self.tabs.addTab(self.command, "CLI equivalent (source hidden)")
+        self.tabs.addTab(self.command, "CLI equivalent (credentials excluded)")
         layout.addWidget(self.tabs, 1)
         self.metrics: dict[str, QLabel] = {}
         metrics_row = QHBoxLayout()
@@ -497,6 +624,9 @@ class StudioWindow(QMainWindow):
             self.error_label.show()
             return
         self.values = values
+        pair = (str(values["source"]), str(values["backend"]))
+        if self._source_mode == 0 and pair != self._native_pair_shown:
+            self._populate_native_cameras()
         self.error_label.hide()
         self.command.setPlainText(settings.command_preview(values))
         if self.bridge is not None:
@@ -532,6 +662,7 @@ class StudioWindow(QMainWindow):
             )
             return
         self.controls["source"].set_value(value)
+        self._sync_source_mode()
         self._refresh_settings()
 
     def _confirm(self, title: str, message: str) -> bool:
@@ -637,6 +768,8 @@ class StudioWindow(QMainWindow):
         self.record_button.setEnabled(not busy)
         self.record_group.setEnabled(not busy)
         self.source_environment_button.setEnabled(not busy)
+        self.input_type.setEnabled(not busy)
+        self.native_panel.setEnabled(not busy)
         self.model_force.setEnabled(not busy)
         for name, control in self.controls.items():
             control.setEnabled(not busy or self.worker is not None and name in LIVE_FIELDS)
@@ -732,6 +865,7 @@ class StudioWindow(QMainWindow):
     def _apply_values(self, values: dict[str, SettingValue]) -> None:
         for name, control in self.controls.items():
             control.set_value(values[name])
+        self._sync_source_mode()
         self._refresh_settings()
 
     def _save_preset_dialog(self) -> None:
@@ -857,6 +991,7 @@ class StudioWindow(QMainWindow):
         self._job_kind = kind
         self._job_error = False
         self._pending_output = ""
+        self._camera_output = ""
         self._decoder = codecs.getincrementaldecoder("utf-8")(errors="replace")
         self.job = QProcess(self)
         self.job.setProcessChannelMode(QProcess.ProcessChannelMode.MergedChannels)
@@ -867,7 +1002,11 @@ class StudioWindow(QMainWindow):
         self._set_busy(True)
         self.job_progress.show()
         self.status.setText(
-            "PRIVATE RAW RECORDING" if kind == "recording" else "MODEL VERIFICATION / DOWNLOAD"
+            "PRIVATE RAW RECORDING"
+            if kind == "recording"
+            else "LISTING LOCAL CAMERAS / METADATA ONLY"
+            if kind == "cameras"
+            else "MODEL VERIFICATION / DOWNLOAD"
         )
         self._append_log("[JOB] Starting " + kind + ". Source and command credentials are hidden.")
         self.job.start(sys.executable, ["-u", str(script), *argv])
@@ -875,7 +1014,15 @@ class StudioWindow(QMainWindow):
     def _read_job_output(self) -> None:
         if self.job is None:
             return
-        self._pending_output += self._decoder.decode(bytes(self.job.readAllStandardOutput()))
+        text = self._decoder.decode(bytes(self.job.readAllStandardOutput()))
+        if self._job_kind == "cameras":
+            self._camera_output += text
+            if len(self._camera_output) > 128_000:
+                self._job_error = True
+                self._show_error("Camera inventory output exceeded its size limit.")
+                self.job.kill()
+            return
+        self._pending_output += text
         lines = self._pending_output.split("\n")
         self._pending_output = lines.pop()
         for line in lines:
@@ -896,7 +1043,12 @@ class StudioWindow(QMainWindow):
         if self.job is None:
             return
         self._read_job_output()
-        self._pending_output += self._decoder.decode(b"", final=True)
+        tail = self._decoder.decode(b"", final=True)
+        if self._job_kind == "cameras":
+            self._camera_output += tail
+            self._accept_camera_inventory(code)
+        else:
+            self._pending_output += tail
         if self._pending_output:
             self._append_log(self._pending_output)
         self._pending_output = ""
@@ -918,6 +1070,42 @@ class StudioWindow(QMainWindow):
         self._refresh_settings()
         if self._closing:
             QTimer.singleShot(0, self.close)
+
+    def _accept_camera_inventory(self, code: int) -> None:
+        if code != 0 or self._job_error:
+            self._job_error = True
+            self.native_hint.setText(
+                "Refresh failed. Any previous list may be stale; see the console."
+            )
+            self._show_error("Camera discovery failed: " + self._camera_output.strip())
+            return
+        try:
+            devices = decode_camera_inventory(self._camera_output)
+        except ValueError as error:
+            self._job_error = True
+            self.native_hint.setText("Invalid camera list. Retry Refresh or use a manual source.")
+            self._show_error(f"Could not read the camera list: {error}")
+            return
+        previous = self.native_camera.currentData()
+        if (
+            self._source_mode == 0
+            and isinstance(previous, LocalCameraDevice)
+            and previous not in devices
+        ):
+            self.controls["source"].set_value("")
+        self._native_devices = devices
+        self._populate_native_cameras()
+        self.native_hint.setText(
+            "Choose the laptop/USB camera. Each entry includes its capture API; the same "
+            "device may appear twice. Refresh after device changes. Start opens the camera."
+            if devices
+            else "No camera entries were returned. Check connections/Windows permissions, refresh, "
+            "or use a manual device index in the custom source field."
+        )
+        self._append_log(
+            f"[CAMERAS] Listed {len(devices)} backend/device entries; "
+            "no capture streams were opened.",
+        )
 
     def _clean_job_files(self) -> None:
         if self._job_temp is not None:

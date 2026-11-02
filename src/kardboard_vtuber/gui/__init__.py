@@ -45,6 +45,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.demo:
         window.page_selector.setCurrentText("Avatar & eyes")
         QTimer.singleShot(0, window.start_demo)
+    elif sys.platform == "win32" and window.input_type.currentIndex() == 0:
+        QTimer.singleShot(0, window.refresh_native_cameras)
     try:
         return app.exec()
     finally:

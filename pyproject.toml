@@ -27,6 +27,7 @@ virtual-camera = [
 ]
 gui = [
     "PySide6-Essentials>=6.8,<7",
+    "cv2-enumerate-cameras>=1.4,<2; sys_platform == 'win32'",
 ]
 
 [project.scripts]

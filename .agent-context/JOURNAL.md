@@ -4,6 +4,16 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Explicit native machine camera selection
+
+- User requested a native machine/laptop camera option. Existing capture already accepted numeric devices; added a discoverable computer-camera input mode and named selector instead of requiring a masked index.
+- Reused the existing asynchronous subprocess lifecycle for metadata discovery. Reviewed the adapter's Windows source: Media Foundation attributes and DirectShow property bags are enumerated without capture/activation calls. No vendor client/driver was installed.
+- Named selections route matching API/index pairs. Custom phone/file/manual sources remain available, with separate in-memory source/backend restoration. A disappeared named choice is cleared on refresh, not silently replaced.
+- Actual metadata listed Integrated Camera through MSMF and DSHOW plus an OBS Virtual Camera entry. No streams or frame probes were opened. The full suite passed 236 tests and Ruff.
+- Added the native-source tutorial/README image using illustrative device names; inspected it with native Windows font rendering. Updated architecture, in-app help and handbook without claiming physical camera capture qualification.
+- Refreshed the Studio on its idle Camera setup page and verified its native window responds. Handbook remains 245 pages/97 diagrams with zero diagram failures and zero overflow.
+- Persisted the native-camera handoff as zmem `ep_834`; successful offload marker is `2026-11-02T14:33:17+05:30`. Shared chat and new incoming replies were read; no direct response obligation remained.
+
 ## 2026-11-02 - Native studio delivered and opened for review
 
 - Completed all GUI workstreams: all 45 runtime controls plus model verification/force download and private recording, live per-eye calibration, source-free presets, native KC-box identity, themes, logs and the nine-step tutorial.

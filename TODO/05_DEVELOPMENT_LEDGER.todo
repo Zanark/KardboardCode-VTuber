@@ -24,4 +24,6 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-02: Added explicit native-camera selection; 236 tests/Ruff passed. Discovery used
+  Windows metadata only. Selected device/backend pairs and source-mode restoration verified.
   Engineering work complete. Native synthetic demo opened for review; no visual acceptance supplied.

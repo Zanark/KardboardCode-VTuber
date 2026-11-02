@@ -75,13 +75,18 @@ flowchart LR
 
 ## Current automated coverage
 
-The 2026-11-02 validated suite contains 224 tests spanning camera contracts and lifecycle, face-state
+The 2026-11-02 validated suite contains 236 tests spanning camera contracts and lifecycle, face-state
 normalization and actions, One Euro filtering, spring integration, procedural and textured
 renderers, experimental body tracking, hand occlusion, green-screen fail-closed behavior,
 virtual output, native widgets, calibration, safe presets, bounded frame/log ownership, recorder
 cancellation and CLI compatibility (`tests/`).
 
 ## Desktop studio evidence - 2026-11-02
+
+- Native camera selection is exercised through backend-specific metadata, strict inventory
+  parsing, source/backend routing, mode switching, disappeared-device handling and a real
+  asynchronous Windows inventory job. This machine returned Integrated Camera under MSMF and
+  DirectShow and an OBS virtual-device entry. No camera streams were opened during these checks.
 
 - The control-inventory test compares actual parser destinations against both declarative fields
   and constructed widgets: all 45 current camera options are represented.

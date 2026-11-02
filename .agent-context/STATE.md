@@ -1,5 +1,5 @@
 > **Last updated:** 2026-11-02 (Asia/Kolkata) - Native desktop studio delivered locally and opened in a camera-free demo.
-> **Last context offload:** 2026-11-02T13:48:33+05:30
+> **Last context offload:** 2026-11-02T14:33:17+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,7 +7,7 @@
 
 ## Current focus
 
-The requested native PySide6 desktop studio is complete locally and open for review in a clearly labelled, camera-free synthetic demo. All 45 current runtime options, independent live eye calibration, original KC icon, private recorder/model actions, source-free presets, bounded logs, themes and nine-part tutorial are included. Research/design rationale, README screenshots, architecture/algorithm/design chapters and the printable handbook are updated. No live camera has been opened and user visual/usability approval remains pending.
+The native PySide6 studio is delivered. The user's follow-up request for explicit native machine/laptop camera selection is also implemented: Camera now separates computer cameras from custom URL/file/index sources, with asynchronous named Windows device discovery. Selection pairs the proper backend/index; refreshing/selecting does not open a stream. All 45 runtime options, live eye calibration, KC icon, recording/model actions, presets, themes, logs and tutorial remain available. No live camera has been opened by this agent; user appearance and physical-device capture qualification remain pending.
 
 The user still chose **face mesh tracking with a frozen last-safe frame on face loss** as the default after unreliable body/hood-marker experiments. Exposing every feature in the GUI does not replace that choice. Actual Discord/Teams/Meet use and reliable distant-face tracking remain unconfirmed.
 
@@ -25,6 +25,12 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 ## Threads
 
 ### Native desktop studio - delivered; awaiting owner review
+
+- Follow-up native-camera workstream: `TODO\06_NATIVE_CAMERA_SELECTION.todo`. Choose Camera -> This computer's camera -> Refresh -> named laptop/USB device -> Start camera. Windows startup performs metadata-only listing when this input type is active.
+- `camera.devices` uses the optional `cv2-enumerate-cameras` Windows adapter through the existing owned subprocess job lifecycle. Explicit MSMF/DSHOW enumeration avoids cross-backend index mismatch. Device paths/serials are not exposed or persisted.
+- Source modes remember their separate source/backend pairs in session memory only. Named selections set both together; loading presets retains source-free semantics. Refresh/reselect after hardware changes; a missing previous selection is cleared.
+- Current follow-up validation: 236 tests and Ruff passed, including actual asynchronous metadata discovery. This machine reported Integrated Camera under MSMF and DSHOW and OBS Virtual Camera under DSHOW. These are backend entries, not three physical cameras. No capture stream or frame probe was used.
+- The Studio was refreshed on its idle Camera page and verified responding. Windows local-camera mode lists metadata on startup; the user still must choose a device and press Start. The native-selector screenshot uses illustrative device names, not captured camera imagery.
 
 - Entry points: `python -m kardboard_vtuber.gui` and the optional `kardboard-studio` GUI launcher. PySide6-Essentials is an optional dependency; normal CLI imports do not import Qt.
 - Research, complete control inventory, layout rationale, runtime architecture and tutorial live in `docs\09-desktop-studio`. Numbered workstreams/evidence live under `TODO`.
@@ -115,4 +121,4 @@ Wait for the user's review of the desktop studio. Do not repeat completed implem
 - The earlier November recap was context-only. The subsequent GUI request changed application code, optional dependencies, tests, TODOs, and documentation and was committed in milestones. No live camera, raw screenshot capture, or push was performed for the GUI request.
 - Local session provenance: `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7`. Its checkpoints preserve earlier work. Raw artifacts are private; do not copy them into durable context or public docs.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_832` (final 224-test source-boundary validation), following GUI delivery `ep_829`. Earlier recap: `ep_823`; registration: `ep_780`; mandatory dual-store routing: `sem_074`.
+- Latest cross-base receipt: `ep_834` (native camera selector, 236 tests), following source-boundary validation `ep_832` and GUI delivery `ep_829`. Earlier recap: `ep_823`; registration: `ep_780`; mandatory dual-store routing: `sem_074`.

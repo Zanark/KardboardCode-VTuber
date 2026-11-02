@@ -41,9 +41,25 @@ Stop the demo. In **Models**, choose the model paths. **Verify / download** chec
 file's expected SHA-256 or downloads the official file if missing. Use the explicit force option
 to replace a corrupt/outdated file. "Present" alone does not establish a correct checksum.
 
-In **Camera**, enter a local index such as `0`, your current phone stream, or browse a recorded
-video. The source is masked by default. **Show** reveals it locally; presets and CLI copies still
-exclude it. The environment button reads only this process's `KARDBOARD_CAMERA_URL`.
+In **Camera**, choose **This computer's camera**, press **Refresh**, and select your laptop or
+USB webcam by name. Each entry includes its capture API and index; the same device may appear
+under both Media Foundation and DirectShow. Choosing one updates both values together. Press
+**Start camera** when ready: selecting or listing devices does not open a stream.
+Windows startup also populates metadata when the computer-camera input type is selected.
+
+Refresh/reselect after plugging or unplugging devices. If a previously named selection disappears,
+the studio clears it rather than silently selecting a different camera. Virtual cameras can also
+appear; do not select OBS Virtual Camera as input while sending to that same output.
+
+![Computer camera selection](../images/kardboardcode-studio-native-camera.png)
+
+*Actual controls with illustrative inventory entries; selecting a row does not start capture.*
+
+Choose **Phone stream / video file / manual source** to enter a phone URL, browse a recording, or
+enter a numeric index such as `0` manually. Index `0` is not guaranteed to mean the laptop camera.
+The custom source is masked by default. Switching input modes keeps the previous source/backend
+in memory only; presets still exclude the source. The environment button reads only this
+process's `KARDBOARD_CAMERA_URL`. After loading a preset, recheck the selected device and backend.
 
 If you prefer setting it before launch:
 

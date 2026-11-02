@@ -28,6 +28,22 @@ Opening the GUI does not start capture. **LIVE** sliders update the current sess
 settings unlock after **Stop**. Presets never retain camera sources or raw-preview consent.
 The installed launcher is `.\.venv312\Scripts\kardboard-studio.exe`.
 
+### Use this laptop's camera
+
+Open **Camera → Input type → This computer's camera**, click **Refresh**, select the laptop
+or USB camera by name, then click **Start camera**. Refresh reads Windows device metadata only:
+it does not open a camera or capture frames. Each named choice uses its matching capture
+backend/index. The same physical camera may appear under both Media Foundation and DirectShow.
+
+Choose **Phone stream / video file / manual source** to keep using a phone URL or recording.
+Manual numeric indices such as `0` remain supported. Refresh/reselect after device changes;
+index `0` is not guaranteed to be the laptop camera on every machine.
+
+![Native camera selection](docs/images/kardboardcode-studio-native-camera.png)
+
+*Actual native-source controls with illustrative laptop/USB device names. No camera was opened;
+Refresh retrieves the real names on the machine running the tool.*
+
 <details>
 <summary>Light theme and built-in tutorial</summary>
 

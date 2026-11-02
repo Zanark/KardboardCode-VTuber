@@ -14,6 +14,8 @@ from PySide6.QtCore import QTimer
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QLineEdit
 
+from kardboard_vtuber.camera.devices import LocalCameraDevice
+from kardboard_vtuber.gui import settings
 from kardboard_vtuber.gui.window import StudioWindow
 from kardboard_vtuber.runtime import RuntimeBridge
 
@@ -208,3 +210,88 @@ def test_worker_reports_parser_exit_as_failure_instead_of_success(
     worker.run()
     assert codes == [2]
     assert "exited unexpectedly" in "\n".join(bridge.take()[1])
+
+
+def test_named_laptop_selection_routes_matching_native_backend_and_index(
+    window: StudioWindow,
+) -> None:
+    window._native_devices = (
+        LocalCameraDevice(2, "msmf", "Laptop RGB Camera"),
+        LocalCameraDevice(0, "dshow", "Laptop RGB Camera"),
+    )
+    window._populate_native_cameras()
+    window.native_camera.setCurrentIndex(1)
+    args = settings.namespace(window.collected_values())
+    assert args.source == "2" and args.backend == "msmf"
+    assert "--source=2" in window.command.toPlainText()
+    assert "$env:KARDBOARD_CAMERA_URL" not in window.command.toPlainText()
+    assert window.worker is None and window.job is None
+    window.native_camera.setCurrentIndex(2)
+    args = settings.namespace(window.collected_values())
+    assert args.source == "0" and args.backend == "dshow"
+
+
+def test_switching_native_and_stream_sources_preserves_each_source_and_backend(
+    window: StudioWindow,
+) -> None:
+    window.input_type.setCurrentIndex(1)
+    window.controls["source"].set_value("rtsp://synthetic.invalid/video")
+    window.controls["backend"].set_value("ffmpeg")
+    window.input_type.setCurrentIndex(0)
+    assert window.controls["source"].value() == "0"
+    assert window.controls["backend"].value() == "auto"
+    window._native_devices = (LocalCameraDevice(1, "dshow", "USB Camera"),)
+    window._populate_native_cameras()
+    window.native_camera.setCurrentIndex(1)
+    window.input_type.setCurrentIndex(1)
+    assert window.controls["source"].value() == "rtsp://synthetic.invalid/video"
+    assert window.controls["backend"].value() == "ffmpeg"
+    window.input_type.setCurrentIndex(0)
+    assert window.controls["source"].value() == "1"
+    assert window.controls["backend"].value() == "dshow"
+
+
+def test_camera_inventory_does_not_open_capture_and_missing_selection_requires_reselection(
+    window: StudioWindow,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        "kardboard_vtuber.cli.LatestFrameCamera",
+        lambda config: pytest.fail("Accepting metadata must never open a camera"),
+    )
+    window._job_error = False
+    window._camera_output = '[{"index":1,"backend":"dshow","name":"Laptop Camera"}]'
+    window._accept_camera_inventory(0)
+    window.native_camera.setCurrentIndex(1)
+    assert window.controls["source"].value() == "1"
+    window._camera_output = "[]"
+    window._accept_camera_inventory(0)
+    assert window.controls["source"].value() == ""
+    assert "No camera entries" in window.native_hint.text()
+    assert window.worker is None
+
+
+def test_invalid_camera_inventory_is_explicit_and_does_not_replace_previous_list(
+    window: StudioWindow,
+) -> None:
+    original = (LocalCameraDevice(0, "dshow", "Laptop Camera"),)
+    window._native_devices = original
+    window._camera_output = "not valid JSON"
+    window._job_error = False
+    window._accept_camera_inventory(0)
+    assert window._job_error
+    assert window._native_devices == original
+    assert "Could not read the camera list" in window.console.toPlainText()
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Named device discovery uses Windows metadata APIs")
+def test_native_inventory_job_completes_without_starting_capture(
+    app: QApplication,
+    window: StudioWindow,
+) -> None:
+    pytest.importorskip("cv2_enumerate_cameras")
+    window.refresh_native_cameras()
+    assert window.job is not None and window.worker is None
+    wait_until(app, lambda: window.job is None, timeout=15)
+    assert "[CAMERAS] Listed" in window.console.toPlainText()
+    assert window.worker is None and window.start_button.isEnabled()

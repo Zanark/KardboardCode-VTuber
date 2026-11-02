@@ -115,6 +115,26 @@ running QThread. This is cooperative shutdown, not process/crash isolation.
 
 ## Logs and subprocess tasks
 
+### Native machine camera selection
+
+The Camera page explicitly separates **This computer's camera** from custom stream/file/index
+input. Named Windows discovery uses the optional
+[`cv2-enumerate-cameras`](https://github.com/lukehugh/cv2_enumerate_cameras) metadata adapter in an
+owned subprocess, reusing the existing job lifecycle. Its Windows implementations query
+`MFEnumDeviceSources` or DirectShow's device enumerator/property bags; they do not call
+`VideoCapture`, read frames, or activate a media source. No vendor camera client/driver is installed.
+
+`camera.devices.discover_local_cameras` enumerates each supported API explicitly. It does not
+mix OpenCV's backend-encoded `CAP_ANY` indices with a different explicit backend. A named row
+contains a validated name, API and index; selecting it updates source/backend together.
+Device paths/serials are not returned or persisted. Listings are snapshots, so refresh/reselect
+after hardware changes; a missing previous selection is cleared rather than silently retargeted.
+Device `0` is a manual fallback, not an assertion that it is always the laptop camera.
+
+The native selector starts no capture merely from switching mode, refreshing, or selecting a row.
+Custom URL/file input and its backend are retained only in session memory when switching back.
+Named discovery is currently Windows-specific; manual index capture remains available elsewhere.
+
 Worker logs have a 500-entry ring; an overflow notice explicitly counts dropped older entries.
 The visible plain-text console retains at most 1,500 text blocks. Camera URLs, including query
 strings and authentication, are redacted before entering the GUI buffer/clipboard.

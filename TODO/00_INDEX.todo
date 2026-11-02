@@ -10,6 +10,7 @@ Workstreams:
   03_NATIVE_INTERFACE.todo
   04_DOCUMENTATION_AND_DELIVERY.todo
   05_DEVELOPMENT_LEDGER.todo
+  06_NATIVE_CAMERA_SELECTION.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.

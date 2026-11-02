@@ -30,7 +30,12 @@ LESSONS = (
         "Models",
         "Open Models. <b>Verify / download</b> runs the official-model downloader and checksum "
         "verification. An existing file is only 'present' until verified.<br><br>"
-        "In Camera, enter a device index (0), phone stream URL, or choose a recorded video. "
+        "In Camera, choose <b>This computer's camera</b>, press <b>Refresh</b>, "
+        "select the laptop/USB camera by name, then Start camera. Listing reads Windows "
+        "metadata only; it does not open streams. The same device may appear under two APIs. "
+        "Refresh after device changes.<br><br>"
+        "Choose <b>Phone stream / video file / manual source</b> "
+        "for a URL, recording or index (0). "
         "Use the environment-source button only if KARDBOARD_CAMERA_URL is set in this process. "
         "The masked source is kept in memory, not saved in presets or copied logs.",
     ),

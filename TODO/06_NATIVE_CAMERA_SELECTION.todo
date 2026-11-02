@@ -1,0 +1,28 @@
+Status: DONE
+Milestone: Explicit local laptop/USB camera selection
+Dependencies: 03_NATIVE_INTERFACE.todo
+Purpose: Make native machine cameras discoverable without typing a numeric source into a masked URL field.
+
+Tasks:
+  [x] Add local-camera versus custom URL/file/index source modes.
+  [x] List Windows device names asynchronously without opening capture streams.
+  [x] Preserve the selected camera's matching backend/index pair.
+  [x] Keep source switching, environment URLs, presets and session lifecycle consistent.
+  [x] Verify routing/failure paths, update tutorial/docs/context, and commit this workstream.
+
+Acceptance criteria:
+  Selecting a named device passes its actual index and capture API to the existing pipeline.
+  Metadata discovery never calls VideoCapture or reads frames.
+  Phone URLs and video files remain available; switching modes does not lose the entered URL.
+  No camera starts merely from opening the studio, refreshing, or selecting a device.
+  Discovery errors and empty results remain explicit; manual index input still works.
+
+Completion evidence:
+  Full suite: 236 passed; Ruff passed. Async discovery and mode switching covered.
+  Actual Windows metadata returned Integrated Camera under MSMF and DirectShow, plus OBS Virtual Camera.
+  No camera streams were opened; hardware frame capture remains the user's explicit Start action.
+  README, tutorial, architecture and native-selector screenshot updated.
+  Handbook rendered with zero diagram failures and zero overflowing pages.
+Completion log:
+  2026-11-02: User requested native machine/laptop camera support in the GUI.
+  2026-11-02: Named native source mode completed. Index 0/manual fallback remains supported.

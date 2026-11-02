@@ -62,6 +62,8 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Native studio conventions
 
+- Native source selection uses Windows metadata in an owned subprocess, never VideoCapture frame probing. Always preserve the enumerated backend/index pair; CAP_ANY indices and explicit API indices are not interchangeable. Device paths/serials are not stored.
+- Computer-camera and custom URL/file modes retain separate source/backend values in memory only. Numeric index 0 is a manual fallback, not a universal laptop-camera identity. Refresh/reselect after hardware changes; missing previous selections must not silently retarget.
 - GUI scope is every existing operational feature, including experimental/raw modes, with a built-in tutorial; the selected default remains face-only. The user explicitly requested deep research, TODOs, layout/design rationale, and README screenshots.
 - Keep PySide6 optional. Reuse the same CLI pipeline through toolkit-neutral runtime hooks; do not duplicate privacy/composition/export logic in widget code.
 - Create, use and close the renderer/GL context on the session worker. Widgets stay on the main thread. Use a one-slot owned preview and bounded logs instead of queuing every video frame.

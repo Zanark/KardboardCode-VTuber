@@ -33,7 +33,7 @@ Why these positions:
 
 | Page | CLI fields / feature | Interaction |
 |---|---|---|
-| Camera | `source` | Masked source entry, reveal action, environment-variable use, recording browse |
+| Camera | `source` | Computer-camera chooser with names/Refresh, or masked URL/file/manual-index entry |
 | Camera | `backend`, `width`, `height`, `fps` | Choice and numeric requests; automatic values clearly labelled |
 | Camera | `rotate`, `mirror`, `input_already_mirrored` | Rotation choice and separate checkboxes |
 | Camera | `brightness` | Live internal-only slider with numeric value |
