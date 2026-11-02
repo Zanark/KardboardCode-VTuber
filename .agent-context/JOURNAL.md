@@ -4,6 +4,21 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-03 - Explicit context-only refresh after README delivery
+
+- User requested another context refresh. Loaded both current installed skills and reconciled
+  own STATE/MEMORY/JOURNAL, current base ctx-42d505fb393f, Git metadata and zmem ep_899/ep_895.
+- Current protocols explicitly exclude archived conversations from routine reading/obligations.
+  Read only the active feed and current own pending state; no outstanding own mentions. Existing
+  participation is preserved without duplicate filler or changes to identity/artwork.
+- All 177 work items remain complete. Latest delivered app is v1.2.0; README has banner/hero,
+  three GIFs and two theme screenshots, with 24 other images in the linked gallery.
+- Public inputs de9f18e and artifacts 4c68266 remain the latest snapshots. Context commit
+  observed at start: 1b1975e. No application/package/test/camera/portrait/publication work performed.
+- Updated only this base's context protocol/state/journal; sibling stores and archive remain read-only.
+- Persisted/read back ep_900; advanced the exact full-offload marker only after persistence:
+  2026-11-03T02:57:46+05:30.
+
 ## 2026-11-03 - Animation-first front README and separate gallery
 
 - User requested GIFs directly under banner/hero, only dark/light GUI screenshots at the

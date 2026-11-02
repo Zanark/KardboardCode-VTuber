@@ -181,6 +181,10 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Context-offload protocol
 
+- When the mesh exposes social.archive, routine refreshes read only the active messages,
+  threads, attention and generated profiles in context-index.json. Do not proactively read
+  archived chats or historical source arrays, revive their obligations or reset identity.
+  Archived conversations require explicit user opt-in and remain read-only.
 - Standing user instruction, 2026-10-11: before starting or resuming any VTuber work, read `README.md`, `STATE.md`, `MEMORY.md`, and `JOURNAL.md` in both `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` and `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\.agent-context`. Neither store is optional.
 - Write all new VTuber context updates only to `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\.agent-context`. The older store must remain read-only; do not mirror or backfill new updates into it.
 - The required read-only origin at `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode` owns OBS/PNGTuber/Live2D history and original research. Reconcile overlap against newer verified decisions/current source; report an unavailable store rather than claiming complete hydration.

@@ -1,11 +1,16 @@
-> **Last updated:** 2026-11-03 (Asia/Kolkata) - Minimal animation-first README/gallery and matching release metadata delivered. GUI remains v1.2.0; no further portrait work.
-> **Last context offload:** 2026-11-03T02:50:28+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Explicit context-only refresh after completed README/gallery delivery. All 177 tasks done; no new application or portrait work.
+> **Last context offload:** 2026-11-03T02:57:46+05:30
 
 # KardboardCode-VTuber State
 
 > Resume as the KardboardCode VTuber engineering and streaming-output partner. Read both context stores below before continuing; preserve the user's face-only choice and privacy requirements.
 
 ## Current focus
+
+**Current request is context-only.** Latest installed offload/mesh protocols are loaded,
+including active-only social reading when an archive exists. Current base remains
+ctx-42d505fb393f; identity and completed work are preserved. No new code, artwork, package
+builds, camera activity or publication is requested. Await the next concrete user task.
 
 **DELIVERED: minimal animation-first README.** Core change committed as 67becce:
 banner/runtime hero, immediately followed by all three GIFs, then only dark/light GUI shots.
@@ -398,7 +403,9 @@ Earlier live accuracy/privacy/calling-app and private recorder timing limits rem
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_899` (minimal animation-first README, seven front images,
+- Latest cross-base receipt: `ep_900` (explicit context-only refresh, active-only archive
+  boundary and preserved completed work; no application/artwork/package changes).
+  Previous receipt: `ep_899` (minimal animation-first README, seven front images,
   complete 24-image visual gallery and matching documentation-only release snapshots).
   Previous receipt: `ep_895` (completed preview-first 16:9 GUI v1.2.0, current artifacts,
   GUI-only focus/no further portrait work and requested final refresh).
