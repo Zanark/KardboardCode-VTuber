@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - Supplied logo and first official v1.0.0 source release completed locally; requested context refresh.
-> **Last context offload:** 2026-11-02T17:35:11+05:30
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - Image-first README completed, release refreshed and final context handoff.
+> **Last context offload:** 2026-11-02T18:05:02+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,13 +7,21 @@
 
 ## Current focus
 
+The user requested much less front README text, many more attractive images/banners, and fonts
+matching the cardboard/voxel aesthetic. The visual redesign is complete: 29 images, eight
+coordinated kraft/deep-green/mint graphics, Silkscreen and Barlow Condensed typography rendered
+into PNGs, and three named operational guides. Local desktop/mobile previews have no broken
+images or horizontal overflow. Public source is committed as `4b85fad`, generated artifacts
+as `f607adc`. No implementation or packaging work remains. Runtime/GUI fonts and behavior were
+not redesigned; the new typography is for the README's local image assets.
+
 The supplied voxel KC box artwork is now the official tool logo. Its original 1345x1169 RGBA
 PNG is preserved byte-for-byte; derived transparent PNG/Windows ICO resources supply the
 application, window/taskbar and header identity. The 3D avatar itself is unchanged.
 v1.0.0 is the first official release version; v0.2.0 was unpublished local staging.
 
 The completed source-release handoff is in the tracked root `release` folder. Clean public
-inputs are committed as `92c32b9`; generated v1.0.0 artifacts as `e7ac0e3`. The manifest has
+inputs are committed as `4b85fad`; generated v1.0.0 artifacts as `f607adc`. The manifest has
 `sourceModified=false` and the current source fingerprint. All six release files match their
 committed Git blobs exactly. README preserves one tool screenshot above Current milestone,
 with separate logo branding above it and the GUI guide/gallery below. No remote publication,
@@ -49,19 +57,25 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
   per-file hashes, asset checksums, archive CRC/content and version alignment are checked.
 - `AGENTS.md` records the release freshness contract. Package metadata and `__version__` are 1.0.0.
   If inputs were uncommitted, commit them and re-export before publication to update provenance.
-- Validation passed: 245 tests/Ruff, exact original-logo bytes, seven native Qt ICO sizes,
-  refreshed branded Windows screenshots, README ordering, archive checks, and extracted
-  CLI/GUI help plus a real synthetic GUI preview. Handbook: 247 pages, 97 diagrams,
-  zero Mermaid failures and zero overflow. No camera/model download was involved.
-- Final export passed `--check` after committing its public inputs as `92c32b9`; manifest
+- Earlier full runtime/logo checkpoint: 245 tests/Ruff, exact original-logo bytes, seven native
+  Qt ICO sizes and extracted CLI/GUI synthetic preview. The README redesign separately passed
+  Ruff/11 targeted branding-export tests, 1120px/390px browser layout, 87 file references and all
+  six new guide SVG renders. All 16 former README images are retained.
+- Handbook remains 247 pages/97 diagrams with zero diagram failures/overflow. The six new user-guide
+  diagrams are separate from that existing PDF edition. No camera/model download was involved.
+- Final export passed `--check` after committing its public inputs as `4b85fad`; manifest
   `sourceModified` is false. Generated release/context files are committed afterward and do not
   change the public-source fingerprint. Current ZIP is about 30 MB, below the regular Git file limit.
 - `.gitattributes` pins release text to LF and leaves ZIPs binary. Final artifact commit is
-  `e7ac0e3`; all six release files were compared against their committed Git blobs byte-for-byte.
-  Final archive size is 32,097,090 bytes. The five exporter tests also cover committed-byte integrity.
+  `f607adc`; all six release files were compared against their committed Git blobs byte-for-byte.
+  Final archive size is 32,592,509 bytes. The five exporter tests also cover committed-byte integrity.
 - `gui\assets\kardboardcode-logo.png` is the unchanged supplied master. Derive PNG/ICO assets
   with `python scripts\build_branding.py`, without redrawing or altering the avatar. The old
   `kc-box.svg` is retired. User visual approval of the refreshed application is not recorded.
+- Visual README assets: `docs\images\readme`, generator `scripts\build_readme_art.py`, font
+  provenance/licenses `docs\branding`. Three clear guides live under `docs\guides`.
+  The eight graphics total 356,129 bytes; visible browser text is 324 words. The source prose
+  estimate is about 75% lower. Hero version text comes from pyproject; rebuild on version changes.
 - No remote release/tag/merge/push is authorized for this local-preparation follow-up. The owner
   will publish using the notes/context and an account with repository Write access.
 
@@ -150,7 +164,7 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-The requested supplied-logo/v1.0.0 work is complete locally and the context refresh is the final
+The requested supplied-logo/v1.0.0 and visual README work is complete locally; context is the final
 handoff. Wait for actual owner feedback or manual publication. Do not repeat completed builds,
 launch another window, connect a camera or publish automatically. Future public changes must
 refresh `release`; preserve CLI compatibility, read both context stores, and write new context
@@ -166,7 +180,8 @@ only here. Distant tracking, real calling-app qualification and recording timing
 - The earlier November recap was context-only. The subsequent GUI request changed application code, optional dependencies, tests, TODOs, and documentation and was committed in milestones. No live camera, raw screenshot capture, or push was performed for the GUI request.
 - Local session provenance: `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7`. Its checkpoints preserve earlier work. Raw artifacts are private; do not copy them into durable context or public docs.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_838` (completed supplied-logo/first official v1.0.0 handoff).
+- Latest cross-base receipt: `ep_840` (completed visual README, named guides and refreshed export).
+  Previous receipt: `ep_838` (supplied-logo/first official v1.0.0 handoff).
   Previous receipts: `ep_837` (Git-stable v0.2.0 staging bytes) and `ep_836`
   (initial local export/README layout), following `ep_834`, `ep_832` and `ep_829`.
   Earlier recap: `ep_823`; registration: `ep_780`; mandatory dual-store routing: `sem_074`.

@@ -8,6 +8,13 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Conventions
 
+- Keep the front README image-first: cohesive cardboard/pixel banners, actual UI/demo galleries,
+  short captions and navigation. Put detailed setup/features/camera/troubleshooting text in
+  clearly named `docs\guides` files rather than rebuilding long front-page explanations.
+- README artwork uses Silkscreen and Barlow Condensed, rendered into PNGs by
+  `scripts\build_readme_art.py`; GitHub does not load a custom stylesheet/web font for it.
+  Preserve the bundled OFL licenses and unchanged logo master. Rebuild on package-version
+  changes because the hero reads its version label from pyproject.
 - Build one fixed KardboardCode cardboard-head character over the real camera feed. The source-runnable Python prototype is not a general model importer or replacement full-body-avatar product.
 - Face-only tracking with fail-closed loss handling is the selected workflow. Body/hood fallback remains experimental and must not become the default without a new user decision.
 - Preserve the PS1 visual identity: real low-poly textured 3D, low-resolution avatar rendering, nearest-neighbor scaling, sharp source camera, corrugated edges, aged asymmetric labels, headphones, and hollow neck-safe silhouette. Canonical specification: `docs\02-architecture\textured-3d-renderer.md`; overview: `README.md:54-60,118-168`.

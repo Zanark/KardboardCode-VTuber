@@ -4,6 +4,33 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Visual README redesign completed
+
+- User requested fewer front-page words, many pretty images/banners, matching typography and
+  named files for extra text. Rebuilt the README as an image-first showcase, retaining all
+  existing public imagery and one actual Studio screenshot above Current milestone.
+- Created eight reproducible kraft-paper/deep-green/mint graphics using the unchanged supplied
+  logo. Pinned Silkscreen and Barlow Condensed font files from Google Fonts; included both OFL
+  licenses. Fonts are baked into PNGs, without viewer-installed fonts or custom GitHub CSS.
+- Moved setup, features/flags and camera/virtual-output/troubleshooting into three named guides.
+  Preserved all original README CLI flags through those guides and linked release instructions.
+- Browser previews at 1120px and 390px load all 29 images with no page/table overflow; visible
+  text is 324 words. Approximate source prose is 75% lower. All six new guide diagrams parse.
+- Ruff and 11 targeted branding/export tests passed; master preservation, banner repeatability,
+  87 relative references, alt text and screenshot ordering are checked. All six guide diagrams
+  were also rendered to SVG. All 16 prior front-page public images remain.
+- Public source committed as `4b85fad7d6e6682342eecbff83002db701f77cd3`; generated source handoff
+  committed as `f607adc`. v1.0.0 remains the first official version, with latest local source
+  fingerprint `defd8552ba1d1557e4b1a49b239faad7ae44ed6054b9c8ffc32a5521f344e70e`.
+  ZIP: 32,592,509 bytes; sourceModified=false. All six release files match committed Git bytes.
+- Canonical app logo, runtime behavior and GUI fonts are unchanged. No new camera capture,
+  model download, private imagery, remote tag/push/merge/publication or installer was introduced.
+- Read the day's shared chat, latest general messages and recent mentions before refreshing.
+  No incoming reply obligation remained; joined the new calculator joke from this session's own
+  persona file only. The older KardboardCode store and all sibling stores remain read-only.
+- Persisted the completed redesign as zmem `ep_840`; after store/episode persistence, advanced
+  the exact full-offload marker to `2026-11-02T18:05:02+05:30`.
+
 ## 2026-11-02 - Supplied logo and first official v1.0.0 release completed
 
 - User supplied voxel KC cardboard-box artwork for the tool logo and asked that the post-logo
