@@ -1,14 +1,19 @@
-# v0.2.0 - Native Desktop Studio
+# v1.0.0 - First Official Release
 
 A native Python desktop interface for KardboardCode's camera-tracked PS1-style cardboard avatar,
 while retaining the existing CLI.
+
+This logo-updated version is the **first official release**. Earlier v0.2.0 packages were
+unpublished local staging exports, not official releases.
 
 ## 2026-11-02
 
 ### New features
 
+- Supplied voxel KC cardboard-box artwork as the official tool logo, with derived transparent
+  application PNG and multi-resolution Windows icon assets.
 - Native PySide6 Studio with camera setup, preview, diagnostics, selectable logs, source-free
-  presets, light/dark themes, and an original KC cardboard-box icon.
+  presets, and light/dark themes.
 - Live independent anatomical left/right blink thresholds, relative wink tuning, brightness
   and debounce controls shared with the renderer/action detector.
 - Explicit laptop/USB camera selection by Windows device name, with metadata-only discovery
@@ -33,7 +38,7 @@ while retaining the existing CLI.
 
 - Illustrated README, source-grounded GUI research/design rationale, control-placement
   decisions, architecture, algorithm/design chapters, and native-camera tutorial.
-- Updated 245-page engineering handbook with 97 diagrams.
+- Updated 247-page engineering handbook with 97 diagrams and refreshed branded screenshots.
 - Versioned release export tooling, checksums, source manifest and manual-publishing context.
 
 ## Install / launch

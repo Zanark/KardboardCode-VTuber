@@ -10,6 +10,7 @@ from pathlib import Path
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
 
+from kardboard_vtuber.camera.devices import LocalCameraDevice
 from kardboard_vtuber.gui.window import StudioWindow
 
 
@@ -38,13 +39,13 @@ def main() -> int:
     timer.setInterval(400)
 
     def capture() -> None:
-        if window.worker is None or time.monotonic() - started > 20:
+        if (state["shot"] < 4 and window.worker is None) or time.monotonic() - started > 30:
             print("Synthetic preview did not become ready.", flush=True)
             state["error"] = True
             timer.stop()
             window.close()
             return
-        if window.preview.image.isNull():
+        if state["shot"] < 4 and window.preview.image.isNull():
             return
         number = state["shot"]
         if number == 0:
@@ -69,6 +70,25 @@ def main() -> int:
             if not window._tutorial.grab().save(str(path)):
                 raise RuntimeError(f"Could not save screenshot: {path}")
             window._tutorial.close()
+            window.stop_button.click()
+            window.resize(1500, 980)
+            window.page_selector.setCurrentText("Camera")
+        elif number == 4:
+            if window.worker is not None:
+                return
+            window._native_devices = (
+                LocalCameraDevice(index=0, backend="msmf", name="Illustrative laptop camera"),
+                LocalCameraDevice(index=0, backend="dshow", name="Illustrative USB camera"),
+            )
+            window._populate_native_cameras()
+            window.native_camera.setCurrentIndex(1)
+            window.native_hint.setText(
+                "Illustrative device names for documentation. No physical camera was opened.",
+            )
+        elif number == 5:
+            path = args.output_dir / "kardboardcode-studio-native-camera.png"
+            if not window.grab().save(str(path)):
+                raise RuntimeError(f"Could not save screenshot: {path}")
             timer.stop()
             heartbeat.stop()
             gaps = [(right - left) * 1000 for left, right in zip(beats, beats[1:], strict=False)]
@@ -76,7 +96,7 @@ def main() -> int:
                 json.dumps(
                     {
                         "synthetic_only": True,
-                        "screenshots": 4,
+                        "screenshots": 5,
                         "heartbeat_samples": len(beats),
                         "maximum_heartbeat_gap_ms": round(max(gaps), 2) if gaps else None,
                     }

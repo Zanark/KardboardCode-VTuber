@@ -65,7 +65,7 @@ from kardboard_vtuber.gui.widgets import OptionControl, VideoCanvas
 from kardboard_vtuber.gui.worker import SessionWorker
 from kardboard_vtuber.runtime import RuntimeBridge, RuntimeTelemetry, redact
 
-ICON_PATH = Path(__file__).parent / "assets" / "kc-box.svg"
+ICON_PATH = Path(__file__).parent / "assets" / "kardboardcode-icon.ico"
 
 
 class StudioWindow(QMainWindow):

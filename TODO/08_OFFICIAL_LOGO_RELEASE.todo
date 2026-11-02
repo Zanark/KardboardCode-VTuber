@@ -1,0 +1,32 @@
+Status: DONE
+Milestone: Supplied logo and first official release v1.0.0
+Dependencies: 07_RELEASE_STAGING.todo
+Purpose: Adopt the user's voxel KC artwork as the tool identity and refresh the official-release handoff.
+
+Tasks:
+  [x] Copy the supplied PNG unchanged into the application assets.
+  [x] Derive application PNG/Windows ICO without redesigning the supplied artwork.
+  [x] Update window/header branding, README, screenshots and documentation.
+  [x] Align v1.0.0 package/release metadata and identify earlier staging as unofficial.
+  [x] Verify the branded source package and record handoff evidence.
+
+Acceptance criteria:
+  Canonical PNG matches the supplied original byte-for-byte.
+  Application resources and README use the new logo, not the old SVG.
+  One tool screenshot remains above Current milestone; the logo is separate branding.
+  Release source, notes/context, manifest/checksums are current for v1.0.0.
+  No remote publication, camera capture or model download is performed.
+
+Completion evidence:
+  Canonical PNG matches the supplied original SHA256:
+  9cefba6bc42ad8da9ac6b49c1d3543fba86cd8832bbc93059e8969419378e852
+  245 tests and Ruff passed; native Qt decodes all seven ICO sizes.
+  Five actual Windows GUI screenshots refreshed and inspected as a contact sheet.
+  Handbook rebuilt: 247 pages, 97 diagrams, zero Mermaid errors and zero overflow.
+  Source ZIP integrity/version/master-logo checks passed. Extracted CLI/GUI help and an actual
+  extracted-package synthetic GUI preview exited normally with the packaged logo.
+  No camera was opened. User visual approval remains unrecorded.
+Completion log:
+  2026-11-02: User designated the supplied artwork as the new tool logo and this version as first official.
+  2026-11-02: v1.0.0 source candidate verified; final handoff uses a clean public-input commit
+  followed by regenerated provenance/artifacts. Context refresh follows release finalization.

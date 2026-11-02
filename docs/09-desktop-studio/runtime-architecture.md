@@ -159,5 +159,15 @@ supply arbitrary command names or executable code. Model fields accept local pat
 
 The GUI extra is optional. `python -m kardboard_vtuber` does not import Qt.
 `python -m kardboard_vtuber.gui` and the `kardboard-studio` GUI entry point launch the native app.
-The original SVG KC-box icon is packaged with the Python module. Model/recording helper actions
-currently require the source checkout's `scripts` directory; an installer is a separate deliverable.
+The supplied canonical PNG and derived application icons are packaged under `gui\assets`.
+`scripts\build_branding.py` derives a transparent 256-pixel PNG and a Windows ICO containing
+16/24/32/48/64/128/256-pixel images, using the existing OpenCV/NumPy dependencies. It trims only
+fully transparent outer padding, preserves aspect ratio, and resamples premultiplied color
+to avoid colored fringes from invisible pixels. The master PNG is never rewritten.
+The same multi-resolution icon supplies the application, window/taskbar and header branding;
+the README embeds the unchanged master. This avoids separate, drifting logo designs.
+
+Rebuild after an explicitly approved logo change with `python scripts\build_branding.py`.
+This is a branding-asset transformation, not a new avatar or installer. Model/recording helper
+actions currently require the source checkout's `scripts` directory; an installer is a separate
+deliverable. v1.0.0 is the first official source release; earlier v0.2.0 exports were local staging.

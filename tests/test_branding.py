@@ -1,0 +1,66 @@
+from __future__ import annotations
+
+import struct
+from pathlib import Path
+
+import cv2
+import numpy as np
+import pytest
+
+from scripts.build_branding import ASSETS, build, icon_frame, png_bytes
+
+
+def test_icon_resampling_preserves_color_across_transparent_pixels() -> None:
+    image = np.zeros((80, 120, 4), dtype=np.uint8)
+    image[:, :, :3] = (0, 255, 255)
+    image[10:70, 20:100:2] = (40, 90, 180, 255)
+    original = image.copy()
+    result = icon_frame(image, 16)
+    visible = result[:, :, 3] > 0
+    assert visible.any()
+    assert np.all(result[:, :, :3][visible] == (40, 90, 180))
+    assert not result[[0, -1], :, 3].any()
+    assert not result[:, [0, -1], 3].any()
+    assert np.array_equal(image, original)
+
+
+@pytest.mark.parametrize(
+    "image",
+    [np.zeros((2, 2, 4), dtype=np.uint8), np.zeros((2, 2, 3), dtype=np.uint8)],
+)
+def test_unusable_logo_is_rejected(image: np.ndarray) -> None:
+    with pytest.raises(ValueError, match="transparent|RGBA"):
+        icon_frame(image, 32)
+
+
+def test_build_preserves_master_and_emits_repeatable_decodable_ico(tmp_path: Path) -> None:
+    folder = tmp_path / ASSETS
+    folder.mkdir(parents=True)
+    image = np.zeros((24, 40, 4), dtype=np.uint8)
+    image[4:20, 6:34] = (30, 80, 150, 200)
+    source = folder / "kardboardcode-logo.png"
+    original = png_bytes(image)
+    source.write_bytes(original)
+    build(tmp_path)
+    ico = (folder / "kardboardcode-icon.ico").read_bytes()
+    png = (folder / "kardboardcode-icon.png").read_bytes()
+    reserved, kind, count = struct.unpack_from("<HHH", ico)
+    assert (reserved, kind) == (0, 1)
+    dimensions = []
+    for index in range(count):
+        width, height, _, _, planes, bits, length, offset = struct.unpack_from(
+            "<BBBBHHII", ico, 6 + 16 * index,
+        )
+        dimension = width or 256
+        decoded = cv2.imdecode(
+            np.frombuffer(ico[offset:offset + length], dtype=np.uint8), cv2.IMREAD_UNCHANGED,
+        )
+        assert (planes, bits, height or 256) == (1, 32, dimension)
+        assert decoded.shape == (dimension, dimension, 4)
+        assert decoded[:, :, 3].any()
+        dimensions.append(dimension)
+    assert min(dimensions) <= 16 and max(dimensions) >= 256
+    build(tmp_path)
+    assert source.read_bytes() == original
+    assert (folder / "kardboardcode-icon.ico").read_bytes() == ico
+    assert (folder / "kardboardcode-icon.png").read_bytes() == png

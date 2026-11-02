@@ -1,5 +1,12 @@
 # KardboardCode-VTuber
 
+<p align="center">
+  <img src="./src/kardboard_vtuber/gui/assets/kardboardcode-logo.png" alt="Official KardboardCode voxel cardboard-box logo with KC lettering" width="240">
+</p>
+<p align="center"><em>
+Official tool logo: the supplied voxel cardboard-box artwork with KC lettering.
+</em></p>
+
 A lightweight Python VTuber tool that places a low-poly, PS1-style KardboardCode box over the user's head in a real camera feed.
 
 <p align="center">
@@ -99,6 +106,9 @@ Read the [studio tutorial](docs/09-desktop-studio/tutorial.md),
 The numbered implementation workstreams and evidence live in [`TODO`](TODO/00_INDEX.todo).
 
 ## Release export
+
+**v1.0.0 is the first official release**, including the supplied KC logo. Earlier v0.2.0
+packages were unpublished local staging exports, not official releases.
 
 The tracked [`release`](release/README.md) folder contains the latest source ZIP, release text,
 provenance and checksums for manual GitHub publication. It is a source release, not a standalone

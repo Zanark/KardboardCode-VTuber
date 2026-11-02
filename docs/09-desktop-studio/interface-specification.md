@@ -88,5 +88,11 @@ The same narrative must be readable in [the book tutorial](tutorial.md).
 
 Dark graphite/mint studio styling echoes the creator setup without recoloring source video. The
 light theme has the same layout and controls. The theme button includes both a sun and a moon icon.
-The window/application icon is original vector artwork: a cardboard box with **KC on its top face**.
+The window/application/header icon uses the user's supplied voxel **KC cardboard-box artwork**.
+Its canonical PNG stays unchanged; derived icons retain transparent edges and aspect ratio.
 Actual screenshots must be generated from the running widgets, not a design mockup.
+
+<img src="../../src/kardboard_vtuber/gui/assets/kardboardcode-logo.png" alt="Official voxel KC cardboard-box tool logo" width="180">
+
+*Official tool identity for the first official release, v1.0.0. This supplied artwork replaces
+the earlier hand-authored SVG icon; it does not replace or modify the tracked 3D avatar.*

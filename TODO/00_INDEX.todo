@@ -12,11 +12,13 @@ Workstreams:
   05_DEVELOPMENT_LEDGER.todo
   06_NATIVE_CAMERA_SELECTION.todo
   07_RELEASE_STAGING.todo
+  08_OFFICIAL_LOGO_RELEASE.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
   [x] Include the user's follow-up requirement: a tutorial.
   [x] Complete the four delivery workstreams in dependency order.
+  [x] Apply supplied logo and prepare first official release v1.0.0 (workstream 08).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -33,5 +35,8 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-02: Supplied voxel KC logo adopted for first official v1.0.0 source release.
+  245 tests/Ruff passed; native icon sizes, branded screenshots and extracted source launch verified.
+  Refreshed handbook: 247 pages, 97 diagrams, zero failures/overflow. Publication remains manual.
   2026-11-02: Workstreams created following source and toolkit research.
   2026-11-02: Studio opened in synthetic-demo mode; documentation and implementation delivered locally.

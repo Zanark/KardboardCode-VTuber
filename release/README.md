@@ -3,6 +3,9 @@
 This tracked folder is the handoff for creating a GitHub release manually. Regenerate it after
 source/documentation changes; it always represents the latest exported tool, not a release history.
 
+**v1.0.0 is the first official release**, adopting the supplied voxel KC box logo. The earlier
+v0.2.0 export was unpublished local staging, not an official release.
+
 ## Files
 
 | File | Purpose |

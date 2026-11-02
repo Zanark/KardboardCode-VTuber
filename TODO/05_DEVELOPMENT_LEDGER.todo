@@ -24,6 +24,12 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-02: Adopted the supplied voxel KC box PNG unchanged as official tool identity.
+  Derived 256px PNG and seven-size Windows ICO; refreshed actual GUI screenshots and README.
+  First official source version is v1.0.0; earlier v0.2.0 was unpublished local staging.
+  245 tests/Ruff, native Qt icon decoding and extracted synthetic source launch passed.
+  Branded handbook: 247 pages/97 diagrams, zero Mermaid failures and zero overflow.
+  Clean-source provenance and manual-publishing boundaries are retained for the final export.
   2026-11-02: README now has one tool screenshot above Current milestone and GUI guide/gallery below.
   Added tracked release staging for v0.2.0, guarded source ZIP export, notes/context/checksums and
   contributor freshness rules. 241 tests/Ruff passed; extracted CLI and synthetic GUI launch verified.

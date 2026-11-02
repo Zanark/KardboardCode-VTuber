@@ -75,11 +75,11 @@ flowchart LR
 
 ## Current automated coverage
 
-The 2026-11-02 validated suite contains 236 tests spanning camera contracts and lifecycle, face-state
+The 2026-11-02 validated suite contains 245 tests spanning camera contracts and lifecycle, face-state
 normalization and actions, One Euro filtering, spring integration, procedural and textured
 renderers, experimental body tracking, hand occlusion, green-screen fail-closed behavior,
 virtual output, native widgets, calibration, safe presets, bounded frame/log ownership, recorder
-cancellation and CLI compatibility (`tests/`).
+cancellation, branding assets, release-export integrity and CLI compatibility (`tests/`).
 
 ## Desktop studio evidence - 2026-11-02
 
@@ -101,17 +101,30 @@ cancellation and CLI compatibility (`tests/`).
 - An actual offscreen GUI session replayed the private canonical recording with MediaPipe and
   the textured GPU renderer: 55 display packets, 54 effective detections, normal exit. No images
   were exported. These are integration counts, not a positioning/privacy accuracy score.
-- `scripts\capture_studio_screenshots.py` captures real dark/light/compact/tutorial widgets using
-  only synthetic imagery. The screenshots are inspected before being linked from README.
+- `scripts\capture_studio_screenshots.py` captures real dark/light/compact/tutorial widgets and
+  illustrative native-camera controls using only synthetic imagery. The screenshots are inspected
+  before being linked from README.
 - A six-second private-recording replay with the real GPU/MediaPipe pipeline delivered 117 GUI
   preview packets, 116 effective detections, and a successful live threshold edit. After a
   one-second warm-up following the first preview, 359 samples of a nominal 10 ms Qt heartbeat
   had a **31 ms 95th-percentile** interval and **47 ms maximum**. This measures service of the
   UI event loop on this machine, not input-to-photon or phone latency. Face inference used
   640-pixel input; higher-cost combinations still need their own qualification.
-- The separate screenshot run included initialization, theme swaps and widget/PNG capture and
-  recorded a 250 ms maximum heartbeat interval. Do not present the steady replay measurement
+- The latest separate screenshot run included initialization, theme swaps and widget/PNG capture and
+  recorded a 375 ms maximum heartbeat interval. Do not present the steady replay measurement
   as a universal worst-case guarantee.
+
+## First official release branding - 2026-11-02
+
+- v1.0.0 adopts the supplied voxel KC box artwork; earlier v0.2.0 was unpublished local staging.
+  The original 1345x1169 transparent PNG is retained byte-for-byte, not redrawn.
+- Native Windows Qt decodes all seven derived ICO sizes from 16 through 256 pixels. Tests
+  exercise transparent-color resampling, unchanged master bytes, repeatability and every
+  embedded PNG frame. No extra image-processing dependency was introduced.
+- Refreshed screenshots show the new header identity on actual widgets. The README retains
+  one tool screenshot above Current milestone, with the separate official logo above it.
+- Release checks cover source/version alignment, privacy exclusions, ZIP contents, checksums
+  and Git-stored byte stability. These checks do not establish live calling-app compatibility.
 
 The full suite and Ruff are reproducible with the existing commands in the
 [command reference](../99-appendix/command-reference.md). GUI tests skip only when the optional
