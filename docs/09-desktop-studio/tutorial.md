@@ -90,6 +90,8 @@ closures. Each must stay below both open/wink rules. An invalid edit displays **
 retains the last valid tuple. Shared blink is only the fallback for an eye whose Override is off.
 Relative wink rules also require the opposite eye to be open and sufficient asymmetry.
 Expand **Winks & timing** for those shared rules and debounce controls.
+Numeric fields use a visible upper **+** and lower **-** for one step. Direct typing and
+arrow keys still work; dimmed symbols indicate a disabled control or a reached bound.
 
 ![Built-in calibration tutorial](../images/kardboardcode-studio-tutorial.png)
 

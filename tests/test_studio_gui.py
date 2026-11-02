@@ -76,6 +76,24 @@ def test_default_window_is_display_fitted_widescreen(
     assert window.frameGeometry().height() <= available.height()
 
 
+def test_mode_switcher_has_no_extra_rule_beyond_its_buttons(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    bar = window.work_mode
+    bar.setFixedWidth(bar.sizeHint().width() + 60)
+    for _ in range(2):
+        app.processEvents()
+        image = bar.grab().toImage()
+        start = round((bar.tabRect(bar.count() - 1).right() + 4) * image.devicePixelRatio())
+        colors = {
+            image.pixelColor(x, y).rgba()
+            for x in range(start, image.width() - 2)
+            for y in range(2, image.height())
+        }
+        assert len(colors) == 1, "The mode switcher must not paint a trailing tab baseline."
+        window.toggle_theme()
+
+
 def test_live_per_eye_edit_applies_atomically_and_invalid_edit_is_visible(
     window: StudioWindow,
     monkeypatch: pytest.MonkeyPatch,

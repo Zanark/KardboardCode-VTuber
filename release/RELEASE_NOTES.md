@@ -1,10 +1,20 @@
-# v1.2.0 - Preview-First Studio
+# v1.2.1 - Clear Numeric Controls
 
 A quieter, preview-first native workspace with every operating option retained. Online Windows
 setup, cardboard-brown dark sliders, Live/Video processing and automatic playback remain included.
 v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 
 ## 2026-11-03
+
+### Numeric controls and mode strip
+
+- Numeric fields now have explicit **+ / -** vector glyphs on contrasting button surfaces,
+  rather than illegible native arrow slots. This applies to integer and decimal controls,
+  including eye sliders, camera parameters and private-capture settings.
+- Disabled controls and steps unavailable at a minimum/maximum have distinct muted glyphs.
+  Existing numeric step sizes, keyboard input, bounds and live tuning behaviour are unchanged.
+- Removed Qt's unintended tab-bar baseline extending beyond the Live/Video buttons.
+- Refreshed native screenshots while preserving the minimal animation-first README/gallery.
 
 ### More preview, less clutter
 

@@ -65,6 +65,10 @@ def stylesheet(dark: bool) -> str:
     assets = Path(__file__).parent / "assets"
     tick = (assets / ("check-ink.svg" if dark else "check-cream.svg")).as_posix()
     disabled_tick = (assets / "check-cream.svg").as_posix()
+    step_plus = (assets / "step-plus.svg").as_posix()
+    step_minus = (assets / "step-minus.svg").as_posix()
+    disabled_plus = (assets / f"step-plus-disabled-{'dark' if dark else 'light'}.svg").as_posix()
+    disabled_minus = (assets / f"step-minus-disabled-{'dark' if dark else 'light'}.svg").as_posix()
     slider_accent = "#d5a568" if dark else accent
     return f"""
         QMainWindow, QDialog {{ background:{bg}; color:{text}; }}
@@ -98,6 +102,41 @@ def stylesheet(dark: bool) -> str:
         QLineEdit:disabled, QComboBox:disabled, QSpinBox:disabled,
         QDoubleSpinBox:disabled {{ background:{disabled_bg}; color:{disabled}; }}
         QComboBox, QSpinBox, QDoubleSpinBox {{ min-height:20px; }}
+        QSpinBox, QDoubleSpinBox {{ padding-right:26px; }}
+        QSpinBox::up-button, QDoubleSpinBox::up-button {{
+            subcontrol-origin:border; subcontrol-position:top right; width:22px;
+            background:{"#d5a568" if dark else "#ead8b4"}; border-left:1px solid {border};
+            border-bottom:1px solid {border}; border-top-right-radius:4px;
+        }}
+        QSpinBox::down-button, QDoubleSpinBox::down-button {{
+            subcontrol-origin:border; subcontrol-position:bottom right; width:22px;
+            background:{"#d5a568" if dark else "#ead8b4"}; border-left:1px solid {border};
+            border-bottom-right-radius:4px;
+        }}
+        QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover,
+        QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {{
+            background:{"#e6bb86" if dark else "#d8bd8c"};
+        }}
+        QSpinBox::up-button:disabled, QDoubleSpinBox::up-button:disabled,
+        QSpinBox::down-button:disabled, QDoubleSpinBox::down-button:disabled,
+        QSpinBox::up-button:off, QDoubleSpinBox::up-button:off,
+        QSpinBox::down-button:off, QDoubleSpinBox::down-button:off {{
+            background:{disabled_bg}; color:{disabled};
+        }}
+        QSpinBox::up-arrow, QDoubleSpinBox::up-arrow {{
+            image:url("{step_plus}"); width:12px; height:12px;
+        }}
+        QSpinBox::down-arrow, QDoubleSpinBox::down-arrow {{
+            image:url("{step_minus}"); width:12px; height:12px;
+        }}
+        QSpinBox::up-arrow:disabled, QDoubleSpinBox::up-arrow:disabled,
+        QSpinBox::up-arrow:off, QDoubleSpinBox::up-arrow:off {{
+            image:url("{disabled_plus}");
+        }}
+        QSpinBox::down-arrow:disabled, QDoubleSpinBox::down-arrow:disabled,
+        QSpinBox::down-arrow:off, QDoubleSpinBox::down-arrow:off {{
+            image:url("{disabled_minus}");
+        }}
         QComboBox QAbstractItemView {{
             background:{field}; color:{text}; selection-background-color:{accent};
             selection-color:{on_accent}; border:1px solid {border};

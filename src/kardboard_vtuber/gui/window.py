@@ -154,6 +154,7 @@ class StudioWindow(QMainWindow):
         self.work_mode = QTabBar()
         self.work_mode.setObjectName("workMode")
         self.work_mode.setExpanding(False)
+        self.work_mode.setDrawBase(False)
         self.work_mode.addTab("Live")
         self.work_mode.addTab("Video")
         self.work_mode.setTabToolTip(0, "Camera and streaming")

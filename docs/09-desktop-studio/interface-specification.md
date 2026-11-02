@@ -136,6 +136,12 @@ controls echo the box material. Mint remains reserved for checked/live/primary s
 than making every accent brown. Light sliders retain their deeper green for contrast on cream.
 Video pixels are never recolored by the UI. The theme button includes both a sun and a moon icon.
 The window/application/header icon uses the user's supplied voxel **KC cardboard-box artwork**.
+
+Numeric controls show an explicit **+** above **-** on contrasting step-button surfaces.
+They increase/decrease the current value by its existing step; direct typing and arrow keys
+remain available. Disabled and boundary-unavailable steps use muted symbols. Vector glyphs
+are specified explicitly because a native button-symbol setting alone did not paint reliably
+through the custom Qt stylesheet. The Live/Video strip does not draw Qt's extra trailing baseline.
 Its canonical PNG stays unchanged; optical bounds discard near-invisible outer noise in derived
 icons, which fill their small native slots. Windows controls the title-bar/taskbar slot size.
 Actual screenshots must be generated from the running widgets, not a design mockup.

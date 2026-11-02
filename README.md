@@ -1,6 +1,6 @@
 # KardboardCode Studio
 
-[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.2.0.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
+[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.2.1.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
 
 ![The actual textured 3D avatar, presented in the forest-green and kraft-paper banner palette](docs/images/kardboardcode-hero.png)
 
@@ -23,7 +23,7 @@
 [Engineering book](docs/README.md) ·
 [Release files](release/README.md)
 
-**v1.2.0 — More preview. Less clutter. Every option.** [What's included →](release/RELEASE_NOTES.md)
+**v1.2.1 — More preview. Less clutter. Clearer controls.** [What's included →](release/RELEASE_NOTES.md)
 
 ## Studio: dark and light
 

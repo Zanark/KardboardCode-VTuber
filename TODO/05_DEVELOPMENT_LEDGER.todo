@@ -24,6 +24,10 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-03: Workstream 19 fixes invisible numeric step controls and Qt's trailing mode-tab
+  baseline. Native-symbol configuration alone did not paint through the stylesheet; explicit
+  packaged plus/minus SVGs with contrast, wider targets and muted unavailable states pass
+  native raster/shape/click/boundary checks. No numeric semantics or pipeline changes.
   2026-11-03: Simplified the front README to banner/hero, all three GIFs and only dark/light
   Studio screenshots. Moved the other 24 images into docs\visual-gallery.md with captions,
   clear sections and prominent navigation. Exact order/media-preservation/link checks pass:

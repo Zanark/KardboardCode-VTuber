@@ -4,7 +4,8 @@ This tracked folder is the handoff for creating a GitHub release manually. Regen
 source/documentation changes; it always represents the latest exported tool, not a release history.
 
 **v1.0.0 was designated the first official version**, adopting the supplied voxel KC box logo.
-The current **v1.2.0** handoff adds the preview-first Studio: left inspector, permanent right
+The current **v1.2.1** handoff fixes numeric step-button visibility and the stray mode-tab line,
+retaining the preview-first Studio: left inspector, permanent right
 preview, labelled control sections and optional Tools. It retains online Windows setup,
 brown dark-theme sliders and automatic video playback. The earlier
 v0.2.0 export was unpublished local staging. A local version/export is not a remote publication.

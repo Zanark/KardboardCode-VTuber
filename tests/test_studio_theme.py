@@ -7,8 +7,18 @@ import pytest
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 pytest.importorskip("PySide6")
 
-from PySide6.QtCore import QPoint, Qt
-from PySide6.QtWidgets import QApplication, QSlider, QStyle, QStyleOptionSlider
+from PySide6.QtCore import QPoint, QRect, Qt
+from PySide6.QtGui import QColor
+from PySide6.QtTest import QTest
+from PySide6.QtWidgets import (
+    QApplication,
+    QDoubleSpinBox,
+    QSlider,
+    QSpinBox,
+    QStyle,
+    QStyleOptionSlider,
+    QStyleOptionSpinBox,
+)
 
 from kardboard_vtuber.gui.theme import stylesheet
 
@@ -45,3 +55,78 @@ def test_slider_track_and_handle_have_visible_palette_and_disabled_states(
         assert disabled.pixelColor(handle.center()).name() != expected
     finally:
         slider.close()
+
+
+@pytest.mark.parametrize("dark", [True, False])
+@pytest.mark.parametrize("decimal", [True, False])
+def test_numeric_step_buttons_render_plus_minus_and_step_values(
+    dark: bool, decimal: bool,
+) -> None:
+    app = QApplication.instance() or QApplication([])
+    spin = QDoubleSpinBox() if decimal else QSpinBox()
+    spin.setRange(0, 10)
+    if isinstance(spin, QDoubleSpinBox):
+        spin.setDecimals(2)
+        spin.setSingleStep(0.01)
+    spin.setValue(5)
+    spin.resize(78, 38)
+    spin.setStyleSheet(stylesheet(dark))
+    spin.show()
+    app.processEvents()
+
+    def button_rects() -> list[QRect]:
+        option = QStyleOptionSpinBox()
+        spin.initStyleOption(option)
+        return [
+            spin.style().subControlRect(QStyle.ComplexControl.CC_SpinBox, option, control, spin)
+            for control in (QStyle.SubControl.SC_SpinBoxUp, QStyle.SubControl.SC_SpinBoxDown)
+        ]
+
+    def glyph_bounds(rect: QRect, color: str) -> tuple[float, float]:
+        image = spin.grab().toImage()
+        ratio = image.devicePixelRatio()
+        expected = QColor(color)
+        points = []
+        for x in range(round((rect.x() + 3) * ratio), round((rect.right() - 2) * ratio)):
+            for y in range(round((rect.y() + 2) * ratio), round((rect.bottom() - 1) * ratio)):
+                actual = image.pixelColor(x, y)
+                if max(
+                    abs(actual.red() - expected.red()),
+                    abs(actual.green() - expected.green()),
+                    abs(actual.blue() - expected.blue()),
+                ) <= 24:
+                    points.append((x, y))
+        assert points, "An empty step button is not a usable numeric affordance."
+        return (
+            (max(x for x, _ in points) - min(x for x, _ in points) + 1) / ratio,
+            (max(y for _, y in points) - min(y for _, y in points) + 1) / ratio,
+        )
+
+    try:
+        up, down = button_rects()
+        plus_width, plus_height = glyph_bounds(up, "#19332b")
+        minus_width, minus_height = glyph_bounds(down, "#19332b")
+        assert plus_width >= 4 and plus_height >= 4
+        assert minus_width >= 4 and minus_height <= 3
+        before = spin.value()
+        QTest.mouseClick(spin, Qt.MouseButton.LeftButton, pos=up.center())
+        assert spin.value() > before
+        QTest.mouseClick(spin, Qt.MouseButton.LeftButton, pos=down.center())
+        assert spin.value() == before
+        muted = "#819385" if dark else "#786e5c"
+        spin.setValue(0)
+        app.processEvents()
+        glyph_bounds(down, muted)
+        QTest.mouseClick(spin, Qt.MouseButton.LeftButton, pos=down.center())
+        assert spin.value() == 0
+        spin.setValue(10)
+        app.processEvents()
+        glyph_bounds(up, muted)
+        QTest.mouseClick(spin, Qt.MouseButton.LeftButton, pos=up.center())
+        assert spin.value() == 10
+        spin.setEnabled(False)
+        app.processEvents()
+        glyph_bounds(up, muted)
+        glyph_bounds(down, muted)
+    finally:
+        spin.close()

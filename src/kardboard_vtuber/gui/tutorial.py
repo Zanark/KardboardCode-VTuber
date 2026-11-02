@@ -76,7 +76,9 @@ LESSONS = (
         "Expand <b>Winks &amp; timing</b> for the shared rules/debounce. "
         "Full raw/rendered/filtered "
         "readouts are under <b>Tools &gt; Diagnostics &gt; Signals</b>. "
-        "Eye debounce controls how long a state must hold before logging, not preview frame rate.",
+        "Numeric fields use the upper <b>+</b> and lower <b>-</b> buttons for one step, or "
+        "accept direct typing. Eye debounce controls how long a state must hold before logging, "
+        "not preview frame rate.",
     ),
     (
         "4. Avatar, physics and diagnostics",
