@@ -130,9 +130,13 @@ No personal identities, device credentials, face imagery, or personal calibratio
 - Keep the tracked root `release` folder synchronized with the latest public source/docs export.
   Run `python scripts\export_release.py` and `--check` after relevant changes; stage new public files first.
   `AGENTS.md` and `release\README.md` are the contributor contract.
-- Release bundles are source-only unless packaging scope is explicitly expanded. Never include
-  agent context, credentials/local config, raw media, downloaded models, environments or the
-  generated archive inside itself. Commit public inputs and regenerate before manual publication.
+- The source ZIP remains source-only; the separate online MSI intentionally includes patched
+  private Python and the own wheel. Keep their receipts/checksums separate. Never include agent
+  context, credentials/local config, raw media, downloaded models, development environments or
+  generated-artifact recursion. Commit public inputs and regenerate before manual publication.
+- Installer fingerprints include README because it is embedded in wheel metadata. Rebuild
+  after README/runtime-input changes; --refresh-provenance only updates a matching external
+  receipt, never a stale MSI. Installer configuration and release text use canonical LF.
 - Native source selection uses Windows metadata in an owned subprocess, never VideoCapture frame probing. Always preserve the enumerated backend/index pair; CAP_ANY indices and explicit API indices are not interchangeable. Device paths/serials are not stored.
 - Computer-camera and custom URL/file modes retain separate source/backend values in memory only. Numeric index 0 is a manual fallback, not a universal laptop-camera identity. Refresh/reselect after hardware changes; missing previous selections must not silently retarget.
 - GUI scope is every existing operational feature, including experimental/raw modes, with a built-in tutorial; the selected default remains face-only. The user explicitly requested deep research, TODOs, layout/design rationale, and README screenshots.
@@ -151,8 +155,13 @@ No personal identities, device credentials, face imagery, or personal calibratio
   accounts, extract credentials, force-push or bypass repository policy to resolve a mismatch.
 - Windows Qt wheels contain deeply nested resource paths. A normal private prefix failed at
   MAX_PATH in the real MSI test; a canonical extended-length prefix successfully installed
-  all exact locked wheels without changing machine-wide settings. The source correction is
-  not yet validated end-to-end in a rebuilt MSI; consult paused workstream 12 before resuming.
+  all exact locked wheels without changing machine-wide settings. Pass it to both dependency
+  and own-wheel installs, and force-reinstall exact locked wheels on retry. The corrected final
+  MSI has passed actual online setup, native application/helpers/video and complete uninstall.
+- MSI bytecode-cache cleanup requires each named __pycache__ directory to have its own stable
+  component, null/directory keypath and CreateFolder ownership. Remove only its *.pyc files;
+  let RemoveFolders remove the directory afterward. Attaching directory removal to parent file
+  components left empty directories in real uninstall tests. Do not remove arbitrary user data.
 - The old `homeDesk\KardboardCode` store predates later changes: visible brightness, some flap decisions, body rendering, and original repository paths may be stale. Do not copy old values blindly.
 - The root README and current CLI describe separate skeleton-only diagnostics; the engineering-book status table still contains an older synthetic-full-body description. Source wins until that documentation is deliberately reconciled.
 - Published visual demos, a successful synthetic receiver, and historical tests do not prove current live hardware/app behavior.
