@@ -27,10 +27,10 @@ The real debug renderer operating on synthetic landmarks and the synthetic cardb
 camera pixels or human face are present.
 </em></p>
 
-Before MediaPipe submission, the CLI applies a mild `+12` brightness offset to both the tracking
-input and displayed camera frame. This improves eye-feature contrast in dim input without making
-the tracker and preview observe different images. `--brightness 0` disables the lift; values up to
-`100` are accepted for local tuning (`src/kardboard_vtuber/cli.py:28-190`).
+Before MediaPipe submission, the CLI applies a mild `+12` brightness offset only to internal
+tracking input. This improves feature contrast in dim input while the displayed and OBS-captured
+preview retains the original camera brightness. `--brightness 0` disables the lift; values up to
+`100` are accepted for local tuning (`src/kardboard_vtuber/cli.py`).
 
 Film grain was removed after profiling showed its full-resolution Gaussian-noise allocation cost
 approximately `77 ms` per 1080x1920 frame. The fully opaque renderer also uses OpenCV's masked-copy

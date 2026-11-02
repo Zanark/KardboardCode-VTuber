@@ -92,6 +92,23 @@ def test_screen_right_c_follows_anatomical_right_eye_in_mirrored_preview() -> No
     assert difference[:, 640:].sum() > difference[:, :640].sum()
 
 
+def test_renderer_respects_less_sensitive_eye_thresholds() -> None:
+    default_renderer = PS1CardboardRenderer()
+    strict_renderer = PS1CardboardRenderer(
+        CardboardRendererConfig(
+            eye_closed_threshold=0.20,
+            eye_open_threshold=0.72,
+            wink_closed_threshold=0.50,
+            wink_min_difference=0.25,
+        )
+    )
+
+    assert default_renderer._eye_closed(0.30, 0.30)
+    assert not strict_renderer._eye_closed(0.30, 0.30)
+    assert default_renderer._eye_closed(0.55, 0.80)
+    assert not strict_renderer._eye_closed(0.55, 0.80)
+
+
 def test_renderer_leaves_center_neck_opening_visible() -> None:
     renderer = PS1CardboardRenderer()
     frame = np.full((720, 1280, 3), 91, dtype=np.uint8)

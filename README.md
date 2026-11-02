@@ -52,7 +52,7 @@ The current working vertical slice includes:
 - Rotation and selfie-style mirroring.
 - MediaPipe face tracking, calibrated pose, and anatomical blink/wink controls.
 - Optional MediaPipe 33-point full-body tracking with a separate skeleton diagnostic window.
-- An opt-in low-resolution pose-driven body whose neck extends beneath the cardboard head.
+- An opt-in separate 33-point line-skeleton diagnostic window.
 - A default ModernGL textured 3D cardboard character with corrugated edges, hollow underside,
   front/side flaps, low-poly headphones, side shipping stickers and barcodes, and a top `FRAGILE`
   label. The paper decals use dirty beige stock, torn corners, stains, and coarse pixel lettering.
@@ -64,9 +64,56 @@ The current working vertical slice includes:
 - Fail-closed privacy: black before safe face acquisition, frozen last-safe output after face loss,
   and fully green output before a fresh segmentation mask.
 - A privacy-safe procedural 2D fallback.
+- Direct Windows virtual-camera output through the installed OBS camera component, without
+  running OBS or capturing a preview window.
 
 The phone preview has been verified around 28-30 FPS. The isolated GPU renderer measures about
 8.17 ms per 1080x1920 frame on the validated AMD Radeon 780M environment.
+
+## Use as a camera in Discord, Teams, or Meet
+
+On Windows, install OBS Studio once to register **OBS Virtual Camera**, then install the optional
+Python dependency:
+
+```powershell
+.\.venv312\Scripts\python.exe -m pip install -e ".[tracking,virtual-camera]"
+```
+
+Run the tool with your camera source. Set `KARDBOARD_CAMERA_URL` in the same terminal;
+an assignment in another terminal does not populate this one:
+
+```powershell
+$env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
+.\.venv312\Scripts\python.exe -m kardboard_vtuber `
+  --source $env:KARDBOARD_CAMERA_URL `
+  --mirror `
+  --physics `
+  --tracking-width 1280 `
+  --brightness 30 `
+  --virtual-camera
+```
+
+Select **OBS Virtual Camera** in the calling application's camera settings. OBS does **not**
+need to run: Python sends the composed frames directly to its installed camera component.
+Do not start OBS's virtual-camera output or another sender at the same time; the OBS backend
+has only one camera instance. This is an existing Windows camera device, not a new custom-named
+KardboardCode device. App permissions or organizational policies can restrict virtual cameras.
+
+`--virtual-camera` automatically enables face tracking and cardboard rendering. With face-only
+tracking, output is black before the first face acquisition and freezes on the last safe frame
+when face tracking is lost or its result becomes stale. Debug text, face-mesh panels, and even `--debug-face-preview` stay
+local; they are never sent to the virtual camera. Processing-only brightness remains internal.
+Video output defaults to **1280x720 at an advertised 30 FPS**; delivered motion depends on capture
+and tracking speed. Input is fitted with black bars if necessary, not stretched or cropped.
+Use `--virtual-camera-width`, `--virtual-camera-height` (positive even values), and
+`--virtual-camera-fps` (1-60) to change the output format. These are separate from capture settings
+and `--preview-height`.
+
+Add `--headless` to send video without opening any preview windows. Use Ctrl+C to stop and
+release the device. Select your microphone separately in the calling application; this output
+carries video only. Window Capture in OBS remains available when you do not use this mode.
+
+Backend details: [pyvirtualcam supported cameras](https://github.com/letmaik/pyvirtualcam#supported-virtual-cameras).
 
 ## Current avatar
 
@@ -173,6 +220,20 @@ eye, blink, wink, and mouth transitions. Use
 `--action-hold-ms 100` to tune how long a candidate action must remain stable before it is logged.
 One Euro smoothing is enabled by default; add `--no-motion-filter` to compare raw visual tracking.
 
+If eye tracking blinks or winks too easily, lower the closed-eye thresholds and require a larger
+difference between the two eyes:
+
+```powershell
+--blink-threshold 0.20 `
+--wink-threshold 0.50 `
+--eye-open-threshold 0.72 `
+--wink-min-difference 0.25
+```
+
+Lower blink/wink values are less sensitive. A higher open-eye threshold and wink difference also
+make accidental winks less likely. These settings affect both action detection and the rendered
+K/C expressions.
+
 Render the current PS1-style cardboard prototype by adding:
 
 ```powershell
@@ -190,9 +251,31 @@ The textured box defaults to a small `0.16` perspective Z offset away from the c
 `--box-depth-offset 0` to restore its previous depth instantly, or provide any finite positive
 value to move it farther away. Large values can make the box too small to preserve head coverage.
 
-Add `--full-body` to render the pose-driven body beneath the cardboard head and open the
-independent 33-point skeleton window. The complete body must be visible to the camera for reliable
-limb tracking.
+Add `--full-body` to open the independent 33-point line-skeleton window. The skeleton is
+diagnostic-only and is not composited into the camera preview beneath the cardboard head. The
+complete body must be visible to the camera for reliable limb tracking.
+
+Add `--body-head-fallback` to enable cardboard rendering and keep the head attached to a
+shoulder-derived anchor when the face turns away or face tracking is briefly lost. The option
+automatically starts face and pose tracking without rendering the synthetic full body or opening
+its skeleton window. It first learns several normal face-to-shoulder observations while the face is
+visible, then uses neutral expressions during fallback. It will not guess a generic head size
+before calibration and returns to the existing frozen fail-safe if both shoulders cannot be
+tracked confidently. Fallback-only pose inference is capped at 256-pixel input and 8 FPS to avoid
+starving camera capture and face tracking.
+
+Start each session facing the camera normally for about one second so the fallback can collect its
+initial calibration before you turn away. Until calibration completes, the preview keeps the lower
+body visible, masks everything above the detected shoulders, and displays calibration progress
+instead of showing an unexplained black frame.
+
+For a hoodie carrying a green square on the wearer's anatomical left and a blue square on the
+anatomical right, use `--hood-marker-tracking`. It automatically enables cardboard, face, and
+low-rate pose tracking. Face landmarks plus body pose mean front-facing; a side square selects the
+corresponding profile; body pose without face landmarks or either side square selects the rear.
+Side markers change orientation and position while retaining the most recent face/body-derived
+head size. Red and pink are not marker colours. Recent side-marker motion is held briefly through
+occlusion, then the existing privacy-safe freeze resumes if body tracking is also lost.
 
 For a camera-visible body over a chroma background, download the verified segmentation model once:
 

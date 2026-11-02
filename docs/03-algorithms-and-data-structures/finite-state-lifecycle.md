@@ -17,7 +17,7 @@ flowchart LR
     style Running fill:#1c2333,stroke:#6d5dfc,color:#e6edf3
     style Reconnect fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
     style Stop fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
-``` and reconnect algorithm
+```
 
 > **TL;DR** — The worker combines an explicit state machine with a consecutive-failure threshold.
 > Short read glitches are retried cheaply; sustained failures release and reopen the source.

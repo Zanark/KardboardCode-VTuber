@@ -21,6 +21,13 @@ does, but also **why** each data structure, algorithm, boundary, and tradeoff ex
 The current default GPU-rendered avatar, generated entirely from synthetic geometry.
 </em></p>
 
+## Printable edition
+
+The complete documentation is also generated as
+[`KardboardCode-VTuber-Engineering-Handbook.pdf`](KardboardCode-VTuber-Engineering-Handbook.pdf).
+Its reproducible Markdown-to-PDF pipeline and build instructions live in
+[`book/`](book/README.md).
+
 ```mermaid
 flowchart LR
     NoFace["No safe face"] --> Black["Black"]
@@ -51,6 +58,7 @@ flowchart LR
 | Hand occlusion | Implemented and opt-in | Hand/forearm-only foreground restoration over the avatar |
 | Procedural renderer | Implemented fallback | Fail-closed opaque shell retained for GPU troubleshooting |
 | OBS integration | Operational through Window Capture | Clean preview output; chroma-key mode available with `--green-screen` |
+| Virtual camera | Opt-in direct Windows output | `--virtual-camera` sends the clean composite to the installed OBS camera component; OBS need not run |
 
 ## Current visual reference
 

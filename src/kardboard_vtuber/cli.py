@@ -21,6 +21,7 @@ from kardboard_vtuber.camera import (
     CaptureState,
 )
 from kardboard_vtuber.camera.stream import LatestFrameCamera
+from kardboard_vtuber.virtual_camera import VirtualCameraConfig, VirtualCameraOutput
 
 if TYPE_CHECKING:
     from kardboard_vtuber.tracking.events import FaceActionDetector
@@ -66,7 +67,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--brightness",
         type=_brightness_offset,
         default=12,
-        help="Brightness offset applied before tracking and preview, from 0 to 100 (default: 12).",
+        help=(
+            "Brightness offset applied only to internal tracking input, "
+            "from 0 to 100 (default: 12)."
+        ),
     )
     parser.add_argument(
         "--track-face",
@@ -101,6 +105,30 @@ def build_parser() -> argparse.ArgumentParser:
         type=int,
         default=40,
         help="How long an eye state must remain stable before blink/wink logging.",
+    )
+    parser.add_argument(
+        "--blink-threshold",
+        type=_unit_interval,
+        default=0.35,
+        help="Both eyes must be at or below this openness to blink (default: 0.35).",
+    )
+    parser.add_argument(
+        "--wink-threshold",
+        type=_unit_interval,
+        default=0.70,
+        help="A winked eye must be at or below this openness (default: 0.70).",
+    )
+    parser.add_argument(
+        "--eye-open-threshold",
+        type=_unit_interval,
+        default=0.65,
+        help="The opposite eye must be at or above this openness for a wink (default: 0.65).",
+    )
+    parser.add_argument(
+        "--wink-min-difference",
+        type=_unit_interval,
+        default=0.15,
+        help="Minimum openness difference between eyes for a wink (default: 0.15).",
     )
     parser.add_argument(
         "--no-motion-filter",
@@ -175,8 +203,24 @@ def build_parser() -> argparse.ArgumentParser:
         "--full-body",
         action="store_true",
         help=(
-            "Render a pose-driven full body beneath the cardboard head and open "
-            "a separate 33-point skeleton window."
+            "Track the body and open a separate 33-point line-skeleton window "
+            "without compositing a body onto the camera preview."
+        ),
+    )
+    parser.add_argument(
+        "--body-head-fallback",
+        action="store_true",
+        help=(
+            "Keep the cardboard head attached to a shoulder-derived pose when face "
+            "tracking is lost. Automatically enables cardboard, face, and body-pose tracking."
+        ),
+    )
+    parser.add_argument(
+        "--hood-marker-tracking",
+        action="store_true",
+        help=(
+            "Track green anatomical-left and blue anatomical-right hood squares. "
+            "Body-only tracking with no side marker is treated as a rear view."
         ),
     )
     parser.add_argument(
@@ -200,9 +244,38 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
     parser.add_argument(
+        "--virtual-camera",
+        action="store_true",
+        help=(
+            "Send the clean cardboard composite directly to OBS Virtual Camera "
+            "(requires the virtual-camera extra and installed OBS camera component)."
+        ),
+    )
+    parser.add_argument(
+        "--virtual-camera-width",
+        type=int,
+        default=1280,
+        help="Virtual-camera output width; positive even number (default: 1280).",
+    )
+    parser.add_argument(
+        "--virtual-camera-height",
+        type=int,
+        default=720,
+        help="Virtual-camera output height; positive even number (default: 720).",
+    )
+    parser.add_argument(
+        "--virtual-camera-fps",
+        type=float,
+        default=30.0,
+        help="Virtual-camera advertised FPS, from 1 to 60 (default: 30).",
+    )
+    parser.add_argument(
         "--headless",
         action="store_true",
-        help="Capture and print diagnostics without opening a preview window.",
+        help=(
+            "Do not open preview windows. With --virtual-camera, continue rendering "
+            "and sending the clean camera output."
+        ),
     )
     parser.add_argument(
         "--duration",
@@ -214,13 +287,47 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    if args.hand_occlusion and not (args.render_cardboard or args.full_body):
-        print("--hand-occlusion requires --render-cardboard or --full-body", file=sys.stderr)
+    if args.virtual_camera:
+        args.render_cardboard = True
+        try:
+            virtual_camera_config = VirtualCameraConfig(
+                width=args.virtual_camera_width,
+                height=args.virtual_camera_height,
+                fps=args.virtual_camera_fps,
+            )
+        except ValueError as error:
+            print(str(error), file=sys.stderr)
+            return 2
+    if args.body_head_fallback and args.hood_marker_tracking:
+        print(
+            "--body-head-fallback and --hood-marker-tracking cannot be combined",
+            file=sys.stderr,
+        )
+        return 2
+    if args.hand_occlusion and not (
+        args.render_cardboard
+        or args.full_body
+        or args.body_head_fallback
+        or args.hood_marker_tracking
+    ):
+        print(
+            "--hand-occlusion requires --render-cardboard, --full-body, "
+            "--body-head-fallback, or --hood-marker-tracking",
+            file=sys.stderr,
+        )
         return 2
     if args.physics and args.cardboard_renderer != "textured-3d":
         print("--physics requires --cardboard-renderer textured-3d", file=sys.stderr)
         return 2
-    source = CameraSource.parse(args.source)
+    try:
+        source = CameraSource.parse(args.source)
+    except ValueError as error:
+        print(
+            f"Invalid --source: {error}. Supply a camera URL or device index. "
+            "If using $env:KARDBOARD_CAMERA_URL, set it in this PowerShell session first.",
+            file=sys.stderr,
+        )
+        return 2
     recorded_file = isinstance(source.value, str) and Path(source.value).is_file()
     config = CameraConfig(
         source=source,
@@ -241,25 +348,43 @@ def main(argv: list[str] | None = None) -> int:
             or args.render_cardboard
             or args.debug_face_preview
             or args.full_body
+            or args.body_head_fallback
+            or args.hood_marker_tracking
             or args.physics
             or args.tracking_debug
             else None
         )
         hand_occluder = _create_hand_occluder(args) if args.hand_occlusion else None
         person_segmenter = _create_person_segmenter(args) if args.green_screen else None
-        body_tracker = _create_full_body_tracker(args) if args.full_body else None
+        body_tracker = (
+            _create_full_body_tracker(args)
+            if args.full_body or args.body_head_fallback or args.hood_marker_tracking
+            else None
+        )
+        if args.body_head_fallback:
+            from kardboard_vtuber.tracking import BodyHeadFallback
+
+            body_head_fallback = BodyHeadFallback()
+        else:
+            body_head_fallback = None
+        if args.hood_marker_tracking:
+            from kardboard_vtuber.tracking import HoodMarkerHeadTracker
+
+            hood_marker_tracker = HoodMarkerHeadTracker()
+        else:
+            hood_marker_tracker = None
         action_detector = _create_action_detector(args) if tracker is not None else None
         renderer = (
             _create_renderer(args)
-            if args.render_cardboard or args.full_body or args.physics
+            if (
+                args.render_cardboard
+                or args.full_body
+                or args.body_head_fallback
+                or args.hood_marker_tracking
+                or args.physics
+            )
             else None
         )
-        if args.full_body:
-            from kardboard_vtuber.renderer import FullBodyAvatarRenderer
-
-            body_renderer = FullBodyAvatarRenderer()
-        else:
-            body_renderer = None
     except (OSError, RuntimeError, ValueError) as error:
         print(str(error), file=sys.stderr)
         return 1
@@ -271,13 +396,24 @@ def main(argv: list[str] | None = None) -> int:
     skeleton_window_name = "KardboardCode Full Body Skeleton"
     shutdown = _ShutdownSignal()
     previous_sigint_handler = signal.signal(signal.SIGINT, shutdown)
+    virtual_camera: VirtualCameraOutput | None = None
 
     try:
+        if args.virtual_camera:
+            virtual_camera = VirtualCameraOutput(virtual_camera_config)
+            print(
+                f"virtual_camera={virtual_camera.device} | "
+                f"output={virtual_camera_config.width}x{virtual_camera_config.height}"
+                f"@{virtual_camera_config.fps:g} | clean_composite=True",
+                flush=True,
+            )
         camera.start()
         while not shutdown.requested:
             packet = camera.read(after_sequence=last_sequence, timeout=2.0, copy=False)
             now = time.monotonic()
             if packet is None:
+                if virtual_camera is not None:
+                    virtual_camera.repeat()
                 snapshot = camera.snapshot()
                 print(
                     f"camera unavailable: state={snapshot.state.value} "
@@ -288,24 +424,47 @@ def main(argv: list[str] | None = None) -> int:
                     return 1
                 if snapshot.state is CaptureState.STOPPED and last_sequence is not None:
                     break
+                if args.duration is not None and now - started_at >= args.duration:
+                    break
                 continue
 
             last_sequence = packet.sequence
-            camera_frame = _apply_brightness(packet.frame, args.brightness)
+            processing_frame = _apply_brightness(packet.frame, args.brightness)
             if hand_occluder is not None:
-                hand_occluder.submit(camera_frame, packet.captured_at_ns)
+                hand_occluder.submit(processing_frame, packet.captured_at_ns)
                 hand_state = hand_occluder.snapshot()
             if person_segmenter is not None:
-                person_segmenter.submit(camera_frame, packet.captured_at_ns)
+                person_segmenter.submit(processing_frame, packet.captured_at_ns)
                 segmentation_state = person_segmenter.snapshot()
             if body_tracker is not None:
-                body_tracker.submit(camera_frame, packet.captured_at_ns)
+                body_tracker.submit(processing_frame, packet.captured_at_ns)
                 body_state = body_tracker.snapshot()
             if tracker is not None:
-                tracker.submit(camera_frame, packet.captured_at_ns)
-                tracking_state = tracker.snapshot().raw_state
+                tracker.submit(processing_frame, packet.captured_at_ns)
+                face_snapshot = tracker.snapshot()
+                tracking_state = face_snapshot.state
+                render_tracking_state = tracking_state
+                if virtual_camera is not None:
+                    from kardboard_vtuber.tracking.models import FaceTrackingState
+
+                    timestamp_ms = packet.captured_at_ns // 1_000_000
+                    if not 0 <= timestamp_ms - tracking_state.timestamp_ms <= 500:
+                        render_tracking_state = FaceTrackingState.no_face(timestamp_ms)
+                if hood_marker_tracker is not None:
+                    render_tracking_state = hood_marker_tracker.update(
+                        processing_frame,
+                        timestamp_ms=packet.captured_at_ns // 1_000_000,
+                        face=tracking_state,
+                        pose=body_state,
+                    )
+                elif body_head_fallback is not None:
+                    render_tracking_state = body_head_fallback.update(
+                        tracking_state,
+                        body_state,
+                        current_timestamp_ms=packet.captured_at_ns // 1_000_000,
+                    )
                 if action_detector is not None:
-                    events = action_detector.update(tracking_state)
+                    events = action_detector.update(face_snapshot.raw_state)
                     if events:
                         latest_action = events[0].action.value
                     for event in events:
@@ -316,10 +475,30 @@ def main(argv: list[str] | None = None) -> int:
                     _print_tracking_snapshot(tracker)
                 if body_tracker is not None:
                     _print_full_body_snapshot(body_tracker)
+                if body_head_fallback is not None:
+                    print(
+                        "body_head_fallback_ready="
+                        f"{body_head_fallback.calibration_ready} | "
+                        f"calibration_samples={body_head_fallback.calibration_samples}/"
+                        f"{body_head_fallback.required_calibration_samples}",
+                        flush=True,
+                    )
+                if hood_marker_tracker is not None:
+                    marker_snapshot = hood_marker_tracker.snapshot()
+                    colors = ",".join(
+                        observation.color.value
+                        for observation in marker_snapshot.observations
+                    )
+                    print(
+                        f"hood_markers={colors or 'none'} | "
+                        f"hood_tracking_source={marker_snapshot.source.value} | "
+                        f"marker_head_detected={marker_snapshot.head_state.detected}",
+                        flush=True,
+                    )
                 last_report_at = now
 
-            if not args.headless:
-                frame = camera_frame
+            if not args.headless or virtual_camera is not None:
+                frame = packet.frame.copy()
                 if person_segmenter is not None:
                     from kardboard_vtuber.tracking.green_screen import apply_green_screen
 
@@ -335,19 +514,42 @@ def main(argv: list[str] | None = None) -> int:
                     else None
                 )
                 if tracker is not None:
-                    from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
-
-                    tracking_state = tracker.snapshot().state
-                    if body_renderer is not None:
-                        body_renderer.render(frame, body_state, tracking_state)
-                    if renderer is not None:
-                        renderer.render(frame, tracking_state)
-                        if hand_occluder is not None and foreground_source is not None:
+                    calibration_hold = (
+                        body_head_fallback is not None
+                        and not body_head_fallback.calibration_ready
+                        and not render_tracking_state.detected
+                    )
+                    if calibration_hold:
+                        body_head_fallback.render_calibration_hold(
+                            frame,
+                            body_state,
+                            current_timestamp_ms=(
+                                packet.captured_at_ns // 1_000_000
+                            ),
+                        )
+                    else:
+                        if renderer is not None:
+                            renderer.render(frame, render_tracking_state)
+                        if (
+                            hand_occluder is not None
+                            and foreground_source is not None
+                            and render_tracking_state.detected
+                        ):
                             from kardboard_vtuber.tracking.hand_occlusion import (
                                 composite_hand_foreground,
                             )
 
-                            composite_hand_foreground(frame, foreground_source, hand_state)
+                            composite_hand_foreground(
+                                frame,
+                                foreground_source,
+                                hand_state,
+                            )
+                if virtual_camera is not None:
+                    virtual_camera.send(frame)
+            if not args.headless:
+                if tracker is not None:
+                    from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
+
                     if args.tracking_debug:
                         draw_tracking_debug(
                             frame,
@@ -355,6 +557,11 @@ def main(argv: list[str] | None = None) -> int:
                             action=latest_action,
                             draw_frame_geometry=renderer is None,
                         )
+                        if hood_marker_tracker is not None:
+                            hood_marker_tracker.draw_debug(
+                                frame,
+                                hood_marker_tracker.snapshot(),
+                            )
                     if args.debug_face_preview and foreground_source is not None:
                         _draw_debug_face_preview(frame, foreground_source, tracking_state)
                 if args.tracking_debug:
@@ -381,7 +588,7 @@ def main(argv: list[str] | None = None) -> int:
                     else frame
                 )
                 cv2.imshow(window_name, display_frame)
-                if body_tracker is not None:
+                if args.full_body:
                     from kardboard_vtuber.tracking.full_body import (
                         render_pose_skeleton_debug,
                     )
@@ -402,6 +609,8 @@ def main(argv: list[str] | None = None) -> int:
         print(str(error), file=sys.stderr)
         return 1
     finally:
+        if virtual_camera is not None:
+            virtual_camera.close()
         if renderer is not None:
             renderer.close()
         if hand_occluder is not None:
@@ -449,6 +658,13 @@ def _preview_height(raw: str) -> int:
     value = int(raw)
     if value < 240:
         raise argparse.ArgumentTypeError("preview height must be at least 240")
+    return value
+
+
+def _unit_interval(raw: str) -> float:
+    value = float(raw)
+    if not math.isfinite(value) or not 0.0 <= value <= 1.0:
+        raise argparse.ArgumentTypeError("value must be finite and between 0 and 1")
     return value
 
 
@@ -581,6 +797,10 @@ def _create_action_detector(args: argparse.Namespace) -> FaceActionDetector:
 
     return FaceActionDetector(
         ActionThresholds(
+            eye_closed=args.blink_threshold,
+            eye_open=args.eye_open_threshold,
+            wink_closed=args.wink_threshold,
+            wink_min_difference=args.wink_min_difference,
             hold_ms=args.action_hold_ms,
             eye_hold_ms=args.eye_action_hold_ms,
         )
@@ -610,7 +830,12 @@ def _create_full_body_tracker(args: argparse.Namespace) -> MediaPipeFullBodyTrac
     return MediaPipeFullBodyTracker(
         FullBodyTrackerConfig(
             model_path=args.pose_model,
-            input_width=args.pose_tracking_width,
+            input_width=(
+                args.pose_tracking_width
+                if args.full_body
+                else min(args.pose_tracking_width, 256)
+            ),
+            minimum_submit_interval_ms=0 if args.full_body else 125,
         )
     )
 
@@ -638,13 +863,25 @@ def _create_renderer(args: argparse.Namespace) -> object:
     )
 
     if args.cardboard_renderer == "procedural-2d":
-        return PS1CardboardRenderer(CardboardRendererConfig(mirrored=args.mirror))
+        return PS1CardboardRenderer(
+            CardboardRendererConfig(
+                mirrored=args.mirror,
+                eye_closed_threshold=args.blink_threshold,
+                eye_open_threshold=args.eye_open_threshold,
+                wink_closed_threshold=args.wink_threshold,
+                wink_min_difference=args.wink_min_difference,
+            )
+        )
     try:
         return Textured3DCardboardRenderer(
             Textured3DRendererConfig(
                 mirrored=args.mirror,
                 physics_enabled=args.physics,
                 perspective_depth_offset=args.box_depth_offset,
+                eye_closed_threshold=args.blink_threshold,
+                eye_open_threshold=args.eye_open_threshold,
+                wink_closed_threshold=args.wink_threshold,
+                wink_min_difference=args.wink_min_difference,
             )
         )
     except RuntimeError as error:
@@ -656,7 +893,15 @@ def _create_renderer(args: argparse.Namespace) -> object:
             f"3D renderer unavailable ({error}); using privacy-safe 2D fallback",
             file=sys.stderr,
         )
-        return PS1CardboardRenderer(CardboardRendererConfig(mirrored=args.mirror))
+        return PS1CardboardRenderer(
+            CardboardRendererConfig(
+                mirrored=args.mirror,
+                eye_closed_threshold=args.blink_threshold,
+                eye_open_threshold=args.eye_open_threshold,
+                wink_closed_threshold=args.wink_threshold,
+                wink_min_difference=args.wink_min_difference,
+            )
+        )
 
 
 def _print_tracking_snapshot(tracker: MediaPipeFaceTracker) -> None:

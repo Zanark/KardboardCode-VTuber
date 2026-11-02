@@ -210,10 +210,9 @@ sequenceDiagram
     CV-->>CLI: composed preview frame
 ```
 
-The CLI orders optional full-body rendering before the head, then restores the hand/forearm
-foreground after the head when hand occlusion is enabled
-(`src/kardboard_vtuber/cli.py:215-414`,
-`src/kardboard_vtuber/renderer/full_body.py:32-187`,
+The CLI keeps full-body output in a separate line-skeleton diagnostic window, then restores the
+hand/forearm foreground after the head when hand occlusion is enabled
+(`src/kardboard_vtuber/cli.py`,
 `src/kardboard_vtuber/tracking/hand_occlusion.py:137-213`).
 
 ## Perspective, pose, and depth

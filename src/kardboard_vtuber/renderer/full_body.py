@@ -8,7 +8,11 @@ import cv2
 import numpy as np
 from numpy import ndarray
 
-from kardboard_vtuber.tracking.full_body import FullBodyPoseState, PoseLandmark
+from kardboard_vtuber.tracking.full_body import (
+    FullBodyPoseState,
+    PoseLandmark,
+    pose_torso_is_plausible,
+)
 from kardboard_vtuber.tracking.models import FaceTrackingState
 
 _LEFT_ARM = ((11, 13), (13, 15))
@@ -41,7 +45,7 @@ class FullBodyAvatarRenderer:
         pose: FullBodyPoseState,
         face: FaceTrackingState,
     ) -> None:
-        if not pose.detected:
+        if not pose.detected or not pose_torso_is_plausible(pose):
             return
         frame_height, frame_width = frame.shape[:2]
         low_width = max(1, round(frame_width / self._config.pixel_scale))

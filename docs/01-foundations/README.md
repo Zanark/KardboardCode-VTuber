@@ -86,7 +86,7 @@ direction.
 **Implemented:** camera ingestion and reconnection, credential-safe diagnostics, asynchronous
 MediaPipe face/pose/hand/person tracking, One Euro filtering, calibrated expression events,
 ModernGL textured rendering, five spring hinges, procedural fallback rendering, full-resolution
-composition, optional full-body output, bounded hand/forearm occlusion, fail-closed green-screen
+composition, optional full-body diagnostics, bounded hand/forearm occlusion, fail-closed green-screen
 composition, and OBS Window Capture output.
 
 **Opt-in diagnostics:** `--tracking-debug` draws synthetic tracking evidence and performance text.

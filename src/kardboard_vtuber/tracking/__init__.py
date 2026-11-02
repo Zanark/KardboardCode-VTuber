@@ -1,5 +1,9 @@
 """Library-neutral face-tracking contracts and MediaPipe adapter."""
 
+from kardboard_vtuber.tracking.body_head_fallback import (
+    BodyHeadFallback,
+    BodyHeadFallbackConfig,
+)
 from kardboard_vtuber.tracking.events import (
     ActionThresholds,
     FaceAction,
@@ -24,6 +28,14 @@ from kardboard_vtuber.tracking.green_screen import (
     PersonSegmentationState,
     apply_green_screen,
 )
+from kardboard_vtuber.tracking.hood_markers import (
+    HoodMarkerColor,
+    HoodMarkerHeadTracker,
+    HoodMarkerObservation,
+    HoodMarkerSnapshot,
+    HoodMarkerTrackerConfig,
+    HoodTrackingSource,
+)
 from kardboard_vtuber.tracking.models import (
     FaceTrackingState,
     HeadPose,
@@ -33,6 +45,8 @@ from kardboard_vtuber.tracking.models import (
 
 __all__ = [
     "ActionThresholds",
+    "BodyHeadFallback",
+    "BodyHeadFallbackConfig",
     "FaceTrackingState",
     "FaceAction",
     "FaceActionDetector",
@@ -43,6 +57,12 @@ __all__ = [
     "FullBodyTrackerConfig",
     "GreenScreenConfig",
     "HeadPose",
+    "HoodMarkerColor",
+    "HoodMarkerHeadTracker",
+    "HoodMarkerObservation",
+    "HoodMarkerSnapshot",
+    "HoodMarkerTrackerConfig",
+    "HoodTrackingSource",
     "MediaPipeFullBodyTracker",
     "MediaPipePersonSegmenter",
     "NormalizedLandmark",

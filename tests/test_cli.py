@@ -5,6 +5,7 @@ import pytest
 
 from kardboard_vtuber.cli import (
     _apply_brightness,
+    _create_full_body_tracker,
     _draw_debug_face_preview,
     _resize_preview,
     _ShutdownSignal,
@@ -12,6 +13,29 @@ from kardboard_vtuber.cli import (
     main,
 )
 from tests.test_ps1_cardboard_renderer import state
+
+
+@pytest.mark.parametrize("source", ["", " \t "])
+@pytest.mark.parametrize("virtual_camera", [False, True])
+def test_empty_source_reports_how_to_set_camera_url(
+    source: str,
+    virtual_camera: bool,
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def unexpected_capture(config: object) -> None:
+        pytest.fail("Empty input must be rejected before creating camera resources")
+
+    monkeypatch.setattr("kardboard_vtuber.cli.LatestFrameCamera", unexpected_capture)
+    args = ["--source", source]
+    if virtual_camera:
+        args.append("--virtual-camera")
+
+    assert main(args) == 2
+    message = capsys.readouterr().err
+    assert "Invalid --source: camera source cannot be empty" in message
+    assert "$env:KARDBOARD_CAMERA_URL" in message
+    assert "this PowerShell session" in message
 
 
 def test_camera_brightness_defaults_to_mild_lift() -> None:
@@ -40,6 +64,8 @@ def test_raw_face_preview_is_disabled_by_default() -> None:
     assert not args.debug_face_preview
     assert not args.hand_occlusion
     assert not args.full_body
+    assert not args.body_head_fallback
+    assert not args.hood_marker_tracking
     assert not args.physics
     assert not args.tracking_debug
     assert not args.green_screen
@@ -47,12 +73,100 @@ def test_raw_face_preview_is_disabled_by_default() -> None:
     assert args.pose_tracking_width == 480
     assert args.segmentation_width == 384
     assert args.box_depth_offset == 0.16
+    assert args.blink_threshold == 0.35
+    assert args.wink_threshold == 0.70
+    assert args.eye_open_threshold == 0.65
+    assert args.wink_min_difference == 0.15
 
 
 def test_tracking_debug_is_opt_in() -> None:
     args = build_parser().parse_args(["--tracking-debug"])
 
     assert args.tracking_debug
+
+
+def test_body_head_fallback_is_opt_in() -> None:
+    args = build_parser().parse_args(["--body-head-fallback"])
+
+    assert args.body_head_fallback
+
+
+def test_hood_marker_tracking_is_opt_in() -> None:
+    args = build_parser().parse_args(["--hood-marker-tracking"])
+
+    assert args.hood_marker_tracking
+
+
+def test_body_fallback_and_hood_markers_are_mutually_exclusive(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    exit_code = main(["--body-head-fallback", "--hood-marker-tracking"])
+
+    assert exit_code == 2
+    assert "cannot be combined" in capsys.readouterr().err
+
+
+def test_body_head_fallback_uses_throttled_low_resolution_pose_tracking(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from kardboard_vtuber.tracking import full_body
+
+    monkeypatch.setattr(
+        full_body,
+        "MediaPipeFullBodyTracker",
+        lambda config: config,
+    )
+    args = build_parser().parse_args(["--body-head-fallback"])
+
+    config = _create_full_body_tracker(args)
+
+    assert config.input_width == 256
+    assert config.minimum_submit_interval_ms == 125
+
+
+def test_full_body_mode_preserves_requested_pose_tracking_rate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from kardboard_vtuber.tracking import full_body
+
+    monkeypatch.setattr(
+        full_body,
+        "MediaPipeFullBodyTracker",
+        lambda config: config,
+    )
+    args = build_parser().parse_args(
+        ["--full-body", "--pose-tracking-width", "400"]
+    )
+
+    config = _create_full_body_tracker(args)
+
+    assert config.input_width == 400
+    assert config.minimum_submit_interval_ms == 0
+
+
+def test_eye_sensitivity_thresholds_are_configurable() -> None:
+    args = build_parser().parse_args(
+        [
+            "--blink-threshold",
+            "0.25",
+            "--wink-threshold",
+            "0.55",
+            "--eye-open-threshold",
+            "0.72",
+            "--wink-min-difference",
+            "0.25",
+        ]
+    )
+
+    assert args.blink_threshold == 0.25
+    assert args.wink_threshold == 0.55
+    assert args.eye_open_threshold == 0.72
+    assert args.wink_min_difference == 0.25
+
+
+def test_eye_sensitivity_thresholds_reject_out_of_range_values() -> None:
+    with pytest.raises(SystemExit):
+        build_parser().parse_args(["--blink-threshold", "-0.1"])
 
 
 def test_box_depth_offset_can_restore_previous_position() -> None:
