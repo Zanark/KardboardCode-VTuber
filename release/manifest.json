@@ -1,22 +1,22 @@
 {
   "assets": {
     "KardboardCode-VTuber-source.zip": {
-      "bytes": 33286361,
-      "sha256": "8400fa7cee78c1f8c0ef63c0fcd9fb65528c87dce00fc2dab32db84e80552748"
+      "bytes": 33031157,
+      "sha256": "1d1b587cbad1ea90a2885039878805e549653b9022b61e600bda2fc6fba68911"
     },
     "RELEASE_CONTEXT.md": {
       "bytes": 2009,
-      "sha256": "a85660fd4c281ceeddb0e03475925a1d62b167d7c746fe3b71215666a4265be7"
+      "sha256": "990ec08af54365818890a13bd64049e56d56c57b1e17146a00fe2395536d92cb"
     },
     "RELEASE_NOTES.md": {
-      "bytes": 7285,
-      "sha256": "f8d37c821ebefdaa3aeb8114adfe96b96ebf167dffa16e083dfd811f9cea829d"
+      "bytes": 9047,
+      "sha256": "00c85ac327854b3cdc759c52528f6946e9853a92f47d5e53a24780baa295c456"
     }
   },
-  "generatedAt": "2026-11-02T18:47:23+00:00",
+  "generatedAt": "2026-11-02T20:57:10+00:00",
   "schemaVersion": 1,
   "sourceBranch": "workDesk/agentic_GUI",
-  "sourceCommit": "d030b3a5df83af9c49d06dac089cba870d7b48d4",
+  "sourceCommit": "1bb30926cab472a463f80649702ffb29f1f48e8b",
   "sourceFiles": {
     ".gitattributes": {
       "bytes": 181,
@@ -31,12 +31,12 @@
       "sha256": "397b08e7ad550bd635777b7ac9e6e61b357098934555fb760c420bedf48654bc"
     },
     "README.md": {
-      "bytes": 8928,
-      "sha256": "c6cfb8ffa3a8fba954f99799d1ed8402860c236c9244390934e26fd65f14ab39"
+      "bytes": 8963,
+      "sha256": "10db7396561e21a1fbf39646ecdf0390aafe9ee981209bb3cecb93f7d9ba07d9"
     },
     "TODO/00_INDEX.todo": {
-      "bytes": 5928,
-      "sha256": "c0f0b6e1a2d31cbbb870176e01b67dcea9e76b25141748bea5572a23b4fe6112"
+      "bytes": 6915,
+      "sha256": "5653edf954e3688b4c1af8376ebdbaa47d0ed9cfd2ca52248e940aa9ee2612eb"
     },
     "TODO/01_RESEARCH_AND_DESIGN.todo": {
       "bytes": 1131,
@@ -55,8 +55,8 @@
       "sha256": "f63eb4731d13d0f5065c0a1ff11841cf2a974c13d69fd08b85af95c992a89897"
     },
     "TODO/05_DEVELOPMENT_LEDGER.todo": {
-      "bytes": 8267,
-      "sha256": "b1465afc0bde47765c62628091356062756631b548b8f1fcaeb679151b562857"
+      "bytes": 10460,
+      "sha256": "22b2d9211005dc1e25edd54c3c1c1d039c57ac6812bd9eae535c785172c4f480"
     },
     "TODO/06_NATIVE_CAMERA_SELECTION.todo": {
       "bytes": 1731,
@@ -97,6 +97,14 @@
     "TODO/15_DARK_CARDBOARD_ACCENTS.todo": {
       "bytes": 2210,
       "sha256": "f32e4a9023802b2b6caa20ef71f02aec229fa1d07530031b40c524cd130242a9"
+    },
+    "TODO/16_PREVIEW_FIRST_STUDIO.todo": {
+      "bytes": 5516,
+      "sha256": "2adcf143de478ee08e7a0bd4801032c9a860eec7d6cf0dc5f4be15f57d0630a5"
+    },
+    "TODO/17_PERSONA_CARDBOARD_IDENTITY.todo": {
+      "bytes": 2792,
+      "sha256": "21c68dbd1c3610bc2a304ace8f89453a91ac6008b54c846f4a1f6856cbdef41a"
     },
     "assets/PNGTuberV1/Eyes Closed.png": {
       "bytes": 21259,
@@ -335,20 +343,20 @@
       "sha256": "ea03ff909b629fa8251f9ab8d4b9e3cc7edb821a9df695b82c3b88836a7f9070"
     },
     "docs/09-desktop-studio/interface-specification.md": {
-      "bytes": 9331,
-      "sha256": "f2001c303405a66f7104dce04451d8d06146294d431dd5b9dc4f29739234c0b6"
+      "bytes": 11029,
+      "sha256": "70c6069643e2d2671cfcca750e076eceebd2e7c3ae55a9f8216b2b3b22fb1620"
     },
     "docs/09-desktop-studio/research-and-design.md": {
-      "bytes": 9587,
-      "sha256": "35c64dfc816ab65d70ef4fac49b7b07a3491e98fc16398d3679c873367a82865"
+      "bytes": 28743,
+      "sha256": "28e26403804f847336e9f14d9590f5a36e1953e2f0cfe4413e4cfff257c49a89"
     },
     "docs/09-desktop-studio/runtime-architecture.md": {
-      "bytes": 12646,
-      "sha256": "d9d3746d76890620b2590606641686818ea0080cd593013b6c409559056e8a2b"
+      "bytes": 15183,
+      "sha256": "3ef90db91dea9296a59e21e0b7471434e9a76bf4210fa94f045d0499516b4d4a"
     },
     "docs/09-desktop-studio/tutorial.md": {
-      "bytes": 12376,
-      "sha256": "9acac86664d3ff5ff93fcdd6fd67d9ef765950a6cadfc3bbf4e9671e74777d84"
+      "bytes": 13274,
+      "sha256": "320274a03c228f81a3ec025baae10b4919fd45424c285e0b5f8fd7e5b80c3202"
     },
     "docs/09-desktop-studio/video-processing.md": {
       "bytes": 7616,
@@ -375,8 +383,8 @@
       "sha256": "c3c24ca66114069d6e63ce71acd2f328250f96bc259ad3bbc8ac6a42cf0f3edd"
     },
     "docs/KardboardCode-VTuber-Engineering-Handbook.pdf": {
-      "bytes": 10638479,
-      "sha256": "5418c8f0d251771e6ad283802aa6a9865ae63d9c9dddf4ada315d1be8c1a58a9"
+      "bytes": 10687472,
+      "sha256": "825acbdfa8bc05cecee0ba246d22a1446bc26e3247501b789cdb4914efab7405"
     },
     "docs/README.md": {
       "bytes": 8589,
@@ -435,8 +443,8 @@
       "sha256": "5b6702f5bcb01b3ad0c68a6f0de978c3a1ebd9b74608757fbe34f6a7b755a7fd"
     },
     "docs/guides/features-and-controls.md": {
-      "bytes": 10868,
-      "sha256": "bea9394797e11220bcc566350e96ea452b684b7de8d9ca38877611065107ad4b"
+      "bytes": 11135,
+      "sha256": "5d0b415a60f984589c2a3f0ba753d6764ea4d9c84310b2f2b6c4233aae3a525d"
     },
     "docs/guides/getting-started.md": {
       "bytes": 7595,
@@ -499,36 +507,36 @@
       "sha256": "ccba9f053eb583b7fa3178c3f1c7e763f78ddf35a12da707766b5d377be14627"
     },
     "docs/images/kardboardcode-studio-clean-output.png": {
-      "bytes": 13294,
-      "sha256": "8b776779d56b5c13ce855bc7366d3a63e5e802b691eb5a7385299f916a2af7d1"
+      "bytes": 11963,
+      "sha256": "5d95d803e63f6d45ec4fdc4e0dcfe371019fab02b7a92d9e59c9230663c2faa2"
     },
     "docs/images/kardboardcode-studio-compact.png": {
-      "bytes": 81406,
-      "sha256": "fc5cad7bcaa1ca1ab35b732e46563b8200e61578db3d8faf610e24117ded5a65"
+      "bytes": 59675,
+      "sha256": "90266d456fc199cf7eb1b6b44be5ed3075064a851ba782164b02ea594e3bfad1"
     },
     "docs/images/kardboardcode-studio-dark.png": {
-      "bytes": 105703,
-      "sha256": "a368ed37bfe5d3a5731a94beb5e49037c00a6770529e8b60cf96bc468956d094"
+      "bytes": 57360,
+      "sha256": "ee95adc8dafffc0a4eed7de8ac5eb55b7dd72d6f6c40fb0ddf704b963cb382ae"
     },
     "docs/images/kardboardcode-studio-diagnostics.png": {
-      "bytes": 108565,
-      "sha256": "e6a3242023fc808141d2de8ae16b32e9a276b928d0834961cacbeb83a8f7d62b"
+      "bytes": 61689,
+      "sha256": "65aca1d12e7455b5a07d0f63ecd024e4f9d81313e937d25194e9e5170e1176bf"
     },
     "docs/images/kardboardcode-studio-light.png": {
-      "bytes": 106828,
-      "sha256": "e7df89e54ce72f948ea758ad00725b912bc0035df80ddf1e41b241e4afe5ebea"
+      "bytes": 62475,
+      "sha256": "d37448a9f1259a04fa95fa80bbd472aff96e59946bdb46caef4fb8212d643094"
     },
     "docs/images/kardboardcode-studio-native-camera.png": {
-      "bytes": 87976,
-      "sha256": "b5fdd7f75fa5fbd56e523d6d9cadace205941072e545d94fa62bf256ed87aa32"
+      "bytes": 44000,
+      "sha256": "4f467f9a4c607e4a2399926ea2bcada039b97a96b0ea1d4023d1efd66755feaa"
     },
     "docs/images/kardboardcode-studio-tutorial.png": {
-      "bytes": 27837,
-      "sha256": "c777d8f4f2f85f078d58bcf5ed4cde402f620e347814df3e80fd3457f23e93e6"
+      "bytes": 31252,
+      "sha256": "d2b2099ca69286015d0b1306f7572ce931e47b94d06d60f9fd678ea0045d9e05"
     },
     "docs/images/kardboardcode-studio-video.png": {
-      "bytes": 91746,
-      "sha256": "57b7e088164260aa951f1ba8562c8096083e4428ab1b2041b2456ef0fecaf65c"
+      "bytes": 50112,
+      "sha256": "9792a4520c603e67d969d066f6e21d1c9bf27a9f49adbef3a930c9900b6db58f"
     },
     "docs/images/kardboardcode-surface-tour.png": {
       "bytes": 209672,
@@ -551,8 +559,8 @@
       "sha256": "3087012b9d059e56040dd7f652167108ac827a3673f9c3c82c841487f6b35ee4"
     },
     "docs/images/readme/hero.png": {
-      "bytes": 210643,
-      "sha256": "e39da56dee9f80f81bade29cde8afc15bed6b8e2ff653588a7e4e98ab81f98fb"
+      "bytes": 210854,
+      "sha256": "c981ee5d8608425a5f4a8228d6ea85167c36f6f48d7c6fd7f57820b65201c247"
     },
     "docs/images/readme/motion.svg": {
       "bytes": 13968,
@@ -588,15 +596,15 @@
     },
     "pyproject.toml": {
       "bytes": 1912,
-      "sha256": "5cdf740017d67eb573f637df077594edcbb5269980de145ff516b95af1af05c8"
+      "sha256": "a6d88aa6f2aa69303550713b6b1947616549c788703a939cb04abf225e9942a1"
     },
     "release/README.md": {
-      "bytes": 5463,
-      "sha256": "c866147624553396395e55920f408d477485d7274527c5a1a315b8f35aa13711"
+      "bytes": 5555,
+      "sha256": "ed3530c733ddd459223e7bb61530fed939e78f2cbfdafb9d6ec9bcd7bd0a34ab"
     },
     "release/RELEASE_NOTES.md": {
-      "bytes": 7285,
-      "sha256": "f8d37c821ebefdaa3aeb8114adfe96b96ebf167dffa16e083dfd811f9cea829d"
+      "bytes": 9047,
+      "sha256": "00c85ac327854b3cdc759c52528f6946e9853a92f47d5e53a24780baa295c456"
     },
     "requirements-dev.txt": {
       "bytes": 53,
@@ -623,8 +631,8 @@
       "sha256": "85bd66f317cfe41d280bf499b92306ffd5d7f4090c36c3d7efc6f21d1948e86e"
     },
     "scripts/capture_studio_screenshots.py": {
-      "bytes": 7155,
-      "sha256": "4247ac294ae82b6f92e7874d8e5f4ca3fc697eadf6ed50dcb9bd22f3740ef360"
+      "bytes": 7230,
+      "sha256": "da6138cb04af88124bbc9fca0fa682ecc432ae58239a05844629b5226d8f818d"
     },
     "scripts/download_face_landmarker_model.py": {
       "bytes": 1673,
@@ -668,7 +676,7 @@
     },
     "src/kardboard_vtuber/__init__.py": {
       "bytes": 469,
-      "sha256": "9f726236f805c87337751b46599280e90c78e416ff359735288b016e46bebab9"
+      "sha256": "f34cd9251146795fa28aa0f647f2ef81e6f203384e3baf0f6806c32f49367c2a"
     },
     "src/kardboard_vtuber/__main__.py": {
       "bytes": 101,
@@ -735,28 +743,28 @@
       "sha256": "34ab61ca3a8f4ac33ff357ea7bbcb6a71ef5f51cd10d548bf15bbdb21ce01f4a"
     },
     "src/kardboard_vtuber/gui/settings.py": {
-      "bytes": 15598,
-      "sha256": "9c96939e2d391ebe6b3283c020f76f757a9db014ee4946b8894b33cc8173c022"
+      "bytes": 17286,
+      "sha256": "93f0c5b7295fedf8d0de9856f6a14833201d0b8fb954e231cf8b4ae0cb2d7510"
     },
     "src/kardboard_vtuber/gui/theme.py": {
-      "bytes": 7787,
-      "sha256": "acbe89a0dc847cee5b9910a72bac21b15280510c715c89a7c4939f530cf2382f"
+      "bytes": 8643,
+      "sha256": "817500588a91a1fbc41b89658e446fc5d4cb498aa6fef6f6779e66d1216d4bdd"
     },
     "src/kardboard_vtuber/gui/tutorial.py": {
-      "bytes": 11725,
-      "sha256": "45cc2a7973f57ddaf16eefefba086fca7dbbc0b5fd8edbc7c8d8b011e42cdb95"
+      "bytes": 12553,
+      "sha256": "786581aa6e33078f7cfa093bd3a14a69a4cbf1d60f46aec8ae30e9b41195957d"
     },
     "src/kardboard_vtuber/gui/video_worker.py": {
       "bytes": 2062,
       "sha256": "b969a0bec453135a5eef7016ff32f24971110bd69d97139c7bd26d694761f823"
     },
     "src/kardboard_vtuber/gui/widgets.py": {
-      "bytes": 10184,
-      "sha256": "5b60ca1fce5ab59c73cfe5790dee14c9f12ce289dd0c283494d6193631a20306"
+      "bytes": 12222,
+      "sha256": "5c2f88526be857c68d11e1070fb009c834268d244c650b1fda55df142000fd88"
     },
     "src/kardboard_vtuber/gui/window.py": {
-      "bytes": 76782,
-      "sha256": "fa03d71e5262072e9b9cda1cea4b35c144079bce3f9a7c7b7ca9878a2d764449"
+      "bytes": 82264,
+      "sha256": "b86206a381c0f2acada8c8d172a199875858e01d7b5fb9ca8be98a8609b6c970"
     },
     "src/kardboard_vtuber/gui/worker.py": {
       "bytes": 6192,
@@ -911,16 +919,16 @@
       "sha256": "52590800ef486f785d458deed505fddf8a752df5d7ae012627814d958d8724fa"
     },
     "tests/test_studio_gui.py": {
-      "bytes": 21465,
-      "sha256": "a5df0195dc180527219252df02164957153ab2a253325182aa604932a2703e5d"
+      "bytes": 28410,
+      "sha256": "7c008ec9a10f1d5982e414c0d917fd271bca768dae3b66610f179a8741899f09"
     },
     "tests/test_studio_runtime.py": {
       "bytes": 9970,
       "sha256": "6575ba305af6cfc5228a799f89899f94c42e9d083e9ca65b2570e966cfeb09c3"
     },
     "tests/test_studio_settings.py": {
-      "bytes": 3495,
-      "sha256": "e25f3d2ffc5031ab8b690a127500865946df45bfb358ee19da624f15a0051dc4"
+      "bytes": 3826,
+      "sha256": "50070541c482571514f83bd5415bbd190b367c07f8293db2b7a0294ef5ed8aac"
     },
     "tests/test_studio_theme.py": {
       "bytes": 1760,
@@ -959,8 +967,8 @@
       "sha256": "7ff6a0c1c8691d037c64a88173b93e2d547811f2332a84e86513fe92e5e62406"
     }
   },
-  "sourceFingerprint": "69f80bc254e2197b370945911f5648e1e3e0155439242bb8097be0c548ade689",
+  "sourceFingerprint": "ea6961ca4aaae1eaf7d11c5f5f6e4bbd5dad63721b5d8c85d847ad7ffeb4fb87",
   "sourceModified": false,
-  "tag": "v1.1.1",
-  "version": "1.1.1"
+  "tag": "v1.2.0",
+  "version": "1.2.0"
 }
