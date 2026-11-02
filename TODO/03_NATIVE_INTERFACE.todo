@@ -1,0 +1,27 @@
+Status: DONE
+Milestone: Usable PySide6 desktop studio
+Dependencies: 02_RUNTIME_AND_CALIBRATION.todo
+Purpose: Provide camera/recording operation, calibration, diagnostics, and help in a coherent native UI.
+
+Tasks:
+  [x] Build all-feature settings pages, preview/skeleton tabs, live metrics and bounded logs.
+  [x] Add Start/Stop, synthetic demo, redacted command view, safe preset save/load.
+  [x] Add model downloads and private guided/free recording actions.
+  [x] Add KC cardboard icon, dark/light themes with sun/moon icons, and tutorial.
+  [x] Handle cancellation, start errors, pending restart changes, and close during work.
+
+Acceptance criteria:
+  GUI does not automatically connect to a camera or publish output.
+  Live and restart-only controls are visibly distinguished.
+  Stop/close do not terminate a running Qt thread unsafely.
+  Presets exclude source credentials and raw-preview consent.
+  Every existing runtime/recorder option is reachable.
+
+Completion evidence:
+  Widget/lifecycle tests passed; actual dark/light/compact/tutorial images captured.
+  Final rerun: 220 tests and Ruff passed. Refreshed screenshots show the complete avatar.
+  Six-second recorded-input replay: live edit applied; 359 post-warmup UI heartbeat samples,
+  p95 31 ms, maximum 47 ms. Scope and capture-run transient limits are in validation-evidence.md.
+Completion log:
+  2026-11-02: Native interface implemented; visual/user acceptance remains pending.
+  2026-11-02: Widget, shutdown, preset, tutorial and async model-verification tests passed.

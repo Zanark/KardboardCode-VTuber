@@ -25,9 +25,15 @@ tracking = [
 virtual-camera = [
     "pyvirtualcam>=0.14,<1",
 ]
+gui = [
+    "PySide6-Essentials>=6.8,<7",
+]
 
 [project.scripts]
 kardboard-camera = "kardboard_vtuber.cli:main"
+
+[project.gui-scripts]
+kardboard-studio = "kardboard_vtuber.gui:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/kardboard_vtuber"]
