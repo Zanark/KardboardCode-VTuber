@@ -1,11 +1,24 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - Studio opens successful video exports in the default player; documentary frozen and installer paused.
-> **Last context offload:** 2026-11-02T23:12:03+05:30
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - Brown dark sliders and refreshed README screenshots completed and pushed; installer paused.
+> **Last context offload:** 2026-11-02T23:25:25+05:30
 
 # KardboardCode-VTuber State
 
 > Resume as the KardboardCode VTuber engineering and streaming-output partner. Read both context stores below before continuing; preserve the user's face-only choice and privacy requirements.
 
 ## Current focus
+
+**Latest completed request:** cardboard-brown dark slider tracks/handles and refreshed native
+README screenshots are committed/pushed as `9938ac258d628759247019a757a36509001d03ec` on
+`workDesk/agentic_GUI`. Remote branch hash verified by `git ls-remote`. 35 focused theme/GUI/
+branding tests and Ruff pass, including actual enabled/disabled slider pixels in both palettes.
+Mint checked/live/primary states and green light sliders are preserved. Eight synthetic native
+captures regenerated (seven changed PNGs); contact sheet reviewed and captions updated.
+No live camera or published output; no user Studio termination.
+
+Important tooling fact: gh reported viewerPermission READ, but the normal configured Git push
+SUCCEEDED with existing credentials. Do not equate that API report with a proven push denial,
+invent the reason or switch accounts/extract credentials. The user explicitly authorized this
+branch push; no merge/tag/remote release or installer publication was performed.
 
 **Latest feature:** user clarified automatic video opening is a KardboardCode feature, not a
 global assistant-workflow preference. Successful Studio VIDEO exports now open their actual
@@ -79,9 +92,9 @@ sentinel preserved. It left 23 empty directories; removed only that exact verifi
 touched. Keep `build\windows` and `build\wtest` cache/log/probe files for resumption. The private
 environment there references the removed test runtime and is not ready/runnable until reinstall.
 
-The user's side request adds cardboard-brown `#d5a568` dark-theme slider tracks/handles,
-retaining mint checked/live states. Actual native synthetic screenshots and the v1.1.1 banner
-were regenerated. That change and all installer inputs remain uncommitted.
+The user's brown-slider side request is now completed/pushed as `9938ac2`; retain `#d5a568`
+and mint checked/live states. The separate v1.1.1 banner/installer/version edits remain local,
+unstaged and unfinished. Do not mistake the pushed theme for a completed Windows installer.
 The six old v1.1.0 source-export files are currently stale against dirty v1.1.1 inputs.
 Workstream 12 is PAUSED; draft warnings on README/guides/release notes prevent treating the
 unverified MSI or old ZIP as a completed v1.1.1 handoff.
@@ -312,7 +325,9 @@ private recorder timing limitations remain unresolved.
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_869` (successful Studio export auto-opens actual result in the
+- Latest cross-base receipt: `ep_876` (completed brown dark sliders/native README screenshots,
+  normal branch push succeeded and remote hash verified; installer remains paused).
+  Previous receipt: `ep_869` (successful Studio export auto-opens actual result in the
   OS default player; failures/cancellation/refusal and frozen-edition/paused-installer boundaries).
   Previous receipt: `ep_868` (completed exhaustive 977-page development documentary,
   frozen source/task coverage, physical PDF audit and current-skill refresh).

@@ -19,6 +19,7 @@ Workstreams:
   12_WINDOWS_SETUP.todo
   13_DEVELOPMENT_DOCUMENTARY.todo
   14_VIDEO_DEFAULT_PLAYER.todo
+  15_DARK_CARDBOARD_ACCENTS.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
@@ -31,6 +32,7 @@ Tasks:
   [ ] Deliver the user-selected online Windows setup and brown slider accents (workstream 12).
   [x] Create the exhaustive chronological documentary PDF (workstream 13).
   [x] Open successful Studio VIDEO exports in the default media player (workstream 14).
+  [x] Finish cardboard-brown dark sliders and refresh/push README screenshots (workstream 15).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -47,6 +49,9 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-02: Brown dark-slider tracks/handles and eight native synthetic captures completed.
+  35 focused theme/GUI/branding tests/Ruff passed; captions and palette rationale updated.
+  Theme commit 9938ac2 pushed and remote branch hash verified. Installer remains paused/local.
   2026-11-02: Successful Studio VIDEO exports now open the actual completed result in the
   default media player; failed/cancelled jobs do not. Launch refusal preserves saved output
   and surfaces an actionable error. 46 focused tests/Ruff pass; CLI remains noninteractive.

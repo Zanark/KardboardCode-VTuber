@@ -4,6 +4,23 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Brown dark theme and README captures completed and pushed
+
+- User explicitly requested finishing brown accents, refreshed README screenshots, commit/push.
+- Enabled dark slider tracks/handles use #d5a568; mint semantic states and green light sliders
+  are preserved. New actual pixel tests cover both track/handle and disabled states.
+  35 focused theme/GUI/branding tests and Ruff passed.
+- Regenerated all eight native synthetic views; seven PNGs changed, tutorial image was identical.
+  Reviewed dark/light/compact/video contact sheet and updated brown/light README captions.
+- Staged theme/docs/screenshots only. Overlapping installer README/version/banner and runtime
+  edits remain local and unstaged. Frozen documentary PDF hash remains identical.
+- gh reported READ, but the normal Git push succeeded without any account/security change.
+  Remote workDesk/agentic_GUI matches 9938ac258d628759247019a757a36509001d03ec exactly.
+  Do not repeat the earlier assumption that publishing/push is necessarily blocked.
+- No live camera, user process termination, installer build/test, merge/tag or remote release.
+- Persisted/readable handoff ep_876; advanced the exact marker only after store/episode
+  persistence to 2026-11-02T23:25:25+05:30.
+
 ## 2026-11-02 - Default media-player opening added to Studio VIDEO
 
 - User clarified the request applies to KardboardCode, not a global assistant preference.

@@ -145,6 +145,10 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Gotchas
 
+- A gh viewerPermission READ report did not predict the configured Git transport's outcome:
+  a normal user-authorized push succeeded on 2026-11-02. When authorized, verify the actual
+  push/remote hash rather than assume denial or invent an identity explanation. Never switch
+  accounts, extract credentials, force-push or bypass repository policy to resolve a mismatch.
 - Windows Qt wheels contain deeply nested resource paths. A normal private prefix failed at
   MAX_PATH in the real MSI test; a canonical extended-length prefix successfully installed
   all exact locked wheels without changing machine-wide settings. The source correction is
