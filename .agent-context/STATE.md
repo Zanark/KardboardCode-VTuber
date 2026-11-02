@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-03 (Asia/Kolkata) - Explicit context-only refresh after completed README/gallery delivery. All 177 tasks done; no new application or portrait work.
-> **Last context offload:** 2026-11-03T02:57:46+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered v1.2.1 numeric +/- clarity and mode-baseline fix with current source/MSI artifacts. All 178 tasks done. No portrait work.
+> **Last context offload:** 2026-11-03T03:26:57+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,16 +7,37 @@
 
 ## Current focus
 
-**Current request is context-only.** Latest installed offload/mesh protocols are loaded,
-including active-only social reading when an archive exists. Current base remains
-ctx-42d505fb393f; identity and completed work are preserved. No new code, artwork, package
-builds, camera activity or publication is requested. Await the next concrete user task.
+**DELIVERED: numeric-control clarity and stray tab underline, v1.2.1.** Code input
+21e4077 adds explicit 12px plus/minus SVG glyphs, contrasting wider step surfaces and muted
+disabled/boundary states for all integer/decimal controls. Existing values/steps/bindings are
+unchanged. Live/Video drawBase is disabled; raster tests confirm no trailing baseline.
 
-**DELIVERED: minimal animation-first README.** Core change committed as 67becce:
+The native PlusMinus property alone still painted blank buttons under this stylesheet;
+explicit glyph images fix the actual rendering path. Complete suite: 302 passed, one unsupported
+offscreen-widescreen case skipped; Ruff. Native glyph/shape/click/boundary/baseline set passes
+at 100/125/150%. Actual dark/light control crops reviewed, eight screenshots refreshed and
+272-page/103-diagram handbook rebuilt with zero failures/overflow. Minimal README media budget
+is preserved. The actual wheel contains all six matching SVGs and paints both signs in both
+themes when extracted outside the checkout. No new MSI install/uninstall lifecycle was needed
+or claimed for this styling patch; previous installed-runtime qualification remains dated.
+
+Workstream 19 and all 178 session tasks are done. Final public completion inputs:
+b3f774d46f16693aaadeb9d7c1e366f9ad133ce3; artifact commit: 148e2f1. Both --check commands pass
+and all nine release files match committed blobs. Clean source fingerprint:
+c72d93f71118d7fcdd2c70d3b513e9b8c484ff52f932d4a4c59f44f0b4c69f68.
+ZIP: 33,042,612 bytes / SHA256 2f7e25200c8899c3ae0d646c57834d82552c2651b5a997fded93f4a01be7c593.
+MSI: 19,709,952 bytes / SHA256 7fd085d51e89415dce23101e9f8309586b7db82488b060a676e5361a3bfabc05.
+No more design, research, packaging or portrait work remains for this request.
+
+Only the existing GUI affordances changed. No tracking/rendering algorithm, numeric semantics,
+camera, output, portrait or remote-publication changes. Current base remains ctx-42d505fb393f;
+routine social reads remain active-only, with archive/history preserved.
+
+**Earlier delivered layout, preserved in v1.2.1: minimal animation-first README.** Core change committed as 67becce:
 banner/runtime hero, immediately followed by all three GIFs, then only dark/light GUI shots.
 Main has seven images total. `docs\visual-gallery.md` contains the other 24 captioned images.
 All 31 original references remain; local media/navigation links resolve; no table framing.
-No new screenshots/artwork or application-code changes. Version remains 1.2.0.
+That documentation-only change used v1.2.0 with no new screenshots/artwork or application-code changes.
 Workstream 18 is done. Final public inputs de9f18e0a866d55a48f8c7aed7850b23acbdacdc;
 artifacts 4c68266. All release bytes match committed blobs; manifests are clean/aligned.
 Source fingerprint: 1c263941eb234b9e304b1c804d7aaa1c8bd1b51b1ab2df72d0b5e27847be1a79.
@@ -235,7 +256,16 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
-### Current GUI handoff - v1.2.0 Preview-First Studio
+### Current GUI handoff - v1.2.1 Numeric-Control Clarity
+
+- Explicit visible upper + / lower minus steps in both themes, with muted disabled and
+  unavailable directions. Native drawBase disabled for the Live/Video mode strip.
+- Code 21e4077, completion inputs b3f774d, generated artifacts 148e2f1. Current source/MSI
+  receipts align with clean inputs; full final evidence and hashes are above.
+- All 178 tasks complete. Restart an existing Studio to load changes; do not terminate it.
+  Await concrete owner feedback. No new portrait work or remote publication.
+
+### Historical GUI baseline - v1.2.0 Preview-First Studio
 
 - Final widescreen GUI inputs: 1bb3092, after implementation 5ca8d84 and handbook evidence
   6faefc4. All operating controls retained; source code and native pictures are committed.
@@ -366,7 +396,7 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-GUI implementation, widescreen follow-up and release artifacts are complete. Await the owner's
+GUI implementation, widescreen follow-up, numeric-control patch and v1.2.1 release artifacts are complete. Await the owner's
 next concrete GUI feedback, not another design/research/installer loop. An already-running
 Studio must be restarted to load external source changes; do not terminate it for the user.
 Do not resume portrait work or silently revert the completed drawing. Real visual/live-camera/
@@ -382,7 +412,7 @@ cutoff and hashes define this edition. Rebuild only intentionally using the priv
 This private documentary does not belong in source-release ZIPs. Its original 977-page PDF hash
 was rechecked unchanged after the installer work.
 
-The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.0. Hand off the current full MSI path;
+The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.1. Hand off the current full MSI path;
 the owner creates the final GitHub release manually. No automatic push/tag/merge/release,
 live camera, driver installation or system Python/PATH/security change is authorized.
 Use approved signing/IT handling if unsigned packages are blocked; never disable protections.
@@ -403,7 +433,9 @@ Earlier live accuracy/privacy/calling-app and private recorder timing limits rem
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_900` (explicit context-only refresh, active-only archive
+- Latest cross-base receipt: `ep_904` (completed v1.2.1 numeric-control/tab-line patch,
+  current source/MSI handoff and all 178 tasks done; current-protocol active-only refresh).
+  Previous receipt: `ep_900` (explicit context-only refresh, active-only archive
   boundary and preserved completed work; no application/artwork/package changes).
   Previous receipt: `ep_899` (minimal animation-first README, seven front images,
   complete 24-image visual gallery and matching documentation-only release snapshots).

@@ -4,6 +4,32 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-03 - Numeric controls and trailing tab-line fixed in v1.2.1
+
+- User reported unlabeled numeric buttons after the stray Live/Video underline. Confirmed
+  default drawBase and invisible native spin controls, then fixed both without unrelated redesign.
+- Native PlusMinus property alone remained blank through QSS. Packaged explicit plus/minus
+  glyphs on contrasting 22px step surfaces, with muted disabled and min/max-unavailable states.
+  Used crisp 12px icon rendering, not weak property-only checks or invisible native fallback.
+- Native raster/shape/click/boundary tests pass for integer/decimal and both themes at
+  Qt 100/125/150%. Mode-strip pixel test verifies no trailing rule. Complete suite:
+  302 passed/one unsupported offscreen-widescreen case skipped; Ruff.
+- Actual native dark/light controls reviewed, eight screenshots refreshed. Handbook:
+  272 pages/103 diagrams, zero Mermaid failures/overflow. README remains animation-first/minimal.
+- Code commit 21e4077; completion inputs b3f774d; generated source/MSI artifacts 148e2f1.
+  Both --check commands pass; all nine release files match committed blobs and clean provenance.
+  The actual wheel resolves all six matching glyph SVGs outside the checkout and paints both
+  signs in both themes. All 178 session tasks are done; no new MSI lifecycle was performed.
+- Current ZIP: 33,042,612 bytes / SHA256
+  2f7e25200c8899c3ae0d646c57834d82552c2651b5a997fded93f4a01be7c593.
+  MSI: 19,709,952 bytes / SHA256
+  7fd085d51e89415dce23101e9f8309586b7db82488b060a676e5361a3bfabc05.
+- Current installed context skills reread; active-only social boundary retained, own attention
+  empty and existing participation preserved without duplicate filler. No camera, algorithm/
+  numeric binding change, portrait work or remote publication.
+- Persisted/read back ep_904, then advanced the exact full-offload marker after successful
+  store/episodic persistence: 2026-11-03T03:26:57+05:30.
+
 ## 2026-11-03 - Explicit context-only refresh after README delivery
 
 - User requested another context refresh. Loaded both current installed skills and reconciled

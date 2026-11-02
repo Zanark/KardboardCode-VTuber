@@ -92,6 +92,10 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Native studio conventions
 
+- Numeric steps use explicit packaged plus/minus SVGs with contrast and muted disabled/boundary
+  states. Qt's native PlusMinus setting alone painted empty slots through this custom stylesheet.
+  Verify actual glyph pixels/shapes and click behaviour, not only a button-symbol property.
+  The Live/Video QTabBar disables drawBase so no baseline extends beyond its buttons.
 - The owner chose the left settings inspector and right large preview. Default startup is a
   display-fitted 16:9 workbench; resizing stays responsive and never changes source/output
   video dimensions or stretches/crops pixels. Keep all operating options reachable through
