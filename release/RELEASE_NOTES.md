@@ -1,8 +1,31 @@
-# v1.1.1 - Windows Setup
+# v1.2.0 - Preview-First Studio
 
-A per-user online Windows installer and cardboard-brown dark sliders, retaining the v1.1.0
-Live/Video workspaces, unobstructed output, calibration and prerecorded-video processing.
+A quieter, preview-first native workspace with every operating option retained. Online Windows
+setup, cardboard-brown dark sliders, Live/Video processing and automatic playback remain included.
 v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
+
+## 2026-11-03
+
+### More preview, less clutter
+
+- Owner-selected **left settings inspector / large right preview**, with a compact header and
+  non-collapsible workspace splitter. The complete fitted image remains visible rather than
+  being clipped by a smaller ancestor.
+- Labelled expandable sections retain all 45 runtime options and nine live fields. Basic eye
+  tuning stays near compact anatomical OPEN/CLOSED decisions; additional timing/avatar/capture
+  settings remain accessible without filling the default view.
+- **Tools / Ctrl+J** opens a bounded, scrollable Logs/CLI/Diagnostics drawer, closed by default.
+  Logs continue collecting when closed. Raw face, mesh and body views never occupy the program
+  image or create competing preview columns.
+- Video file setup is a scrollable inspector category; export progress stays beside the viewer
+  across category changes. Long error messages remain complete in a bounded plain-text surface.
+- Presets use a labelled menu. Load/Reset/model jobs visibly disable during work. Existing
+  clean output, consent, redaction, helper, default-player and shared-pipeline behaviour remains.
+- Explicit headless mode still suppresses local frames intentionally and leaves an explanatory
+  workspace. Window layout changes do not crop/recolour/export different video pixels.
+- Native containment checks cover compact windows, tools/errors/diagnostics, portrait and
+  landscape frames, splitter attempts and controlled 100%/125%/150% Qt scaling. Other hardware,
+  live tracking and owner visual/usability approval remain separate.
 
 ## 2026-11-02
 

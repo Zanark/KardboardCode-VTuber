@@ -69,24 +69,28 @@ def stylesheet(dark: bool) -> str:
     return f"""
         QMainWindow, QDialog {{ background:{bg}; color:{text}; }}
         QWidget {{ color:{text}; font-family:'Segoe UI'; font-size:12px; }}
-        QFrame#panel, QFrame#metric, QGroupBox {{
+        QFrame#panel, QFrame#toolsPanel, QGroupBox {{
             background:{panel}; border:1px solid {border}; border-radius:9px;
         }}
         QGroupBox {{ margin-top:10px; padding:14px 10px 8px; }}
         QGroupBox::title {{ subcontrol-origin:margin; left:12px; padding:0 6px; }}
         QScrollArea, QScrollArea > QWidget > QWidget, QStackedWidget {{ background:{panel}; }}
         QLabel {{ background:transparent; }}
-        QLabel#appTitle {{ font-size:23px; font-weight:700; letter-spacing:1px; }}
+        QLabel#appTitle {{ font-size:17px; font-weight:700; }}
+        QLabel#panelTitle {{ font-size:14px; font-weight:600; }}
         QLabel#eyebrow {{ color:{muted}; font-size:10px; font-weight:600; }}
         QLabel#hint, QLabel#sectionIntro {{ color:{muted}; font-size:11px; }}
         QLabel#status {{ background:{panel}; border-left:4px solid {accent};
-            padding:10px 13px; font-weight:600; }}
+            padding:5px 9px; font-weight:600; }}
+        QLabel#sessionHint {{ color:{muted}; padding:4px 0; }}
+        QLabel#sessionHint[busy="true"], QLabel#privateNotice {{
+            color:{"#e8c58a" if dark else "#6c481e"}; padding:4px 0;
+        }}
         QLabel#error, QLabel#warning {{ color:{text}; background:{panel};
             border:2px solid #d5a568; border-radius:6px; padding:10px; }}
         QLabel#lockBadge, QLabel#lockBadge:disabled {{
             color:{"#e8c58a" if dark else "#6c481e"}; font-size:10px; font-weight:700;
         }}
-        QLabel#metricValue {{ font-size:17px; font-weight:600; }}
         QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox, QPlainTextEdit, QTextBrowser {{
             background:{field}; border:1px solid {border}; border-radius:5px;
             padding:6px; selection-background-color:{accent}; selection-color:{on_accent};
@@ -111,6 +115,17 @@ def stylesheet(dark: bool) -> str:
             background:{disabled_bg}; color:{disabled}; border-color:{border};
         }}
         QPushButton#stop {{ color:{"#ffc3a0" if dark else "#8c351c"}; border-color:#b27348; }}
+        QToolButton {{ background:{panel}; border:1px solid {border}; border-radius:5px;
+            padding:5px 8px; }}
+        QToolButton:hover, QToolButton:focus {{ border:1px solid {accent}; }}
+        QToolButton:checked {{ color:{accent}; }}
+        QToolButton#sectionToggle {{
+            text-align:left; border:0; border-bottom:1px solid {border};
+            border-radius:0; padding:8px 2px; font-weight:600;
+        }}
+        QToolButton#sectionToggle:focus {{ border:1px solid {accent}; }}
+        QPlainTextEdit#error {{ color:{text}; background:{panel}; border:2px solid #d5a568;
+            font-family:'Segoe UI'; font-size:12px; }}
         QWidget:disabled {{ color:{disabled}; }}
         QCheckBox {{ spacing:9px; }}
         QCheckBox::indicator {{ width:19px; height:19px; border:2px solid {border};
@@ -132,7 +147,7 @@ def stylesheet(dark: bool) -> str:
         QTabWidget::pane {{ border:1px solid {border}; border-radius:6px; }}
         QTabBar::tab {{ background:{panel}; border:1px solid {border}; padding:7px 12px; }}
         QTabBar::tab:selected {{ border-bottom:3px solid {accent}; font-weight:600; }}
-        QTabBar#workMode::tab {{ padding:11px 20px; font-size:14px; font-weight:700; }}
+        QTabBar#workMode::tab {{ padding:7px 14px; font-size:12px; font-weight:600; }}
         QTabBar#workMode::tab:selected {{ background:{accent}; color:{on_accent}; }}
         QDockWidget {{ color:{muted}; }}
         QPlainTextEdit#console, QPlainTextEdit#command {{ font-family:Consolas; font-size:11px; }}

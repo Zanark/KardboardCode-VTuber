@@ -5,33 +5,47 @@
 
 ## Spatial model
 
-The header contains identity, theme, tutorial, stable Start/Stop actions and two prominent modes:
+The compact header contains identity, theme, tutorial, stable Start/Stop actions and two modes:
 **LIVE** for cameras/streaming and **VIDEO** for applying the avatar to an existing file.
-Settings sit left. The central program image stays clean; private raw face and synthetic
-face/body diagnostics occupy separate side panels. Bottom tabs contain **Logs** and the
-**CLI equivalent**, with one-click copying of the complete command.
+The owner's chosen arrangement is a scrollable settings inspector on the **left** and a large,
+permanent preview on the **right**. Labelled disclosure sections retain every option without
+expanding every form. **Tools** / **Ctrl+J** opens a bounded bottom drawer containing **Logs**,
+**CLI equivalent** and **Diagnostics**. The drawer starts closed, not the preview.
 
 Why these positions:
 
 - **Start/Stop stay in the header:** changing settings pages must not hide the emergency stop.
   Stop is visually distinct from Start, never a destructive "kill thread" action.
 - **Source is first:** most startup failures are source/model/output setup, not eye calibration.
-- **Avatar/eyes sit next to the preview:** compare a left/right slider edit with the K/C result,
+- **Avatar/eyes sit next to the preview:** the default Eye tuning section has calibration,
+  shared/independent thresholds and compact anatomical OPEN/CLOSED readouts. Winks/timing and
+  Avatar setup remain labelled expansions. Compare a left/right slider edit with the K/C result,
   using anatomical names rather than ambiguous mirrored screen-side labels.
 - **Output is separate from input:** capture requests and virtual-camera dimensions are different
   contracts; changing one must not look like changing the other.
 - **Experimental tracking gets its own page and warnings:** all features remain accessible without
   presenting hood/body estimates as the normal or privacy-certified path.
-- **VIDEO is a front-level task:** input/output files, lossless/MP4 quality and progress are
-  separate from live capture. The old raw recorder remains a consent-gated **Private capture**
+- **VIDEO is a front-level task:** its Video file inspector holds input/output files and quality.
+  Progress stays beside the viewer even after changing inspector categories. File setup scrolls
+  rather than pushing every other page below an unbounded form. The old raw recorder remains a consent-gated **Private capture**
   utility in Live mode, not the meaning of video processing.
-- **Diagnostics never cover the program:** dedicated side panels preserve the complete central
-  image. A separate clean output window supports OBS Window Capture without exposing Studio.
+- **Diagnostics never cover the program:** Tools has Signals, Raw face, Face / pose and Body
+  sub-tabs, not additional columns that squeeze the viewer. Active/private indicators remain
+  obvious while the drawer is closed. The separate clean output window still supports OBS capture.
 - **Model setup is discoverable:** missing files need actionable setup, not a cryptic traceback.
 - **Tutorial is a persistent header action and a full page:** it is available before camera access,
   not a first-run modal that blocks the interface or disappears forever.
 - **Logs remain selectable plain text:** no HTML interpretation, bounded history, explicit clearing
-  and safe copying. Rich styling is reserved for status, not log formatting.
+  and safe copying. Closing Tools does not stop log collection.
+- **Presets are a menu:** Save/Load/Reset remain reachable in the inspector and File menu without
+  a permanent row of three extra buttons. Load/Reset/model jobs visibly disable during work.
+- **Errors do not consume the stage:** the bounded plain-text error surface remains visible and
+  scrollable. Full details are retained rather than stretching an arbitrary-length message.
+
+The viewer's splitter cannot collapse. Secondary tools have a height cap and a scrollable
+content region, not a fixed height that can override the viewer's minimum. Native geometry
+checks inspect ancestor clipping, including compact sizes, portrait/landscape frames, tools,
+long errors, private diagnostics, video progress and explicit headless placeholders.
 
 ## Complete runtime control inventory
 

@@ -24,6 +24,21 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-03: Implemented the owner-approved left-inspector/right-preview structure as v1.2.0.
+  Labelled disclosure retains all 45 runtime fields; optional capped scrollable Tools separates
+  logs/CLI/raw/mesh/body data from the viewer. Fixed the remaining native nine-pixel corner case
+  with shrinkable secondary content. Final full suite: 297/Ruff; three native Qt scale factors,
+  both frame orientations, compact modes/errors/diagnostics/headless and action-fit checks pass.
+  Eight native synthetic captures refreshed; engineering handbook 272 pages/103 diagrams with
+  zero failures/overflow. Installer/source qualification and final offload follow this source milestone.
+  User also requested own portrait branding: scoped kraft KC box/headphones below the unchanged
+  face, source/live/generated output verified. Shared contributor bundle left unstaged.
+  2026-11-03: Completed five-pass preview-first UI research against 5dcf3db/v1.1.1. Read 12
+  primary references and recorded current source/state/pixel contracts. Native audit of eight
+  cases at three isolated Qt scale factors reproduces parent clipping and splitter collapse;
+  inventory covers all 45 runtime fields plus GUI-only actions. Research/acceptance criteria
+  are in the existing Studio research chapter; workstream 16 implementation awaits design
+  confirmation. No shipping UI change, camera, virtual output or global display change.
   2026-11-03: Completed workstream 12 after the user explicitly resumed it. Final MSI built
   from committed runtime inputs 209b852, with clean provenance and patched private Python
   3.12.16. Size 19,709,952 bytes; SHA256

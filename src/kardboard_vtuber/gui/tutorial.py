@@ -23,6 +23,9 @@ LESSONS = (
         "a camera, record, or publish video.<br><br><b>Try demo</b> renders the real avatar on an "
         "explicitly synthetic stage. It needs no camera and does not send virtual-camera video. "
         "Use it to explore the layout and live eye sliders.<br><br>"
+        "Settings stay in the <b>left inspector</b>; the large preview stays on the right. "
+        "Expand a labelled section for more controls. <b>Tools</b> or <b>Ctrl+J</b> opens "
+        "Logs, CLI equivalent and Diagnostics without covering the preview.<br><br>"
         "<b>LIVE</b> controls apply to the next processed frame. "
         "Dimmed controls show <b>LOCKED / STOP TO EDIT</b>. Other settings unlock after Stop.",
     ),
@@ -44,7 +47,8 @@ LESSONS = (
     (
         "2. Framing and a safe start",
         "Camera",
-        "Choose backend, rotation, mirroring and optional resolution/FPS. These are capture "
+        "Expand <b>Image adjustments</b> or <b>Capture &amp; tracking</b> in Camera for "
+        "backend, rotation, mirroring and optional resolution/FPS. These are capture "
         "requests, not guaranteed negotiated settings. Already mirrored recordings use their own "
         "checkbox; avoid flipping twice.<br><br>Click <b>Start camera</b>. With cardboard enabled, "
         "startup is black before face acquisition; face loss freezes the last safe composite. "
@@ -56,7 +60,8 @@ LESSONS = (
         "3. Calibrate your LEFT / K and RIGHT / C eyes",
         "Avatar & eyes",
         "Your anatomical LEFT eye controls K; RIGHT controls C, regardless of mirroring. "
-        "During a live session press <b>Calibrate OPEN / CLOSED eyes</b>. Capture relaxed open "
+        "Open <b>Eye tuning</b>. During a live session press "
+        "<b>Calibrate OPEN / CLOSED eyes</b>. Capture relaxed open "
         "samples, then close BOTH eyes during the countdown and hold through capture. "
         "A closed eye can still have a nonzero model score. No face images are saved.<br><br>"
         "The wizard derives both overrides and compatible open/wink rules. The readout shows "
@@ -68,17 +73,21 @@ LESSONS = (
         "Both per-eye blink values must remain lower "
         "than the open and wink thresholds.<br><br>"
         "Invalid combinations are not applied. The last valid configuration stays active. "
+        "Expand <b>Winks &amp; timing</b> for the shared rules/debounce. "
+        "Full raw/rendered/filtered "
+        "readouts are under <b>Tools &gt; Diagnostics &gt; Signals</b>. "
         "Eye debounce controls how long a state must hold before logging, not preview frame rate.",
     ),
     (
         "4. Avatar, physics and diagnostics",
         "Avatar & eyes",
-        "Textured 3D is the canonical model. Procedural 2D is the fallback/comparison renderer; "
+        "Expand <b>Avatar setup</b>. Textured 3D is the canonical model. "
+        "Procedural 2D is the fallback/comparison renderer; "
         "disable flap physics before selecting it. Depth offset changes perspective placement. "
         "Motion smoothing reduces jitter; turning it off requires a restart.<br><br>"
         "Local tracking diagnostics are in Tracking labs. Raw-face debugging requires confirmation "
-        "on every real start and appears in its own side panel. Face mesh/body diagnostics use "
-        "the other side, not overlays on the program image. "
+        "on every real start. Open <b>Tools &gt; Diagnostics</b> and choose "
+        "<b>Raw face</b>, <b>Face / pose</b> or <b>Body</b>; these are not program overlays. "
         "Nothing diagnostic enters the clean window. "
         "Presets never restore raw consent. Unmasked camera mode also requires "
         "explicit acknowledgement. The GUI cannot make unsafe modes safe by changing their labels.",
@@ -102,7 +111,7 @@ LESSONS = (
         "6. Experimental tracking",
         "Tracking labs",
         "Face-only is the selected default. "
-        "Skeleton diagnostics use the right-side Body tab, not a "
+        "Skeleton diagnostics use <b>Tools &gt; Diagnostics &gt; Body</b>, not a "
         "filled avatar on the output. Shoulder fallback requires calibration. Hood tracking uses "
         "green on your left and blue on your right. Red/pink markers are unsupported.<br><br>"
         "Body fallback and hood-marker mode cannot run together. Body-only/no-face/no-side-marker "
@@ -112,7 +121,8 @@ LESSONS = (
     (
         "7. Process an existing video",
         "Video",
-        "Switch the front mode to <b>VIDEO</b>. Choose an input and a NEW output filename. "
+        "Switch the front mode to <b>VIDEO</b>. The <b>Video file</b> inspector page opens. "
+        "Choose an input and a NEW output filename. "
         "Use avatar, eye, model, green-screen and hand settings, then Process video.<br><br>"
         "<b>Lossless MKV</b> preserves processed RGB frames without extra compression loss and "
         "can be large. <b>MP4</b> uses high-quality H.264 CRF 17 and is explicitly lossy. "
@@ -141,11 +151,13 @@ LESSONS = (
     (
         "9. Presets, logs and troubleshooting",
         "Camera",
-        "Save/load stores validated controls, not your source URL or raw-preview consent. Loading "
-        "does not start capture. The bottom <b>CLI equivalent</b> tab has one-click complete "
+        "Use the inspector's <b>Presets</b> menu to save/load validated controls, not your source "
+        "URL or raw-preview consent. Loading does not start capture. Open <b>Tools</b> "
+        "(<b>Ctrl+J</b>); its <b>CLI equivalent</b> tab has one-click complete "
         "command copying. It substitutes a local environment variable "
         "so copying a command does not copy credentials.<br><br>"
-        "The separate bottom <b>Logs</b> tab remains selectable and bounded. "
+        "The <b>Logs</b> tab remains selectable and bounded, and continues collecting when "
+        "Tools is closed. "
         "Missing model? Open Models. No image? Check source, backend and face visibility. "
         "Virtual output unavailable? Check installation and competing producer. "
         "Distant detection remains a known limitation, not a solved slider setting.<br><br>"

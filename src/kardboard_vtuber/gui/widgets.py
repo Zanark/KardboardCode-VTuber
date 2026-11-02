@@ -16,14 +16,66 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
+    QPlainTextEdit,
     QPushButton,
+    QSizePolicy,
     QSlider,
     QSpinBox,
+    QToolButton,
     QVBoxLayout,
     QWidget,
 )
 
 from kardboard_vtuber.gui.settings import LIVE_FIELDS, PATH_FIELDS, Field, SettingValue
+
+
+class DisclosureSection(QWidget):
+    def __init__(self, title: str, *, expanded: bool = False) -> None:
+        super().__init__()
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(4)
+        self.toggle = QToolButton()
+        self.toggle.setObjectName("sectionToggle")
+        self.toggle.setText(title)
+        self.toggle.setAccessibleName(title)
+        self.toggle.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.toggle.setCheckable(True)
+        self.toggle.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        layout.addWidget(self.toggle)
+        self.body = QWidget()
+        self.content = QVBoxLayout(self.body)
+        self.content.setContentsMargins(2, 4, 2, 8)
+        self.content.setSpacing(8)
+        layout.addWidget(self.body)
+        self.toggle.toggled.connect(self._show_content)
+        self.set_expanded(expanded)
+
+    def set_expanded(self, expanded: bool) -> None:
+        self.toggle.setChecked(expanded)
+        self._show_content(expanded)
+
+    def _show_content(self, expanded: bool) -> None:
+        self.body.setVisible(expanded)
+        self.toggle.setArrowType(
+            Qt.ArrowType.DownArrow if expanded else Qt.ArrowType.RightArrow,
+        )
+
+
+class ErrorBanner(QPlainTextEdit):
+    def __init__(self) -> None:
+        super().__init__()
+        self.setObjectName("error")
+        self.setAccessibleName("Session error details")
+        self.setReadOnly(True)
+        self.setFixedHeight(68)
+        self.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
+
+    def setText(self, message: str) -> None:
+        self.setPlainText(message)
+
+    def text(self) -> str:
+        return self.toPlainText()
 
 
 class ValueSlider(QWidget):
@@ -128,8 +180,11 @@ class OptionControl(QWidget):
             layout.addLayout(row)
         self.editor.setObjectName(field.name)
         self.editor.setAccessibleName(field.label)
-        self.setToolTip(field.hint or action.help or "")
-        if field.hint:
+        help_text = field.hint or action.help or ""
+        self.setToolTip(help_text)
+        self.editor.setToolTip(help_text)
+        self.editor.setAccessibleDescription(help_text)
+        if field.name == "debug_face_preview" and field.hint:
             hint = QLabel(field.hint)
             hint.setObjectName("hint")
             hint.setWordWrap(True)

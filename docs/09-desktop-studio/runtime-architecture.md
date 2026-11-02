@@ -56,7 +56,7 @@ available, and body/marker resolvers can have different state from the face trac
 
 `RuntimeBridge.publish` bounds display copies to 1280x800 while preserving aspect ratio. The
 clean compositor/output stays full-size. A separate full-resolution owned frame feeds the
-controls-free output window, while mesh/raw-face/skeleton buffers feed local side panels.
+controls-free output window, while mesh/raw-face/skeleton buffers feed the local diagnostic drawer.
 The mailbox owns its copies; `VideoCanvas.set_frame`
 also detaches the QImage from NumPy. Replacing a worker buffer therefore cannot change pixels
 while Qt is painting. No QPixmap or QWidget is touched by the worker.
@@ -65,6 +65,44 @@ There are at most one waiting preview packet and one packet currently being cons
 bound excludes the camera's own latest slot, trackers, renderer targets and virtual output,
 which retain their existing ownership. Memory is bounded structurally, not claimed constant
 across different source resolutions.
+
+## Preview-first containment
+
+The window keeps a left inspector and right program workspace in a non-collapsible horizontal
+splitter. Each settings category is scrollable; `settings.SECTIONS` groups the same `PAGES`
+fields without changing their values or parser destinations. Expanding a section does not
+recreate its controls or restart a worker. Tooltips and accessible descriptions carry secondary
+field help; raw-consent warnings remain explicit.
+
+Logs/CLI/Diagnostics are inside a closed-by-default `QScrollArea` drawer with a height cap.
+It can shrink and scroll when space is tight. A fixed-height dock was not sufficient: the old
+220px canvas could be clipped to 76px by its parent at 1120x780. Raising only the child's
+minimum repeats that defect. Error messages are a bounded, scrollable plain-text surface;
+video progress stays in the program workspace rather than the inspector page.
+
+```mermaid
+flowchart TD
+    Header["Compact header / mode / Start / Stop"] --> Status["Visible state and bounded errors"]
+    Status --> Work["Primary workspace receives remaining space"]
+    Work --> Inspector["Left: scrollable task inspector / labelled sections"]
+    Work --> Viewer["Right: protected aspect-fit preview"]
+    Work --> Progress["Video progress remains visible across categories"]
+    Optional["Tools toggle / Ctrl+J"] --> Drawer["Bounded scrollable secondary drawer"]
+    Drawer --> Tabs["Logs / CLI / Diagnostics"]
+    Tabs --> Separate["Private channels never become program pixels"]
+    classDef default fill:#19332b,stroke:#d5a568,color:#fff4db
+```
+
+Runtime polling still updates owned raw/mesh/body buffers while the drawer is closed, but
+does not add or reveal columns beside the viewer. Compact eye decisions remain near eye
+tuning; full numeric signals and performance values are in Diagnostics. The shared preset
+actions and model buttons visibly reflect busy state. Logging continues regardless of drawer
+visibility, and the explicit headless option leaves an explanatory workspace.
+
+Native regressions check the whole widget and fitted image against its actual visible region,
+not only its `isVisible` flag. They cover small windows, long errors, diagnostics, mode/page
+changes, splitter dragging, both image orientations and controlled Qt scaling. These checks
+establish containment on the tested platform, not universal hardware or live-camera accuracy.
 
 ## Live eye calibration
 
@@ -180,9 +218,10 @@ The same multi-resolution icon supplies the application, window/taskbar and head
 the README embeds the unchanged master. This avoids separate, drifting logo designs.
 
 Rebuild after an explicitly approved logo change with `python scripts\build_branding.py`.
-This is a branding-asset transformation, not a new avatar or installer. Model/recording helper
-actions currently require the source checkout's `scripts` directory; an installer is a separate
-deliverable. v1.0.0 is the first official version; v1.1.0 adds the feedback workspaces.
+This is a branding-asset transformation, not a new tracked avatar. Source helpers come from
+`scripts`; installed helpers are packaged in `_tools`, with writable models/presets/recordings
+kept in per-user data. See [Windows installation](windows-installation.md) for the online MSI.
+v1.0.0 is the first official version; v1.1.0 added workspaces and v1.2.0 adds the preview-first UI.
 Earlier v0.2.0 exports were local staging.
 
 ## Offline processing host

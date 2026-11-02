@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: All Studio workstreams DONE
+Status: Preview-first delivery IN PROGRESS; portrait and earlier workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -20,6 +20,8 @@ Workstreams:
   13_DEVELOPMENT_DOCUMENTARY.todo
   14_VIDEO_DEFAULT_PLAYER.todo
   15_DARK_CARDBOARD_ACCENTS.todo
+  16_PREVIEW_FIRST_STUDIO.todo
+  17_PERSONA_CARDBOARD_IDENTITY.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
@@ -33,6 +35,8 @@ Tasks:
   [x] Create the exhaustive chronological documentary PDF (workstream 13).
   [x] Open successful Studio VIDEO exports in the default media player (workstream 14).
   [x] Finish cardboard-brown dark sliders and refresh/push README screenshots (workstream 15).
+  [ ] Deliver a less-cluttered, preview-first layout without removing options (workstream 16).
+  [x] Add cardboard-tool identity to this session's unobscured portrait (workstream 17).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -54,6 +58,10 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-03: Workstream 16 research completed. Native audit reproduces 76 visible pixels of a
+  220px canvas at 1120x780; dock/parent budgeting and splitter collapse are structural defects.
+  Five research lenses, 12 primary references and full option inventory recorded.
+  Design confirmation and implementation remain pending; this is not a shipped UI fix.
   2026-11-03: Workstream 12 delivered: 19,709,952-byte per-user MSI, strict online component
   setup and installed native/CLI/helper/export/uninstall qualification. Updated handbook and
   v1.1.1 source handoff. No live camera, system Python/PATH changes or remote publication.

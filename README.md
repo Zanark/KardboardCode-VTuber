@@ -1,6 +1,6 @@
 # KardboardCode Studio
 
-[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.1.1.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
+[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.2.0.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
 
 ![The actual textured 3D avatar, presented in the forest-green and kraft-paper banner palette](docs/images/kardboardcode-hero.png)
 
@@ -17,12 +17,12 @@
 
 ![Actual KardboardCode Studio with live eye sliders and a synthetic avatar preview](docs/images/kardboardcode-studio-dark.png)
 
-*Cardboard-brown sliders on forest green. Real Windows widgets on a labelled synthetic stage;
-no camera input or published video.*
+*A permanent preview. Grouped settings on the left; extra tools only when needed.
+Real Windows widgets, synthetic stage, no camera input or published video.*
 
 ## Current milestone
 
-**v1.1.1 — Windows setup, cardboard sliders and automatic video playback.** [What's included →](release/RELEASE_NOTES.md)
+**v1.2.0 — More preview. Less clutter. Every option.** [What's included →](release/RELEASE_NOTES.md)
 
 ## Inside the Studio
 
@@ -38,7 +38,7 @@ no camera input or published video.*
 
 <a href="docs/images/kardboardcode-studio-compact.png"><img src="docs/images/kardboardcode-studio-compact.png" alt="Compact Studio layout with anatomical eye calibration" width="100%"></a>
 
-*A smaller desk. The same cardboard-brown live eye controls.*
+*A smaller desk without a disappearing preview. The same cardboard-brown live controls.*
 
 <a href="docs/images/kardboardcode-studio-tutorial.png"><img src="docs/images/kardboardcode-studio-tutorial.png" alt="Built-in tutorial explaining left and right eye calibration" width="100%"></a>
 
@@ -115,9 +115,9 @@ no camera input or published video.*
 
 ![04: Under the cardboard. Synthetic debug views, real geometry.](docs/images/readme/debug.svg)
 
-![Dedicated local diagnostic side panels leaving the central program image unobstructed](docs/images/kardboardcode-studio-diagnostics.png)
+![Optional diagnostic tools drawer leaving the large program preview unobstructed](docs/images/kardboardcode-studio-diagnostics.png)
 
-*Synthetic diagnostic layout. Private raw-face pixels stay in their own panel, not the output.*
+*Open Tools when you need diagnostics. Synthetic raw placeholders, never part of clean output.*
 
 <a href="docs/images/kardboardcode-tracking-debug-window.png"><img src="docs/images/kardboardcode-tracking-debug-window.png" alt="Synthetic tracking debug view with face mesh and XYZ inset" width="100%"></a>
 

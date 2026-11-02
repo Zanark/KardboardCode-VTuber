@@ -35,9 +35,12 @@ See [scoped validation evidence](../07-quality-and-testing/validation-evidence.m
 
 ## Studio pages and live changes
 
-Use **Camera**, **Avatar & eyes**, **Output & effects**, **Tracking labs**, **Private capture**,
-**Models** and **Tutorial**. Diagnostics occupy side panels, not the program image.
-Logs/CLI-equivalent occupy the bottom tabs.
+Use the left inspector: **Camera**, **Video file**, **Avatar & eyes**, **Output & effects**,
+**Tracking labs**, **Private capture**, **Models** and **Tutorial**. Labelled sections expose
+secondary controls without removing them; field help is available in tooltips/accessibility
+descriptions. The large preview stays on the right.
+**Tools** / **Ctrl+J** opens a bounded Logs/CLI/Diagnostics drawer, closed by default.
+Raw face, mesh and body views never occupy or cover the program image.
 Left/right blink overrides, shared wink/open/asymmetry thresholds, internal brightness and
 debounce are live. Other settings unlock after Stop
 (`src/kardboard_vtuber/gui/settings.py:17-29,48-186`).

@@ -22,6 +22,13 @@ def test_every_cli_option_has_a_native_control_and_roundtrips(source: str) -> No
     assert live_tuning(args).eyes.left_closed == 0.35
 
 
+def test_disclosure_sections_preserve_each_page_inventory_once() -> None:
+    for page, sections in settings.SECTIONS.items():
+        names = [name for section in sections for name in section.fields]
+        assert len(names) == len(set(names))
+        assert set(names) == {field.name for field in settings.PAGES[page]}
+
+
 def test_preset_keeps_current_source_and_drops_raw_consent(tmp_path: Path) -> None:
     values = dict(
         settings.defaults(),

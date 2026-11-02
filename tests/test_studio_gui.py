@@ -10,9 +10,10 @@ import pytest
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 pytest.importorskip("PySide6")
 
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QRect, Qt, QTimer
+from PySide6.QtGui import QRegion
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QLineEdit
+from PySide6.QtWidgets import QApplication, QLineEdit, QScrollArea
 
 from kardboard_vtuber.camera.devices import LocalCameraDevice
 from kardboard_vtuber.gui import settings
@@ -156,6 +157,9 @@ def test_demo_keeps_ui_heartbeat_and_cooperatively_stops(
         wait_until(app, lambda: not window.preview.image.isNull())
         assert window.controls["left_blink_threshold"].isEnabled()
         assert not window.controls["source"].isEnabled()
+        assert not window.load_action.isEnabled() and not window.reset_action.isEnabled()
+        assert window.save_action.isEnabled()
+        assert all(not button.isEnabled() for button in window._model_buttons.values())
         assert "LOCKED" in window.controls["source"].state_badge.text()
         assert "LOCKED" in window.live_hint.text()
         assert window.output_window.isVisible()
@@ -169,6 +173,7 @@ def test_demo_keeps_ui_heartbeat_and_cooperatively_stops(
         window.stop()
         wait_until(app, lambda: window.worker is None)
         assert window.start_button.isEnabled() and window.preview.image.isNull()
+        assert all(button.isEnabled() for button in window._model_buttons.values())
     finally:
         timer.stop()
 
@@ -323,6 +328,7 @@ def test_bottom_command_tab_copies_the_complete_redacted_command(
 
     window.controls["source"].set_value("https://synthetic:secret@invalid/video")
     window._refresh_settings()
+    window.tools_action.setChecked(True)
     window.console_tabs.setCurrentIndex(1)
     app.processEvents()
     QTest.mouseClick(window.copy_command, Qt.MouseButton.LeftButton)
@@ -375,12 +381,154 @@ def test_raw_debug_channels_never_cover_program_or_clean_window(window: StudioWi
         clean, RuntimeTelemetry(), clean_frame=clean, raw_face=raw, face_mesh=debug,
     )
     window._poll_runtime()
-    assert window.raw_panel.isVisible() and window.diagnostic_panel.isVisible()
+    assert not window.tools_drawer.isVisible()
+    assert window.diagnostics_notice.isVisible()
     assert window.preview.image.pixelColor(5, 5).red() == 30
     assert window.output_window.canvas.image.pixelColor(5, 5).red() == 30
     assert window.raw_face.image.pixelColor(5, 5).red() == 120
     assert window.face_mesh.image.pixelColor(5, 5).red() == 220
+    window.tools_action.setChecked(True)
+    window.console_tabs.setCurrentIndex(2)
+    window.diagnostic_tabs.setCurrentIndex(1)
+    assert window.raw_panel.isVisible()
+    assert window.diagnostic_panel.isVisible()
     window.bridge = None
+
+
+def assert_whole_preview_visible(window: StudioWindow) -> None:
+    preview = window.preview
+    visible = preview.visibleRegion()
+    assert QRegion(preview.rect()).subtracted(visible).isEmpty()
+    assert preview.width() >= 320 and preview.height() >= 180
+    if not preview.image.isNull():
+        fitted = preview.image.size().scaled(
+            preview.size(), Qt.AspectRatioMode.KeepAspectRatio,
+        )
+        target = QRect(
+            (preview.width() - fitted.width()) // 2,
+            (preview.height() - fitted.height()) // 2,
+            fitted.width(), fitted.height(),
+        )
+        assert QRegion(target).subtracted(visible).isEmpty()
+
+
+@pytest.mark.parametrize("size", [(1120, 780), (1280, 720), (960, 600)])
+@pytest.mark.parametrize("frame_size", [(720, 1280), (1280, 720)])
+def test_preview_is_not_clipped_by_tools_errors_pages_or_splitter(
+    app: QApplication, window: StudioWindow, size: tuple[int, int],
+    frame_size: tuple[int, int],
+) -> None:
+    window.resize(*size)
+    frame = np.full((*frame_size, 3), (10, 20, 30), np.uint8)
+    window.preview.set_frame(frame)
+    assert not window.tools_drawer.isVisible()
+    for tools in (False, True):
+        window.tools_action.setChecked(tools)
+        for page in ("Avatar & eyes", "Camera", "Models"):
+            window.page_selector.setCurrentText(page)
+            app.processEvents()
+            assert_whole_preview_visible(window)
+        window._show_error("Synthetic recoverable error with details. " * 100)
+        app.processEvents()
+        assert_whole_preview_visible(window)
+        assert "Synthetic recoverable" in window.error_label.text()
+        window.error_label.hide()
+        window.workspace_split.setSizes([320, 0])
+        app.processEvents()
+        assert_whole_preview_visible(window)
+    window.diagnostics_notice.show()
+    window._show_error("Synthetic raw-diagnostic error. " * 100)
+    app.processEvents()
+    assert_whole_preview_visible(window)
+    window.diagnostics_notice.hide()
+    window.work_mode.setCurrentIndex(1)
+    window.page_selector.setCurrentText("Avatar & eyes")
+    window.preview.set_frame(frame)
+    app.processEvents()
+    assert window.video_progress_panel.isVisible()
+    assert_whole_preview_visible(window)
+    window._show_error("Synthetic video-export error. " * 100)
+    app.processEvents()
+    assert_whole_preview_visible(window)
+
+
+def test_every_option_remains_reachable_in_the_scrollable_inspector(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    window.resize(1120, 780)
+    window.input_type.setCurrentIndex(1)
+    window.controls["source"].set_value("synthetic-input.mkv")
+    for page, fields in settings.PAGES.items():
+        window.page_selector.setCurrentText(page)
+        for (group_page, _), section in window.sections.items():
+            if group_page == page:
+                section.set_expanded(True)
+        app.processEvents()
+        scroll = window.pages.currentWidget()
+        assert isinstance(scroll, QScrollArea)
+        for field in fields:
+            if field.name in {"virtual_camera_width", "virtual_camera_height"}:
+                assert window.output_resolution.isVisible()
+                continue
+            control = window.controls[field.name]
+            scroll.ensureWidgetVisible(control.editor, 0, 10)
+            app.processEvents()
+            assert control.isVisible(), field.name
+            assert not control.editor.visibleRegion().isEmpty(), field.name
+    assert window.worker is None and window.job is None
+
+
+def test_tools_toggle_is_keyboard_reachable_and_keeps_background_logs(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    window._append_log("[TEST] This log arrived while tools were closed.")
+    assert not window.tools_drawer.isVisible()
+    QTest.keyClick(window, Qt.Key.Key_J, Qt.KeyboardModifier.ControlModifier)
+    app.processEvents()
+    assert window.tools_drawer.isVisible()
+    assert "arrived while tools were closed" in window.console.toPlainText()
+    QTest.keyClick(window, Qt.Key.Key_J, Qt.KeyboardModifier.ControlModifier)
+    app.processEvents()
+    assert not window.tools_drawer.isVisible()
+    assert window.preview.isVisible()
+
+
+def test_explicit_headless_keeps_a_visible_explanatory_workspace(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    from kardboard_vtuber.runtime import RuntimeTelemetry
+
+    window.bridge = RuntimeBridge()
+    try:
+        window.bridge.publish(None, RuntimeTelemetry(demo=True))
+        window._poll_runtime()
+        app.processEvents()
+        assert window.preview.image.isNull()
+        assert "explicitly suppressed" in window.preview.placeholder
+        assert_whole_preview_visible(window)
+        window._clear_signals()
+        assert "explicitly suppressed" not in window.preview.placeholder
+    finally:
+        window.bridge = None
+
+
+@pytest.mark.parametrize("size", [(960, 600), (1120, 780)])
+def test_primary_actions_fit_both_work_modes_and_themes(
+    app: QApplication, window: StudioWindow, size: tuple[int, int],
+) -> None:
+    window.resize(*size)
+    window.tools_action.setChecked(True)
+    window.console_tabs.setCurrentIndex(2)
+    for mode in (0, 1):
+        window.work_mode.setCurrentIndex(mode)
+        for _ in range(2):
+            app.processEvents()
+            for button in (
+                window.theme_button, window.help_button, window.start_button, window.stop_button,
+            ):
+                assert QRegion(button.rect()).subtracted(button.visibleRegion()).isEmpty()
+            assert_whole_preview_visible(window)
+            window.toggle_theme()
 
 
 def test_checkbox_visual_states_are_distinct_in_both_themes(
