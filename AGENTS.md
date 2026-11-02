@@ -6,10 +6,19 @@
   `python scripts\export_release.py`
 - Verify freshness before handing off changes:
   `python scripts\export_release.py --check`
-- The archive is a source release, not a standalone executable or installer. Preserve its
-  setup instructions and known limitations.
+- The ZIP remains source-only. The separately generated online per-user Windows x64 MSI
+  includes patched private Python and the application wheel; first launch downloads locked
+  dependencies. Keep its explicit model/OBS prerequisites and unsigned status clear.
+- After installed runtime inputs change, build with Windows x64 Python 3.12:
+  `.\.venv312\Scripts\python.exe scripts\build_windows_installer.py`
+  Verify with `--check`. Update the lock only intentionally using `--update-lock` from a
+  compatible environment; each downloaded wheel must match authoritative PyPI hashes.
+- Commit public runtime inputs before finalizing provenance. After that commit, use
+  `--refresh-provenance` only if the runtime fingerprint and MSI hash remain unchanged.
+  Keep installer receipt/checksums separate from the source ZIP manifest/checksums.
 - Never export `.agent-context`, credentials/local environment files, raw recordings/captures,
-  downloaded models, virtual environments, caches, Git internals, or the release archive itself.
+  downloaded models, development environments, caches, Git internals, or generated artifacts
+  inside the source archive. Only the MSI intentionally redistributes its pinned private runtime.
 - Update `release\RELEASE_NOTES.md` when preparing a new version. Keep its version aligned with
   `pyproject.toml` and the package's `__version__`.
 - Export from a Git checkout. Only tracked/staged public files are eligible; the exporter rejects

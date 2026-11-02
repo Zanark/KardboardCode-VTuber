@@ -1,0 +1,82 @@
+Status: DONE
+Milestone: v1.1.1 online Windows x64 setup and cardboard slider accents
+Dependencies: 10_STUDIO_FEEDBACK.todo, 11_BORDERLESS_README.todo
+Purpose: Install and launch Studio without manual Python/pip commands or system Python changes.
+
+Tasks:
+  [x] Record user choice: smaller online bootstrap, not full offline packaging.
+  [x] Pin patched private Python and verify upstream dependency wheel hashes.
+  [x] Separate installed resources/helpers from writable per-user application data.
+  [x] Add cardboard-brown dark sliders while preserving semantic mint states.
+  [x] Validate component setup, cancellation, network configuration and installed helpers.
+  [x] Build/test actual MSI install, camera-free application launch and uninstall.
+  [x] Update setup/design/architecture, screenshots, release notes and source export.
+  [x] Commit public inputs/artifacts and complete current-base context refresh.
+
+Acceptance criteria:
+  A Windows x64 .msi exists in release with a matching receipt and SHA-256 file.
+  Setup is per-user; bundled patched Python needs no system Python/pip/PATH modifications.
+  First-launch downloads are explicit, binary-only and hash verified with TLS verification.
+  Existing verified HTTPS mirrors may be used without persisting private feed settings.
+  Models, camera capture and OBS-driver installation never start automatically.
+  Installed CLI/GUI/helper resources work without a source checkout.
+  Uninstall removes installed files/shortcut and preserves per-user data.
+  Source archive and installer provenance remain separate and current.
+  Actual installation evidence remains separate from owner usability approval.
+
+Completion evidence:
+  Final complete suite: 285 passed; Ruff passed. Engineering handbook: 263 pages/101 diagrams,
+  zero Mermaid failures and zero overflowing pages. Source archive and installer checks passed.
+  Public runtime inputs committed as 209b852; final MSI is 19,709,952 bytes, SHA256:
+  3fc4967bb00e8c07e0e8fc7b0d008dcd29a9bb5a7c36fc858d8acf969dd6e14b.
+  Exact final MSI passed genuine online setup of all 26 locked packages, pip check, native
+  installed pythonw Studio/demo/clean window/live tuning/Video workspace/presets, metadata-only
+  camera discovery, checksum-only model verification and real four-frame MediaPipe/GPU export.
+  All three installed CLI entry points and all six packaged helpers passed --help.
+  Final uninstall exit 0 removed the complete installation tree and Start folder without manual
+  cleanup; saved preset and model bytes remained identical. No live camera or real player opened.
+  Release receipts/checksums are separate; final generated provenance follows the public-input
+  commit and is verified against the unchanged MSI. Remote publication and owner approval remain
+  separate. The frozen 977-page documentary retains its original SHA256.
+  Earlier resumed qualification:
+  User explicitly requested context refresh followed by installer continuation.
+  Resumed full suite: 284 passed/Ruff, including the real extended-length wheel regression.
+  Corrected per-user MSI installed and strict online setup completed all 26 locked packages.
+  Installed private pythonw exercised metadata-only camera helper, checksum-only model helper,
+  textured demo/clean window/live tuning/Video workspace/presets, and real four-frame offline
+  MediaPipe/GPU export. Default-player dispatch intercepted; no camera/player opened.
+  Camera, GUI and video CLI help passed; bootstrap ready=true. Uninstall exit 0 removed the
+  full installation tree and Start shortcut while preserving a user sentinel and saved preset.
+  Cache cleanup now uses 103 MSI-owned directory components rather than racing RemoveFile rows.
+  Final focused MSI/source-export regressions: 16 passed, including actual MSI null directory
+  keypaths, CreateFolder ownership and Welcome Escape/Cancel. Engineering handbook rebuilt:
+  263 pages/101 diagrams, zero Mermaid failures and zero overflowing pages.
+  Final documented-source build/provenance/export is now complete.
+  Historical evidence at the earlier pause (superseded by the resumed results above):
+  Last complete source suite before the latest extended-path change: 278 passed; Ruff passed.
+  Last focused installer/Studio slice before that change: 48 passed.
+  All 26 selected upstream wheel hashes matched authoritative PyPI release metadata.
+  MSI draft built (19,697,664 bytes). Real per-user test installation succeeded.
+  Online component downloads succeeded through the configured verified HTTPS mirror.
+  Qt extraction failed on Windows path length; a real locked-wheel reinstall using a canonical
+  extended-length private prefix succeeded without changing system settings.
+  At that pause the prefix/retry fix was not rebuilt into the MSI and its regression was unrun.
+  Owned test MSI was uninstalled (exit 0), its shortcut removed and user-data sentinel preserved.
+  Uninstall left 23 empty directories, manually removed only after confirming zero files.
+  No installer test processes remain. Existing user Studio was untouched.
+  At that pause installed application/helper launch, final rebuild and handoff remained pending.
+  User usability approval and remote publication: not performed.
+Completion log:
+  2026-11-03: Completed final exact-payload online/native/helper/CLI/video/uninstall qualification.
+  User data survived unchanged; source/MSI handoffs verified. Final public-source, generated
+  artifacts and context are recorded separately. No push, tag, merge or remote release requested.
+  2026-11-02 23:50 IST: Resumed MSI runtime/native GUI/video/uninstall qualification succeeded.
+  Fixed empty-directory residue using explicit cache components/CreateFolder ownership.
+  2026-11-02 23:31 IST: User explicitly resumed setup after context refresh. Preserve completed
+  theme/default-player code and frozen documentary; qualify retained long-path fix in a fresh MSI.
+  2026-11-02 21:40 IST: Paused at explicit user request. Retained source, wheelhouse, download
+  cache, logs and camera-free installed-runtime probe under build for later resumption.
+  Do not publish current MSI or call the old v1.1.0 ZIP a v1.1.1 export.
+  2026-11-02: User selected online setup. Private Python 3.12.16 verified, app wheel and initial
+  MSI authored. Direct public-CDN TLS fails here; configured verified HTTPS mirror works.
+  No TLS bypass, live camera, system Python/PATH modification or remote publication.

@@ -98,7 +98,7 @@ def hero(version: str) -> None:
     text(image, (76, 424), "Your camera. Your cardboard.", 51, fill=CREAM)
     text(image, (77, 493), "Real 3D. Live eyes. Zero browser tabs.", 32, fill="#cfdbc6")
     draw.rectangle((76, 590, 685, 662), outline="#6c8c75", width=2)
-    text(image, (96, 614), f"v{version} / SOURCE EDITION", 25, fill=CREAM, pixel=True)
+    text(image, (96, 614), f"v{version} / WINDOWS + SOURCE", 25, fill=CREAM, pixel=True)
     logo(image, (952, 120, 1545, 632))
     barcode(draw, 1128, 665)
     text(image, (1194, 69), "HANDLE WITH", 25, pixel=True)

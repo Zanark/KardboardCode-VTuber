@@ -4,6 +4,68 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-03 - Windows setup v1.1.1 delivered and final artifacts verified
+
+- User's requested pre-resumption refresh completed as ep_878 before new setup work. Finished
+  workstream 12 instead of leaving the superseded pause as pending work.
+- Public runtime inputs committed as 209b852; final delivery evidence/line-ending contract as
+  d030b3a5df83af9c49d06dac089cba870d7b48d4. Full final suite: 285 passed and Ruff.
+- Final MSI: 19,709,952 bytes, SHA256
+  3fc4967bb00e8c07e0e8fc7b0d008dcd29a9bb5a7c36fc858d8acf969dd6e14b.
+  Private Python 3.12.16; own wheel SHA256
+  882bc5fbad3be54169f0d594e78c4ffe1c8a021a08c702b18a3f2cb8a5ceb27b.
+- Exact final bytes installed and completed real strict online setup of all 26 locked upstream
+  packages through the existing verified HTTPS mirror. ready=true and pip check passed.
+- Installed native pythonw Studio passed metadata camera discovery, checksum-only model helper,
+  1280x720 textured demo/clean window/live tuning/VIDEO workspace/presets and real four-frame
+  synchronous MediaPipe/GPU export. Default-player request intercepted; no camera/player opened.
+  All three CLI entry points and all six packaged helpers passed --help.
+- Final uninstall exit 0 removed the entire owned installation and Start folder, without manual
+  cleanup. Saved preset and model SHA256 values stayed identical. User Studio untouched.
+- Engineering handbook rebuilt: 263 pages/101 diagrams, zero Mermaid failures/right overflow.
+  Source ZIP: 33,286,361 bytes, SHA256
+  8400fa7cee78c1f8c0ef63c0fcd9fb65528c87dce00fc2dab32db84e80552748.
+  Separate source/MSI manifests identify clean d030b3a inputs. Generated artifact commit 037e723;
+  both --check commands and all nine committed-blob comparisons pass. No push/tag/merge/release.
+- Frozen 977-page documentary PDF retains its exact original SHA256. Historical failures/pause
+  remain below; there is no leftover installer WIP. User usability/live/calling-app approval is
+  still separate from packaging qualification.
+- Reread both current installed context skills, full digest, own store, relevant zmem and actual
+  incoming conversations. Answered the new room-wide Pokemon question with a personally inspected
+  fitting image in this session's own persona file. Final readback found one newer room-wide
+  message from Alfred; answered it individually too. No sibling/persona edits or fabricated replies.
+- Persisted/read back final handoff as ep_883. Advanced the exact full-offload marker only after
+  local store and episodic persistence succeeded: 2026-11-03T00:29:58+05:30.
+
+## 2026-11-02 - Resumed Windows setup passes native install/runtime/uninstall qualification
+
+- After ep_878/verified mesh refresh, ran the long-path/bootstrap/path safeguards and complete
+  suite: 284 passed/Ruff. New dedicated cache-directory ownership fixed prior uninstall residue.
+- Corrected MSI installed; strict online first launch installed all 26 locked components,
+  application wheel and import/resource checks; readiness marker published only afterward.
+- Actual installed private pythonw Studio passed metadata camera/helper/model checksum jobs,
+  native textured demo/clean output/live tuning/presets, VIDEO workspace and real four-frame
+  MediaPipe/GPU export. Default-player launch intercepted; no camera/real player opened.
+- Installed CLI/GUI/video help passed. Uninstall exit 0 removed the full installed tree/shortcut,
+  preserving both user sentinel and preset. Built MSI Welcome binds Escape to Cancel.
+- Rebuilt engineering handbook: 263 pages/101 diagrams, zero diagram failures/right overflow.
+  Final documented-source MSI rebuild, exact-payload smoke/provenance/source export still pending.
+
+## 2026-11-02 - Context refresh before explicitly resumed Windows setup
+
+- User requested a context refresh FIRST, then continuation of installer work. Pause superseded.
+- Reread current installed offload/mesh instructions and reconciled current/old KardboardCode
+  stores, task prerequisites and retained source. Older/sibling stores remain read-only.
+- Public HEAD is 34cc9a3 after completed/pushed brown screenshots and default-player feature.
+  Remaining 16 modified tracked +13 untracked files are the retained installer/version/docs draft.
+- No new installer tests/builds yet at this checkpoint. Next: long-path regression, cleanup
+  ownership fix, rebuild/install/installed pythonw/helpers/CLI/video/uninstall qualification,
+  final handbook/docs/source export and installer provenance. Existing MSI is still stale.
+- Frozen 977-page documentary remains unchanged. No live camera, system Python/PATH changes,
+  security bypass, user-process termination or automatic release/tag/merge.
+- Persisted/readable episode ep_878; advanced marker after store/episode persistence to
+  2026-11-02T23:36:26+05:30.
+
 ## 2026-11-02 - Brown dark theme and README captures completed and pushed
 
 - User explicitly requested finishing brown accents, refreshed README screenshots, commit/push.

@@ -51,6 +51,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from kardboard_vtuber.app_paths import command_prefix, data_root, recordings_root, scripts_root
 from kardboard_vtuber.camera.devices import LocalCameraDevice, decode_camera_inventory
 from kardboard_vtuber.cli import live_tuning
 from kardboard_vtuber.gui import settings
@@ -60,7 +61,6 @@ from kardboard_vtuber.gui.settings import (
     LIVE_FIELDS,
     MODEL_SCRIPTS,
     PAGES,
-    ROOT,
     RecordingOptions,
     SettingValue,
 )
@@ -504,7 +504,7 @@ class StudioWindow(QMainWindow):
         def quote(value: object) -> str:
             return "'" + str(value).replace("'", "''") + "'"
         lines = [
-            r".\.venv312\Scripts\python.exe -m kardboard_vtuber.video_cli `",
+            command_prefix("kardboard_vtuber.video_cli") + " `",
             "  --input-video=" + quote(self.video_input.text()) + " `",
             "  --output-video=" + quote(self.video_output.text()) + " `",
             "  --video-quality " + str(self.video_quality.currentData()) + " `",
@@ -752,7 +752,7 @@ class StudioWindow(QMainWindow):
             self._show_error("Stop the current session/job before refreshing the device list.")
             return
         try:
-            self._start_job("cameras", ROOT / "scripts" / "list_local_cameras.py", [])
+            self._start_job("cameras", scripts_root() / "list_local_cameras.py", [])
         except (ValueError, OSError) as error:
             self._show_error(str(error))
 
@@ -956,7 +956,7 @@ class StudioWindow(QMainWindow):
         self.record_pose_fps = self._float_spin(0.1, 60, 10)
         self.record_countdown = self._float_spin(0, 60, 3)
         self.record_preview_height = self._int_spin(240, 4320, 720)
-        self.record_folder = QLineEdit(str(ROOT / "recordings"))
+        self.record_folder = QLineEdit(str(recordings_root()))
         self.record_name = QLineEdit("KardboardCode-studio-session")
         for title, control in (
             ("Free duration / seconds", self.record_duration),
@@ -1379,10 +1379,16 @@ class StudioWindow(QMainWindow):
         self._refresh_settings()
 
     def _save_preset_dialog(self) -> None:
+        folder = data_root() / "presets"
+        try:
+            folder.mkdir(parents=True, exist_ok=True)
+        except OSError as error:
+            self._show_error(f"Cannot create the preset folder: {error}")
+            return
         filename, _ = QFileDialog.getSaveFileName(
             self,
             "Save source-free preset",
-            "KardboardCode-studio.json",
+            str(folder / "KardboardCode-studio.json"),
             "Studio preset (*.json)",
         )
         if filename:
@@ -1469,7 +1475,7 @@ class StudioWindow(QMainWindow):
             self._job_temp = tempfile.TemporaryDirectory(prefix="kardboard-studio-")
             self._job_stop = Path(self._job_temp.name) / "stop"
             argv = options.arguments(values, self._job_stop)
-            self._start_job("recording", ROOT / "scripts" / "record_guided_regression.py", argv)
+            self._start_job("recording", scripts_root() / "record_guided_regression.py", argv)
         except (ValueError, OSError) as error:
             self._clean_job_files()
             self._show_error(str(error))
@@ -1486,7 +1492,7 @@ class StudioWindow(QMainWindow):
                 raise ValueError("Choose a local model destination, not a URL.")
             path = Path(value).expanduser()
             if not path.is_absolute():
-                path = ROOT / path
+                path = data_root() / path
             temporary = path.with_suffix(path.suffix + ".download")
             if temporary.exists():
                 raise ValueError(
@@ -1496,7 +1502,7 @@ class StudioWindow(QMainWindow):
             self._download_temp = temporary
             self._start_job(
                 "model",
-                ROOT / "scripts" / MODEL_SCRIPTS[name],
+                scripts_root() / MODEL_SCRIPTS[name],
                 ["--destination", str(path)]
                 + (["--force"] if self.model_force.isChecked() else []),
             )
@@ -1507,8 +1513,10 @@ class StudioWindow(QMainWindow):
     def _start_job(self, kind: str, script: Path, argv: list[str]) -> None:
         if not script.is_file():
             raise ValueError(
-                "This operation needs the source checkout's scripts folder: " + str(script)
+                "The required application helper is missing: " + str(script)
             )
+        working = data_root()
+        working.mkdir(parents=True, exist_ok=True)
         self._job_kind = kind
         self._job_error = False
         self._pending_output = ""
@@ -1516,7 +1524,7 @@ class StudioWindow(QMainWindow):
         self._decoder = codecs.getincrementaldecoder("utf-8")(errors="replace")
         self.job = QProcess(self)
         self.job.setProcessChannelMode(QProcess.ProcessChannelMode.MergedChannels)
-        self.job.setWorkingDirectory(str(ROOT))
+        self.job.setWorkingDirectory(str(working))
         self.job.readyReadStandardOutput.connect(self._read_job_output)
         self.job.finished.connect(self._job_finished)
         self.job.errorOccurred.connect(self._job_failed)

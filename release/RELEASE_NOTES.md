@@ -1,10 +1,29 @@
-# v1.1.0 - Studio Workspaces
+# v1.1.1 - Windows Setup
 
-The fifteen-point live-use feedback pass: clearer controls, unobstructed program video,
-separate clean output, meaningful eye calibration and genuine prerecorded-video processing.
+A per-user online Windows installer and cardboard-brown dark sliders, retaining the v1.1.0
+Live/Video workspaces, unobstructed output, calibration and prerecorded-video processing.
 v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 
 ## 2026-11-02
+
+### Windows installation and theme
+
+- Online **Windows x64 MSI** with patched private Python 3.12.16 and the application wheel.
+  No manual Python/pip commands or system Python/PATH changes.
+- Start-menu launcher opens a responsive first-launch component wizard. Downloads are
+  binary-only and hash locked; verified HTTPS mirrors are supported without shipping private
+  feed settings. No TLS bypass is accepted. Cancel/failure never marks components ready.
+- Models, recordings and presets use per-user application data. All six helpers are included
+  in the wheel; no source checkout is required. Uninstall preserves per-user data/cache.
+- Dark slider filled tracks and handles now use warm cardboard brown; mint continues to
+  indicate checked/live states. The light theme retains its existing contrast.
+- Successful Studio VIDEO exports open their actual saved result in the system's default
+  player after cleanup. Failed/cancelled jobs never launch. A refused launch leaves the video
+  saved and shows an actionable error. The selected player must support the output codec.
+- Canonical extended-length private prefixes avoid Qt wheel extraction failures without
+  changing Windows long-path settings. Installer-owned bytecode caches are removed on uninstall.
+- Setup is **unsigned** and requires internet on first launch. OBS's installed virtual-camera
+  component is separate; AI models remain explicit downloads in Studio.
 
 ### Studio and output
 
@@ -54,8 +73,11 @@ v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 
 ## Install / launch
 
-This is a **source release**, not a standalone executable/installer. Extract the source ZIP,
-open PowerShell in its project folder, then:
+**Windows setup:** run `KardboardCode-Studio-windows-x64.msi`, then open KardboardCode Studio
+from Start and choose **Install components**. The first launch requires internet. Use Models
+for explicit model downloads. Setup does not open a camera.
+
+**Source ZIP:** extract it and open PowerShell in its project folder, then:
 
 ```powershell
 py -3.12 -m venv .venv312
@@ -69,6 +91,9 @@ press Start camera deliberately. Models are verified/downloaded explicitly from 
 
 ## Known limitations
 
+- Setup targets Windows 10/11 x64 with an OpenGL 3.3-capable graphics driver. ARM64/native
+  non-Windows installers and offline installation are not included. Unsigned packages may be
+  restricted by SmartScreen/application-control policy; never disable device protections.
 - Live distant-face reliability and actual Discord/Teams/Meet qualification remain unconfirmed.
 - Experimental shoulder/hood tracking remains available in LIVE, not the selected default;
   no face/side markers does not establish rear orientation.
@@ -84,5 +109,6 @@ press Start camera deliberately. Models are verified/downloaded explicitly from 
 - The advanced private recorder saves unmasked footage and retains its earlier fixed-FPS
   duration limitation at low capture throughput.
 - Camera indices can change with hardware changes. Refresh/reselect before live capture.
-- Models, recordings, environments, credentials and private context are excluded. Dependencies,
-  codecs and bundled fonts retain their own licenses. No custom camera driver is installed.
+- Source ZIP excludes models, recordings, environments, credentials and private context.
+  MSI intentionally includes the pinned private Python runtime and its licenses, not third-party
+  dependency wheels. Dependencies, codecs and fonts retain their own licenses. No custom driver.

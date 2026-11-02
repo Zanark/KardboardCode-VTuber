@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - Brown dark sliders and refreshed README screenshots completed and pushed; installer paused.
-> **Last context offload:** 2026-11-02T23:25:25+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Windows setup v1.1.1 delivered locally with qualified native lifecycle and aligned release artifacts.
+> **Last context offload:** 2026-11-03T00:29:58+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,7 +7,38 @@
 
 ## Current focus
 
-**Latest completed request:** cardboard-brown dark slider tracks/handles and refreshed native
+**DELIVERED: v1.1.1 online Windows x64 setup.** The user explicitly resumed work after the
+requested pre-resumption context refresh (ep_878, 2026-11-02 23:36 IST). Workstream 12 is done;
+the old pause and draft are superseded. No installer implementation/build/qualification work
+remains. Publication and owner usability approval are separate.
+
+Installer: `release\KardboardCode-Studio-windows-x64.msi`, **19,709,952 bytes**, SHA256
+`3fc4967bb00e8c07e0e8fc7b0d008dcd29a9bb5a7c36fc858d8acf969dd6e14b`.
+It is online, unsigned and per-user Windows x64. Includes private Python 3.12.16 and the own
+application wheel; first launch explicitly downloads 26 hash-locked upstream components.
+Models remain explicit and OBS's installed camera component remains separate.
+
+Final exact MSI passed actual per-user installation and strict online component setup,
+ready=true, pip check, three installed CLI entry points and all six packaged helper --help
+checks. Installed private pythonw exercised metadata-only camera discovery, checksum-only
+model verification, textured synthetic demo/clean 1280x720 output/live eye tuning, VIDEO
+workspace, saved presets and a real four-frame synchronous MediaPipe/GPU export. Player
+dispatch was intercepted; no camera/real player opened. Uninstall exit 0 removed the full
+owned installation tree and Start folder without manual cleanup; preset/model hashes survived.
+
+Final suite: **285 passed/Ruff**, including real long-path installation and emitted-MSI cache/
+null directory-keypath/Welcome Cancel regressions. Runtime caches now have 103 dedicated
+CreateFolder components. Current engineering handbook: **263 pages/101 diagrams**, zero
+diagram failures or overflowing pages.
+
+Runtime inputs: `209b852`; final public delivery inputs: `d030b3a5df83af9c49d06dac089cba870d7b48d4`;
+generated artifacts: `037e723`. Both manifests name those clean public inputs (`sourceModified=false`).
+Source ZIP: **33,286,361 bytes**, SHA256
+`8400fa7cee78c1f8c0ef63c0fcd9fb65528c87dce00fc2dab32db84e80552748`.
+All nine release files match committed blobs; both build/export --check commands pass.
+These installer commits are local: no new push, merge, tag or remote release by this agent.
+
+**Earlier completed request:** cardboard-brown dark slider tracks/handles and refreshed native
 README screenshots are committed/pushed as `9938ac258d628759247019a757a36509001d03ec` on
 `workDesk/agentic_GUI`. Remote branch hash verified by `git ls-remote`. 35 focused theme/GUI/
 branding tests and Ruff pass, including actual enabled/disabled slider pixels in both palettes.
@@ -27,14 +58,14 @@ Failed/cancelled jobs never launch. A refused launch shows the saved path and an
 without changing successful export status or deleting output. CLI remains Qt-free/noninteractive.
 Tests mock the player; 46 focused GUI/runtime/video-export cases and Ruff passed. Documentation,
 in-app tutorial and workstream 14 are updated. Restart an already-running Studio to load changes.
-The installed MSI is still a stale paused draft; no installer rebuild/test or release export
-was resumed. This post-cutoff feature does not alter the sealed documentary edition.
+This feature is included in the qualified v1.1.1 MSI/source handoff. The post-cutoff feature
+does not alter the sealed documentary edition.
 
 **COMPLETED: development documentary book, The Box That Learned to Follow.** User requested
 deep storytelling research and an exhaustive chronological PDF including every task in checkpoints,
 context, TODOs, histories and work_done sections. Private authoring package:
 `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\YTScript\DevelopmentJourney`.
-Do not confuse it with the existing engineering handbook or resume the installer.
+Do not confuse it with the existing engineering handbook or alter its frozen source corpus.
 
 Final PDF:
 `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\YTScript\DevelopmentJourney\KardboardCode-Development-Journey.pdf`
@@ -63,47 +94,29 @@ User reiterated use of the CURRENT installed context-offload and context-mesh sk
 refresh. Both current files were reread completely. New room-wide mention obligations apply;
 the Alfred introduction was acknowledged in this session's own persona file only.
 
-**PAUSED BY USER:** the user requested pausing installer work unless nearly finished. It still
-needs a corrected build and actual installed GUI/helper verification, so stop rather than rush.
-Do not resume Windows setup implementation/build/testing until the user asks.
+**Installer history, resolved:** an earlier 19,697,664-byte draft failed Qt extraction at
+MAX_PATH and left 23 empty directories after test uninstall. The user paused it, then explicitly
+resumed it. Canonical extended-length private prefixes, force-reinstall-on-retry and explicit
+MSI cache-directory ownership fixed both issues. The final MSI above replaces that draft.
+Historical failures remain in JOURNAL/workstream 12, not as current pending work.
 
-The pending request is a Windows setup in `release` for manual publication. The user chose
-the smaller online bootstrap, not a fully offline/frozen application. v1.1.1 includes patched
-private Python 3.12.16 and the own app wheel in a per-user x64 MSI; first launch offers
-hash-locked upstream component downloads. Models remain explicit and OBS's installed camera
-component remains separate. System Python/PATH are unchanged. The MSI is unsigned.
+Direct public-CDN TLS fails on this machine; actual online qualification used its existing
+verified HTTPS mirror. Every locked wheel was compared with authoritative PyPI hashes.
+Bootstrap copies only network settings into a clean child environment, rejects TLS bypasses
+and ignores target/user/prefix overrides. No private feed configuration is shipped.
+Do not revive the abandoned PyInstaller plan or change system Python/PATH/security settings.
 
-A 19,697,664-byte draft MSI exists, but it predates the latest source correction and is NOT
-release-ready. Real per-user installation succeeded and all 26 upstream component downloads
-worked through the configured verified HTTPS mirror, with hashes compared against PyPI metadata.
-Direct public-CDN TLS fails here; do not weaken TLS or embed the private feed. Bootstrap copies
-network-only pip settings into a clean child environment, rejects TLS bypasses and ignores
-user/prefix overrides. Do not revive the abandoned PyInstaller plan.
+The owned test MSI is uninstalled and its Start folder is absent. Keep `build\windows` and
+`build\wtest` cache/log/probe evidence for future targeted work. Preserved test environments
+reference the removed test runtime and cannot run until it is deliberately reinstalled.
+The user's existing Studio was not touched. The final v1.1.1 banner/version/docs/source export
+are committed; there is no leftover installer WIP to resume.
 
-Qt's deeply nested resource paths failed at Windows MAX_PATH during actual installation.
-A real reinstall of the locked wheels using a canonical extended-length private prefix worked
-without changing the registry. That prefix plus force-reinstall-on-retry fix and a real long-path
-regression are now in source, but NOT rebuilt/tested as a complete MSI. The last complete suite
-was 278 passed/Ruff; the last focused slice was 48 passed, both before the final prefix change.
-
-Safe stopping point: owned test MSI uninstalled (exit 0), Start shortcut removed, user-data
-sentinel preserved. It left 23 empty directories; removed only that exact verified-empty
-`build\wtest\Studio` tree. No task shell remains running and the user's existing Studio was not
-touched. Keep `build\windows` and `build\wtest` cache/log/probe files for resumption. The private
-environment there references the removed test runtime and is not ready/runnable until reinstall.
-
-The user's brown-slider side request is now completed/pushed as `9938ac2`; retain `#d5a568`
-and mint checked/live states. The separate v1.1.1 banner/installer/version edits remain local,
-unstaged and unfinished. Do not mistake the pushed theme for a completed Windows installer.
-The six old v1.1.0 source-export files are currently stale against dirty v1.1.1 inputs.
-Workstream 12 is PAUSED; draft warnings on README/guides/release notes prevent treating the
-unverified MSI or old ZIP as a completed v1.1.1 handoff.
-
-The latest README layout feedback is complete: no table/table-cell markup or visible image
+The earlier README layout feedback is complete: no table/table-cell markup or visible image
 borders. All 29 non-paired images fill content width; only the approved original-background /
 green-screen GIFs remain side by side, in plain HTML with no table frame. Desktop/mobile
-checks retain all 31 images and captions with no overflow. Public source `4590ca7`, latest
-v1.1.0 source artifacts `a35f331`; app behavior, images/artwork and handbook are unchanged.
+checks retained all 31 images and captions with no overflow. That v1.1.0 checkpoint used public
+source `4590ca7` and artifacts `a35f331`, without application/artwork/handbook changes then.
 
 All fifteen live-use feedback items are implemented and verified as **v1.1.0**. Workstream 10
 is complete; its functional-source milestone is `11a0e2b`. The complete suite
@@ -144,14 +157,9 @@ PNG is preserved byte-for-byte; derived transparent PNG/Windows ICO resources su
 application, window/taskbar and header identity. The 3D avatar itself is unchanged.
 v1.0.0 is the first official release version; v0.2.0 was unpublished local staging.
 
-The completed source-release handoff is in the tracked root `release` folder. Clean public
-inputs are committed as `4590ca7`; generated v1.1.0 artifacts as `a35f331`. The manifest has
-`sourceModified=false` and the current source fingerprint. All six release files match their
-committed Git blobs exactly. README preserves one tool screenshot above Current milestone,
-with separate logo branding above it and the GUI guide/gallery below. No remote publication,
-tag, merge or push was performed; the owner still publishes manually with Write authorization.
-This is a source release, not a standalone installer. The user requested this context refresh
-after completion, and there is no remaining logo/release implementation work.
+The historical v1.1.0 source-only handoff used `4590ca7` public inputs and `a35f331` artifacts.
+It is superseded by the v1.1.1 source ZIP plus separate MSI above. The owner still publishes
+manually; source snapshots, generated artifacts and context have separate commits.
 
 The native PySide6 studio is delivered. The user's follow-up request for explicit native machine/laptop camera selection is also implemented: Camera now separates computer cameras from custom URL/file/index sources, with asynchronous named Windows device discovery. Selection pairs the proper backend/index; refreshing/selecting does not open a stream. All 45 runtime options, live eye calibration, KC icon, recording/model actions, presets, themes, logs and tutorial remain available. No live camera has been opened by this agent; user appearance and physical-device capture qualification remain pending.
 
@@ -170,7 +178,7 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
-### Latest release handoff - v1.1.0 Studio Workspaces
+### Latest release handoff - v1.1.1 Windows Setup
 
 - Canonical handoff folder: `release` at this repository root, outside `src`. The user wants it
   refreshed with the latest export after future public source/docs changes.
@@ -179,21 +187,22 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
   explicitly; private context, credentials/config, raw recordings, models, environments and caches are excluded.
 - Regenerate with `python scripts\export_release.py`; verify with `--check`. Source fingerprints,
   per-file hashes, asset checksums, archive CRC/content and version alignment are checked.
-- `AGENTS.md` records the release freshness contract. Package metadata and `__version__` are 1.1.0.
+- `AGENTS.md` records the release freshness contract. Package metadata and `__version__` are 1.1.1.
   If inputs were uncommitted, commit them and re-export before publication to update provenance.
-- Current validation: 266 tests/Ruff, real checkbox tick pixels in both palettes, separate owned
-  program/raw/debug channels, calibration on both renderers, real encoded VFR/PCM/AAC cases,
-  no-overwrite/cancel/HDR safety and actual extracted-source GUI/video CLI launch.
-- Handbook is 256 pages/99 diagrams with zero failures/overflow. Native captions accepted both
-  palette setters. A post-warmup demo heartbeat had p95 31ms/max 32ms across 161 intervals;
-  that is local UI service time, not end-to-end video latency or real-camera qualification.
-- Final export passed `--check` after committing its public inputs as `4590ca7`; manifest
-  `sourceModified` is false. Generated release/context files are committed afterward and do not
-  change the public-source fingerprint. Current ZIP is about 30 MB, below the regular Git file limit.
-- `.gitattributes` pins release text to LF and leaves ZIPs binary. Final artifact commit is
-  `a35f331`; all six release files match their committed Git blobs byte-for-byte.
-  Final archive size is 33,147,025 bytes. Source fingerprint:
-  `05e322ac47665f43f619792bb0df6277f7974123c5d69725ce4c744f326baea3`.
+- Current validation: 285 tests/Ruff and actual final MSI online/native/helper/CLI/export/
+  uninstall qualification. Earlier checkbox/channel/calibration/VFR/audio/no-overwrite/cancel/
+  HDR safeguards remain covered. This is not live camera/privacy/calling-app approval.
+- Handbook is 263 pages/101 diagrams with zero failures/overflow. Historical demo heartbeat
+  measurements are local UI service time, never end-to-end latency or camera qualification.
+- Final source and installer checks pass with public inputs `d030b3a`, both manifests clean.
+  Separate artifact commit `037e723` does not change the public-source fingerprint:
+  `69f80bc254e2197b370945911f5648e1e3e0155439242bb8097be0c548ade689`.
+- `.gitattributes` pins release/installer text to LF and leaves ZIP/MSI binary. All nine release
+  files match committed Git blobs byte-for-byte. ZIP is 33,286,361 bytes; MSI is 19,709,952 bytes,
+  both below the regular Git file-size limit.
+- `scripts\build_windows_installer.py --check` validates runtime fingerprint and MSI hash/size.
+  Its fingerprint includes README because wheel metadata embeds it. Rebuild after such changes;
+  --refresh-provenance cannot bless changed inputs. Installer and source receipts stay separate.
 - `gui\assets\kardboardcode-logo.png` is the unchanged supplied master. Derive PNG/ICO assets
   with `python scripts\build_branding.py`, without redrawing or altering the avatar. The old
   `kc-box.svg` is retired. User visual approval of the refreshed application is not recorded.
@@ -297,18 +306,14 @@ silently install or hardcode a different player. Existing Studio processes were 
 The documentary is complete locally; await owner reading/revision requests. Do not silently
 re-freeze `sources\corpus.json` from newer live context or rerun the source collector: its exact
 cutoff and hashes define this edition. Rebuild only intentionally using the private package README.
-This private documentary does not belong in source-release ZIPs. Public export remains the older
-completed v1.1.0 baseline while installer/source v1.1.1 work is paused and explicitly marked draft.
+This private documentary does not belong in source-release ZIPs. Its original 977-page PDF hash
+was rechecked unchanged after the installer work.
 
-Installer work is paused; wait for explicit resumption. When requested: first run the new
-extended-path regression, rebuild and reinstall the MSI, then execute the retained camera-free
-`build\wtest\verify_installed.py` using installed pythonw with redirected pipes. Verify all six
-helpers, native metadata listing, checksum-only model job, CLI/video CLI, real textured demo,
-clean output and Video workspace. Address empty-directory uninstall residue, rebuild the
-handbook/source export, commit public inputs then regenerate clean installer/source provenance.
-No camera, remote publication, system Python/PATH change or security-policy bypass is authorized.
-The user's existing Studio must remain untouched. Earlier live accuracy/privacy/calling-app and
-private recorder timing limitations remain unresolved.
+Windows setup and the v1.1.1 source handoff are complete locally. Hand off the full MSI path;
+the owner creates the final GitHub release manually. No automatic push/tag/merge/release,
+live camera, driver installation or system Python/PATH/security change is authorized.
+Use approved signing/IT handling if unsigned packages are blocked; never disable protections.
+Earlier live accuracy/privacy/calling-app and private recorder timing limits remain unresolved.
 
 ## Environment reminders
 
@@ -325,7 +330,11 @@ private recorder timing limitations remain unresolved.
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_876` (completed brown dark sliders/native README screenshots,
+- Latest cross-base receipt: `ep_883` (completed/qualified Windows setup v1.1.1, aligned clean
+  source/MSI handoff and current-protocol post-delivery refresh).
+  Previous receipt: `ep_878` (requested context refresh before explicitly resumed
+  installer qualification; previous pause superseded).
+  Previous receipt: `ep_876` (completed brown dark sliders/native README screenshots,
   normal branch push succeeded and remote hash verified; installer remains paused).
   Previous receipt: `ep_869` (successful Studio export auto-opens actual result in the
   OS default player; failures/cancellation/refusal and frozen-edition/paused-installer boundaries).

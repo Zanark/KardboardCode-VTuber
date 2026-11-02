@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING
 import cv2
 from numpy import ndarray
 
+from kardboard_vtuber.app_paths import model_path
 from kardboard_vtuber.camera import (
     CameraBackend,
     CameraConfig,
@@ -90,7 +91,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--face-model",
         type=Path,
-        default=Path("models/face_landmarker.task"),
+        default=model_path("face_landmarker.task"),
         help="Path to the MediaPipe Face Landmarker .task model.",
     )
     parser.add_argument(
@@ -186,7 +187,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--hand-model",
         type=Path,
-        default=Path("models/hand_landmarker.task"),
+        default=model_path("hand_landmarker.task"),
         help="Path to the MediaPipe Hand Landmarker .task model.",
     )
     parser.add_argument(
@@ -203,7 +204,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--segmentation-model",
         type=Path,
-        default=Path("models/selfie_segmenter.tflite"),
+        default=model_path("selfie_segmenter.tflite"),
         help="Path to the MediaPipe Selfie Segmenter .tflite model.",
     )
     parser.add_argument(
@@ -239,7 +240,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--pose-model",
         type=Path,
-        default=Path("models/pose_landmarker_lite.task"),
+        default=model_path("pose_landmarker_lite.task"),
         help="Path to the MediaPipe Pose Landmarker .task model.",
     )
     parser.add_argument(

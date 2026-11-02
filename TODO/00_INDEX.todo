@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: Documentary DONE; Windows setup PAUSED; preceding Studio workstreams DONE
+Status: All Studio workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -29,7 +29,7 @@ Tasks:
   [x] Rebuild the front README as a visual showcase (workstream 09).
   [x] Address the fifteen-point live Studio feedback (workstream 10).
   [x] Remove README table layouts while keeping the approved GIF pair (workstream 11).
-  [ ] Deliver the user-selected online Windows setup and brown slider accents (workstream 12).
+  [x] Deliver the user-selected online Windows setup and brown slider accents (workstream 12).
   [x] Create the exhaustive chronological documentary PDF (workstream 13).
   [x] Open successful Studio VIDEO exports in the default media player (workstream 14).
   [x] Finish cardboard-brown dark sliders and refresh/push README screenshots (workstream 15).
@@ -42,6 +42,11 @@ Acceptance criteria:
   Completed evidence is separate from user approval.
 
 Completion evidence:
+  Current v1.1.1 handoff includes online unsigned Windows x64 setup with private Python 3.12.16.
+  Final suite: 285 passed/Ruff. Real final-MSI online setup, native application/helpers/video
+  and complete uninstall passed; saved user preset/model bytes survived unchanged.
+  Current engineering handbook: 263 pages/101 diagrams, zero failures/overflow.
+  Source ZIP and MSI have independent, verified receipts/checksums; publication remains manual.
   All 45 runtime options have native controls; recording and model helpers are included.
   Full suite: 224 passed; Ruff passed. README/book paths and fences checked.
   Actual dark/light/compact/tutorial screenshots inspected; handbook: 245 pages, 97 diagrams,
@@ -49,6 +54,9 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-03: Workstream 12 delivered: 19,709,952-byte per-user MSI, strict online component
+  setup and installed native/CLI/helper/export/uninstall qualification. Updated handbook and
+  v1.1.1 source handoff. No live camera, system Python/PATH changes or remote publication.
   2026-11-02: Brown dark-slider tracks/handles and eight native synthetic captures completed.
   35 focused theme/GUI/branding tests/Ruff passed; captions and palette rationale updated.
   Theme commit 9938ac2 pushed and remote branch hash verified. Installer remains paused/local.

@@ -24,6 +24,19 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-03: Completed workstream 12 after the user explicitly resumed it. Final MSI built
+  from committed runtime inputs 209b852, with clean provenance and patched private Python
+  3.12.16. Size 19,709,952 bytes; SHA256
+  3fc4967bb00e8c07e0e8fc7b0d008dcd29a9bb5a7c36fc858d8acf969dd6e14b.
+  Final actual online setup installed all 26 hash-locked packages and passed pip check.
+  Installed private pythonw exercised metadata-only camera discovery, checksum-only model
+  verification, textured synthetic demo/clean output/live tuning, VIDEO workspace, presets and
+  a real four-frame MediaPipe/GPU export. Default-player dispatch intercepted. Three CLI and
+  all six helper --help entry points passed. Uninstall removed the full installed tree/Start
+  folder without manual cleanup and preserved preset/model hashes. Final suite: 285/Ruff.
+  Handbook: 263 pages/101 diagrams, zero errors/overflow. Source/MSI checks passed; generated
+  release/context commits remain distinct from runtime inputs and manual remote publication.
+  Frozen 977-page documentary unchanged. No live camera or unrelated process/system changes.
   2026-11-02: Finished cardboard-brown slider accents, preserving mint semantic states and
   green-on-cream light sliders. Real pixel/disabled-state checks plus GUI/branding slice:
   35 passed and Ruff. Regenerated eight native synthetic captures; seven PNGs changed.

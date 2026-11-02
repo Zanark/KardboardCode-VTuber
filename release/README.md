@@ -4,33 +4,47 @@ This tracked folder is the handoff for creating a GitHub release manually. Regen
 source/documentation changes; it always represents the latest exported tool, not a release history.
 
 **v1.0.0 was designated the first official version**, adopting the supplied voxel KC box logo.
-The current **v1.1.0** export adds the Live/Video workspaces and feedback refinements. The earlier
+The current **v1.1.1** handoff adds online Windows setup, brown dark-theme sliders and automatic
+playback after successful Studio video exports. The earlier
 v0.2.0 export was unpublished local staging. A local version/export is not a remote publication.
 
 ## Files
 
 | File | Purpose |
 |---|---|
+| `KardboardCode-Studio-windows-x64.msi` | Online per-user Windows setup with private Python; no manual Python/pip |
+| `installer-manifest.json` | Installer version, runtime-input fingerprint, source provenance and MSI hash |
+| `INSTALLER_SHA256SUMS.txt` | Checksums for MSI and installer receipt |
 | `KardboardCode-VTuber-source.zip` | Uploadable source package with GUI, CLI, scripts, tests, assets and documentation |
 | `RELEASE_NOTES.md` | Copy its text into the GitHub release description |
 | `RELEASE_CONTEXT.md` | Generated version, source provenance, packaging scope and publishing checklist |
 | `manifest.json` | Machine-readable source fingerprint, per-file hashes and archive hash |
 | `SHA256SUMS.txt` | Checksums for the archive, release notes, context and manifest |
 
-This is **not a standalone Windows executable/installer**. Python and the selected optional
-dependencies are installed on the receiving machine. Downloaded models are intentionally excluded.
-Release text uses canonical LF line endings through `.gitattributes`; keep that format when
-editing these instructions or notes. Do not edit generated files manually, because that would
-invalidate their checksums. ZIP files are always binary.
+The MSI is **online, unsigned and Windows x64 only**. First launch offers hash-locked component
+downloads from PyPI or an existing verified HTTPS mirror. It includes patched private Python,
+without changing system Python/PATH. Models are explicit GUI downloads; OBS's camera component
+is separate. Uninstall preserves per-user models, presets, recordings, component environments
+and cache. Device policy/SmartScreen may restrict unsigned packages; never disable protections.
+See [Windows installation](../docs/09-desktop-studio/windows-installation.md).
+
+The ZIP remains a **source package**, with manual Python/dependency setup. Downloaded models
+and generated installer artifacts are intentionally excluded from it.
+Release text and installer configuration use canonical LF line endings through `.gitattributes`;
+keep that format when editing them. Do not edit generated files manually, because that would
+invalidate their checksums. ZIP and MSI files are always binary.
 The source ZIP includes these instructions and the notes, but not a nested copy of the generated
 release archive/context/manifest/checksums. Regenerate those from a Git checkout when contributing.
 
 ## Regenerate and verify
 
-From the repository root, using Python 3.11+:
+From the repository root, using Windows x64 Python 3.12:
 
 ```powershell
 git add -- README.md pyproject.toml src scripts tests assets docs TODO AGENTS.md
+git add -- installer .gitattributes release/README.md release/RELEASE_NOTES.md
+.\.venv312\Scripts\python.exe scripts\build_windows_installer.py
+.\.venv312\Scripts\python.exe scripts\build_windows_installer.py --check
 .\.venv312\Scripts\python.exe scripts\export_release.py
 .\.venv312\Scripts\python.exe scripts\export_release.py --check
 ```
@@ -42,16 +56,22 @@ changes are never pushed or published automatically.
 The archive name stays fixed so the folder does not collect obsolete ZIPs. Version/provenance
 are recorded in its manifest/context and in the archive's top-level folder.
 
+Build the MSI with Windows x64 Python 3.12 (`msilib` is build-only). The normal build reuses the
+committed dependency lock. Intentional `--update-lock` resolves the installed runtime dependency
+closure, downloads binary wheels and compares each with its authoritative PyPI hash. No private
+package-feed configuration is embedded. Commit public inputs, then finalize both source and
+installer provenance; `--refresh-provenance` does not rebuild or accept changed runtime inputs.
+
 ## Create the GitHub release
 
-1. Verify the export with `--check`. Review the notes and `RELEASE_CONTEXT.md`.
+1. Verify both scripts with `--check`. Review the notes, `RELEASE_CONTEXT.md` and installer receipt.
 2. If `sourceModified` is true, commit the public source changes and export again. Push the
    intended source branch/commit with an account that has repository Write access.
 3. Create the tag shown in `manifest.json`, targeting that GUI/source commit or its merged
    equivalent. **Do not accidentally target an older `main` that lacks these changes.**
 4. Paste `RELEASE_NOTES.md` into the release description.
-5. Upload `KardboardCode-VTuber-source.zip`, `SHA256SUMS.txt`, `manifest.json`, and optionally
-   `RELEASE_CONTEXT.md` / `RELEASE_NOTES.md`.
+5. Upload the MSI, `INSTALLER_SHA256SUMS.txt`, `installer-manifest.json`, source ZIP,
+   `SHA256SUMS.txt`, `manifest.json`, and optionally context/notes.
 6. Preserve published release assets as immutable snapshots. A later update to this folder is
    a new export; it is not permission to overwrite an older published version.
 
