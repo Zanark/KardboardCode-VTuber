@@ -8,6 +8,16 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Conventions
 
+- The exhaustive development documentary is a separate private package at
+  `YTScript\DevelopmentJourney`, not the engineering handbook. Its narrative and unabridged
+  source/task appendices are local/Git-ignored and must not enter public release exports.
+- Documentary editions freeze their corpus/cutoff and original/sanitized hashes. Never silently
+  re-collect from newer live context or collapse repeated historical tasks into a false final state.
+  Preserve every source occurrence and distinguish topic associations from actual dependency/
+  resolution evidence. The current edition covers through 2026-11-02T21:46:13.268+05:30.
+- Documentary PDF verification compares complete source-record text inside each printed record
+  span, alongside task/message presence, chapter order, links, figures, bounds and stable folios.
+  An ID count or a PDF that merely opens is not a completeness check. Preserve privacy redactions.
 - Keep the front README image-first: cohesive cardboard/pixel banners, actual UI/demo galleries,
   short captions and navigation. Put detailed setup/features/camera/troubleshooting text in
   clearly named `docs\guides` files rather than rebuilding long front-page explanations.
@@ -81,6 +91,17 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Native studio conventions
 
+- Windows setup is the explicitly chosen online, per-user x64 bootstrap, not an offline
+  PyInstaller bundle. Include patched private Python and the application wheel; first launch
+  offers hash-locked upstream wheels. Models remain explicit; OBS's camera component is separate.
+  Keep installed resources/helper scripts separate from writable AppData models/presets/recordings.
+  Never change system Python/PATH or disable TLS, app-control or agent protections.
+- Package downloads may use an existing verified HTTPS mirror. Copy network-only pip settings
+  into a cleaned child environment, reject trusted-host/HTTP indexes, and ignore user-target/prefix
+  overrides. Validate wheel hashes against authoritative PyPI metadata when creating the lock.
+  Never embed feed configuration/credentials in public artifacts or print credential-bearing URLs.
+- Dark-theme sliders use cardboard brown while mint continues to distinguish live/checked states.
+  This is the user's KardboardCode theme refinement, not a new global palette preference.
 - Both GUI palettes follow the banner: forest/mint dark and kraft/cream light. Checkboxes need
   visible contrasting ticks and distinct unchecked/disabled states; lock/live-only badges explain
   unavailable controls. Native OS title colors are per-window, not global Windows settings.
@@ -120,6 +141,10 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Gotchas
 
+- Windows Qt wheels contain deeply nested resource paths. A normal private prefix failed at
+  MAX_PATH in the real MSI test; a canonical extended-length prefix successfully installed
+  all exact locked wheels without changing machine-wide settings. The source correction is
+  not yet validated end-to-end in a rebuilt MSI; consult paused workstream 12 before resuming.
 - The old `homeDesk\KardboardCode` store predates later changes: visible brightness, some flap decisions, body rendering, and original repository paths may be stale. Do not copy old values blindly.
 - The root README and current CLI describe separate skeleton-only diagnostics; the engineering-book status table still contains an older synthetic-full-body description. Source wins until that documentation is deliberately reconciled.
 - Published visual demos, a successful synthetic receiver, and historical tests do not prove current live hardware/app behavior.

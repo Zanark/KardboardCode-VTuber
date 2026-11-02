@@ -4,6 +4,83 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Exhaustive development documentary completed
+
+- Delivered The Box That Learned to Follow as a private local PDF under
+  YTScript\DevelopmentJourney. Final 977 pages/31 chronological chapters/62 diagrams/12 figures;
+  ~17,000 original narrative words followed by complete visible evidence appendices.
+- Scope: 117 textual files, 6,560 records, 158 historical tasks/66 dependencies, 245 checklist
+  occurrences, 199 human messages +16 delegated instructions, 203 responses, four form decisions,
+  80 Git milestones. Eight documentary work orders/nine dependencies are indexed separately.
+- Three print/audit rounds fixed SVG XML breaks, duplicate IDs, repeated chapter headings and
+  one border-only empty page. The final PDF preserves every complete record occurrence, task
+  and message; 31,252 links resolve; 51 bookmarks and stable printed folios are present.
+  Zero blank pages, horizontal margin overflow, missing images or omitted source lines.
+- Final cover/content/diagram/screenshot/source-appendix contact sheets inspected. PDF is
+  30,570,619 bytes; SHA256 2891a853af0e7553b3156196e4286091e16b490adb2fcde15b79772f7dd972d4.
+  edition-receipt.json and SHA256SUMS.txt seal the final audited files. Package remains ignored.
+- User explicitly requested rereading current installed context skills before final offload.
+  Read both complete current SKILL.md files; acknowledged Alfred's room-wide introduction
+  only in own persona file. No sibling store, camera, installer implementation or publication.
+- Completed evidence is separate from owner reading approval. Live accuracy/privacy/calling-app
+  and installer/recording limitations remain as previously recorded.
+- Persisted/readable final handoff as zmem `ep_868`; advanced the exact marker only after
+  store/episode persistence, to `2026-11-02T22:51:42+05:30`. Source release remains the older
+  completed v1.1.0 baseline while installer/source work is paused; the private book is not exported.
+
+## 2026-11-02 - Development documentary drafted; print review in progress
+
+- User requested a proper chronological documentary PDF with every task/detail, research,
+  diagrams, repeated review and final context refresh. Installer remains paused.
+- Froze 117 sanitized textual sources, 6,560 records, 158 historical task rows, 66 dependencies,
+  245 checklist occurrences, 215 human/delegated requests, 203 responses, four form choices
+  and 80 Git milestones. Sources include original research and both context stores.
+- Built an original 31-chapter narrative, 62 diagrams and 12 captioned figures, with historical
+  synthetic UI captures from specific Git revisions rather than mislabelling current UI as old.
+- First complete PDF was 1,050 pages/~30.7 MB. Actual PDF text audit recovered every complete
+  source-record occurrence, task and conversation entry; links resolve and horizontal bounds pass.
+  Visual review found duplicate chapter headings and one blank border-only page; fixes are
+  applied but final rendering, page-map, visual review and delivery remain pending.
+- Local private production folder is YTScript\DevelopmentJourney; no raw camera imagery,
+  credentials, publication or installer work. User explicitly requested rereading current
+  installed context skills before the final offload.
+
+## 2026-11-02 - Windows installer paused at the user's request
+
+- User asked to pause unless almost finished. Final corrected MSI and actual installed
+  application/helper verification remain, so paused instead of claiming a ready deliverable.
+- Last full suite: 278 passed/Ruff; focused slice: 48 passed. Those predate the final
+  extended-prefix/retry source change and its new unrun real-wheel regression.
+- Genuine per-user MSI installation succeeded. All 26 component downloads worked through
+  the configured verified HTTPS mirror, but Qt wheel extraction hit Windows MAX_PATH.
+  A locked-wheel reinstall using a canonical extended-length private prefix succeeded.
+  Added that source fix and forced exact-wheel reinstall on retry; did not rebuild after pause.
+- Draft MSI is 19,697,664 bytes and stale against source. Existing ZIP remains completed
+  v1.1.0, not v1.1.1. Added clear paused/draft warnings; no artifacts were published.
+- Uninstalled only the owned test MSI (exit 0), removed its Start shortcut and confirmed
+  user-data sentinel preservation. It left 23 empty directories; removed only the exact empty
+  test installation tree after verifying zero files. No running task shell remains.
+- Retained ignored build/runtime/wheelhouse/download cache, logs and the unrun camera-free
+  installed-runtime probe for resumption. Do not resume setup until asked. All unfinished
+  source/docs/theme changes remain uncommitted; brown sliders and native screenshots retained.
+- No live camera, user Studio termination, system Python/PATH or security-setting changes.
+- Persisted/readable handoff episode: `ep_856`. Advanced the full-offload marker only after
+  store/episode persistence, to `2026-11-02T21:42:29+05:30`.
+
+## 2026-11-02 - Online Windows setup requested; initial MSI built
+
+- User requested a Windows setup in the existing release folder and selected the smaller
+  online bootstrap. Adopted per-user x64 MSI with patched private Python 3.12.16, own wheel
+  and first-launch Tk component wizard; no frozen runtime/system Python/PATH modifications.
+- Added install-aware models/data/helper paths and packaged the six fixed helper scripts.
+  The user's brown-slider refinement is included in dirty v1.1.1 inputs.
+- Initial installed-path/Studio slice: 38 passed and Ruff passed. Downloaded all 26 dependency
+  wheels through the configured verified HTTPS mirror and checked each against PyPI hashes.
+  Direct public package-CDN TLS is blocked here; no TLS verification was disabled.
+- Initial MSI is 19,689,472 bytes. Installation, installed helper/GUI checks, uninstall/data
+  preservation, release documentation and final artifacts/provenance are still pending.
+  Existing v1.1.0 source export is stale. No camera or remote publication was performed.
+
 ## 2026-11-02 - Borderless README gallery completed
 
 - User rejected table rows/borders around README images, while explicitly approving the

@@ -1,11 +1,80 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - README gallery made borderless/full-width; approved GIF comparison retained.
-> **Last context offload:** 2026-11-02T20:19:41+05:30
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - Exhaustive 977-page development documentary completed; installer remains paused.
+> **Last context offload:** 2026-11-02T22:51:42+05:30
 
 # KardboardCode-VTuber State
 
 > Resume as the KardboardCode VTuber engineering and streaming-output partner. Read both context stores below before continuing; preserve the user's face-only choice and privacy requirements.
 
 ## Current focus
+
+**COMPLETED: development documentary book, The Box That Learned to Follow.** User requested
+deep storytelling research and an exhaustive chronological PDF including every task in checkpoints,
+context, TODOs, histories and work_done sections. Private authoring package:
+`C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\YTScript\DevelopmentJourney`.
+Do not confuse it with the existing engineering handbook or resume the installer.
+
+Final PDF:
+`C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\YTScript\DevelopmentJourney\KardboardCode-Development-Journey.pdf`
+**977 pages, 30,570,619 bytes**, SHA256
+`2891a853af0e7553b3156196e4286091e16b490adb2fcde15b79772f7dd972d4`.
+HTML reading companion, chapter sources, research, frozen corpus, media provenance, coverage maps,
+PDF audit, `edition-receipt.json` and `SHA256SUMS.txt` are beside it. Entire package is Git-ignored.
+
+Frozen story cutoff is `2026-11-02T21:46:13.268+05:30`. Corpus: 117 textual files, 6,560
+occurrence-preserving records, 158 historical session tasks/66 dependencies, 245 checklist
+occurrences, 199 human messages +16 delegated instructions, 203 responses, four form decisions,
+80 Git milestones. Original research and both context stores are included. Redacted credentials/
+private URLs; no private camera images, system/developer prompts or internal model reasoning.
+
+Authored 31 chronological chapters (~17,000 words), researched six nonfiction-craft
+sources and produced 62 diagrams/12 captioned figures, including dated synthetic UI images
+retrieved from Git. Full visible evidence appendices preserve every nonblank source line.
+Three print/audit rounds corrected malformed SVG line breaks, duplicate IDs, repeated headings
+and a border-only blank page. Final actual-PDF comparison finds all 6,560 complete record
+occurrences inside their own spans, every task/message, 31,252 valid links, 51 bookmarks,
+stable contents folios and no blank/horizontally overflowing pages. Contact sheets inspected.
+See `build\coverage.json`, `pdf-audit.json` and pipeline scripts. Eight documentary work orders/
+nine dependencies are indexed separately from historical work. User reading approval is not recorded.
+
+User reiterated use of the CURRENT installed context-offload and context-mesh skills for final
+refresh. Both current files were reread completely. New room-wide mention obligations apply;
+the Alfred introduction was acknowledged in this session's own persona file only.
+
+**PAUSED BY USER:** the user requested pausing installer work unless nearly finished. It still
+needs a corrected build and actual installed GUI/helper verification, so stop rather than rush.
+Do not resume Windows setup implementation/build/testing until the user asks.
+
+The pending request is a Windows setup in `release` for manual publication. The user chose
+the smaller online bootstrap, not a fully offline/frozen application. v1.1.1 includes patched
+private Python 3.12.16 and the own app wheel in a per-user x64 MSI; first launch offers
+hash-locked upstream component downloads. Models remain explicit and OBS's installed camera
+component remains separate. System Python/PATH are unchanged. The MSI is unsigned.
+
+A 19,697,664-byte draft MSI exists, but it predates the latest source correction and is NOT
+release-ready. Real per-user installation succeeded and all 26 upstream component downloads
+worked through the configured verified HTTPS mirror, with hashes compared against PyPI metadata.
+Direct public-CDN TLS fails here; do not weaken TLS or embed the private feed. Bootstrap copies
+network-only pip settings into a clean child environment, rejects TLS bypasses and ignores
+user/prefix overrides. Do not revive the abandoned PyInstaller plan.
+
+Qt's deeply nested resource paths failed at Windows MAX_PATH during actual installation.
+A real reinstall of the locked wheels using a canonical extended-length private prefix worked
+without changing the registry. That prefix plus force-reinstall-on-retry fix and a real long-path
+regression are now in source, but NOT rebuilt/tested as a complete MSI. The last complete suite
+was 278 passed/Ruff; the last focused slice was 48 passed, both before the final prefix change.
+
+Safe stopping point: owned test MSI uninstalled (exit 0), Start shortcut removed, user-data
+sentinel preserved. It left 23 empty directories; removed only that exact verified-empty
+`build\wtest\Studio` tree. No task shell remains running and the user's existing Studio was not
+touched. Keep `build\windows` and `build\wtest` cache/log/probe files for resumption. The private
+environment there references the removed test runtime and is not ready/runnable until reinstall.
+
+The user's side request adds cardboard-brown `#d5a568` dark-theme slider tracks/handles,
+retaining mint checked/live states. Actual native synthetic screenshots and the v1.1.1 banner
+were regenerated. That change and all installer inputs remain uncommitted.
+The six old v1.1.0 source-export files are currently stale against dirty v1.1.1 inputs.
+Workstream 12 is PAUSED; draft warnings on README/guides/release notes prevent treating the
+unverified MSI or old ZIP as a completed v1.1.1 handoff.
 
 The latest README layout feedback is complete: no table/table-cell markup or visible image
 borders. All 29 non-paired images fill content width; only the approved original-background /
@@ -18,7 +87,8 @@ is complete; its functional-source milestone is `11a0e2b`. The complete suite
 passes 266 tests/Ruff, and a real private 30-frame synchronous MediaPipe VIDEO/GPU export at
 1080x1920 completed without a camera. The rebuilt handbook is 256 pages/99 diagrams, zero
 diagram failures/overflow. The actual extracted source launches camera CLI, Studio and video CLI;
-its demo/clean window/video workspace were checked. No implementation/packaging work remains.
+its demo/clean window/video workspace were checked. That completed feedback milestone is
+the baseline for the newer installer request above.
 
 The GUI now has forest/mint and kraft/cream themes, explicit contrasting checkbox ticks,
 LOCKED/live-only states, standard/monitor resolution choices, clearer capture-backend labels,
@@ -197,13 +267,21 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-The requested fifteen-point v1.1.0 feedback pass is complete locally; context is the final
-handoff. The user's previously running Studio was not terminated; they must restart it to load
-new code/icons and run guided eye calibration for their setup. Wait for owner review/publication.
-Do not repeat completed builds,
-launch another window, connect a camera or publish automatically. Future public changes must
-refresh `release`; preserve CLI compatibility, read both context stores, and write new context
-only here. Distant tracking, real calling-app qualification and recording timing remain open.
+The documentary is complete locally; await owner reading/revision requests. Do not silently
+re-freeze `sources\corpus.json` from newer live context or rerun the source collector: its exact
+cutoff and hashes define this edition. Rebuild only intentionally using the private package README.
+This private documentary does not belong in source-release ZIPs. Public export remains the older
+completed v1.1.0 baseline while installer/source v1.1.1 work is paused and explicitly marked draft.
+
+Installer work is paused; wait for explicit resumption. When requested: first run the new
+extended-path regression, rebuild and reinstall the MSI, then execute the retained camera-free
+`build\wtest\verify_installed.py` using installed pythonw with redirected pipes. Verify all six
+helpers, native metadata listing, checksum-only model job, CLI/video CLI, real textured demo,
+clean output and Video workspace. Address empty-directory uninstall residue, rebuild the
+handbook/source export, commit public inputs then regenerate clean installer/source provenance.
+No camera, remote publication, system Python/PATH change or security-policy bypass is authorized.
+The user's existing Studio must remain untouched. Earlier live accuracy/privacy/calling-app and
+private recorder timing limitations remain unresolved.
 
 ## Environment reminders
 
@@ -220,7 +298,11 @@ only here. Distant tracking, real calling-app qualification and recording timing
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_846` (borderless full-width README / retained GIF pair).
+- Latest cross-base receipt: `ep_868` (completed exhaustive 977-page development documentary,
+  frozen source/task coverage, physical PDF audit and current-skill refresh).
+  Previous receipt: `ep_856` (installer explicitly paused; test uninstall complete,
+  brown sliders retained; unverified MSI must not be published).
+  Previous receipt: `ep_846` (borderless full-width README / retained GIF pair).
   Previous receipt: `ep_844` (completed fifteen-point v1.1.0 Studio/video feedback pass).
   Previous receipt: `ep_841` (explicit post-delivery context-only refresh).
   Detailed delivery receipt: `ep_840` (visual README, named guides and refreshed export).
