@@ -90,10 +90,11 @@ class StudioWindow(QMainWindow):
         self.setMinimumSize(960, 600)
         screen = QApplication.primaryScreen()
         available = screen.availableGeometry() if screen is not None else None
-        self.resize(
-            min(1360, available.width() - 32) if available is not None else 1360,
-            min(860, available.height() - 64) if available is not None else 860,
-        )
+        width = min(
+            1440, available.width() - 32, (available.height() - 64) * 16 // 9,
+        ) if available is not None else 1440
+        width = width // 16 * 16
+        self.resize(width, width // 16 * 9)
         self.values = settings.defaults()
         self.controls: dict[str, OptionControl] = {}
         self.sections: dict[tuple[str, str], DisclosureSection] = {}

@@ -63,6 +63,19 @@ def test_window_has_all_controls_and_no_implicit_capture(window: StudioWindow) -
     assert not window.windowIcon().isNull()
 
 
+def test_default_window_is_display_fitted_widescreen(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    screen = app.primaryScreen()
+    assert screen is not None
+    available = screen.availableGeometry()
+    if available.width() < 1104 or available.height() < 676:
+        pytest.skip("This work area is below the supported widescreen startup size.")
+    assert window.width() * 9 == window.height() * 16
+    assert window.frameGeometry().width() <= available.width()
+    assert window.frameGeometry().height() <= available.height()
+
+
 def test_live_per_eye_edit_applies_atomically_and_invalid_edit_is_visible(
     window: StudioWindow,
     monkeypatch: pytest.MonkeyPatch,

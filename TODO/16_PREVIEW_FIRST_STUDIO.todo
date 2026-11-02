@@ -1,4 +1,4 @@
-Status: IN PROGRESS (implemented; final documentation/release/context delivery)
+Status: DONE
 Milestone: Preview-first Studio layout without removing operating options
 Dependencies: 12_WINDOWS_SETUP.todo, 15_DARK_CARDBOARD_ACCENTS.todo
 Purpose: Keep the full preview visible and make a feature-rich interface calm and clearly separated.
@@ -12,8 +12,8 @@ Tasks:
   [x] Implement a protected viewer, contextual inspector and optional bounded tools.
   [x] Preserve every option, privacy/output boundary, preset, helper and runtime binding.
   [x] Check native geometry, keyboard access, both themes, all relevant states and option access.
-  [ ] Update actual screenshots, handbook/source/installer handoff and development evidence.
-  [ ] Commit completed work and refresh this base's context without remote publication.
+  [x] Update actual screenshots, handbook/source/installer handoff and development evidence.
+  [x] Commit completed work and refresh this base's context without remote publication.
 
 Acceptance criteria:
   The full aspect-fitted image is not clipped by any ancestor or covered by diagnostic panels.
@@ -36,7 +36,16 @@ Completion evidence:
   and real encoded export/default-player regressions remain intact.
   Eight actual native synthetic captures refreshed and reviewed, including video setup.
   Engineering handbook rebuilt: 272 pages/103 diagrams, zero Mermaid failures/overflow.
-  Final installer/source artifact provenance is being completed.
+  Current installer/source artifacts are rebuilt from committed inputs with independent
+  manifests/checksums; final handoff provenance is verified separately from owner approval.
+  Follow-up requirement: a display-fitted 16:9 startup workbench, without stretching/cropping
+  video or filling spare space with permanent clutter. Widescreen startup/action-fit checks
+  pass in native Qt at 100%, 125% and 150% scaling; final public screenshots use 16:9 sizes.
+  Installed v1.2.0 smoke passed before this final default-size refinement: private pythonw,
+  preview containment with Tools, metadata/model helpers, real four-frame export and CLI/pip check.
+  Initial preservation check used a pre-probe preset hash even though the probe intentionally
+  rewrites that preset; the isolated install/uninstall preservation recheck passed with the
+  correct post-probe baseline. Complete owned removal and preset/model preservation verified.
   Five research lenses and 12 primary references recorded in
   docs\09-desktop-studio\research-and-design.md.
   Native Windows/Fusion audit: eight scenarios at Qt scale factors 1.0, 1.25 and 1.5.
@@ -49,7 +58,7 @@ Completion evidence:
   Local probe/geometry JSON/contact sheets are session research artifacts, not shipping code.
   No camera, microphone, virtual output, OS display change or user-process termination.
   Owner structural choice: recorded above. Visual/usability approval is not recorded.
-  Refreshed release artifacts and final context: pending delivery.
+  Final artifact/context commits record delivery; no remote publication is authorized.
 
 Completion log:
   2026-11-03: Implemented the approved arrangement with compact chrome, progressive disclosure,

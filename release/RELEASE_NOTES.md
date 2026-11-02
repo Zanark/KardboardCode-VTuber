@@ -11,6 +11,8 @@ v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 - Owner-selected **left settings inspector / large right preview**, with a compact header and
   non-collapsible workspace splitter. The complete fitted image remains visible rather than
   being clipped by a smaller ancestor.
+- Display-fitted **16:9** startup workbench, up to 1440 x 810 logical pixels, with native
+  responsive resizing. Original video dimensions/aspect remain unchanged.
 - Labelled expandable sections retain all 45 runtime options and nine live fields. Basic eye
   tuning stays near compact anatomical OPEN/CLOSED decisions; additional timing/avatar/capture
   settings remain accessible without filling the default view.

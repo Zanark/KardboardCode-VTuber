@@ -17,7 +17,7 @@
 
 ![Actual KardboardCode Studio with live eye sliders and a synthetic avatar preview](docs/images/kardboardcode-studio-dark.png)
 
-*A permanent preview. Grouped settings on the left; extra tools only when needed.
+*A widescreen 16:9 workbench. Grouped settings on the left; extra tools only when needed.
 Real Windows widgets, synthetic stage, no camera input or published video.*
 
 ## Current milestone

@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: Preview-first delivery IN PROGRESS; portrait and earlier workstreams DONE
+Status: All Studio workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -35,7 +35,7 @@ Tasks:
   [x] Create the exhaustive chronological documentary PDF (workstream 13).
   [x] Open successful Studio VIDEO exports in the default media player (workstream 14).
   [x] Finish cardboard-brown dark sliders and refresh/push README screenshots (workstream 15).
-  [ ] Deliver a less-cluttered, preview-first layout without removing options (workstream 16).
+  [x] Deliver a less-cluttered, preview-first layout without removing options (workstream 16).
   [x] Add cardboard-tool identity to this session's unobscured portrait (workstream 17).
 
 Acceptance criteria:
@@ -58,6 +58,10 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-03: Preview-first v1.2.0 delivered with a display-fitted 16:9 startup layout, left
+  inspector/right protected preview, full option access and optional bounded Tools. Current
+  native screenshots, engineering handbook and release handoff updated. Portrait work had
+  already finished when the user stopped that task; no further portrait work is active.
   2026-11-03: Workstream 16 research completed. Native audit reproduces 76 visible pixels of a
   220px canvas at 1120x780; dock/parent budgeting and splitter collapse are structural defects.
   Five research lenses, 12 primary references and full option inventory recorded.

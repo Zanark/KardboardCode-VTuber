@@ -24,6 +24,14 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-03: Final 16:9 follow-up uses display-fitted startup dimensions up to 1440x810 while
+  keeping original video aspect/output dimensions. Native startup/action-fit checks pass at
+  Qt factors 1/1.25/1.5; default, compact and diagnostic images use widescreen layouts.
+  Installed v1.2.0 private pythonw/preview/Tools/helpers/four-frame export/CLI/pip checks passed.
+  Qualified unchanged dependencies from verified cached wheels; earlier online bootstrap route
+  remains unchanged. Corrected the harness baseline after its deliberate preset save: isolated
+  install/uninstall confirms unchanged preset/model bytes and complete owned tree removal.
+  Latest user directive is GUI-only: no further portrait work. Final release/context handoff follows.
   2026-11-03: Implemented the owner-approved left-inspector/right-preview structure as v1.2.0.
   Labelled disclosure retains all 45 runtime fields; optional capped scrollable Tools separates
   logs/CLI/raw/mesh/body data from the viewer. Fixed the remaining native nine-pixel corner case

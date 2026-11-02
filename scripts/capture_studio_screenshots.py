@@ -69,7 +69,7 @@ def main() -> int:
             if not window.grab().save(str(path)):
                 raise RuntimeError(f"Could not save screenshot: {path}")
             window.toggle_theme()
-            window.resize(1120, 780)
+            window.resize(1280, 720)
         elif number == 2:
             path = args.output_dir / "kardboardcode-studio-compact.png"
             if not window.grab().save(str(path)):
@@ -82,7 +82,7 @@ def main() -> int:
                 raise RuntimeError(f"Could not save screenshot: {path}")
             window._tutorial.close()
             window.stop_button.click()
-            window.resize(1360, 860)
+            window.resize(1440, 810)
             window.page_selector.setCurrentText("Camera")
         elif number == 4:
             if window.worker is not None:
@@ -108,7 +108,7 @@ def main() -> int:
             if not window.grab().save(str(path)):
                 raise RuntimeError(f"Could not save screenshot: {path}")
             window.work_mode.setCurrentIndex(0)
-            window.resize(1360, 860)
+            window.resize(1440, 810)
             window.page_selector.setCurrentText("Tracking labs")
             window.controls["full_body"].set_value(True)
             window.controls["tracking_debug"].set_value(True)

@@ -47,6 +47,12 @@ content region, not a fixed height that can override the viewer's minimum. Nativ
 checks inspect ancestor clipping, including compact sizes, portrait/landscape frames, tools,
 long errors, private diagnostics, video progress and explicit headless placeholders.
 
+The default workbench uses a display-fitted **16:9** window (up to 1440 x 810 logical pixels),
+with proportional down-sizing for the available work area. Resizing/maximizing remains native
+and responsive. Empty space is not filled with additional permanent panels. The video itself
+retains its source aspect ratio and original export dimensions; non-widescreen material is
+fitted rather than stretched or cropped.
+
 ## Complete runtime control inventory
 
 | Page | CLI fields / feature | Interaction |
