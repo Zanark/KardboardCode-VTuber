@@ -4,6 +4,66 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-03 - Preview-first GUI and final 16:9 follow-up implemented
+
+- Owner chose left inspector/right large preview. Implemented the protected workspace, labelled
+  disclosure, compact anatomical eye states, shared preset actions, persistent video progress,
+  bounded complete error text and optional shrinkable/scrollable Tools.
+- Full compatibility baseline: 297/Ruff. Native containment/access/keyboard/headless cases
+  pass at Qt 1/1.25/1.5; additional primary-action fit checks pass. Fixed a native minimum-size
+  nine-pixel clipping corner with proper secondary scrolling, not weaker assertions.
+- User added a display-fitted 16:9 requirement. Startup now fits up to 1440x810 logical pixels;
+  original video dimensions/aspect stay unchanged. Native default/action-fit cases pass at
+  all three factors. Eight final widescreen native synthetic captures refreshed/reviewed.
+- Engineering handbook: 272 pages/103 diagrams, zero errors/overflow. Implementation 5ca8d84,
+  research/PDF finalization 6faefc4, final widescreen inputs 1bb3092.
+- Actual installed v1.2.0 Python 3.12.16/pythonw passed full preview with Tools, metadata camera/
+  checksum-model helpers, real four-frame export, CLI help and pip check. Verified dependencies
+  used cached hash-locked wheels; no new online-route claim. Initial preset-preservation harness
+  compared before an intentional probe save; isolated post-probe install/uninstall passed
+  unchanged preset/model hashes and complete owned tree/shortcut removal.
+- User requested a KC box portrait without covering the face. Scoped source/live/generated
+  drawing completed; face pixels/non-wardrobe geometry preserved. Concurrent upstream source/
+  deployment changes were retained. Own handoff bf81da3; shared untracked contributor bundle
+  was not staged. User then explicitly stopped further portrait work and redirected GUI-only;
+  no portrait process or further branding task remains.
+- Final size-follow-up release assets are being built from clean inputs; finish byte checks,
+  commit and requested full offload, without more cosmetic loops or remote publication.
+- Final widescreen input commit 1bb30926cab472a463f80649702ffb29f1f48e8b and artifact commit
+  fe92a98 are complete. Both scripts pass --check; all final wheel GUI modules match source.
+  Final MSI SHA256 bd15e329a88ed44dc244fb264b66dab5e17e3b8778b7da52ded3d6a176445403
+  (19,709,952 bytes); ZIP SHA256
+  1d1b587cbad1ea90a2885039878805e549653b9022b61e600bda2fc6fba68911
+  (33,031,157 bytes). Final artifact runtime sizing refinement is source/native-verified; the
+  prior installed v1.2.0 lifecycle evidence remains explicitly scoped, not redated.
+- Latest installed context skills reread completely. Read the three incoming replies; the room
+  was concurrently archived, so discarded only the new unsent reply drafts rather than
+  reopening archived conversations. Historical source/archive messages stayed unchanged.
+  No new portrait work, sibling-store edits or remote publication.
+- Persisted/read back final GUI handoff ep_895. Exact full-offload marker advanced after local
+  state/journal and episodic persistence: 2026-11-03T02:31:34+05:30. All 175 session tasks done.
+
+## 2026-11-03 - Preview-first redesign research completes five passes
+
+- User supplied the clipped-preview screenshot, requested a full structural declutter while
+  retaining every option, then explicitly asked for deep research before implementation.
+- Source baseline remains 5dcf3db/v1.1.1. Traced parent layouts, dock/splitter sizing, complete
+  option inventory, live tuning, mode locks, telemetry, clean/private channels and video setup.
+- Native Windows/Fusion audit: eight cases at Qt scale 1/1.25/1.5 (24 observations, not passing
+  usability tests). Exact reproduction at 1120x780: canvas 220px, visible region 76px, parent
+  splitter 76px, minimum-height hint 960px, tools dock 215px. Tools-hidden restores full frame;
+  zero splitter allocation and diagnostic competition also reproduced. No real capture/output.
+- Read 12 primary references across NN/g, Microsoft Windows, Qt, OBS and Kdenlive. Distinguished
+  normative guidance and documented patterns from this product's design inferences.
+- Recorded five research lenses, confidence labels, all 45 runtime options/nine live fields,
+  candidate comparison, explicit headless exception, acceptance criteria and knowledge map in
+  the existing research chapter. Added workstream 16/index entry. Product UI is not modified yet.
+- Recommended a permanent dominant viewer, one scrollable inspector and optional bounded tools,
+  not smaller type, feature deletion, a preview-replacing wizard or unrestricted dashboard docks.
+  Owner choice of inspector side/structure precedes the significant implementation change.
+- Source/release refresh and actual after-screenshots belong to final delivery after the redesign;
+  the current qualified MSI is still the earlier v1.1.1 baseline.
+
 ## 2026-11-03 - Windows setup v1.1.1 delivered and final artifacts verified
 
 - User's requested pre-resumption refresh completed as ep_878 before new setup work. Finished

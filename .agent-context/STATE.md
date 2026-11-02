@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-03 (Asia/Kolkata) - Windows setup v1.1.1 delivered locally with qualified native lifecycle and aligned release artifacts.
-> **Last context offload:** 2026-11-03T00:29:58+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Preview-first 16:9 GUI v1.2.0 delivered locally; final context refresh. No further portrait work.
+> **Last context offload:** 2026-11-03T02:31:34+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,7 +7,45 @@
 
 ## Current focus
 
-**DELIVERED: v1.1.1 online Windows x64 setup.** The user explicitly resumed work after the
+**DELIVERED: preview-first GUI v1.2.0.** The owner chose left inspector/right large preview after five
+research passes and 12 primary references. All 45 options/nine live fields remain accessible;
+labelled disclosure, compact states, a non-collapsible workspace, persistent video progress
+and capped scrollable Tools replace the crowded dashboard. Full compatibility baseline:
+297 tests/Ruff. Native containment/access/keyboard/headless cases pass at three Qt scales.
+
+Latest follow-up: default startup is display-fitted 16:9, up to 1440x810 logical pixels.
+Native widescreen/action-fit checks pass at 100/125/150%; video dimensions/aspect are never
+stretched or cropped. Eight native synthetic captures and the handbook (272 pages/103 diagrams)
+are refreshed. Final widescreen inputs are committed as 1bb30926cab472a463f80649702ffb29f1f48e8b;
+generated artifacts are committed separately as fe92a98. Both build/export checks pass and
+the final wheel's GUI module bytes match the verified source exactly.
+
+Final MSI: 19,709,952 bytes, SHA256
+bd15e329a88ed44dc244fb264b66dab5e17e3b8778b7da52ded3d6a176445403.
+Final source ZIP: 33,031,157 bytes, SHA256
+1d1b587cbad1ea90a2885039878805e549653b9022b61e600bda2fc6fba68911.
+Public-source fingerprint:
+ea6961ca4aaae1eaf7d11c5f5f6e4bbd5dad63721b5d8c85d847ad7ffeb4fb87.
+Manifests are clean/aligned; setup remains online, unsigned and Windows x64. No push/release.
+
+Code inputs 5ca8d84; research/PDF finalization 6faefc4. Installed private Python 3.12.16/pythonw
+passed the redesigned preview with Tools, metadata camera/model helpers, real four-frame
+MediaPipe/GPU export, CLI help and pip check. Dependencies were installed from the previously
+verified hash-locked wheelhouse; this is not a new claim of online-path testing. Test product
+was completely removed. The harness initially compared a pre-probe preset hash despite the
+probe intentionally saving it; the isolated post-probe install/uninstall check passed with
+preset/model bytes unchanged.
+
+Latest user instruction: continue GUI work, stop any further portrait work. The KC box harness
+had already been completed/deployed before that instruction; no portrait agent/process exists.
+Do not resume branding, change identity, or silently revert it. It keeps the face unchanged.
+Shared source/live changes preserved another contributor's untracked bundle and were not staged.
+
+Original clipping evidence (76 visible pixels of a 220px canvas), 24 baseline geometry
+observations and research remain in the existing research chapter/workstream 16.
+No live camera, raw footage, global display/Python/PATH/security change or remote publication.
+
+**Historical delivered baseline: v1.1.1 online Windows x64 setup.** The user explicitly resumed work after the
 requested pre-resumption context refresh (ep_878, 2026-11-02 23:36 IST). Workstream 12 is done;
 the old pause and draft are superseded. No installer implementation/build/qualification work
 remains. Publication and owner usability approval are separate.
@@ -35,7 +73,7 @@ Runtime inputs: `209b852`; final public delivery inputs: `d030b3a5df83af9c49d06d
 generated artifacts: `037e723`. Both manifests name those clean public inputs (`sourceModified=false`).
 Source ZIP: **33,286,361 bytes**, SHA256
 `8400fa7cee78c1f8c0ef63c0fcd9fb65528c87dce00fc2dab32db84e80552748`.
-All nine release files match committed blobs; both build/export --check commands pass.
+At that completed handoff all nine release files matched committed blobs and both checks passed.
 These installer commits are local: no new push, merge, tag or remote release by this agent.
 
 **Earlier completed request:** cardboard-brown dark slider tracks/handles and refreshed native
@@ -178,7 +216,17 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
-### Latest release handoff - v1.1.1 Windows Setup
+### Current GUI handoff - v1.2.0 Preview-First Studio
+
+- Final widescreen GUI inputs: 1bb3092, after implementation 5ca8d84 and handbook evidence
+  6faefc4. All operating controls retained; source code and native pictures are committed.
+- Final installer/source export is complete for those exact inputs; artifact commit fe92a98. The prior v1.2.0
+  installed runtime passed preview/Tools/real export/helper/CLI checks before the final
+  startup-size refinement; final 16:9 startup/action-fit checks pass natively.
+- No more portrait work. That previously requested change was complete before the user stopped
+  the task; its shared contributor bundle remains unstaged here.
+
+### Historical release baseline - v1.1.1 Windows Setup
 
 - Canonical handoff folder: `release` at this repository root, outside `src`. The user wants it
   refreshed with the latest export after future public source/docs changes.
@@ -299,6 +347,12 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
+GUI implementation, widescreen follow-up and release artifacts are complete. Await the owner's
+next concrete GUI feedback, not another design/research/installer loop. An already-running
+Studio must be restarted to load external source changes; do not terminate it for the user.
+Do not resume portrait work or silently revert the completed drawing. Real visual/live-camera/
+calling-app approval remains separate from the recorded synthetic/native evidence.
+
 Default-player feature is implemented and source-tested; actual OS codec/player behavior
 depends on the user's file associations and installed codecs, especially FFV1/MKV. Do not
 silently install or hardcode a different player. Existing Studio processes were not terminated.
@@ -309,7 +363,7 @@ cutoff and hashes define this edition. Rebuild only intentionally using the priv
 This private documentary does not belong in source-release ZIPs. Its original 977-page PDF hash
 was rechecked unchanged after the installer work.
 
-Windows setup and the v1.1.1 source handoff are complete locally. Hand off the full MSI path;
+The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.0. Hand off the current full MSI path;
 the owner creates the final GitHub release manually. No automatic push/tag/merge/release,
 live camera, driver installation or system Python/PATH/security change is authorized.
 Use approved signing/IT handling if unsigned packages are blocked; never disable protections.
@@ -330,7 +384,9 @@ Earlier live accuracy/privacy/calling-app and private recorder timing limits rem
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_883` (completed/qualified Windows setup v1.1.1, aligned clean
+- Latest cross-base receipt: `ep_895` (completed preview-first 16:9 GUI v1.2.0, current artifacts,
+  GUI-only focus/no further portrait work and requested final refresh).
+  Previous receipt: `ep_883` (completed/qualified Windows setup v1.1.1, aligned clean
   source/MSI handoff and current-protocol post-delivery refresh).
   Previous receipt: `ep_878` (requested context refresh before explicitly resumed
   installer qualification; previous pause superseded).
