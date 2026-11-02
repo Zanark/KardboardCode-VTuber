@@ -1,11 +1,25 @@
-> **Last updated:** 2026-11-03 (Asia/Kolkata) - Preview-first 16:9 GUI v1.2.0 delivered locally; final context refresh. No further portrait work.
-> **Last context offload:** 2026-11-03T02:31:34+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Minimal animation-first README/gallery and matching release metadata delivered. GUI remains v1.2.0; no further portrait work.
+> **Last context offload:** 2026-11-03T02:50:28+05:30
 
 # KardboardCode-VTuber State
 
 > Resume as the KardboardCode VTuber engineering and streaming-output partner. Read both context stores below before continuing; preserve the user's face-only choice and privacy requirements.
 
 ## Current focus
+
+**DELIVERED: minimal animation-first README.** Core change committed as 67becce:
+banner/runtime hero, immediately followed by all three GIFs, then only dark/light GUI shots.
+Main has seven images total. `docs\visual-gallery.md` contains the other 24 captioned images.
+All 31 original references remain; local media/navigation links resolve; no table framing.
+No new screenshots/artwork or application-code changes. Version remains 1.2.0.
+Workstream 18 is done. Final public inputs de9f18e0a866d55a48f8c7aed7850b23acbdacdc;
+artifacts 4c68266. All release bytes match committed blobs; manifests are clean/aligned.
+Source fingerprint: 1c263941eb234b9e304b1c804d7aaa1c8bd1b51b1ab2df72d0b5e27847be1a79.
+ZIP: 33,033,706 bytes / SHA256 29a7e2b7a1239998319dc6a69f5f9ff4cc36514eed0c3a633b9646ca38f93211.
+MSI: 19,709,952 bytes / SHA256 a2f51fbedc8f6ff65df2db0a9244b88b34bec4820819589b4239525e2a258bb9.
+README is embedded in wheel metadata, so its installer fingerprint is legitimately rebuilt;
+this was not another installer lifecycle or GUI design task. Both --check commands pass;
+the new wheel's GUI module bytes match unchanged runtime source. No push/publication.
 
 **DELIVERED: preview-first GUI v1.2.0.** The owner chose left inspector/right large preview after five
 research passes and 12 primary references. All 45 options/nine live fields remain accessible;
@@ -20,7 +34,7 @@ are refreshed. Final widescreen inputs are committed as 1bb30926cab472a463f80649
 generated artifacts are committed separately as fe92a98. Both build/export checks pass and
 the final wheel's GUI module bytes match the verified source exactly.
 
-Final MSI: 19,709,952 bytes, SHA256
+Prior GUI-only snapshot MSI (superseded by current README-metadata snapshot): 19,709,952 bytes, SHA256
 bd15e329a88ed44dc244fb264b66dab5e17e3b8778b7da52ded3d6a176445403.
 Final source ZIP: 33,031,157 bytes, SHA256
 1d1b587cbad1ea90a2885039878805e549653b9022b61e600bda2fc6fba68911.
@@ -384,7 +398,9 @@ Earlier live accuracy/privacy/calling-app and private recorder timing limits rem
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_895` (completed preview-first 16:9 GUI v1.2.0, current artifacts,
+- Latest cross-base receipt: `ep_899` (minimal animation-first README, seven front images,
+  complete 24-image visual gallery and matching documentation-only release snapshots).
+  Previous receipt: `ep_895` (completed preview-first 16:9 GUI v1.2.0, current artifacts,
   GUI-only focus/no further portrait work and requested final refresh).
   Previous receipt: `ep_883` (completed/qualified Windows setup v1.1.1, aligned clean
   source/MSI handoff and current-protocol post-delivery refresh).

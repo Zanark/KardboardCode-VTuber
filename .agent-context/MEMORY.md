@@ -18,9 +18,10 @@ No personal identities, device credentials, face imagery, or personal calibratio
 - Documentary PDF verification compares complete source-record text inside each printed record
   span, alongside task/message presence, chapter order, links, figures, bounds and stable folios.
   An ID count or a PDF that merely opens is not a completeness check. Preserve privacy redactions.
-- Keep the front README image-first: cohesive cardboard/pixel banners, actual UI/demo galleries,
-  short captions and navigation. Put detailed setup/features/camera/troubleshooting text in
-  clearly named `docs\guides` files rather than rebuilding long front-page explanations.
+- Keep the front README animation-first and minimal: branding banner, runtime hero, then all
+  three existing GIFs immediately below them. Only dark/light Studio screenshots remain on
+  the front. Detailed static imagery belongs in the linked `docs\visual-gallery.md`, organized
+  with captions. Keep setup/features/camera/troubleshooting prose in `docs\guides`.
 - README image galleries must not use table rows/cells or visible borders. Stack other images
   at full content width. Keep only the explicitly approved original-background / green-screen
   GIF comparison side by side, using borderless plain HTML rather than a table.

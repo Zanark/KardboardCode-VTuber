@@ -4,6 +4,27 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-03 - Animation-first front README and separate gallery
+
+- User requested GIFs directly under banner/hero, only dark/light GUI screenshots at the
+  front, and detailed images moved into a linked separate file.
+- Implemented README media order: banner, hero, synthetic animation, approved original/
+  green-screen GIF pair, dark Studio, light Studio. Front image count seven.
+- Created docs\visual-gallery.md with 24 moved images, organized sections and captions.
+  Exact set comparison preserves all 31 original references; every local media/navigation
+  path resolves, no duplicates in the gallery and no README table framing.
+- Public documentation input 67becce; completed evidence de9f18e; artifacts 4c68266.
+  Both source/installer checks pass with clean aligned manifests; all release bytes match
+  committed Git blobs and GUI wheel modules match unchanged source. README-in-wheel metadata
+  required the installer rebuild, not an installer lifecycle or runtime-code change.
+- Source ZIP 33,033,706 bytes / SHA256
+  29a7e2b7a1239998319dc6a69f5f9ff4cc36514eed0c3a633b9646ca38f93211;
+  MSI 19,709,952 bytes / SHA256
+  a2f51fbedc8f6ff65df2db0a9244b88b34bec4820819589b4239525e2a258bb9.
+  Software remains v1.2.0; no new images, code tests, UI/portrait/camera work or remote publication.
+- Persisted/read back handoff ep_899; exact full-offload marker advanced after successful
+  store/episodic persistence to 2026-11-03T02:50:28+05:30.
+
 ## 2026-11-03 - Preview-first GUI and final 16:9 follow-up implemented
 
 - Owner chose left inspector/right large preview. Implemented the protected workspace, labelled
