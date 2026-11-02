@@ -24,6 +24,10 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-03: Simplified the front README to banner/hero, all three GIFs and only dark/light
+  Studio screenshots. Moved the other 24 images into docs\visual-gallery.md with captions,
+  clear sections and prominent navigation. Exact order/media-preservation/link checks pass:
+  all 31 original references retained, no table frames. No new artwork or runtime changes.
   2026-11-03: Final 16:9 follow-up uses display-fitted startup dimensions up to 1440x810 while
   keeping original video aspect/output dimensions. Native startup/action-fit checks pass at
   Qt factors 1/1.25/1.5; default, compact and diagnostic images use widescreen layouts.

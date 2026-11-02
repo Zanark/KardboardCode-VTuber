@@ -8,6 +8,8 @@ v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 
 ### More preview, less clutter
 
+- Animation-first README: GIFs immediately follow the banner/hero; only dark/light GUI
+  screenshots remain on the front page. The full captioned visual gallery is linked separately.
 - Owner-selected **left settings inspector / large right preview**, with a compact header and
   non-collapsible workspace splitter. The complete fitted image remains visible rather than
   being clipped by a smaller ancestor.

@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: All Studio workstreams DONE
+Status: README/gallery delivery IN PROGRESS; earlier workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -22,6 +22,7 @@ Workstreams:
   15_DARK_CARDBOARD_ACCENTS.todo
   16_PREVIEW_FIRST_STUDIO.todo
   17_PERSONA_CARDBOARD_IDENTITY.todo
+  18_MINIMAL_README_GALLERY.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
@@ -37,6 +38,7 @@ Tasks:
   [x] Finish cardboard-brown dark sliders and refresh/push README screenshots (workstream 15).
   [x] Deliver a less-cluttered, preview-first layout without removing options (workstream 16).
   [x] Add cardboard-tool identity to this session's unobscured portrait (workstream 17).
+  [ ] Keep the main README animation-first and move detailed imagery to a gallery (workstream 18).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
