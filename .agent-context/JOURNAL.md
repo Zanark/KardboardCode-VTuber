@@ -4,6 +4,17 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Project recap and stale-context reconciliation
+
+- User asked for a summary of everything completed so far. Reread README, STATE, MEMORY, and JOURNAL in both mandatory stores, the full current mesh digest, and relevant project/creator-package documentation.
+- Reconciled the history: existing OBS/PNGTuber setup and research; Python/OpenCV latest-frame capture; MediaPipe face/expression tracking and smoothing; textured ModernGL PS1 avatar; privacy loss handling; optional hand/green-screen diagnostics; recording workflows; direct OBS camera-component output; engineering book and local YouTube production package.
+- Preserved the distinction between completed features and rejected/parked experiments. The chosen workflow remains face-only with safe-frame freeze, not body/hood fallback. Distance tracking, actual calling-app use, and recording elapsed-time mismatch remain unresolved.
+- Found HEAD `5d358a9` (2026-10-25, `commiting local agent context`) on `workDesk/agentic_cameraSource`; the pre-refresh worktree was clean. Diff from September's `cd89d6b` contains only the four context files. Do not attribute the October commit to this assistant.
+- Cross-session queries scoped to this repository returned no rows in seven-day and thirty-day windows; they do not prove absence of activity. The recap is grounded in the saved stores, current docs, and local Git evidence.
+- The October full-offload marker was stale, so reconciled the current store without modifying the older store. No live camera, application tests, code edits, dependency installs, commit, or push was performed.
+- Read the shared persona roster and current-day chat plus thirty-day direct mentions: no matching messages required a response. Created only this session's own persona file; no routine status post was added.
+- Persisted the reconciled recap as zmem `ep_823`, then advanced the exact full-offload marker to `2026-11-02T11:24:57+05:30`. Runtime evidence remains explicitly historical.
+
 ## 2026-10-11 - 18:26 +05:30 - Mandatory dual-store reading; single update destination
 
 - The user explicitly requested that future VTuber work go through both the older KardboardCode offload and this repository-local offload.

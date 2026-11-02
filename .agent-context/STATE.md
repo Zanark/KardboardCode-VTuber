@@ -1,5 +1,5 @@
-> **Last updated:** 2026-10-11 (Asia/Kolkata) - Mandatory read-both/write-here context routing recorded.
-> **Last context offload:** 2026-10-11T17:36:12+05:30
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - Both context stores reread; project recap and repository snapshot reconciled.
+> **Last context offload:** 2026-11-02T11:24:57+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,7 +7,7 @@
 
 ## Current focus
 
-The context offload is complete; the user has now made dual-store reading mandatory for future VTuber work. No tracking redesign is requested. The user chose **face mesh tracking with a frozen last-safe frame on face loss** after unreliable body/hood-marker experiments. Direct camera output is implemented through the installed **OBS Virtual Camera** component, without running OBS. Actual Discord/Teams/Meet use and reliable distant-face tracking remain unconfirmed.
+The user requested a summary of all work so far. All four files in both context stores were reread on 2026-11-02, together with current project documentation and repository history. No feature work or live capture is requested. The user chose **face mesh tracking with a frozen last-safe frame on face loss** after unreliable body/hood-marker experiments. Direct camera output is implemented through the installed **OBS Virtual Camera** component, without running OBS. Actual Discord/Teams/Meet use and reliable distant-face tracking remain unconfirmed.
 
 This repository is now the explicitly designated home for VTuber implementation continuity. The older KardboardCode OBS store remains a read-only origin reference, not the destination for new runtime updates.
 
@@ -91,11 +91,11 @@ Wait for the user's next runtime request. For calling-app troubleshooting, first
 ## Environment reminders
 
 - Current base: `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber`.
-- Repository observed on 2026-10-11: `Zanark/KardboardCode-VTuber`, branch `workDesk/agentic_cameraSource`, HEAD `cd89d6b` dated 2026-09-14 (`adding OBS Virtual Camera source`). Working tree was clean before this new store. These are snapshot facts, not permanent defaults.
+- Repository observed on 2026-11-02: `Zanark/KardboardCode-VTuber`, branch `workDesk/agentic_cameraSource`, HEAD `5d358a9` dated 2026-10-25 (`commiting local agent context`). The worktree was clean before this refresh. The diff from `cd89d6b` contains only the four context Markdown files; no later application changes appear in that checked-out commit range. These are snapshot facts, not permanent defaults.
 - Python tracking workflow uses `.venv312`; the tracking extra is conditional on Python below 3.13. `pyproject.toml` uses `opencv-contrib-python` as the single OpenCV distribution.
-- Current source reviewed for this offload: `cli.py:288-620`, `virtual_camera.py:13-109`, `pyproject.toml:17-27`, and README direct-camera instructions.
-- Historical September validation: existing pytest/Ruff suites passed; native synthetic output was received with OBS closed; the synthetic no-face CLI sent black. These were not rerun in October and do not establish live accuracy or actual calling-app success.
-- The October task changes context/registration only: no application edits, live capture, dependency changes, commits, or pushes.
+- October source review covered `cli.py:288-620`, `virtual_camera.py:13-109`, `pyproject.toml:17-27`, and README direct-camera instructions. November reconciliation reread the current README, book index, and creator-package README; the commit comparison found no application changes since that review.
+- Historical September validation: existing pytest/Ruff suites passed; native synthetic output was received with OBS closed; the synthetic no-face CLI sent black. These were not rerun for the October or November context tasks and do not establish live accuracy or actual calling-app success.
+- The November summary task changes only this context store and its own session-persona file, plus zmem/generated mesh output. No application edits, live capture, dependency changes, commits, or pushes were performed.
 - Local session provenance: `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7`. Its checkpoints preserve earlier work. Raw artifacts are private; do not copy them into durable context or public docs.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Cross-base offload receipt: zmem episodic `ep_780` (`KardboardCode-VTuber repository context offload`).
+- Latest cross-base offload receipt: zmem episodic `ep_823` (`KardboardCode-VTuber November project recap and context reconciliation`). Earlier registration receipt: `ep_780`; mandatory dual-store routing: `sem_074`.

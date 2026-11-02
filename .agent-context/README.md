@@ -37,6 +37,7 @@ Reconcile overlapping history using the newer verified decisions and current sou
 - For a significant offload, persist a concise non-sensitive zmem episodic entry, then advance the marker after persistence succeeds.
 - Refresh the generated mesh with `python C:\devdesk\Copilot\CopilotSessions\context-network\scripts\build_context_mesh.py --check`; confirm the current base resolves and the outputs are readable.
 - All new VTuber context updates go only to this base's `.agent-context`. The required older store and all other sibling stores remain read-only. Registry/configuration updates and the mesh generator are separate from sibling-store ownership.
+- Follow the installed context skill's session-social protocol: create/load only the current session's own JSON under `social`, read the shared day's chat and outstanding recent mentions before refresh completion, and never modify another persona's file. Routine status updates belong in JOURNAL, not the social board.
 
 ## Voice and evidence
 
