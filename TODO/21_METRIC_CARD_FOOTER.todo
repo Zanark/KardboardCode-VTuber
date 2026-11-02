@@ -1,4 +1,4 @@
-Status: IN PROGRESS
+Status: DONE
 Milestone: Restore the preferred compact data-card footer
 Dependencies: 20_SIDE_DIAGNOSTICS_AND_CLEAN_OUTPUT.todo
 Purpose: Preserve the user's preferred scannable metric cards instead of flattened text rows,
@@ -10,8 +10,8 @@ Tasks:
   [x] Put Tools and its drawer below the viewer only, keeping the inspector full-height.
   [x] Verify actual card borders/value readability and native containment across sizes/scales.
   [x] Preserve the diagnostic rail, clean-output action and all existing controls/data bindings.
-  [ ] Refresh native README/gallery screenshots, guide, handbook and current source/MSI snapshots.
-  [ ] Commit completed work and persist only the owned context handoff.
+  [x] Refresh native README/gallery screenshots, guide, handbook and current source/MSI snapshots.
+  [x] Commit completed work and persist only the owned context handoff.
 
 Acceptance criteria:
   Four clearly grouped cards remain visible with Tools open or closed in both work modes.
@@ -37,7 +37,11 @@ Completion evidence:
   dark/diagnostic views reviewed: restored cards and full-height settings match the illustration.
   README retains7images with all3GIFs below banner/hero; gallery24images; media/navigation
   links resolve. In-app/source guides updated; handbook274pages/103diagrams, zero failures/
-  overflow. Current source/MSI snapshot and completed continuity handoff remain pending.
+  overflow. Current1.2.3 source/MSI snapshots pass both checks. Actual extracted package outside
+  checkout verifies matching GUI/resource bytes, native card text, full-height settings,
+  protected images and clean-output reopening in both themes.
+  Final completion-input/artifact/context commits preserve the handoff separately. No new
+  MSI lifecycle, live camera, portrait or remote publication is claimed.
   Owner approval of the new implementation remains separate from automated evidence.
 
 Completion log:
@@ -45,3 +49,5 @@ Completion log:
   supplied the desired footer placement below the preview, beside Tools.
   2026-11-03: Card footer/full-height settings committed as20542ad; real native text/border/
   geometry proof passes at all3scales. Final current source and visual documentation verified.
+  2026-11-03: Current source/installer and extracted native-package checks pass. Completion
+  evidence is recorded separately from approval of the restored implementation.

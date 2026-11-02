@@ -29,7 +29,9 @@ Completion log:
   Native card/font/border/containment/channel/actions/Tools set18passed at each100/125/150%.
   Final suite313passed/2explicit offscreen limitations skipped; Ruff. Eight native captures/
   banner and minimal README/gallery refreshed; links resolve. Handbook274pages/103diagrams,
-  zero failures/overflow. Current snapshots and own continuity handoff remain pending.
+  zero failures/overflow. Current1.2.3 snapshots pass both checks. Actual extracted native
+  wheel proof outside checkout verifies matching GUI/resources, card text, full-height
+  settings, protected images and clean-output recovery. Final handoff commits are separate.
   2026-11-03: v1.2.2 follow-up: owner-sketched right-hand stacked visual diagnostics (342c4cb)
   and persistent Show clean output / separate Auto-open preference (973dc1d). Actual close/
   reopen retains the same window and worker; no capture starts from idle. Final complete suite
