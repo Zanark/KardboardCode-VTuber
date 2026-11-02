@@ -411,11 +411,37 @@ error and fixed-height tools were both visible. The final drawer is therefore a 
 shrinkable scroll area, not another hard-height panel. The full error text stays in a bounded
 plain-text surface; secondary content can scroll instead of clipping the viewer.
 
-The final complete suite passes 297 cases/Ruff. The native geometry/access/keyboard set plus explicit
+The v1.2.0 baseline complete suite passed 297 cases/Ruff. Its native geometry/access/keyboard set plus explicit
 headless coverage passes at Qt scale 1.0/1.25/1.5: 27 distinct parameterized cases across the
 three factors, including compact sizes, portrait/landscape, errors, diagnostics and video mode.
 Actual synthetic dark/light/compact/diagnostic captures were reviewed. No real camera or
 owner usability approval is implied.
+
+### Owner feedback: visual diagnostics need real image area
+
+The owner then rejected the bottom drawer's undersized raw-face view and supplied an explicit
+illustration: settings at the left edge, the main preview directly beside them, and two stacked
+diagnostic areas in the freed right-hand column. The earlier containment results did not prove
+that a tiny diagnostic was useful. Treating every secondary surface as a text drawer was the
+wrong tradeoff for this task; no new questionnaire or abstract research overrides that feedback.
+
+The v1.2.2 correction keeps raw face above Face / pose or Body in a resizable, non-collapsible
+right-hand rail. Inactive channels reclaim their space. Logs, CLI and numeric Signals remain
+in Tools; the selected image diagnostics do not require opening it. Native regressions inspect
+both actual visible regions and the fitted diagnostic image area, including compact sizes,
+Tools/errors, attempted splitter collapse and Qt 100/125/150%.
+
+The owner also identified a missing visible recovery action: after closing clean output, a
+checked checkbox did not communicate how to get it back. **Show clean output** is now a
+persistent Live button sharing the View action; **Auto-open** is separately labelled as a
+startup preference. Closing/reopening retains the same clean window and worker without
+restarting capture. Raw/headless/Video restrictions and local-only consent remain unchanged.
+
+The native image/channel/close-reopen/primary-control set passes 16 cases at each tested Qt
+scale. The complete suite passes 310 cases with one unsupported offscreen-widescreen case
+skipped; Ruff passes. Actual synthetic native screenshots show the revised arrangement.
+These results establish the tested geometry/lifecycle, not owner usability approval or live
+camera/tracking qualification.
 
 ### Primary references for this revision
 

@@ -15,8 +15,6 @@ from PySide6.QtWidgets import QApplication
 
 from kardboard_vtuber.camera.devices import LocalCameraDevice
 from kardboard_vtuber.gui.window import StudioWindow
-from kardboard_vtuber.tracking.mediapipe_tracker import render_face_mesh_panel
-from kardboard_vtuber.tracking.models import FaceTrackingState
 
 
 def main() -> int:
@@ -30,6 +28,8 @@ def main() -> int:
     window.page_selector.setCurrentText("Avatar & eyes")
     window.controls["left_blink_threshold"].set_value(0.30)
     window.controls["right_blink_threshold"].set_value(0.38)
+    window.controls["tracking_debug"].set_value(True)
+    window.controls["debug_face_preview"].set_value(True)
     window._refresh_settings()
     window.show()
     window.start_demo()
@@ -41,22 +41,39 @@ def main() -> int:
     heartbeat.start()
     state = {"shot": 0, "error": False}
     demo_image = QImage()
+    face_image = QImage()
+    raw = np.full((260, 230, 3), (55, 85, 65), np.uint8)
+    for x in range(0, 230, 30):
+        for y in range(0, 260, 30):
+            if (x + y) // 30 % 2:
+                raw[y:y + 30, x:x + 30] = (85, 115, 95)
+    cv2.putText(raw, "SYNTHETIC", (30, 120), cv2.FONT_HERSHEY_SIMPLEX,
+                .65, (210, 235, 220), 2)
+    cv2.putText(raw, "NOT A FACE", (28, 155), cv2.FONT_HERSHEY_SIMPLEX,
+                .60, (210, 235, 220), 1)
     timer = QTimer()
     timer.setInterval(400)
 
     def capture() -> None:
-        nonlocal demo_image
+        nonlocal demo_image, face_image
         if (state["shot"] < 4 and window.worker is None) or time.monotonic() - started > 30:
             print("Synthetic preview did not become ready.", flush=True)
             state["error"] = True
             timer.stop()
             window.close()
             return
-        if state["shot"] < 4 and window.preview.image.isNull():
+        if state["shot"] < 4 and (
+            window.preview.image.isNull() or window.face_mesh.image.isNull()
+        ):
             return
         number = state["shot"]
         if number == 0:
+            window.timer.stop()
             demo_image = window.preview.image.copy()
+            face_image = window.face_mesh.image.copy()
+            window.raw_face.set_frame(raw)
+            window.diagnostics_notice.setText("Synthetic diagnostics / local only")
+            app.processEvents()
             path = args.output_dir / "kardboardcode-studio-dark.png"
             if not window.grab().save(str(path)):
                 raise RuntimeError(f"Could not save screenshot: {path}")
@@ -82,6 +99,9 @@ def main() -> int:
                 raise RuntimeError(f"Could not save screenshot: {path}")
             window._tutorial.close()
             window.stop_button.click()
+            window.controls["tracking_debug"].set_value(False)
+            window.controls["debug_face_preview"].set_value(False)
+            window._refresh_settings()
             window.resize(1440, 810)
             window.page_selector.setCurrentText("Camera")
         elif number == 4:
@@ -116,22 +136,10 @@ def main() -> int:
             window._refresh_settings()
             window.preview.image = demo_image.copy()
             window.preview.update()
-            raw = np.full((260, 230, 3), (55, 85, 65), np.uint8)
-            for x in range(0, 230, 30):
-                for y in range(0, 260, 30):
-                    if (x + y) // 30 % 2:
-                        raw[y:y + 30, x:x + 30] = (85, 115, 95)
-            cv2.putText(raw, "SYNTHETIC", (30, 120), cv2.FONT_HERSHEY_SIMPLEX,
-                        .65, (210, 235, 220), 2)
-            cv2.putText(raw, "NOT A FACE", (28, 155), cv2.FONT_HERSHEY_SIMPLEX,
-                        .60, (210, 235, 220), 1)
             window.raw_face.set_frame(raw)
-            window.face_mesh.set_frame(
-                render_face_mesh_panel(FaceTrackingState.no_face(), (1280, 720)),
-            )
-            window.tools_action.setChecked(True)
-            window.console_tabs.setCurrentIndex(2)
-            window.diagnostic_tabs.setCurrentIndex(1)
+            window.face_mesh.image = face_image.copy()
+            window.face_mesh.update()
+            window.diagnostic_tabs.setCurrentIndex(0)
             window.status.setText("SYNTHETIC DIAGNOSTIC LAYOUT / NO CAMERA INPUT")
         elif number == 7:
             path = args.output_dir / "kardboardcode-studio-diagnostics.png"

@@ -1,6 +1,6 @@
 # KardboardCode Studio
 
-[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.2.1.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
+[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.2.2.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
 
 ![The actual textured 3D avatar, presented in the forest-green and kraft-paper banner palette](docs/images/kardboardcode-hero.png)
 
@@ -23,17 +23,17 @@
 [Engineering book](docs/README.md) ·
 [Release files](release/README.md)
 
-**v1.2.1 — More preview. Less clutter. Clearer controls.** [What's included →](release/RELEASE_NOTES.md)
+**v1.2.2 — Readable diagnostics. One-click clean output.** [What's included →](release/RELEASE_NOTES.md)
 
 ## Studio: dark and light
 
-<a href="docs/images/kardboardcode-studio-dark.png"><img src="docs/images/kardboardcode-studio-dark.png" alt="Dark Studio with a large protected preview and cardboard-brown eye controls" width="100%"></a>
+<a href="docs/images/kardboardcode-studio-dark.png"><img src="docs/images/kardboardcode-studio-dark.png" alt="Dark Studio with left settings, a protected preview, stacked right-hand diagnostics and Show clean output" width="100%"></a>
 
-*Forest green, cardboard-brown controls. Actual Windows widgets on a synthetic, camera-free stage.*
+*Forest green and cardboard controls. Raw diagnostics above face/pose on the right; the raw pattern is synthetic, not a face.*
 
-<a href="docs/images/kardboardcode-studio-light.png"><img src="docs/images/kardboardcode-studio-light.png" alt="Light Studio with the same preview-first layout and green controls on warm paper" width="100%"></a>
+<a href="docs/images/kardboardcode-studio-light.png"><img src="docs/images/kardboardcode-studio-light.png" alt="Light Studio with the same readable diagnostic rail and persistent clean-output button" width="100%"></a>
 
-*Warm paper, the same full-featured workbench. No camera input or published video.*
+*Warm paper, the same layout. Show clean output reopens the separate window; Auto-open is its startup preference. No camera input.*
 
 **[Explore the full gallery: Studio views, avatar details and diagnostics →](docs/visual-gallery.md)**
 

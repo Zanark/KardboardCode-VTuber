@@ -21,9 +21,9 @@ illustrative. No raw camera footage or private face imagery is included.
 
 ### Compact widescreen workspace
 
-![Compact 16:9 Studio with a protected preview and anatomical eye controls](images/kardboardcode-studio-compact.png)
+![Compact 16:9 Studio with a protected preview, stacked diagnostics and anatomical eye controls](images/kardboardcode-studio-compact.png)
 
-*The full preview stays visible on a smaller desk; secondary settings remain in labelled sections.*
+*The main preview and selected diagnostic images stay visible on a smaller desk; settings remain in labelled sections.*
 
 ### Built-in tutorial
 
@@ -41,7 +41,8 @@ illustrative. No raw camera footage or private face imagery is included.
 
 ![Separate clean output window without Studio controls or diagnostics](images/kardboardcode-studio-clean-output.png)
 
-*A controls-free synthetic output window for OBS Window Capture, distinct from OBS Virtual Camera.*
+*A controls-free synthetic output window for OBS Window Capture, distinct from OBS Virtual Camera.
+The persistent Show clean output button reopens it after closing; Auto-open is a separate preference.*
 
 The [dark and light theme showcases](../README.md#studio-dark-and-light) remain on the front page.
 See the [complete operating guide](guides/features-and-controls.md) for all settings.
@@ -106,12 +107,13 @@ Read the [renderer chapter](02-architecture/textured-3d-renderer.md) for geometr
 
 ![Synthetic diagnostics and real geometry](images/readme/debug.svg)
 
-### Studio diagnostic tools
+### Readable Studio diagnostics
 
-![Optional diagnostic drawer leaving the program preview unobstructed](images/kardboardcode-studio-diagnostics.png)
+![Raw face above face-pose or body diagnostics beside the program preview](images/kardboardcode-studio-diagnostics.png)
 
-*Tools exposes raw/mesh/body diagnostics without covering the viewer. The raw placeholder is
-synthetic, explicitly not a face, and never enters clean output.*
+*The right-hand rail keeps raw and tracking image areas readable together without opening Tools.
+Its dividers resize the panels; disabled channels return space to the main preview. The raw
+pattern is synthetic, explicitly not a face, and never enters clean output.*
 
 ### Face mesh and pose
 

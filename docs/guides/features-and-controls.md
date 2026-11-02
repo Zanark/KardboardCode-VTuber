@@ -38,9 +38,12 @@ See [scoped validation evidence](../07-quality-and-testing/validation-evidence.m
 Use the left inspector: **Camera**, **Video file**, **Avatar & eyes**, **Output & effects**,
 **Tracking labs**, **Private capture**, **Models** and **Tutorial**. Labelled sections expose
 secondary controls without removing them; field help is available in tooltips/accessibility
-descriptions. The large preview stays on the right.
-**Tools** / **Ctrl+J** opens a bounded Logs/CLI/Diagnostics drawer, closed by default.
+descriptions. The main preview sits directly beside the inspector. Selected raw-face diagnostics
+appear above face/pose or body in a resizable right-hand rail, simultaneously visible without Tools.
+**Tools** / **Ctrl+J** opens a bounded Logs/CLI/numeric Signals drawer, closed by default.
 Raw face, mesh and body views never occupy or cover the program image.
+**Show clean output** remains available in Live mode to reopen the separate controls-free window
+after closing it; **Auto-open** is an independent startup preference.
 Left/right blink overrides, shared wink/open/asymmetry thresholds, internal brightness and
 debounce are live. Other settings unlock after Stop
 (`src/kardboard_vtuber/gui/settings.py:17-29,48-186`).

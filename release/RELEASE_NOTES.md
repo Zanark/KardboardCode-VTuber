@@ -1,10 +1,27 @@
-# v1.2.1 - Clear Numeric Controls
+# v1.2.2 - Readable Diagnostics and Reopenable Clean Output
 
 A quieter, preview-first native workspace with every operating option retained. Online Windows
 setup, cardboard-brown dark sliders, Live/Video processing and automatic playback remain included.
 v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 
 ## 2026-11-03
+
+### Readable side diagnostics and clean-output access
+
+- Settings stay left; the protected main preview sits directly beside them. A resizable
+  right-hand rail shows raw face above Face / pose or Body. These visual diagnostics are
+  simultaneously readable without opening a bottom drawer, and return space when disabled.
+- Tools now contains Logs, CLI equivalent and numeric Signals, not tiny image previews.
+  Splitters cannot collapse the main or diagnostic image area; compact errors stay complete
+  and scrollable without pushing the image panels outside their parents.
+- A persistent **Show clean output** button shares the View-menu action in Live mode.
+  Closing that window does not stop processing; the button reopens the same clean window
+  without restarting the camera or toggling a checked box off and on.
+- **Auto-open** separately controls startup opening. Manual reopening works when it is off.
+  Idle opening is black and opens no camera. Video/headless/raw configurations cannot display
+  clean output; raw/debug pixels remain local to the diagnostic rail.
+- Updated actual native dark/light/compact/diagnostic screenshots and operating documentation.
+  The front README still contains only the banner/hero, three GIFs and two theme screenshots.
 
 ### Numeric controls and mode strip
 
@@ -28,9 +45,9 @@ v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 - Labelled expandable sections retain all 45 runtime options and nine live fields. Basic eye
   tuning stays near compact anatomical OPEN/CLOSED decisions; additional timing/avatar/capture
   settings remain accessible without filling the default view.
-- **Tools / Ctrl+J** opens a bounded, scrollable Logs/CLI/Diagnostics drawer, closed by default.
-  Logs continue collecting when closed. Raw face, mesh and body views never occupy the program
-  image or create competing preview columns.
+- **Tools / Ctrl+J** opens a bounded, scrollable Logs/CLI/Signals drawer, closed by default.
+  Logs continue collecting when closed. Raw face, mesh and body views stay in their selected
+  right-hand diagnostic panels, never over the program image.
 - Video file setup is a scrollable inspector category; export progress stays beside the viewer
   across category changes. Long error messages remain complete in a bounded plain-text surface.
 - Presets use a labelled menu. Load/Reset/model jobs visibly disable during work. Existing

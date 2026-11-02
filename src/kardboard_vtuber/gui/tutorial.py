@@ -23,9 +23,10 @@ LESSONS = (
         "a camera, record, or publish video.<br><br><b>Try demo</b> renders the real avatar on an "
         "explicitly synthetic stage. It needs no camera and does not send virtual-camera video. "
         "Use it to explore the layout and live eye sliders.<br><br>"
-        "Settings stay in the <b>left inspector</b>; the large preview stays on the right. "
+        "Settings stay in the <b>left inspector</b>; the main preview sits directly beside it. "
+        "Selected visual diagnostics stack in a <b>right-hand column</b>. "
         "Expand a labelled section for more controls. <b>Tools</b> or <b>Ctrl+J</b> opens "
-        "Logs, CLI equivalent and Diagnostics without covering the preview.<br><br>"
+        "Logs, CLI equivalent and numeric Signals without covering the preview.<br><br>"
         "<b>LIVE</b> controls apply to the next processed frame. "
         "Dimmed controls show <b>LOCKED / STOP TO EDIT</b>. Other settings unlock after Stop.",
     ),
@@ -75,7 +76,7 @@ LESSONS = (
         "Invalid combinations are not applied. The last valid configuration stays active. "
         "Expand <b>Winks &amp; timing</b> for the shared rules/debounce. "
         "Full raw/rendered/filtered "
-        "readouts are under <b>Tools &gt; Diagnostics &gt; Signals</b>. "
+        "readouts are under <b>Tools &gt; Signals</b>. "
         "Numeric fields use the upper <b>+</b> and lower <b>-</b> buttons for one step, or "
         "accept direct typing. Eye debounce controls how long a state must hold before logging, "
         "not preview frame rate.",
@@ -88,8 +89,10 @@ LESSONS = (
         "disable flap physics before selecting it. Depth offset changes perspective placement. "
         "Motion smoothing reduces jitter; turning it off requires a restart.<br><br>"
         "Local tracking diagnostics are in Tracking labs. Raw-face debugging requires confirmation "
-        "on every real start. Open <b>Tools &gt; Diagnostics</b> and choose "
-        "<b>Raw face</b>, <b>Face / pose</b> or <b>Body</b>; these are not program overlays. "
+        "on every real start. Enabled visual diagnostics appear beside the main preview: "
+        "<b>Raw face</b> above <b>Face / pose</b> or <b>Body</b>. Both areas are visible "
+        "without opening Tools. Drag their dividers to resize them; disabled channels return "
+        "space to the preview. These are not program overlays. "
         "Nothing diagnostic enters the clean window. "
         "Presets never restore raw consent. Unmasked camera mode also requires "
         "explicit acknowledgement. The GUI cannot make unsafe modes safe by changing their labels.",
@@ -104,7 +107,11 @@ LESSONS = (
         "Output is video-only, aspect-fitted with black bars. Preview resize and local debugging "
         "do not affect exported pixels. Actual motion speed follows capture/processing.<br><br>"
         "<b>Clean output window</b> is different: it is a separate controls-free window for OBS "
-        "Window Capture. It opens with Live/demo by default and can be reopened from View. "
+        "Window Capture. <b>Show clean output</b> stays beside the preview in Live mode, "
+        "and the same action is in View. Closing the window hides it without stopping the "
+        "session; press the button to reopen it. <b>Auto-open</b> separately controls opening "
+        "at Live/demo startup. Reopening also works when Auto-open is off. Before capture, "
+        "the window is black and opens no camera. Raw/headless modes cannot populate it. "
         "Use its client area in OBS; do not capture the Studio diagnostic panels.<br><br>"
         "Green screen replaces the background. Hand foreground is an RGB anatomical approximation; "
         "it does not track arbitrary held objects or prove physical depth.",
@@ -113,7 +120,7 @@ LESSONS = (
         "6. Experimental tracking",
         "Tracking labs",
         "Face-only is the selected default. "
-        "Skeleton diagnostics use <b>Tools &gt; Diagnostics &gt; Body</b>, not a "
+        "Skeleton diagnostics use the right-hand <b>Body</b> tab, not a "
         "filled avatar on the output. Shoulder fallback requires calibration. Hood tracking uses "
         "green on your left and blue on your right. Red/pink markers are unsupported.<br><br>"
         "Body fallback and hood-marker mode cannot run together. Body-only/no-face/no-side-marker "

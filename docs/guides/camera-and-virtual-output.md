@@ -112,6 +112,10 @@ device. App permissions and organizational policies can restrict virtual cameras
 For **OBS Window Capture**, use the separate **KardboardCode - Clean Output** window, opened by
 default from Live/demo. Select its client area rather than capturing the Studio with private
 diagnostic panels. This window is independent of the virtual-camera sender.
+Use **Show clean output** beside the Live preview, or the same View action, to reopen it after
+closing it without stopping/restarting the session. **Auto-open** separately controls startup
+opening; manual reopening works when it is off. Idle opening is black and starts no camera.
+Raw/headless/Video states cannot display clean output.
 
 ```mermaid
 flowchart TD

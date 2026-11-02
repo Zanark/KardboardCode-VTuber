@@ -8,9 +8,12 @@
 The compact header contains identity, theme, tutorial, stable Start/Stop actions and two modes:
 **LIVE** for cameras/streaming and **VIDEO** for applying the avatar to an existing file.
 The owner's chosen arrangement is a scrollable settings inspector on the **left** and a large,
-permanent preview on the **right**. Labelled disclosure sections retain every option without
-expanding every form. **Tools** / **Ctrl+J** opens a bounded bottom drawer containing **Logs**,
-**CLI equivalent** and **Diagnostics**. The drawer starts closed, not the preview.
+permanent preview directly beside it. Enabled visual diagnostics occupy a resizable **right-hand
+column**: raw face above Face / pose or Body. Both image areas remain visible together, without
+opening Tools; disabling their channels returns space to the main preview.
+Labelled disclosure sections retain every option without expanding every form.
+**Tools** / **Ctrl+J** opens a bounded bottom drawer containing **Logs**, **CLI equivalent**
+and numeric **Signals**. The drawer starts closed, not the preview or selected diagnostics.
 
 Why these positions:
 
@@ -29,9 +32,15 @@ Why these positions:
   Progress stays beside the viewer even after changing inspector categories. File setup scrolls
   rather than pushing every other page below an unbounded form. The old raw recorder remains a consent-gated **Private capture**
   utility in Live mode, not the meaning of video processing.
-- **Diagnostics never cover the program:** Tools has Signals, Raw face, Face / pose and Body
-  sub-tabs, not additional columns that squeeze the viewer. Active/private indicators remain
-  obvious while the drawer is closed. The separate clean output window still supports OBS capture.
+- **Visual diagnostics need image area, not a text strip:** the owner's illustrated arrangement
+  places raw face above tracking diagnostics to the right of the main preview. The main and
+  diagnostic splitters cannot collapse; each requested image retains a real, fully visible
+  canvas. Face / pose and Body share the lower tabs. Numeric signals remain in Tools.
+  Raw/local-only warnings and the original start-time consent remain explicit.
+- **Clean output is a persistent action:** **Show clean output** remains beside the Live preview
+  and shares its View-menu action. Closing that separate window does not stop the worker or
+  require restarting. **Auto-open** is a startup preference, independent of manual reopening.
+  Idle opening is black/no capture; raw/headless/Video states cannot display clean output.
 - **Model setup is discoverable:** missing files need actionable setup, not a cryptic traceback.
 - **Tutorial is a persistent header action and a full page:** it is available before camera access,
   not a first-run modal that blocks the interface or disappears forever.
@@ -45,7 +54,9 @@ Why these positions:
 The viewer's splitter cannot collapse. Secondary tools have a height cap and a scrollable
 content region, not a fixed height that can override the viewer's minimum. Native geometry
 checks inspect ancestor clipping, including compact sizes, portrait/landscape frames, tools,
-long errors, private diagnostics, video progress and explicit headless placeholders.
+long errors, private diagnostics, video progress and explicit headless placeholders. Error
+details can shrink within 48-68px; Tools can shrink below Qt's default scroll-area hint when
+necessary. Neither may force diagnostic images outside their actual parent-clipped regions.
 
 The default workbench uses a display-fitted **16:9** window (up to 1440 x 810 logical pixels),
 with proportional down-sizing for the available work area. Resizing/maximizing remains native

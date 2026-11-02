@@ -56,7 +56,7 @@ available, and body/marker resolvers can have different state from the face trac
 
 `RuntimeBridge.publish` bounds display copies to 1280x800 while preserving aspect ratio. The
 clean compositor/output stays full-size. A separate full-resolution owned frame feeds the
-controls-free output window, while mesh/raw-face/skeleton buffers feed the local diagnostic drawer.
+controls-free output window, while mesh/raw-face/skeleton buffers feed the local diagnostic rail.
 The mailbox owns its copies; `VideoCanvas.set_frame`
 also detaches the QImage from NumPy. Replacing a worker buffer therefore cannot change pixels
 while Qt is painting. No QPixmap or QWidget is touched by the worker.
@@ -74,28 +74,38 @@ fields without changing their values or parser destinations. Expanding a section
 recreate its controls or restart a worker. Tooltips and accessible descriptions carry secondary
 field help; raw-consent warnings remain explicit.
 
-Logs/CLI/Diagnostics are inside a closed-by-default `QScrollArea` drawer with a height cap.
+Raw face and face/pose or body use a protected vertical splitter in a right-hand rail beside
+the main canvas. A horizontal splitter lets the user adjust preview/rail widths without
+collapsing either. `debug_face_preview`, `tracking_debug` and `full_body` control the relevant
+panels; disabled channels reclaim their space. Headless/Video states hide this Live-only rail.
+
+Logs/CLI/numeric Signals are inside a closed-by-default `QScrollArea` drawer with a height cap.
 It can shrink and scroll when space is tight. A fixed-height dock was not sufficient: the old
 220px canvas could be clipped to 76px by its parent at 1120x780. Raising only the child's
 minimum repeats that defect. Error messages are a bounded, scrollable plain-text surface;
-video progress stays in the program workspace rather than the inspector page.
+video progress stays in the program workspace rather than the inspector page. Tools has an
+explicit 1px minimum so Qt can shrink its otherwise 70px scroll-area minimum hint. Error
+details can shrink within 48-68px while retaining complete scrollable text.
 
 ```mermaid
 flowchart TD
     Header["Compact header / mode / Start / Stop"] --> Status["Visible state and bounded errors"]
     Status --> Work["Primary workspace receives remaining space"]
     Work --> Inspector["Left: scrollable task inspector / labelled sections"]
-    Work --> Viewer["Right: protected aspect-fit preview"]
+    Work --> Viewer["Middle: protected aspect-fit preview"]
+    Work --> Rail["Right: selected visual diagnostics"]
+    Rail --> Raw["Upper: raw face / local only"]
+    Rail --> Tracking["Lower: face-pose or body tabs"]
     Work --> Progress["Video progress remains visible across categories"]
     Optional["Tools toggle / Ctrl+J"] --> Drawer["Bounded scrollable secondary drawer"]
-    Drawer --> Tabs["Logs / CLI / Diagnostics"]
-    Tabs --> Separate["Private channels never become program pixels"]
+    Drawer --> Tabs["Logs / CLI / numeric Signals"]
+    Rail --> Separate["Private channels never become program pixels"]
     classDef default fill:#19332b,stroke:#d5a568,color:#fff4db
 ```
 
-Runtime polling still updates owned raw/mesh/body buffers while the drawer is closed, but
-does not add or reveal columns beside the viewer. Compact eye decisions remain near eye
-tuning; full numeric signals and performance values are in Diagnostics. The shared preset
+Runtime polling updates owned raw/mesh/body buffers independently of Tools visibility. Compact
+eye decisions remain near eye tuning; full numeric signals and performance values are in
+Tools > Signals. The shared preset
 actions and model buttons visibly reflect busy state. Logging continues regardless of drawer
 visibility, and the explicit headless option leaves an explanatory workspace.
 
@@ -103,6 +113,14 @@ Native regressions check the whole widget and fitted image against its actual vi
 not only its `isVisible` flag. They cover small windows, long errors, diagnostics, mode/page
 changes, splitter dragging, both image orientations and controlled Qt scaling. These checks
 establish containment on the tested platform, not universal hardware or live-camera accuracy.
+Diagnostic regressions also inspect actual aspect-fitted image area, rather than treating a
+visible but unusably small thumbnail as a successful design.
+
+The persistent **Show clean output** button and View entry share one QAction. Closing the
+controls-free window hides it without stopping the worker; runtime polling continues updating
+its owned clean-frame buffer. Reopening shows the same window and latest clean pixels, without
+changing **Auto-open**. Manual idle opening stays black and starts no source. Raw/headless/Video
+configurations disable the action and hide/clear the window rather than displaying private data.
 
 ## Live eye calibration
 

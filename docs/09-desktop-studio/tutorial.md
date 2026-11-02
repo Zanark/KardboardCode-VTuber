@@ -81,8 +81,8 @@ In **Avatar & eyes → Eye tuning**, use **Calibrate OPEN / CLOSED eyes** during
    fail visibly; repeat rather than assuming a physically closed eye must have model score zero.
 
 Only numeric observations are used; no face images are saved. K follows anatomical left and C
-anatomical right. Compact OPEN/CLOSED decisions stay next to tuning. **Tools → Diagnostics →
-Signals** shows raw/rendered scores, applied thresholds and pose. Geometry/pose remain smoothed;
+anatomical right. Compact OPEN/CLOSED decisions stay next to tuning. **Tools → Signals**
+shows raw/rendered scores, applied thresholds and pose. Geometry/pose remain smoothed;
 brief raw eye closures are not filtered away.
 
 For manual tuning, **raise** blink thresholds for missed closures and **lower** them for false
@@ -108,14 +108,17 @@ Expand **Avatar setup**. Textured 3D is canonical; disable physics before select
 Depth offset changes perspective placement and supports direct numeric entry without an
 artificial positive cap. Preview resizing does not crop or change source processing resolution.
 
-The program image stays unobstructed. Open **Tools → Diagnostics** and choose **Raw face**,
-**Face / pose** or **Body**. Only the requested diagnostic is displayed in that secondary area;
-enabling diagnostics does not create columns that squeeze the viewer. They do not enter clean output.
+The program image stays unobstructed beside the left settings inspector. Enable the required
+**Local diagnostics** in **Tracking labs**: **Raw face** appears in the upper-right panel;
+**Face / pose** or **Body** occupies the lower-right panel. Both image areas remain visible
+without opening Tools. Drag their dividers to adjust widths/heights. Disabling a channel
+reclaims its space; the main preview and diagnostic images cannot be collapsed by dragging.
+Raw consent remains explicit on each real start. These views never enter clean output.
 Skeleton diagnostics do not fill a full-body avatar into camera video.
 
-![Optional diagnostic drawer](../images/kardboardcode-studio-diagnostics.png)
+![Raw face above face-pose or body diagnostics in the right-hand rail](../images/kardboardcode-studio-diagnostics.png)
 
-*Actual layout with synthetic placeholders, not a saved face image.*
+*Actual native layout with readable stacked image areas. The checkerboard is synthetic, not a face.*
 
 Green screen preserves the person over chroma green. Hand foreground restores conservative
 anatomical regions; RGB does not establish physical depth or recover arbitrary held objects.
@@ -137,11 +140,13 @@ not guaranteed delivered motion speed. Actual calling-app permissions still need
 
 ### Separate clean window for OBS Window Capture
 
-**Clean output** beside the preview is enabled by default for Live/demo.
+**Show clean output** remains beside the preview in Live mode, with the same action in View.
 The stable **KardboardCode - Clean Output** window contains only clean program video.
 Select its client area in OBS Window Capture; it is distinct from OBS Virtual Camera.
-Closing it hides the window, not the live pipeline. Reopen it from View. Raw/unmasked modes
-do not populate this clean-output channel.
+Closing it hides the window, not the live pipeline. Press the button to reopen the same window
+without restarting capture. **Auto-open**, enabled by default, separately controls startup opening;
+manual reopening also works when it is off. Opening before capture shows black and starts no camera.
+Raw/unmasked, headless and Video states cannot display this clean-output window.
 
 ![Clean output window](../images/kardboardcode-studio-clean-output.png)
 

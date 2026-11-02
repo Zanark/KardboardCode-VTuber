@@ -11,7 +11,7 @@ Tasks:
   [x] Keep Logs, CLI and numeric signals in Tools rather than squeezing images into it.
   [x] Add a persistent Live-mode action/button to show or reopen clean output after closing it.
   [x] Verify image area, containment, settings access, privacy and real close/reopen behaviour.
-  [ ] Update native dark/light README captures, gallery, guide and engineering handbook.
+  [x] Update native dark/light README captures, gallery, guide and engineering handbook.
   [ ] Refresh current source/MSI artifacts, commit completed work and offload own context.
 
 Acceptance criteria:
@@ -42,7 +42,14 @@ Completion evidence:
   Final native Windows image/channel/close-reopen/primary-control set: 16 passed at each
   100/125/150% scale. Compact error details shrink within 48-68px and retain full scrollable text
   instead of forcing the protected image panels outside their parents.
-  Final screenshot/docs/snapshot verification is still pending.
+  Eight actual native screenshots refreshed; contact sheet and full dark/light/tutorial views
+  reviewed. The README shows the diagnostic rail and persistent output button in both themes.
+  Banner/hero/three-GIF order and exactly two front GUI shots are preserved: seven front images,
+  24 captioned gallery images; local media/navigation links resolve.
+  In-app tutorial, operating guides, architecture and design rationale match the user-directed
+  layout. Handbook rebuilt: 274 pages/103 diagrams, zero Mermaid failures and zero overflow.
+  Final current-source full suite: 310 passed/one existing skip; Ruff and diff checks pass.
+  Source/MSI snapshot and completed context handoff are still pending.
   User usability approval remains separate from automated/synthetic evidence.
 
 Completion log:
@@ -50,3 +57,6 @@ Completion log:
   move the main preview beside the settings edge and use the freed right column for two
   stacked diagnostics. Also requested an always-accessible clean-output reopen button and
   refreshed README. No additional design questionnaire or unrelated research is needed.
+  2026-11-03: Layout 342c4cb and persistent clean-output action 973dc1d implemented/committed.
+  Native image/containment/lifecycle checks and current full suite pass; actual screenshots,
+  tutorial, guide and 274-page engineering handbook updated for v1.2.2.

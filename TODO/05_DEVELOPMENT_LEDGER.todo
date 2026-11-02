@@ -24,6 +24,13 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-03: v1.2.2 follow-up: owner-sketched right-hand stacked visual diagnostics (342c4cb)
+  and persistent Show clean output / separate Auto-open preference (973dc1d). Actual close/
+  reopen retains the same window and worker; no capture starts from idle. Final complete suite
+  310 passed/one existing offscreen-widescreen skip; Ruff. Native image/containment/channel/
+  close-reopen/primary-action set16passed at each100/125/150%. Eight native screenshots and
+  minimal README/gallery refreshed; handbook274pages/103diagrams, zero failures/overflow.
+  Final current snapshots and own continuity handoff remain pending; no remote publication.
   2026-11-03: v1.2.1 numeric-affordance patch completed. Full suite 302 passed/one unsupported
   offscreen-widescreen case skipped; Ruff. Native glyph/shape/click/bounds/baseline set 5 passed
   at each Qt factor 1/1.25/1.5. Actual wheel resolves all six glyph SVGs outside checkout.
