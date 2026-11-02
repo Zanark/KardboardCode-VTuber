@@ -111,20 +111,6 @@ class SessionWorker(QThread):
                     last_action = events[0].action.value
                     for event in events:
                         self.bridge.log("[DEMO] " + event.format_log())
-                if args.tracking_debug:
-                    from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
-
-                    draw_tracking_debug(frame, state, action=last_action, draw_frame_geometry=False)
-                cv2.putText(
-                    frame,
-                    "SYNTHETIC DEMO / NO CAMERA INPUT",
-                    (28, 38),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.65,
-                    (192, 230, 219),
-                    1,
-                    cv2.LINE_AA,
-                )
                 telemetry = RuntimeTelemetry(
                     face=state,
                     raw_face=replace(state),
@@ -133,8 +119,16 @@ class SessionWorker(QThread):
                     capture_state="synthetic",
                     action=last_action,
                     demo=True,
+                    render_face=state,
                 )
-                self.bridge.publish(None if args.headless else frame, telemetry)
+                from kardboard_vtuber.tracking.mediapipe_tracker import render_face_mesh_panel
+
+                self.bridge.publish(
+                    None if args.headless else frame, telemetry,
+                    clean_frame=None if args.headless else frame,
+                    face_mesh=render_face_mesh_panel(state, (1280, 720))
+                    if args.tracking_debug and not args.headless else None,
+                )
                 self.bridge.stop_event.wait(max(0.0, 1 / 30 - (time.monotonic() - tick)))
         finally:
             renderer.close()

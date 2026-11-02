@@ -146,6 +146,7 @@ class BodyHeadFallback:
         pose: FullBodyPoseState,
         *,
         current_timestamp_ms: int,
+        show_status: bool = True,
     ) -> None:
         """Show safe setup feedback while keeping the head region opaque."""
 
@@ -173,6 +174,8 @@ class BodyHeadFallback:
                 f"{self.required_calibration_samples}"
             )
 
+        if not show_status:
+            return
         scale = max(0.65, min(1.25, frame.shape[1] / 1280.0))
         cv2.putText(
             frame,

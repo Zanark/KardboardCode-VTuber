@@ -39,6 +39,7 @@ class HandOcclusionConfig:
     min_detection_confidence: float = 0.5
     min_presence_confidence: float = 0.5
     min_tracking_confidence: float = 0.5
+    video_mode: bool = False
 
     def __post_init__(self) -> None:
         if self.input_width <= 0:
@@ -89,12 +90,15 @@ class MediaPipeHandOccluder:
             base_options=mp.tasks.BaseOptions(
                 model_asset_path=str(config.model_path.resolve()),
             ),
-            running_mode=mp.tasks.vision.RunningMode.LIVE_STREAM,
+            running_mode=(
+                mp.tasks.vision.RunningMode.VIDEO if config.video_mode
+                else mp.tasks.vision.RunningMode.LIVE_STREAM
+            ),
             num_hands=config.max_hands,
             min_hand_detection_confidence=config.min_detection_confidence,
             min_hand_presence_confidence=config.min_presence_confidence,
             min_tracking_confidence=config.min_tracking_confidence,
-            result_callback=self._on_result,
+            result_callback=None if config.video_mode else self._on_result,
         )
         self._landmarker = mp.tasks.vision.HandLandmarker.create_from_options(options)
 
@@ -116,7 +120,12 @@ class MediaPipeHandOccluder:
             image_format=self._mp.ImageFormat.SRGB,
             data=np.ascontiguousarray(frame_rgb),
         )
-        self._landmarker.detect_async(image, timestamp_ms)
+        if self._config.video_mode:
+            self._on_result(
+                self._landmarker.detect_for_video(image, timestamp_ms), image, timestamp_ms,
+            )
+        else:
+            self._landmarker.detect_async(image, timestamp_ms)
 
     def snapshot(self) -> HandOcclusionState:
         with self._lock:

@@ -14,6 +14,7 @@ Workstreams:
   07_RELEASE_STAGING.todo
   08_OFFICIAL_LOGO_RELEASE.todo
   09_VISUAL_README.todo
+  10_STUDIO_FEEDBACK.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
@@ -21,6 +22,7 @@ Tasks:
   [x] Complete the four delivery workstreams in dependency order.
   [x] Apply supplied logo and prepare first official release v1.0.0 (workstream 08).
   [x] Rebuild the front README as a visual showcase (workstream 09).
+  [x] Address the fifteen-point live Studio feedback (workstream 10).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -37,6 +39,10 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-02: v1.1.0 Studio feedback pass delivered: front Live/Video modes, separate clean
+  output/diagnostics, palette and state clarity, guided calibration, preset resolutions, optical
+  icons, SVG/hero corrections and real offline export. 266 tests/Ruff and extracted-source launch
+  checks passed. Handbook: 256 pages/99 diagrams, zero failures/overflow. Owner review remains separate.
   2026-11-02: Image-first README delivered with 29 images, eight coordinated graphics and
   licensed pixel/industrial typography. Three named guides preserve detailed operating text.
   Desktop/mobile previews, relative links, six guide diagrams and targeted tests verified.

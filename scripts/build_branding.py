@@ -16,11 +16,11 @@ SIZES = (16, 24, 32, 48, 64, 128, 256)
 def icon_frame(image: np.ndarray, size: int) -> np.ndarray:
     if image.ndim != 3 or image.shape[2] != 4 or image.dtype != np.uint8:
         raise ValueError("Branding input must be an 8-bit RGBA PNG")
-    ys, xs = np.nonzero(image[:, :, 3])
+    ys, xs = np.nonzero(image[:, :, 3] >= 16)
     if not len(xs):
         raise ValueError("The logo is fully transparent")
     cropped = image[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
-    padding = max(1, round(size * 0.06))
+    padding = 0 if size <= 32 else max(1, round(size * 0.01))
     available = size - padding * 2
     scale = available / max(cropped.shape[:2])
     width = max(1, round(cropped.shape[1] * scale))

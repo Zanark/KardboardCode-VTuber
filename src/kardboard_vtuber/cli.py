@@ -530,7 +530,9 @@ def main(argv: list[str] | None = None, *, runtime: RuntimeBridge | None = None)
                 tracker.submit(processing_frame, packet.captured_at_ns)
                 face_snapshot = tracker.snapshot()
                 tracking_state = face_snapshot.state
-                render_tracking_state = tracking_state
+                from kardboard_vtuber.tracking.eyes import render_eye_state
+
+                render_tracking_state = render_eye_state(tracking_state, face_snapshot.raw_state)
                 if virtual_camera is not None or runtime is not None:
                     from kardboard_vtuber.tracking.models import FaceTrackingState
 
@@ -541,12 +543,12 @@ def main(argv: list[str] | None = None, *, runtime: RuntimeBridge | None = None)
                     render_tracking_state = hood_marker_tracker.update(
                         processing_frame,
                         timestamp_ms=packet.captured_at_ns // 1_000_000,
-                        face=tracking_state,
+                        face=render_tracking_state,
                         pose=body_state,
                     )
                 elif body_head_fallback is not None:
                     render_tracking_state = body_head_fallback.update(
-                        tracking_state,
+                        render_tracking_state,
                         body_state,
                         current_timestamp_ms=packet.captured_at_ns // 1_000_000,
                     )
@@ -618,6 +620,7 @@ def main(argv: list[str] | None = None, *, runtime: RuntimeBridge | None = None)
                             current_timestamp_ms=(
                                 packet.captured_at_ns // 1_000_000
                             ),
+                            show_status=runtime is None and virtual_camera is None,
                         )
                     else:
                         if renderer is not None:
@@ -639,7 +642,7 @@ def main(argv: list[str] | None = None, *, runtime: RuntimeBridge | None = None)
                 if virtual_camera is not None:
                     virtual_camera.send(frame)
             if not args.headless:
-                if tracker is not None:
+                if tracker is not None and runtime is None:
                     from kardboard_vtuber.tracking.mediapipe_tracker import draw_tracking_debug
 
                     if args.tracking_debug:
@@ -656,7 +659,7 @@ def main(argv: list[str] | None = None, *, runtime: RuntimeBridge | None = None)
                             )
                     if args.debug_face_preview and foreground_source is not None:
                         _draw_debug_face_preview(frame, foreground_source, tracking_state)
-                if args.tracking_debug:
+                if args.tracking_debug and runtime is None:
                     snapshot = camera.snapshot()
                     latency_ms = (time.monotonic_ns() - packet.captured_at_ns) / 1_000_000
                     label = (
@@ -694,6 +697,7 @@ def main(argv: list[str] | None = None, *, runtime: RuntimeBridge | None = None)
                     if key in {ord("q"), 27}:
                         break
             if runtime is not None:
+                from kardboard_vtuber.tracking.mediapipe_tracker import render_face_mesh_panel
                 from kardboard_vtuber.tracking.models import FaceTrackingState
 
                 camera_snapshot = camera.snapshot()
@@ -716,8 +720,26 @@ def main(argv: list[str] | None = None, *, runtime: RuntimeBridge | None = None)
                         output_device=virtual_camera.device if virtual_camera is not None else "",
                         masking_enabled=renderer is not None,
                         raw_preview=args.debug_face_preview,
+                        calibration_status=(
+                            f"BODY CALIBRATION {body_head_fallback.calibration_samples}/"
+                            f"{body_head_fallback.required_calibration_samples} / FACE CAMERA"
+                            if body_head_fallback is not None
+                            and not body_head_fallback.calibration_ready else ""
+                        ),
+                        render_face=render_tracking_state if tracker is not None else None,
                     ),
                     None if args.headless else skeleton_frame,
+                    clean_frame=frame if not args.headless and renderer is not None else None,
+                    face_mesh=(
+                        render_face_mesh_panel(tracking_state, (packet.width, packet.height))
+                        if tracker is not None and args.tracking_debug and not args.headless
+                        else None
+                    ),
+                    raw_face=(
+                        _raw_face_crop(packet.frame, tracking_state)
+                        if tracker is not None and args.debug_face_preview and not args.headless
+                        else None
+                    ),
                 )
 
             if args.duration is not None and now - started_at >= args.duration:
@@ -796,6 +818,20 @@ def _resize_preview(frame: ndarray, maximum_height: int) -> ndarray:
         (max(1, round(width * scale)), maximum_height),
         interpolation=cv2.INTER_AREA,
     )
+
+
+def _raw_face_crop(source: ndarray, state: FaceTrackingState) -> ndarray | None:
+    if not state.detected:
+        return None
+    height, width = source.shape[:2]
+    left = max(0, round((state.center_x - state.face_width * 0.72) * width))
+    right = min(width, round((state.center_x + state.face_width * 0.72) * width))
+    top = max(0, round((state.center_y - state.face_height * 0.90) * height))
+    bottom = min(height, round((state.center_y + state.face_height * 0.90) * height))
+    if right <= left or bottom <= top:
+        return None
+    crop = source[top:bottom, left:right]
+    return _resize_preview(crop, 360).copy()
 
 
 def _draw_debug_face_preview(

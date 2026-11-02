@@ -102,7 +102,78 @@ def test_gui_runtime_reuses_pipeline_and_keeps_raw_debug_out_of_output(
     packet, _ = bridge.take()
     assert packet is not None and packet.frame is not None
     assert not packet.telemetry.effective_detected
-    assert not np.array_equal(packet.frame, exported[-1])
+    np.testing.assert_array_equal(packet.frame, exported[-1])
+    assert packet.clean_frame is not None and packet.face_mesh is not None
+    np.testing.assert_array_equal(packet.clean_frame, exported[-1])
+
+
+def test_clean_program_and_diagnostics_have_separate_owned_buffers() -> None:
+    bridge = RuntimeBridge()
+    clean = np.full((10, 10, 3), 20, np.uint8)
+    raw = np.full_like(clean, 140)
+    debug = np.full_like(clean, 240)
+    bridge.publish(
+        clean, RuntimeTelemetry(), clean_frame=clean, raw_face=raw, face_mesh=debug,
+    )
+    clean[:] = raw[:] = debug[:] = 0
+    packet, _ = bridge.take()
+    assert packet is not None
+    assert np.all(packet.clean_frame == 20)
+    assert np.all(packet.frame == 20)
+    assert np.all(packet.raw_face == 140)
+    assert np.all(packet.face_mesh == 240)
+
+
+@pytest.mark.parametrize("renderer_kind", ("procedural", "textured"))
+def test_reported_closed_eye_scores_work_after_guided_calibration(renderer_kind: str) -> None:
+    from kardboard_vtuber.tracking.eyes import calibrate_eyes, render_eye_state
+
+    calibrated = calibrate_eyes([(.93, .94)] * 15, [(.51, .66)] * 15)
+    assert calibrated.closed(.51, .66, left_eye=True)
+    assert calibrated.closed(.66, .51, left_eye=False)
+    assert not calibrated.closed(.93, .94, left_eye=True)
+    assert not calibrated.closed(.94, .93, left_eye=False)
+    raw = replace(state(34), left_eye_open=.1, right_eye_open=.1)
+    smooth = replace(raw, left_eye_open=.8, right_eye_open=.8)
+    visual = render_eye_state(smooth, raw)
+    if renderer_kind == "textured":
+        from kardboard_vtuber.renderer import Textured3DCardboardRenderer
+
+        try:
+            renderer = Textured3DCardboardRenderer()
+        except RuntimeError as error:
+            pytest.skip(f"GPU context unavailable: {error}")
+    else:
+        renderer = PS1CardboardRenderer()
+    try:
+        renderer.set_eye_sensitivity(calibrated)
+        before = np.full((480, 640, 3), 90, np.uint8)
+        after = before.copy()
+        renderer.render(before, smooth)
+        renderer.render(after, visual)
+        assert visual.head_pose == smooth.head_pose
+        assert not np.array_equal(before, after)
+    finally:
+        renderer.close()
+
+
+def test_overlapping_eye_samples_are_not_silently_applied() -> None:
+    from kardboard_vtuber.tracking.eyes import calibrate_eyes
+
+    with pytest.raises(ValueError, match="overlap"):
+        calibrate_eyes([(.8, .8)] * 15, [(.78, .77)] * 15)
+
+
+def test_experimental_calibration_hold_can_be_published_without_debug_text() -> None:
+    from kardboard_vtuber.tracking.body_head_fallback import BodyHeadFallback
+    from kardboard_vtuber.tracking.full_body import FullBodyPoseState
+
+    fallback = BodyHeadFallback()
+    frame = np.full((480, 640, 3), 100, np.uint8)
+    fallback.render_calibration_hold(
+        frame, FullBodyPoseState.empty(0), current_timestamp_ms=0, show_status=False,
+    )
+    assert not frame.any()
 
 
 def test_partial_runtime_initialization_closes_already_created_tracker(

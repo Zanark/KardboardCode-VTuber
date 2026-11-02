@@ -18,12 +18,13 @@ LESSONS = (
     (
         "Welcome: a control surface, not a second pipeline",
         "Camera",
-        "The studio uses the existing tracking and cardboard pipeline. Opening it does not start "
+        "Choose a front-level mode: <b>LIVE</b> for cameras/streaming, or <b>VIDEO</b> to process "
+        "an existing file into a new avatar video. Opening Studio does not start "
         "a camera, record, or publish video.<br><br><b>Try demo</b> renders the real avatar on an "
         "explicitly synthetic stage. It needs no camera and does not send virtual-camera video. "
         "Use it to explore the layout and live eye sliders.<br><br>"
         "<b>LIVE</b> controls apply to the next processed frame. "
-        "Other settings are available after Stop.",
+        "Dimmed controls show <b>LOCKED / STOP TO EDIT</b>. Other settings unlock after Stop.",
     ),
     (
         "1. Models and source",
@@ -35,7 +36,8 @@ LESSONS = (
         "metadata only; it does not open streams. The same device may appear under two APIs. "
         "Refresh after device changes.<br><br>"
         "Choose <b>Phone stream / video file / manual source</b> "
-        "for a URL, recording or index (0). "
+        "for a URL, replay or manual index. Index <b>0</b> means the first device for an API. "
+        "Media Foundation and DirectShow are alternative Windows capture routes, not RGB/IR modes. "
         "Use the environment-source button only if KARDBOARD_CAMERA_URL is set in this process. "
         "The masked source is kept in memory, not saved in presets or copied logs.",
     ),
@@ -54,11 +56,16 @@ LESSONS = (
         "3. Calibrate your LEFT / K and RIGHT / C eyes",
         "Avatar & eyes",
         "Your anatomical LEFT eye controls K; RIGHT controls C, regardless of mirroring. "
-        "Watch the live raw/filtered meters, blink each eye, then enable each independent Override "
-        "and move its slider. Numeric boxes allow precise values.<br><br>"
+        "During a live session press <b>Calibrate OPEN / CLOSED eyes</b>. Capture relaxed open "
+        "samples, then close BOTH eyes during the countdown and hold through capture. "
+        "A closed eye can still have a nonzero model score. No face images are saved.<br><br>"
+        "The wizard derives both overrides and compatible open/wink rules. The readout shows "
+        "the effective rendered decision, raw score and applied threshold. "
+        "Pose remains smoothed; brief raw eye closures are not low-pass filtered away.<br><br>"
         "An eye at or below its blink threshold closes. A relative wink can also close it when the "
         "opposite eye exceeds the open threshold and their difference is large enough. "
-        "<b>Lower thresholds are less sensitive.</b> Both per-eye blink values must remain lower "
+        "<b>Raise blink thresholds for missed closures; lower them for false closures.</b> "
+        "Both per-eye blink values must remain lower "
         "than the open and wink thresholds.<br><br>"
         "Invalid combinations are not applied. The last valid configuration stays active. "
         "Eye debounce controls how long a state must hold before logging, not preview frame rate.",
@@ -70,24 +77,32 @@ LESSONS = (
         "disable flap physics before selecting it. Depth offset changes perspective placement. "
         "Motion smoothing reduces jitter; turning it off requires a restart.<br><br>"
         "Local tracking diagnostics are in Tracking labs. Raw-face debugging requires confirmation "
-        "on every real start; presets never restore it. Unmasked camera mode also requires "
+        "on every real start and appears in its own side panel. Face mesh/body diagnostics use "
+        "the other side, not overlays on the program image. "
+        "Nothing diagnostic enters the clean window. "
+        "Presets never restore raw consent. Unmasked camera mode also requires "
         "explicit acknowledgement. The GUI cannot make unsafe modes safe by changing their labels.",
     ),
     (
         "5. Calling apps and output effects",
         "Output & effects",
         "Install OBS Studio's camera component and the project's virtual-camera extra. Enable the "
-        "output, choose even dimensions and advertised FPS, then select <b>OBS Virtual Camera</b> "
+        "output, choose an SD/HD/FHD/QHD/4K/portrait or current-display preset and advertised FPS, "
+        "then select <b>OBS Virtual Camera</b> "
         "in Discord, Teams or Meet. OBS can remain closed. Only one producer may use it.<br><br>"
         "Output is video-only, aspect-fitted with black bars. Preview resize and local debugging "
         "do not affect exported pixels. Actual motion speed follows capture/processing.<br><br>"
+        "<b>Clean output window</b> is different: it is a separate controls-free window for OBS "
+        "Window Capture. It opens with Live/demo by default and can be reopened from View. "
+        "Use its client area in OBS; do not capture the Studio diagnostic panels.<br><br>"
         "Green screen replaces the background. Hand foreground is an RGB anatomical approximation; "
         "it does not track arbitrary held objects or prove physical depth.",
     ),
     (
         "6. Experimental tracking",
         "Tracking labs",
-        "Face-only is the selected default. Skeleton diagnostics open in their own tab, not as a "
+        "Face-only is the selected default. "
+        "Skeleton diagnostics use the right-side Body tab, not a "
         "filled avatar on the output. Shoulder fallback requires calibration. Hood tracking uses "
         "green on your left and blue on your right. Red/pink markers are unsupported.<br><br>"
         "Body fallback and hood-marker mode cannot run together. Body-only/no-face/no-side-marker "
@@ -95,8 +110,22 @@ LESSONS = (
         "in prior live use; do not treat availability numbers as accuracy or privacy evidence.",
     ),
     (
-        "7. Private recording and replay",
-        "Recording",
+        "7. Process an existing video",
+        "Video",
+        "Switch the front mode to <b>VIDEO</b>. Choose an input and a NEW output filename. "
+        "Use avatar, eye, model, green-screen and hand settings, then Process video.<br><br>"
+        "<b>Lossless MKV</b> preserves processed RGB frames without extra compression loss and "
+        "can be large. <b>MP4</b> uses high-quality H.264 CRF 17 and is explicitly lossy. "
+        "The avatar changes pixels; the output cannot be byte-identical to the input.<br><br>"
+        "Every frame is processed synchronously. Source size/timestamps are kept within the "
+        "container's timing precision; compatible audio streams are copied. No live camera "
+        "opens, no source mirroring/rotation is applied, and output cannot replace existing files."
+        "<br><br>Opaque 8-bit SDR only. Rotated, interlaced, non-square-pixel, HDR or unsupported "
+        "codec/container cases fail explicitly. Stop cancels and removes temporary output.",
+    ),
+    (
+        "8. Advanced private capture and replay",
+        "Private capture",
         "Stop the camera/demo first. Select guided or free recording, body telemetry, duration, "
         "countdown, model/input widths, folder and filename. Confirm the raw warning.<br><br>"
         "The existing recorder opens a raw preview and writes MP4 + CSV. This is NOT a masked "
@@ -107,12 +136,13 @@ LESSONS = (
         "Keep raw footage private. Browse it later as a camera source for offline testing.",
     ),
     (
-        "8. Presets, logs and troubleshooting",
+        "9. Presets, logs and troubleshooting",
         "Camera",
         "Save/load stores validated controls, not your source URL or raw-preview consent. Loading "
-        "does not start capture. The CLI-equivalent tab substitutes a local environment variable "
+        "does not start capture. The bottom <b>CLI equivalent</b> tab has one-click complete "
+        "command copying. It substitutes a local environment variable "
         "so copying a command does not copy credentials.<br><br>"
-        "The bottom console remains selectable and bounded; Copy includes redacted text only. "
+        "The separate bottom <b>Logs</b> tab remains selectable and bounded. "
         "Missing model? Open Models. No image? Check source, backend and face visibility. "
         "Virtual output unavailable? Check installation and competing producer. "
         "Distant detection remains a known limitation, not a solved slider setting.<br><br>"

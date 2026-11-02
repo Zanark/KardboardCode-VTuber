@@ -150,15 +150,18 @@ This prevents MediaPipe-specific result objects from contaminating the renderer.
 |---|---|
 | `EyeSensitivity` | Immutable effective anatomical left/right blink, open, wink and asymmetry thresholds shared by actions/renderers |
 | `LiveTuning` | One validated tuple of eye sensitivity, internal brightness and debounce intervals; atomically replaced |
-| `RuntimeTelemetry` | Raw/filtered face state, effective detection, observed rates, frame age, dimensions, and explicit synthetic/raw flags |
-| `PreviewPacket` | Owned display-size BGR image, optional separate skeleton, and matching telemetry |
+| `RuntimeTelemetry` | Raw/filtered face state, actual rendered eye state, effective detection, observed rates, dimensions and synthetic/raw flags |
+| `PreviewPacket` | Separate owned program preview, full-resolution clean window frame, local mesh/raw-face/skeleton buffers and matching telemetry |
 | `RuntimeBridge` | Thread event, short lock, one latest display slot and a bounded 500-entry log ring |
 | Studio preset | Versioned allowlisted scalar settings; excludes camera source and raw-preview consent |
+| `VideoExportOptions` | Local input, new output and explicit lossless/MP4 choice; never an existing destination |
+| `VideoProgress` / `VideoExportResult` | Source-time progress, frame/dimension counts and completed output/audio metadata |
 
 These are defined in `tracking\eyes.py`, `runtime.py`, and `gui\settings.py`. They separate a
 small control plane from the full-size compositor/output. The widget thread receives no
 mutable MediaPipe result or ModernGL object. [The desktop architecture
 chapter](../09-desktop-studio/runtime-architecture.md) traces the actual readers and writers.
+Offline file contracts live in `video.py` and the [video-processing chapter](../09-desktop-studio/video-processing.md).
 
 ---
 

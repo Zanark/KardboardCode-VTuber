@@ -18,6 +18,7 @@ class GreenScreenConfig:
     input_width: int = 384
     person_threshold: float = 0.35
     maximum_mask_age_ms: int = 500
+    video_mode: bool = False
 
     def __post_init__(self) -> None:
         if self.input_width <= 0:
@@ -67,10 +68,13 @@ class MediaPipePersonSegmenter:
             base_options=mp.tasks.BaseOptions(
                 model_asset_path=str(config.model_path.resolve()),
             ),
-            running_mode=mp.tasks.vision.RunningMode.LIVE_STREAM,
+            running_mode=(
+                mp.tasks.vision.RunningMode.VIDEO if config.video_mode
+                else mp.tasks.vision.RunningMode.LIVE_STREAM
+            ),
             output_confidence_masks=True,
             output_category_mask=False,
-            result_callback=self._on_result,
+            result_callback=None if config.video_mode else self._on_result,
         )
         self._segmenter = mp.tasks.vision.ImageSegmenter.create_from_options(options)
 
@@ -96,7 +100,12 @@ class MediaPipePersonSegmenter:
             image_format=self._mp.ImageFormat.SRGB,
             data=np.ascontiguousarray(frame_rgb),
         )
-        self._segmenter.segment_async(image, timestamp_ms)
+        if self._config.video_mode:
+            self._on_result(
+                self._segmenter.segment_for_video(image, timestamp_ms), image, timestamp_ms,
+            )
+        else:
+            self._segmenter.segment_async(image, timestamp_ms)
 
     def snapshot(self) -> PersonSegmentationState:
         with self._lock:

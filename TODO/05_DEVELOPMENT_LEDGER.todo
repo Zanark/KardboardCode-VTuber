@@ -24,6 +24,16 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-02: Addressed fifteen live-use feedback items as v1.1.0. Implemented banner-derived
+  dark/light themes, native contrasting ticks/locked badges, separate raw/mesh/body panels and
+  a full-resolution clean output window, bottom command/log tabs and standard/monitor presets.
+  Guided eye sampling derives compatible thresholds; raw eye closures bypass geometry smoothing.
+  Native optical icon bounds are tight; master unchanged. README cards removed, SVG sections and
+  restyled hero reordered. Front VIDEO mode uses synchronous frame-complete PyAV/MediaPipe with
+  lossless MKV / optional lossy MP4, copied compatible audio, no overwrite and cancel cleanup.
+  266 tests/Ruff passed. Actual 30-frame private MediaPipe VIDEO/GPU run at 1080x1920 succeeded.
+  Actual extracted v1.1.0 CLI/Studio/video CLI entry points and demo/clean/video workspace verified.
+  Final handbook: 256 pages, 99 diagrams, zero failures/overflow. Publication remains manual.
   2026-11-02: Replaced the text-heavy README with a visual showcase: 29 images, eight local
   kraft/mint graphics, Silkscreen + Barlow Condensed typography and 324 visible browser words.
   Setup, features and camera/output explanations moved into three named guides. Existing

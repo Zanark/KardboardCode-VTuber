@@ -109,6 +109,10 @@ virtual-camera sender and any competing process. This does not install a custom 
 device. App permissions and organizational policies can restrict virtual cameras
 (`src/kardboard_vtuber/virtual_camera.py:31-57`).
 
+For **OBS Window Capture**, use the separate **KardboardCode - Clean Output** window, opened by
+default from Live/demo. Select its client area rather than capturing the Studio with private
+diagnostic panels. This window is independent of the virtual-camera sender.
+
 ```mermaid
 flowchart TD
     Composite["Clean cardboard composite"] --> Sender["pyvirtualcam OBS backend"]
@@ -131,6 +135,8 @@ Processing brightness also stays internal (`src/kardboard_vtuber/cli.py:624-685`
 - `--virtual-camera-width` / `--virtual-camera-height` require positive even dimensions.
   `--virtual-camera-fps` accepts finite values from 1 to 60. These differ from requested
   capture width/height/FPS and local `--preview-height`.
+- The GUI uses standard SD/HD/FHD/QHD/4K/portrait and current-display presets instead of unit
+  spin boxes. Video-file exports retain source dimensions instead of these live output sizes.
 - Add `--headless` for no CLI preview windows; rendering/output continue. Ctrl+C stops and
   releases the device. Studio's equivalent suppresses preview transfer, not its controls/logs.
 - Video only: select the microphone separately. OBS Window Capture remains a separate option

@@ -5,10 +5,11 @@
 
 ## Spatial model
 
-The top header contains identity, theme, tutorial, and the stable Start/Stop actions. The left
-settings notebook contains task-oriented pages. The right workspace contains preview/skeleton
-views, live telemetry, and a redacted CLI equivalent. A bounded bottom console preserves the
-CLI's inspectable logs.
+The header contains identity, theme, tutorial, stable Start/Stop actions and two prominent modes:
+**LIVE** for cameras/streaming and **VIDEO** for applying the avatar to an existing file.
+Settings sit left. The central program image stays clean; private raw face and synthetic
+face/body diagnostics occupy separate side panels. Bottom tabs contain **Logs** and the
+**CLI equivalent**, with one-click copying of the complete command.
 
 Why these positions:
 
@@ -21,8 +22,11 @@ Why these positions:
   contracts; changing one must not look like changing the other.
 - **Experimental tracking gets its own page and warnings:** all features remain accessible without
   presenting hood/body estimates as the normal or privacy-certified path.
-- **Recording gets its own task:** the recorder saves raw pixels, not the safe rendered preview.
-  Explicit consent and a distinct action prevent accidental capture.
+- **VIDEO is a front-level task:** input/output files, lossless/MP4 quality and progress are
+  separate from live capture. The old raw recorder remains a consent-gated **Private capture**
+  utility in Live mode, not the meaning of video processing.
+- **Diagnostics never cover the program:** dedicated side panels preserve the complete central
+  image. A separate clean output window supports OBS Window Capture without exposing Studio.
 - **Model setup is discoverable:** missing files need actionable setup, not a cryptic traceback.
 - **Tutorial is a persistent header action and a full page:** it is available before camera access,
   not a first-run modal that blocks the interface or disappears forever.
@@ -44,7 +48,7 @@ Why these positions:
 | Avatar / eyes | `wink_threshold`, `eye_open_threshold`, `wink_min_difference` | Live calibrated controls with validation |
 | Avatar / eyes | `action_hold_ms`, `eye_action_hold_ms` | Live debounce values |
 | Avatar / eyes | `no_motion_filter` | Explicit smoothing toggle, restart-only |
-| Output | `virtual_camera`, `virtual_camera_width`, `virtual_camera_height`, `virtual_camera_fps` | Enable and fixed-format numeric controls |
+| Output | `virtual_camera`, `virtual_camera_width`, `virtual_camera_height`, `virtual_camera_fps` | Enable, standard/monitor resolution preset and advertised FPS; width/height remain CLI fields |
 | Output | `green_screen`, `segmentation_width`, `segmentation_model` | Feature toggle, input width, model file |
 | Output | `hand_occlusion`, `hand_tracking_width`, `hand_model` | Anatomical foreground toggle, width, model file |
 | Tracking labs | `full_body`, `pose_tracking_width`, `pose_model` | Separate skeleton diagnostics and pose configuration |
@@ -55,10 +59,16 @@ Why these positions:
 The new independent-eye CLI overrides preserve the original shared `--blink-threshold` default.
 They do not change anatomical K-left/C-right mapping.
 
-## Recorder control inventory
+## Video processing and private capture
+
+VIDEO offers a local input, a new output filename, lossless FFV1/MKV by default and explicitly
+lossy H.264/MP4 CRF 17. It processes every frame, retains source dimensions and timestamp
+spacing within container precision, and copies compatible audio streams. Live camera transforms,
+virtual output and experimental body/marker modes are visibly unavailable. Every processing
+setting locks during export for a deterministic result. See [video processing](video-processing.md).
 
 Source/backend/rotation/mirror/brightness and face/pose model selections are reused from the
-current setup. The recording page exposes `full_body`, `free_recording`, `duration`, `tracking_width`,
+current setup. The advanced private-capture page exposes `full_body`, `free_recording`, `duration`, `tracking_width`,
 `pose_tracking_width`, `pose_tracking_fps`, `output_dir`, `name`, `countdown`, and `preview_height`.
 These map to `scripts\record_guided_regression.py`, not to an invented output format.
 
@@ -70,7 +80,8 @@ The interface does not silently record the safe preview instead of the documente
 
 - Opening: no source connection, no output, no raw consent. Synthetic demo is explicit.
 - Starting: disable duplicate starts, show initialization, retain Stop.
-- Running: enable live tuning; restart-only settings are disabled until stopped.
+- Running: enable live tuning; restart-only settings show **LOCKED / STOP TO EDIT**, muted fields
+  and a persistent explanation. Offline-only/live-only controls state their scope.
 - Stopping: request cooperative shutdown; keep the window event loop running.
 - Stopped/error: clear live video to an explicit idle/error state, release owned resources, enable setup.
 - Invalid tuning: show the exact invariant; retain the last applied valid snapshot.
@@ -84,12 +95,26 @@ anatomical eye calibration, live/restart badges, virtual-camera selection/single
 green screen/hands, experimental tracking, recording privacy, source-free presets, logs, and Stop.
 The same narrative must be readable in [the book tutorial](tutorial.md).
 
+## Calibration and capture routes
+
+Guided calibration samples relaxed OPEN eyes, then BOTH CLOSED eyes after a countdown.
+Only numeric observations are retained. The complete compatible threshold tuple applies atomically;
+overlapping samples fail visibly. Higher blink thresholds help missed closures; lower thresholds
+reduce false closures. The readout shows raw score, effective rendered score and CLOSED/OPEN.
+
+Device index 0 means the first device for an API. Media Foundation and DirectShow are capture
+backends, often exposing the same integrated camera, not an RGB/IR pair. No physical-device
+identity is inferred from equal names. The current automatic/manual route remains explicit.
+
 ## Visual identity
 
-Dark graphite/mint studio styling echoes the creator setup without recoloring source video. The
-light theme has the same layout and controls. The theme button includes both a sun and a moon icon.
+Both themes follow the top banner: forest ink, mint, kraft and cream. The dark theme uses forest
+surfaces; the light theme uses warm paper. Checked boxes have an explicit contrasting tick;
+unchecked boxes are empty bordered squares, and disabled states remain distinguishable.
+Video pixels are never recolored by the UI. The theme button includes both a sun and a moon icon.
 The window/application/header icon uses the user's supplied voxel **KC cardboard-box artwork**.
-Its canonical PNG stays unchanged; derived icons retain transparent edges and aspect ratio.
+Its canonical PNG stays unchanged; optical bounds discard near-invisible outer noise in derived
+icons, which fill their small native slots. Windows controls the title-bar/taskbar slot size.
 Actual screenshots must be generated from the running widgets, not a design mockup.
 
 <img src="../../src/kardboard_vtuber/gui/assets/kardboardcode-logo.png" alt="Official voxel KC cardboard-box tool logo" width="180">

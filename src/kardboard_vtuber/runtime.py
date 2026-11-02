@@ -74,6 +74,8 @@ class RuntimeTelemetry:
     demo: bool = False
     masking_enabled: bool = True
     raw_preview: bool = False
+    render_face: FaceTrackingState | None = None
+    calibration_status: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -81,6 +83,9 @@ class PreviewPacket:
     frame: ndarray | None
     skeleton: ndarray | None
     telemetry: RuntimeTelemetry
+    clean_frame: ndarray | None = None
+    face_mesh: ndarray | None = None
+    raw_face: ndarray | None = None
 
 
 class RuntimeBridge:
@@ -120,8 +125,16 @@ class RuntimeBridge:
         frame: ndarray | None,
         telemetry: RuntimeTelemetry,
         skeleton: ndarray | None = None,
+        *,
+        clean_frame: ndarray | None = None,
+        face_mesh: ndarray | None = None,
+        raw_face: ndarray | None = None,
     ) -> None:
-        packet = PreviewPacket(_display_copy(frame), _display_copy(skeleton), telemetry)
+        packet = PreviewPacket(
+            _display_copy(frame), _display_copy(skeleton), telemetry,
+            clean_frame.copy() if clean_frame is not None else None,
+            _display_copy(face_mesh), _display_copy(raw_face),
+        )
         with self._lock:
             self._preview = packet
 

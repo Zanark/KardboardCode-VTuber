@@ -1,52 +1,58 @@
-# v1.0.0 - First Official Release
+# v1.1.0 - Studio Workspaces
 
-A native Python desktop interface for KardboardCode's camera-tracked PS1-style cardboard avatar,
-while retaining the existing CLI.
-
-This logo-updated version is the **first official release**. Earlier v0.2.0 packages were
-unpublished local staging exports, not official releases.
+The fifteen-point live-use feedback pass: clearer controls, unobstructed program video,
+separate clean output, meaningful eye calibration and genuine prerecorded-video processing.
+v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 
 ## 2026-11-02
 
-### New features
+### Studio and output
 
-- Supplied voxel KC cardboard-box artwork as the official tool logo, with derived transparent
-  application PNG and multi-resolution Windows icon assets.
-- Native PySide6 Studio with camera setup, preview, diagnostics, selectable logs, source-free
-  presets, and light/dark themes.
-- Live independent anatomical left/right blink thresholds, relative wink tuning, brightness
-  and debounce controls shared with the renderer/action detector.
-- Explicit laptop/USB camera selection by Windows device name, with metadata-only discovery
-  and matching Media Foundation/DirectShow index/backend routing.
-- Access to all 45 runtime CLI controls, private guided/free recording, model verification,
-  experimental tracking modes, and a nine-part built-in tutorial.
-- Direct clean output through the installed OBS Virtual Camera component; OBS itself can remain
-  closed. This is the existing OBS device, not a new KardboardCode-named camera driver.
+- Front-level **LIVE** and **VIDEO** modes distinguish streaming from file processing.
+- Forest/mint dark theme and kraft/cream light theme follow the approved top-banner palette.
+  Checked boxes have explicit contrasting ticks; restart-only fields dim and show LOCKED.
+- Raw face, mesh/pose and body diagnostics occupy dedicated local side panels instead of
+  covering the program image. Clean output never includes those panels.
+- Separate **KardboardCode - Clean Output** window for OBS Window Capture, independent of
+  OBS Virtual Camera. It opens for Live/demo by default and can be reopened from View.
+- Bottom **Logs** and **CLI equivalent** tabs, with one-click complete command copying.
+- Standard SD/HD/FHD/QHD/4K/portrait and current-display virtual-resolution presets.
+- Camera-route labels explain that index 0 is the first device for an API and that Media
+  Foundation / DirectShow are backend alternatives, not RGB/IR modes.
 
-### Fixes and safety
+### Eye calibration and identity
 
-- Cooperative startup/shutdown and cleanup of partially initialized resources.
-- Cancelled model initialization does not subsequently open capture/output.
-- Invalid tuning stays visible without replacing the last valid configuration.
-- Literal source argument handling, explicit parser-exit failures, and stronger endpoint
-  redaction in GUI log copies.
-- Existing zero-duration CLI probes remain supported.
-- Face-only output retains black startup and a last-safe-frame freeze on tracking loss.
-- Local debugging/raw-face preview is excluded from virtual-camera pixels.
+- Guided relaxed-OPEN / BOTH-CLOSED sampling derives both blink overrides and compatible
+  shared open/wink rules. Overlapping samples fail visibly rather than applying guesses.
+- Raw eye signals drive closure decisions while pose/geometry remain filtered, so brief
+  blinks are not smoothed away. Readouts show the effective rendered decision and threshold.
+- Tighter optical icon bounds remove near-invisible outer noise and unnecessary small-size
+  margins. The supplied original master remains unchanged; Windows still controls icon-slot size.
 
-### Documentation
+### Process an existing video
 
-- Image-first README with 29 images, eight coordinated kraft-paper banners/cards, and licensed
-  Silkscreen / Barlow Condensed typography. Setup, feature and camera/output details live in
-  clearly named linked guides instead of long front-page explanations.
-- Source-grounded GUI research/design rationale, control-placement decisions, architecture,
-  algorithm/design chapters, and native-camera tutorial.
-- Updated 247-page engineering handbook with 97 diagrams and refreshed branded screenshots.
-- Versioned release export tooling, checksums, source manifest and manual-publishing context.
+- Every frame is tracked synchronously in MediaPipe VIDEO mode and rendered at original size.
+  Source presentation timing is kept within output-container precision.
+- Default **lossless FFV1/MKV** avoids additional compression loss in processed RGB frames.
+  Optional **high-quality H.264/MP4 CRF 17** is explicitly lossy.
+- Compatible audio streams are copied without re-encoding. No live camera opens.
+- New output filenames only, owned temporary files, atomic no-overwrite publication, progress
+  and cooperative cancellation. Input/existing files are never replaced.
+- Qt-free `python -m kardboard_vtuber.video_cli` shares the processing engine with Studio.
+- The old unmasked MP4/CSV recorder remains an advanced Live-mode **Private capture** utility,
+  not the meaning of prerecorded-video processing.
+
+### README and documentation
+
+- Milestone raster cards removed. Decorative section/footer art is transparent SVG with real
+  font outlines; no external font service is needed.
+- The restyled runtime-avatar hero follows the top banner directly and shares its palette.
+- Updated actual synthetic GUI screenshots, tutorial, design rationale, runtime/video
+  architecture, guides and engineering handbook.
 
 ## Install / launch
 
-This is a **source release**, not a standalone `.exe` or installer. Extract the source ZIP,
+This is a **source release**, not a standalone executable/installer. Extract the source ZIP,
 open PowerShell in its project folder, then:
 
 ```powershell
@@ -55,18 +61,26 @@ py -3.12 -m venv .venv312
 .\.venv312\Scripts\python.exe -m kardboard_vtuber.gui
 ```
 
-Verify/download models explicitly from **Models**. Opening Studio or listing devices does not
-start camera capture. Choose the source and press **Start camera** when ready.
+Existing installations should refresh the optional GUI dependencies, including PyAV, and
+close/reopen Studio to load the new code/icon assets. Opening Studio lists metadata only;
+press Start camera deliberately. Models are verified/downloaded explicitly from Models.
 
 ## Known limitations
 
-- Live distant-face reliability and real Discord/Teams/Meet qualification remain unconfirmed.
-- Body/hood tracking is experimental; face-only remains the selected default. Missing face/side
-  markers is not proof of rear orientation.
-- RGB hand foreground is approximate; arbitrary-object depth occlusion is unsupported.
-- Private recordings contain unmasked footage. The existing fixed-FPS writer may compress
-  playback duration when delivered capture FPS is lower.
-- Camera names/indices can change with hardware changes; refresh/reselect before capture.
-- Models, recordings, environments, credentials and private agent context are not bundled.
-- The package uses optional dependencies with their own licensing terms; this release does not
-  introduce a packaged Windows installer or custom camera driver.
+- Live distant-face reliability and actual Discord/Teams/Meet qualification remain unconfirmed.
+- Experimental shoulder/hood tracking remains available in LIVE, not the selected default;
+  no face/side markers does not establish rear orientation.
+- RGB hand foreground is approximate, not arbitrary-object depth occlusion.
+- Video export supports one opaque, progressive, square-pixel 8-bit SDR video stream with valid
+  timing/rate metadata. HDR/high-bit-depth/alpha/rotation/interlacing/changing-dimension inputs
+  and extra subtitle/data/attachment streams fail explicitly. MP4 requires even dimensions
+  and compatible audio codecs.
+- MKV may quantize source timestamps to milliseconds. The source bitstream cannot remain
+  byte-identical after adding an avatar; lossless describes the processed RGB video.
+- Lossless files can be large. Final publication needs a destination filesystem supporting
+  hard links, such as local NTFS; failure is explicit and existing files remain untouched.
+- The advanced private recorder saves unmasked footage and retains its earlier fixed-FPS
+  duration limitation at low capture throughput.
+- Camera indices can change with hardware changes. Refresh/reselect before live capture.
+- Models, recordings, environments, credentials and private context are excluded. Dependencies,
+  codecs and bundled fonts retain their own licenses. No custom camera driver is installed.

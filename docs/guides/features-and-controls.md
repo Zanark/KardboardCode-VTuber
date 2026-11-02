@@ -35,8 +35,9 @@ See [scoped validation evidence](../07-quality-and-testing/validation-evidence.m
 
 ## Studio pages and live changes
 
-Use **Camera**, **Avatar & eyes**, **Output & effects**, **Tracking labs**, **Recording**,
-**Models** and **Tutorial**. Preview, Skeleton and CLI-equivalent are separate workspace tabs.
+Use **Camera**, **Avatar & eyes**, **Output & effects**, **Tracking labs**, **Private capture**,
+**Models** and **Tutorial**. Diagnostics occupy side panels, not the program image.
+Logs/CLI-equivalent occupy the bottom tabs.
 Left/right blink overrides, shared wink/open/asymmetry thresholds, internal brightness and
 debounce are live. Other settings unlock after Stop
 (`src/kardboard_vtuber/gui/settings.py:17-29,48-186`).
@@ -53,7 +54,10 @@ flowchart TD
     classDef default fill:#2d333b,stroke:#6d5dfc,color:#e6edf3
 ```
 
-Invalid combinations display **Not applied** and retain the last valid tuple. Model/source
+Guided OPEN/CLOSED calibration derives both eye overrides and compatible shared rules.
+Raise blink thresholds for missed closures; lower them for false closures. Raw eye signals
+drive rendering while geometry remains filtered. Invalid combinations display **Not applied**
+and retain the last valid tuple. Model/source
 inspection is deferred from slider callbacks to the worker. Source/log copies are redacted;
 native libraries may still write separate stderr (`src/kardboard_vtuber/runtime.py:19-57,102-119`;
 `docs/09-desktop-studio/runtime-architecture.md`).
@@ -170,7 +174,11 @@ Reuse private recorded footage for offline regression rather than opening a came
 
 Presets retain validated controls, not sources or raw-preview consent. Stop is cooperative;
 close waits for the worker rather than forcibly terminating a Qt thread.
-See [recording/preset/stop tutorial](../09-desktop-studio/tutorial.md#8-record-privately-and-replay).
+See [private-capture tutorial](../09-desktop-studio/tutorial.md#9-advanced-private-capture-and-replay).
+
+Front **VIDEO** mode instead processes an existing file into a new avatar video. It is not raw
+capture. It offers lossless MKV and high-quality MP4, retains source size/timing/compatible audio
+and processes every frame. See [the video chapter](../09-desktop-studio/video-processing.md).
 
 ## Implementation references
 

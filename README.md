@@ -1,8 +1,10 @@
 # KardboardCode Studio
 
-[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.0.0 source edition.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
+[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.1.0 source edition.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
 
-*Official KC artwork, wrapped in pixel lettering and kraft-paper graphics.*
+![The actual textured 3D avatar, presented in the forest-green and kraft-paper banner palette](docs/images/kardboardcode-hero.png)
+
+*Official KC identity above; the real runtime character directly below. No camera imagery.*
 
 **A real 3D cardboard head for your real camera.**
 
@@ -18,15 +20,11 @@
 
 ## Current milestone
 
-**v1.0.0 — first official source release.** [What's included →](release/RELEASE_NOTES.md)
-
-![Three features: textured 3D and spring flaps, independent K/C eye controls, clean OBS Virtual Camera output](docs/images/readme/feature-cards.png)
-
-*Real geometry, live anatomical eyes, and clean output through the installed OBS camera component.*
+**v1.1.0 — Live + Video workspaces.** [What's included →](release/RELEASE_NOTES.md)
 
 ## Inside the Studio
 
-![01: The control room. Real widgets, live sliders, your setup.](docs/images/readme/studio.png)
+![01: The control room. Real widgets, live sliders, your setup.](docs/images/readme/studio.svg)
 
 <table>
 <tr>
@@ -49,13 +47,23 @@
 <sub>A built-in walkthrough, before you connect a camera.</sub>
 </td>
 </tr>
+<tr>
+<td align="center">
+<a href="docs/images/kardboardcode-studio-video.png"><img src="docs/images/kardboardcode-studio-video.png" alt="Video processing workspace with original-size lossless MKV and optional high-quality MP4" width="100%"></a>
+<sub>Process an existing video. Original size, every frame, compatible audio.</sub>
+</td>
+<td align="center">
+<a href="docs/images/kardboardcode-studio-clean-output.png"><img src="docs/images/kardboardcode-studio-clean-output.png" alt="Separate clean output window for OBS Window Capture, without controls or diagnostics" width="100%"></a>
+<sub>A separate clean window for OBS. No debug panels in the feed.</sub>
+</td>
+</tr>
 </table>
 
 [Open the Studio tutorial →](docs/09-desktop-studio/tutorial.md)
 
 ## Cardboard in motion
 
-![02: Built to move. Real 3D, little pixels, big expressions.](docs/images/readme/motion.png)
+![02: Built to move. Real 3D, little pixels, big expressions.](docs/images/readme/motion.svg)
 
 ![Animated cardboard avatar with head rotation, eye expressions and flap physics](docs/images/kardboardcode-live-demo.gif)
 
@@ -93,11 +101,7 @@
 
 ## Every side has a story
 
-![03: Every side has a story. Corrugation, shipping labels and headphones.](docs/images/readme/details.png)
-
-![Face-free hero render of the textured cardboard character and chunky headphones](docs/images/kardboardcode-hero.png)
-
-*The actual runtime character, rendered without camera imagery.*
+![03: Every side has a story. Corrugation, shipping labels and headphones.](docs/images/readme/details.svg)
 
 <table>
 <tr>
@@ -136,7 +140,11 @@
 
 ## Under the cardboard
 
-![04: Under the cardboard. Synthetic debug views, real geometry.](docs/images/readme/debug.png)
+![04: Under the cardboard. Synthetic debug views, real geometry.](docs/images/readme/debug.svg)
+
+![Dedicated local diagnostic side panels leaving the central program image unobstructed](docs/images/kardboardcode-studio-diagnostics.png)
+
+*Synthetic diagnostic layout. Private raw-face pixels stay in their own panel, not the output.*
 
 <table>
 <tr>
@@ -159,7 +167,7 @@
 
 ## Unbox your setup
 
-![05: Unbox your setup. Quick start, camera output and the engineering book.](docs/images/readme/start.png)
+![05: Unbox your setup. Quick start, camera output and the engineering book.](docs/images/readme/start.svg)
 
 **Already installed?**
 
@@ -180,7 +188,7 @@
 *Source release, not an installer. Face-only loss freezes the last-safe frame; real calling-app
 qualification remains unconfirmed. [Privacy and known limits →](docs/guides/camera-and-virtual-output.md#troubleshooting-and-known-limits)*
 
-![Handle with character. Built in Python, wrapped in cardboard.](docs/images/readme/footer.png)
+![Handle with character. Built in Python, wrapped in cardboard.](docs/images/readme/footer.svg)
 
 *Official supplied logo. Original banner compositions with licensed Silkscreen and Barlow
 Condensed typography. [Artwork and font credits →](docs/branding/README.md)*

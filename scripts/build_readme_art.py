@@ -5,8 +5,11 @@ from __future__ import annotations
 import argparse
 import random
 import tomllib
+from html import escape
 from pathlib import Path
 
+from fontTools.pens.svgPathPen import SVGPathPen
+from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -103,40 +106,98 @@ def hero(version: str) -> None:
     save(image, "hero.png")
 
 
-def section(number: str, title: str, subtitle: str, filename: str) -> None:
-    image = paper(196)
-    draw = ImageDraw.Draw(image)
-    draw.rectangle((42, 43, 149, 151), fill=INK)
-    text(image, (58, 76), number, 43, fill=MINT, pixel=True, bold=True)
-    text(image, (190, 44), title, 65, bold=True)
-    text(image, (193, 124), subtitle, 23, pixel=True)
-    save(image, filename)
+def svg_text(
+    value: str, x: int, y: int, size: int, *, pixel: bool = False,
+    fill: str = KRAFT,
+) -> str:
+    filename = "Silkscreen-Bold.ttf" if pixel else "BarlowCondensed-SemiBold.ttf"
+    parts = []
+    with TTFont(FONTS / filename) as face:
+        glyphs = face.getGlyphSet()
+        cmap = face.getBestCmap()
+        scale = size / face["head"].unitsPerEm
+        baseline = y + face["hhea"].ascent * scale
+        cursor = float(x)
+        for character in value:
+            name = cmap.get(ord(character))
+            if name is None:
+                raise ValueError(f"Font has no SVG glyph for {character!r}")
+            glyph = glyphs[name]
+            pen = SVGPathPen(glyphs)
+            glyph.draw(pen)
+            data = pen.getCommands()
+            if data:
+                parts.append(
+                    f'<path d="{data}" fill="{fill}" stroke="{INK}" stroke-width="1" '
+                    'paint-order="stroke" vector-effect="non-scaling-stroke" '
+                    f'transform="translate({cursor:.3f} {baseline:.3f}) '
+                    f'scale({scale:.6f} {-scale:.6f})"/>',
+                )
+            cursor += glyph.width * scale
+        if cursor > WIDTH - 24:
+            raise ValueError(f"SVG lettering would overflow: {value}")
+    return "".join(parts)
 
 
-def features() -> None:
-    image = paper(338)
-    draw = ImageDraw.Draw(image)
-    cards = (
-        ("3D", "A REAL LITTLE BOX", "Textured geometry + spring flaps"),
-        ("K C", "EYES WITH PERSONALITY", "Independent blink + wink controls"),
-        ("OUT", "CAMERA-READY OUTPUT", "Clean video via OBS Virtual Camera"),
+def save_svg(filename: str, body: str, title: str, *, height: int = 170) -> None:
+    OUTPUT.mkdir(parents=True, exist_ok=True)
+    data = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" '
+        f'viewBox="0 0 {WIDTH} {height}" role="img"><title>{escape(title)}</title>'
+        f"{body}</svg>\n"
     )
-    for index, (mark, title, caption) in enumerate(cards):
-        left = 38 + index * 514
-        draw.rectangle((left, 38, left + 496, 299), fill=CREAM, outline=INK, width=2)
-        draw.rectangle((left + 22, 59, left + 146, 128), fill=INK)
-        text(image, (left + 37, 77), mark, 33, fill=MINT, pixel=True, bold=True)
-        text(image, (left + 22, 160), title, 37, bold=True)
-        text(image, (left + 22, 220), caption, 29)
-    save(image, "feature-cards.png")
+    (OUTPUT / filename).write_text(data, encoding="utf-8", newline="\n")
+    print(f"{filename}: transparent vector lettering")
+
+
+def section(number: str, title: str, subtitle: str, filename: str) -> None:
+    body = (
+        f'<rect x="22" y="26" width="104" height="104" rx="8" fill="{INK}"/>'
+        + svg_text(number, 36, 44, 44, pixel=True, fill=MINT)
+        + svg_text(title, 160, 12, 63)
+        + svg_text(subtitle, 163, 96, 22, pixel=True, fill=MINT)
+    )
+    save_svg(filename, body, title)
 
 
 def footer() -> None:
-    image = paper(292, dark=True)
-    logo(image, (50, 37, 278, 256))
-    text(image, (330, 65), "HANDLE WITH CHARACTER.", 59, fill=CREAM, pixel=True, bold=True)
-    text(image, (335, 164), "Built in Python. Wrapped in cardboard.", 45, fill=MINT)
-    save(image, "footer.png")
+    save_svg(
+        "footer.svg",
+        svg_text("HANDLE WITH CHARACTER.", 80, 16, 64, pixel=True)
+        + svg_text("Built in Python. Wrapped in cardboard.", 84, 108, 40, fill=MINT),
+        "Handle with character",
+    )
+
+
+def avatar_hero() -> None:
+    import cv2
+    import numpy as np
+
+    from kardboard_vtuber.renderer import Textured3DCardboardRenderer
+    from kardboard_vtuber.tracking.models import FaceTrackingState, HeadPose
+
+    image = paper(760, dark=True)
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((880, 76, 1532, 674), fill=KRAFT)
+    draw.rectangle((904, 100, 1508, 650), outline=INK, width=2)
+    text(image, (940, 135), "THE ACTUAL", 28, pixel=True)
+    text(image, (934, 211), "3D AVATAR", 98, bold=True)
+    text(image, (940, 355), "Small box.", 70, bold=True)
+    text(image, (940, 440), "Big character.", 70, bold=True)
+    text(image, (943, 572), "ModernGL / MediaPipe / OpenCV", 31)
+    frame = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    renderer = Textured3DCardboardRenderer()
+    try:
+        renderer.render(frame, FaceTrackingState(
+            timestamp_ms=1, detected=True, landmarks=(), center_x=.27, center_y=.61,
+            face_width=.095, face_height=.105, left_eye_open=1, right_eye_open=1,
+            mouth_open=0, head_pose=HeadPose(0, 0, 0, -18, 30, -2),
+        ))
+    finally:
+        renderer.close()
+    path = ROOT / "docs" / "images" / "kardboardcode-hero.png"
+    Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)).save(path, optimize=True)
+    print(f"{path.name}: runtime avatar / matching forest and kraft palette")
 
 
 def build() -> None:
@@ -144,18 +205,17 @@ def build() -> None:
         "version"
     ]
     hero(version)
-    features()
     sections = (
-        ("01", "THE CONTROL ROOM", "REAL WIDGETS / LIVE SLIDERS / YOUR SETUP", "studio.png"),
-        ("02", "BUILT TO MOVE", "REAL 3D / LITTLE PIXELS / BIG EXPRESSIONS", "motion.png"),
+        ("01", "THE CONTROL ROOM", "REAL WIDGETS / LIVE SLIDERS / YOUR SETUP", "studio.svg"),
+        ("02", "BUILT TO MOVE", "REAL 3D / LITTLE PIXELS / BIG EXPRESSIONS", "motion.svg"),
         (
             "03", "EVERY SIDE HAS A STORY",
-            "CORRUGATION / SHIPPING LABELS / HEADPHONES", "details.png",
+            "CORRUGATION / SHIPPING LABELS / HEADPHONES", "details.svg",
         ),
-        ("04", "UNDER THE CARDBOARD", "SYNTHETIC DEBUG VIEWS / REAL GEOMETRY", "debug.png"),
+        ("04", "UNDER THE CARDBOARD", "SYNTHETIC DEBUG VIEWS / REAL GEOMETRY", "debug.svg"),
         (
             "05", "UNBOX YOUR SETUP",
-            "QUICK START / CAMERA OUTPUT / THE ENGINEERING BOOK", "start.png",
+            "QUICK START / CAMERA OUTPUT / THE ENGINEERING BOOK", "start.svg",
         ),
     )
     for number, title, subtitle, filename in sections:
@@ -164,9 +224,15 @@ def build() -> None:
 
 
 def main() -> int:
-    argparse.ArgumentParser(description=__doc__).parse_args()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--avatar-hero", action="store_true", help="Also rebuild the GPU avatar hero.",
+    )
+    args = parser.parse_args()
     try:
         build()
+        if args.avatar_hero:
+            avatar_hero()
     except (OSError, ValueError) as error:
         raise SystemExit(f"README artwork build failed: {error}") from error
     return 0

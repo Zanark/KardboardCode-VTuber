@@ -26,9 +26,11 @@ flowchart TD
 
 ## Complexity and boundaries
 
-Slot replacement is O(1); resizing/copying costs O(display pixels). Waiting storage is one
-packet, not O(elapsed frames). Capture and clean output keep their own independent buffers.
-Dropping a display frame does not drop a packet before inference or virtual-camera publication.
+Slot replacement is O(1); copying costs O(source pixels + bounded diagnostic/display pixels)
+when the full-resolution clean-window channel is present. A packet owns each channel separately:
+program, clean window, raw face, mesh and skeleton cannot contaminate one another.
+Waiting storage is one packet, not O(elapsed frames). Capture/virtual output keep independent
+buffers. Dropping a display packet does not drop live output or an offline encoded video frame.
 
 Logs use a separate 500-entry deque. When it overwrites older entries, the consumer receives an
 explicit dropped-line count. The visible editor independently caps its text blocks at 1,500.

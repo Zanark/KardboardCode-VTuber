@@ -27,8 +27,11 @@ flowchart TD
     Capture --> Inference["MediaPipe callbacks / normalized state"]
     Inference --> Render["Original pixels + renderer / effects"]
     Render --> Send["Clean virtual-camera send"]
-    Send --> Debug["Local diagnostics only"]
-    Debug --> Latest["Owned resized preview / one slot"]
+    Render --> Latest["Owned clean preview / one slot"]
+    Render --> Window["Full-size clean output-window channel"]
+    Inference --> Debug["Separate local mesh / raw-face / skeleton channels"]
+    Window --> Latest
+    Debug --> Latest
     Latest --> Tick["Qt timer consumes newest packet"]
     Tick --> Widget
     style Widget fill:#183a39,stroke:#72dcc0,color:#ecf6f5
@@ -46,13 +49,15 @@ reads a snapshot between frames, applies eye rules to the action detector and re
 uses the chosen brightness for the next processing copy. Invalid edits remain visible but
 do not replace the last valid tuple.
 
-`RuntimeTelemetry` separates raw/filtered face state, effective rendered detection, measured
+`RuntimeTelemetry` separates raw/filtered face state, actual rendered eye state, effective detection, measured
 capture/tracker rates, internal frame age, output device and explicit synthetic/raw flags.
 The GUI must not infer safe masking solely from `face.detected`: an unmasked mode is deliberately
 available, and body/marker resolvers can have different state from the face tracker.
 
 `RuntimeBridge.publish` bounds display copies to 1280x800 while preserving aspect ratio. The
-clean compositor/output stays full-size. The mailbox owns its copies; `VideoCanvas.set_frame`
+clean compositor/output stays full-size. A separate full-resolution owned frame feeds the
+controls-free output window, while mesh/raw-face/skeleton buffers feed local side panels.
+The mailbox owns its copies; `VideoCanvas.set_frame`
 also detaches the QImage from NumPy. Replacing a worker buffer therefore cannot change pixels
 while Qt is painting. No QPixmap or QWidget is touched by the worker.
 
@@ -80,9 +85,15 @@ unchanged mouth channel. Both renderers accept the same sensitivity without rebu
 resources or discarding the last-safe image. Texture regeneration remains conditional on the
 resulting open/closed expression changing.
 
-Action logs use raw controls while visual rendering uses filtered controls, preserving the
-existing distinction. A filter may delay a visible transition relative to a raw action event;
-the studio displays both values rather than pretending they are identical.
+Action logs and visual closure decisions use raw eye controls, while geometry/pose and mouth
+remain filtered. `render_eye_state` prevents the One Euro filter from smoothing away brief blinks.
+Both renderers still use the same `EyeSensitivity`. Telemetry carries the actual render state so
+fallback/held expressions are not misrepresented as raw face decisions.
+
+`calibrate_eyes` uses at least 12 distinct observations for each OPEN/CLOSED phase. Conservative
+open/closed quantiles must have a useful gap. It derives both per-eye blink thresholds and the
+shared open/wink/asymmetry rules together. Overlapping ranges fail explicitly, retaining existing
+settings. `EyeCalibrationDialog` uses a countdown and timed sampling without saving face images.
 
 ## Lifecycle and failure handling
 
@@ -162,7 +173,8 @@ The GUI extra is optional. `python -m kardboard_vtuber` does not import Qt.
 The supplied canonical PNG and derived application icons are packaged under `gui\assets`.
 `scripts\build_branding.py` derives a transparent 256-pixel PNG and a Windows ICO containing
 16/24/32/48/64/128/256-pixel images, using the existing OpenCV/NumPy dependencies. It trims only
-fully transparent outer padding, preserves aspect ratio, and resamples premultiplied color
+near-invisible outer pixels below alpha 16 from its optical bounds, preserves aspect ratio,
+uses no extra margin at 16/24/32px, and resamples premultiplied color
 to avoid colored fringes from invisible pixels. The master PNG is never rewritten.
 The same multi-resolution icon supplies the application, window/taskbar and header branding;
 the README embeds the unchanged master. This avoids separate, drifting logo designs.
@@ -170,4 +182,20 @@ the README embeds the unchanged master. This avoids separate, drifting logo desi
 Rebuild after an explicitly approved logo change with `python scripts\build_branding.py`.
 This is a branding-asset transformation, not a new avatar or installer. Model/recording helper
 actions currently require the source checkout's `scripts` directory; an installer is a separate
-deliverable. v1.0.0 is the first official source release; earlier v0.2.0 exports were local staging.
+deliverable. v1.0.0 is the first official version; v1.1.0 adds the feedback workspaces.
+Earlier v0.2.0 exports were local staging.
+
+## Offline processing host
+
+VIDEO uses `VideoExportWorker` around the Qt-free `video_pipeline.render_avatar_video`, also
+used by `video_cli`. Unlike live capture, it never creates `LatestFrameCamera`. MediaPipe VIDEO
+mode performs synchronous face/hand/segmentation inference for each decoded frame. Progress
+signals are bounded in time; preview frames still use the latest-slot bridge.
+
+`video.export_video` owns PyAV decode/encode/remux resources and preserves source PTS. FFV1/MKV
+keeps processed RGB pixels lossless; H.264/MP4 CRF 17 is explicitly lossy. Audio packets are copied
+through stream templates, not decoded/re-encoded. A same-filesystem temporary output is published
+with an atomic no-overwrite hard link only after successful close; cancellation/errors remove
+the owned temporary directory without touching input or existing outputs.
+
+See [video processing and its supported-input boundary](video-processing.md).

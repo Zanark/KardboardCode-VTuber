@@ -50,6 +50,7 @@ class MediaPipeTrackerConfig:
     min_tracking_confidence: float = 0.5
     swap_eyes: bool = False
     motion_filtering: bool = True
+    video_mode: bool = False
     motion_filter: FaceMotionFilterConfig = field(default_factory=FaceMotionFilterConfig)
 
     def __post_init__(self) -> None:
@@ -101,14 +102,17 @@ class MediaPipeFaceTracker:
 
         options = mp.tasks.vision.FaceLandmarkerOptions(
             base_options=mp.tasks.BaseOptions(model_asset_path=str(config.model_path.resolve())),
-            running_mode=mp.tasks.vision.RunningMode.LIVE_STREAM,
+            running_mode=(
+                mp.tasks.vision.RunningMode.VIDEO if config.video_mode
+                else mp.tasks.vision.RunningMode.LIVE_STREAM
+            ),
             num_faces=1,
             min_face_detection_confidence=config.min_face_detection_confidence,
             min_face_presence_confidence=config.min_face_presence_confidence,
             min_tracking_confidence=config.min_tracking_confidence,
             output_face_blendshapes=True,
             output_facial_transformation_matrixes=True,
-            result_callback=self._on_result,
+            result_callback=None if config.video_mode else self._on_result,
         )
         self._landmarker = mp.tasks.vision.FaceLandmarker.create_from_options(options)
 
@@ -126,7 +130,12 @@ class MediaPipeFaceTracker:
 
         image = self._mp.Image(image_format=self._mp.ImageFormat.SRGB, data=frame_rgb)
         try:
-            self._landmarker.detect_async(image, timestamp_ms)
+            if self._config.video_mode:
+                self._on_result(
+                    self._landmarker.detect_for_video(image, timestamp_ms), image, timestamp_ms,
+                )
+            else:
+                self._landmarker.detect_async(image, timestamp_ms)
         except Exception as error:
             with self._lock:
                 self._last_error = f"{type(error).__name__}: {error}"
@@ -282,12 +291,24 @@ def draw_tracking_debug(
         )
 
 
-def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:
+def render_face_mesh_panel(state: FaceTrackingState, source_size: tuple[int, int]) -> ndarray:
+    panel = np.zeros((340, 420, 3), dtype=np.uint8)
+    _draw_face_mesh_inset(panel, state, source_size=source_size, panel_only=True)
+    return panel
+
+
+def _draw_face_mesh_inset(
+    frame: ndarray, state: FaceTrackingState, *,
+    source_size: tuple[int, int] | None = None, panel_only: bool = False,
+) -> None:
     frame_height, frame_width = frame.shape[:2]
     inset_width = min(max(220, round(frame_width * 0.30)), 420, frame_width - 32)
     inset_height = min(round(inset_width * 0.85), max(120, frame_height // 3))
     origin_x = frame_width - inset_width - 16
     origin_y = 16
+    if panel_only:
+        origin_x = origin_y = 0
+        inset_width, inset_height = frame_width - 1, frame_height - 1
     x2 = origin_x + inset_width
     y2 = origin_y + inset_height
     cv2.rectangle(frame, (origin_x, origin_y), (x2, y2), (0, 0, 0), -1)
@@ -322,8 +343,9 @@ def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:
     padding_bottom = 14
     usable_width = inset_width - padding_left - padding_right
     usable_height = inset_height - padding_top - padding_bottom
-    face_width_px = state.face_width * frame_width
-    face_height_px = state.face_height * frame_height
+    source_width, source_height = source_size or (frame_width, frame_height)
+    face_width_px = state.face_width * source_width
+    face_height_px = state.face_height * source_height
     scale = min(
         usable_width / max(face_width_px, 1e-6),
         usable_height / max(face_height_px, 1e-6),
@@ -336,8 +358,8 @@ def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:
     def point(index: int) -> tuple[int, int]:
         landmark = state.landmarks[index]
         return (
-            round(center_px[0] + (landmark.x - state.center_x) * frame_width * scale),
-            round(center_px[1] + (landmark.y - state.center_y) * frame_height * scale),
+            round(center_px[0] + (landmark.x - state.center_x) * source_width * scale),
+            round(center_px[1] + (landmark.y - state.center_y) * source_height * scale),
         )
 
     groups = (
@@ -356,8 +378,8 @@ def _draw_face_mesh_inset(frame: ndarray, state: FaceTrackingState) -> None:
             _draw_closed_path(frame, indices, point, color)
 
     for landmark in state.landmarks[::12]:
-        px = round(center_px[0] + (landmark.x - state.center_x) * frame_width * scale)
-        py = round(center_px[1] + (landmark.y - state.center_y) * frame_height * scale)
+        px = round(center_px[0] + (landmark.x - state.center_x) * source_width * scale)
+        py = round(center_px[1] + (landmark.y - state.center_y) * source_height * scale)
         cv2.circle(frame, (px, py), 1, (120, 120, 120), -1, cv2.LINE_AA)
 
     _draw_pose_axis_gizmo(
