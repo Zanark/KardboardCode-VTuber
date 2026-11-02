@@ -1,22 +1,22 @@
 {
   "assets": {
     "KardboardCode-VTuber-source.zip": {
-      "bytes": 33031157,
-      "sha256": "1d1b587cbad1ea90a2885039878805e549653b9022b61e600bda2fc6fba68911"
+      "bytes": 33033706,
+      "sha256": "29a7e2b7a1239998319dc6a69f5f9ff4cc36514eed0c3a633b9646ca38f93211"
     },
     "RELEASE_CONTEXT.md": {
       "bytes": 2009,
-      "sha256": "990ec08af54365818890a13bd64049e56d56c57b1e17146a00fe2395536d92cb"
+      "sha256": "ecd416cf3abc63573ae913be5d206f03edc459e359c418b733bdddb1482e41bd"
     },
     "RELEASE_NOTES.md": {
-      "bytes": 9047,
-      "sha256": "00c85ac327854b3cdc759c52528f6946e9853a92f47d5e53a24780baa295c456"
+      "bytes": 9230,
+      "sha256": "59b65707e4516563242593ee3cf402636a6e35810311aa85ddc2d9a10087c925"
     }
   },
-  "generatedAt": "2026-11-02T20:57:10+00:00",
+  "generatedAt": "2026-11-02T21:17:29+00:00",
   "schemaVersion": 1,
   "sourceBranch": "workDesk/agentic_GUI",
-  "sourceCommit": "1bb30926cab472a463f80649702ffb29f1f48e8b",
+  "sourceCommit": "de9f18e0a866d55a48f8c7aed7850b23acbdacdc",
   "sourceFiles": {
     ".gitattributes": {
       "bytes": 181,
@@ -31,12 +31,12 @@
       "sha256": "397b08e7ad550bd635777b7ac9e6e61b357098934555fb760c420bedf48654bc"
     },
     "README.md": {
-      "bytes": 8963,
-      "sha256": "10db7396561e21a1fbf39646ecdf0390aafe9ee981209bb3cecb93f7d9ba07d9"
+      "bytes": 2857,
+      "sha256": "b9e938e14a993be63480ad27c984bef3ae4c2ea33fa0edd1ec3daa5bfeff23f7"
     },
     "TODO/00_INDEX.todo": {
-      "bytes": 6915,
-      "sha256": "5653edf954e3688b4c1af8376ebdbaa47d0ed9cfd2ca52248e940aa9ee2612eb"
+      "bytes": 7332,
+      "sha256": "8f028f07365f9677dbd5c4bdc8fbb4c14fcb970c9906ec40941941853f207699"
     },
     "TODO/01_RESEARCH_AND_DESIGN.todo": {
       "bytes": 1131,
@@ -55,8 +55,8 @@
       "sha256": "f63eb4731d13d0f5065c0a1ff11841cf2a974c13d69fd08b85af95c992a89897"
     },
     "TODO/05_DEVELOPMENT_LEDGER.todo": {
-      "bytes": 10460,
-      "sha256": "22b2d9211005dc1e25edd54c3c1c1d039c57ac6812bd9eae535c785172c4f480"
+      "bytes": 10831,
+      "sha256": "3d040a7ac0f4ea6aff8004cc96feeada5245777d61d3c8a895149f6e1081272d"
     },
     "TODO/06_NATIVE_CAMERA_SELECTION.todo": {
       "bytes": 1731,
@@ -105,6 +105,10 @@
     "TODO/17_PERSONA_CARDBOARD_IDENTITY.todo": {
       "bytes": 2792,
       "sha256": "21c68dbd1c3610bc2a304ace8f89453a91ac6008b54c846f4a1f6856cbdef41a"
+    },
+    "TODO/18_MINIMAL_README_GALLERY.todo": {
+      "bytes": 2495,
+      "sha256": "dee9e376abaf2cf00be5e883fa79cc923b57cae2f31a6d41a4da8524b0d8c397"
     },
     "assets/PNGTuberV1/Eyes Closed.png": {
       "bytes": 21259,
@@ -574,6 +578,10 @@
       "bytes": 15709,
       "sha256": "42636950d62b1b72b3d808e52cdf26b11955d89b4e9ca9163b0f2dae2f66baf4"
     },
+    "docs/visual-gallery.md": {
+      "bytes": 5933,
+      "sha256": "27c81f835a2219442cdb58c06809f03e8befe3f75f7270a37786523407ded33e"
+    },
     "installer/windows/bootstrap.py": {
       "bytes": 17572,
       "sha256": "568d0f6de4c64b34debe0d2951b06ad44289148209ba6ac72a986b0e5db70f70"
@@ -603,8 +611,8 @@
       "sha256": "ed3530c733ddd459223e7bb61530fed939e78f2cbfdafb9d6ec9bcd7bd0a34ab"
     },
     "release/RELEASE_NOTES.md": {
-      "bytes": 9047,
-      "sha256": "00c85ac327854b3cdc759c52528f6946e9853a92f47d5e53a24780baa295c456"
+      "bytes": 9230,
+      "sha256": "59b65707e4516563242593ee3cf402636a6e35810311aa85ddc2d9a10087c925"
     },
     "requirements-dev.txt": {
       "bytes": 53,
@@ -967,7 +975,7 @@
       "sha256": "7ff6a0c1c8691d037c64a88173b93e2d547811f2332a84e86513fe92e5e62406"
     }
   },
-  "sourceFingerprint": "ea6961ca4aaae1eaf7d11c5f5f6e4bbd5dad63721b5d8c85d847ad7ffeb4fb87",
+  "sourceFingerprint": "1c263941eb234b9e304b1c804d7aaa1c8bd1b51b1ab2df72d0b5e27847be1a79",
   "sourceModified": false,
   "tag": "v1.2.0",
   "version": "1.2.0"
