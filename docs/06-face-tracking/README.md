@@ -115,6 +115,8 @@ python -m kardboard_vtuber `
 
 ## Deep dives
 
+- [Native eye-calibration tutorial](../09-desktop-studio/tutorial.md#4-start-and-calibrate)
+  — independent anatomical thresholds, shared wink rules, raw/filtered meters and live updates
 - [Normalized face state](normalized-face-state.md)
 - [Live debugging and validation](live-debugging-and-validation.md)
 - [Asynchronous live inference](../03-algorithms-and-data-structures/asynchronous-live-inference.md)
@@ -130,6 +132,9 @@ python -m kardboard_vtuber `
 - `src/kardboard_vtuber/tracking/mediapipe_tracker.py:1` — MediaPipe adapter
 - `src/kardboard_vtuber/cli.py:1` — runtime integration
 - `tests/test_tracking_models.py:1` — normalization tests
+- `src\kardboard_vtuber\tracking\eyes.py`, `EyeSensitivity` — shared per-eye rules
+- `src\kardboard_vtuber\tracking\events.py`, `FaceActionDetector.set_thresholds` — live
+  recalibration without a false blink spanning configurations
 
 ---
 

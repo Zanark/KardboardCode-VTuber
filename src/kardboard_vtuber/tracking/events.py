@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import StrEnum
 
+from kardboard_vtuber.tracking.eyes import EyeSensitivity
 from kardboard_vtuber.tracking.models import FaceTrackingState
 
 
@@ -31,14 +32,11 @@ class ActionThresholds:
     hold_ms: int = 100
     eye_hold_ms: int = 40
     maximum_blink_ms: int = 500
+    left_eye_closed: float | None = None
+    right_eye_closed: float | None = None
 
     def __post_init__(self) -> None:
-        if not 0.0 <= self.eye_closed < self.eye_open <= 1.0:
-            raise ValueError("eye thresholds must satisfy 0 <= closed < open <= 1")
-        if not self.eye_closed < self.wink_closed <= 1.0:
-            raise ValueError("wink_closed must satisfy eye_closed < wink_closed <= 1")
-        if not 0.0 <= self.wink_min_difference <= 1.0:
-            raise ValueError("wink_min_difference must be between 0 and 1")
+        self.eye_sensitivity()
         if not 0.0 <= self.mouth_closed < self.mouth_open <= 1.0:
             raise ValueError("mouth thresholds must satisfy 0 <= closed < open <= 1")
         if self.hold_ms < 0:
@@ -47,6 +45,15 @@ class ActionThresholds:
             raise ValueError("eye_hold_ms cannot be negative")
         if self.maximum_blink_ms < 0:
             raise ValueError("maximum_blink_ms cannot be negative")
+
+    def eye_sensitivity(self) -> EyeSensitivity:
+        return EyeSensitivity(
+            self.eye_closed if self.left_eye_closed is None else self.left_eye_closed,
+            self.eye_closed if self.right_eye_closed is None else self.right_eye_closed,
+            self.eye_open,
+            self.wink_closed,
+            self.wink_min_difference,
+        )
 
 
 @dataclass(frozen=True, slots=True)
@@ -89,6 +96,25 @@ class FaceActionDetector:
         self._mouth = _ChannelState()
         self._last_timestamp_ms = -1
         self._eyes_closed_since_ms: int | None = None
+
+    def set_thresholds(self, thresholds: ActionThresholds) -> None:
+        if thresholds == self._thresholds:
+            return
+        previous = self._thresholds
+        self._thresholds = thresholds
+        if (
+            thresholds.eye_sensitivity() != previous.eye_sensitivity()
+            or thresholds.eye_hold_ms != previous.eye_hold_ms
+            or thresholds.maximum_blink_ms != previous.maximum_blink_ms
+        ):
+            self._eyes = _ChannelState()
+            self._eyes_closed_since_ms = None
+        if (thresholds.mouth_open, thresholds.mouth_closed, thresholds.hold_ms) != (
+            previous.mouth_open, previous.mouth_closed, previous.hold_ms,
+        ):
+            self._mouth = _ChannelState()
+        if thresholds.hold_ms != previous.hold_ms:
+            self._face.candidate = None
 
     def update(self, state: FaceTrackingState) -> tuple[FaceActionEvent, ...]:
         if state.timestamp_ms <= self._last_timestamp_ms:
@@ -140,25 +166,16 @@ class FaceActionDetector:
         return tuple(events)
 
     def _classify_eyes(self, state: FaceTrackingState) -> FaceAction | None:
-        left_closed = state.left_eye_open <= self._thresholds.eye_closed
-        right_closed = state.right_eye_open <= self._thresholds.eye_closed
-        left_open = state.left_eye_open >= self._thresholds.eye_open
-        right_open = state.right_eye_open >= self._thresholds.eye_open
+        sensitivity = self._thresholds.eye_sensitivity()
+        left_closed = state.left_eye_open <= sensitivity.left_closed
+        right_closed = state.right_eye_open <= sensitivity.right_closed
+        left_open = state.left_eye_open >= sensitivity.opened
+        right_open = state.right_eye_open >= sensitivity.opened
         if left_closed and right_closed:
             return FaceAction.EYES_CLOSED
-        if (
-            state.left_eye_open <= self._thresholds.wink_closed
-            and right_open
-            and state.right_eye_open - state.left_eye_open
-            >= self._thresholds.wink_min_difference
-        ):
+        if sensitivity.winked(state.left_eye_open, state.right_eye_open):
             return FaceAction.LEFT_WINK
-        if (
-            state.right_eye_open <= self._thresholds.wink_closed
-            and left_open
-            and state.left_eye_open - state.right_eye_open
-            >= self._thresholds.wink_min_difference
-        ):
+        if sensitivity.winked(state.right_eye_open, state.left_eye_open):
             return FaceAction.RIGHT_WINK
         if left_open and right_open:
             return FaceAction.EYES_OPEN

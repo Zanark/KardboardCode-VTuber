@@ -60,6 +60,18 @@ No personal identities, device credentials, face imagery, or personal calibratio
 - Higher tracking width or processing brightness may help but has not been established as a reliable distance-tracking fix.
 - Negotiated FPS is metadata; latest-frame overwrite counts can be healthy. Internal post-decode frame age excludes capture/encode/network/decode latency.
 
+## Native studio conventions
+
+- Native source selection uses Windows metadata in an owned subprocess, never VideoCapture frame probing. Always preserve the enumerated backend/index pair; CAP_ANY indices and explicit API indices are not interchangeable. Device paths/serials are not stored.
+- Computer-camera and custom URL/file modes retain separate source/backend values in memory only. Numeric index 0 is a manual fallback, not a universal laptop-camera identity. Refresh/reselect after hardware changes; missing previous selections must not silently retarget.
+- GUI scope is every existing operational feature, including experimental/raw modes, with a built-in tutorial; the selected default remains face-only. The user explicitly requested deep research, TODOs, layout/design rationale, and README screenshots.
+- Keep PySide6 optional. Reuse the same CLI pipeline through toolkit-neutral runtime hooks; do not duplicate privacy/composition/export logic in widget code.
+- Create, use and close the renderer/GL context on the session worker. Widgets stay on the main thread. Use a one-slot owned preview and bounded logs instead of queuing every video frame.
+- Independent eye rules are shared by actions and both renderers. Live edits are one validated immutable tuple; invalid combinations retain the last applied valid configuration and display an error.
+- Keep source/model filesystem inspection out of slider callbacks. Source URLs and raw consent are session-only, excluded from presets and command/log copies.
+- Guided/free recording remains raw/private and uses the existing script. Its cooperative stop-file contract flushes the writer; it does not fix recording timing. Model helpers remain checksum-verifying explicit jobs.
+- Synthetic demos/screenshots must say synthetic, never open a camera, and never publish virtual output. GUI appearance/heartbeat tests do not establish live accuracy or privacy.
+
 ## Gotchas
 
 - The old `homeDesk\KardboardCode` store predates later changes: visible brightness, some flap decisions, body rendering, and original repository paths may be stale. Do not copy old values blindly.

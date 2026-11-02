@@ -53,12 +53,13 @@ flowchart LR
 | Face tracking | Implemented and live-validated | MediaPipe near 30 result FPS plus debounced action logs |
 | Textured 3D renderer | Implemented as default | ModernGL mesh, cubic shell, complete front, neck-safe underside, headphones, decals, K/C eyes |
 | Flap physics | Implemented and opt-in | Five independent shader hinges driven by bounded damped springs |
-| Full-body mode | Implemented and opt-in | 33-point pose tracker, synthetic body, and separate skeleton window |
+| Full-body diagnostics | Implemented and opt-in | 33-point pose tracker and separate line-skeleton diagnostic; no filled body on output |
 | Green-screen mode | Implemented and opt-in | Person mask preserves the body and replaces the room with chroma green |
 | Hand occlusion | Implemented and opt-in | Hand/forearm-only foreground restoration over the avatar |
 | Procedural renderer | Implemented fallback | Fail-closed opaque shell retained for GPU troubleshooting |
 | OBS integration | Operational through Window Capture | Clean preview output; chroma-key mode available with `--green-screen` |
 | Virtual camera | Opt-in direct Windows output | `--virtual-camera` sends the clean composite to the installed OBS camera component; OBS need not run |
+| Desktop studio | Optional native GUI | All runtime flags, per-eye live calibration, presets, recorder/model actions, logs and tutorial |
 
 ## Current visual reference
 
@@ -87,6 +88,7 @@ geometry, shader, privacy, decal, and animation specification.
 | Inspect every current avatar surface | [Textured GPU 3D renderer](02-architecture/textured-3d-renderer.md) |
 | Understand testing | [Quality and testing](07-quality-and-testing/README.md) |
 | Understand what comes next | [Roadmap](08-roadmap/README.md) |
+| Operate without memorizing CLI flags | [Desktop studio](09-desktop-studio/README.md) → [Tutorial](09-desktop-studio/tutorial.md) |
 | Look up a term or file | [Glossary](99-appendix/glossary.md) → [Repository map](99-appendix/repository-map.md) |
 
 ## Chapters
@@ -102,6 +104,7 @@ geometry, shader, privacy, decal, and animation specification.
 | 06 | [Face tracking](06-face-tracking/README.md) | How are landmarks, expressions, and head pose produced? |
 | 07 | [Quality and testing](07-quality-and-testing/README.md) | How do we verify behavior without depending only on hardware? |
 | 08 | [Roadmap](08-roadmap/README.md) | Which production-hardening tasks remain after the working avatar milestone? |
+| 09 | [Desktop studio](09-desktop-studio/README.md) | How do native controls, live calibration, privacy, and responsive worker ownership fit together? |
 | 99 | [Appendix](99-appendix/README.md) | Where are commands, terms, source files, and quick references? |
 
 ## The system in one picture

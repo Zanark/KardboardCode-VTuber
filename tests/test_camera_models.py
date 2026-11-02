@@ -23,6 +23,11 @@ def test_camera_source_redacts_credentials() -> None:
     assert source.redacted() == "rtsp://***@192.168.42.129/live"
 
 
+def test_recording_filename_with_at_sign_is_not_treated_as_url_credentials() -> None:
+    source = CameraSource.parse(r"C:\recordings\session@take2.mp4")
+    assert source.redacted() == r"C:\recordings\session@take2.mp4"
+
+
 @pytest.mark.parametrize("raw", ["", "   "])
 def test_camera_source_rejects_empty_value(raw: str) -> None:
     with pytest.raises(ValueError):
@@ -32,4 +37,3 @@ def test_camera_source_rejects_empty_value(raw: str) -> None:
 def test_camera_config_rejects_invalid_dimensions() -> None:
     with pytest.raises(ValueError):
         CameraConfig(CameraSource(0), requested_width=0)
-

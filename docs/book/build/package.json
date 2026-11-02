@@ -1,0 +1,12 @@
+{
+  "name": "kardboardcode-vtuber-engineering-handbook",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Markdown, Mermaid, Paged.js, and Puppeteer build for the KardboardCode VTuber engineering handbook.",
+  "scripts": {
+    "build": "node build.js",
+    "render": "node render.js",
+    "book": "node build.js && node render.js",
+    "qa": "node overflow-check.js"
+  }
+}

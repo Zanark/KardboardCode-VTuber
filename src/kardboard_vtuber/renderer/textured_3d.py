@@ -11,6 +11,7 @@ import numpy as np
 from numpy import ndarray
 
 from kardboard_vtuber.motion import DampedSpring, SpringParameters
+from kardboard_vtuber.tracking.eyes import EyeSensitivity
 from kardboard_vtuber.tracking.models import FaceTrackingState
 
 
@@ -123,6 +124,8 @@ class Textured3DRendererConfig:
     eye_open_threshold: float = 0.65
     wink_closed_threshold: float = 0.70
     wink_min_difference: float = 0.15
+    left_eye_closed_threshold: float | None = None
+    right_eye_closed_threshold: float | None = None
 
     def __post_init__(self) -> None:
         if self.pixel_scale < 1:
@@ -139,12 +142,18 @@ class Textured3DRendererConfig:
             or self.perspective_depth_offset < -1.0
         ):
             raise ValueError("perspective_depth_offset must be finite and at least -1")
-        if not 0.0 <= self.eye_closed_threshold < self.eye_open_threshold <= 1.0:
-            raise ValueError("eye thresholds must satisfy 0 <= closed < open <= 1")
-        if not self.eye_closed_threshold < self.wink_closed_threshold <= 1.0:
-            raise ValueError("wink threshold must be greater than the blink threshold")
-        if not 0.0 <= self.wink_min_difference <= 1.0:
-            raise ValueError("wink_min_difference must be between 0 and 1")
+        self.eye_sensitivity()
+
+    def eye_sensitivity(self) -> EyeSensitivity:
+        return EyeSensitivity(
+            self.eye_closed_threshold
+            if self.left_eye_closed_threshold is None else self.left_eye_closed_threshold,
+            self.eye_closed_threshold
+            if self.right_eye_closed_threshold is None else self.right_eye_closed_threshold,
+            self.eye_open_threshold,
+            self.wink_closed_threshold,
+            self.wink_min_difference,
+        )
 
 
 class Textured3DCardboardRenderer:
@@ -152,6 +161,7 @@ class Textured3DCardboardRenderer:
 
     def __init__(self, config: Textured3DRendererConfig | None = None) -> None:
         self._config = config or Textured3DRendererConfig()
+        self._eye_sensitivity = self._config.eye_sensitivity()
         self._flap_physics = _FlapPhysics() if self._config.physics_enabled else None
         try:
             self._context = moderngl.create_standalone_context(require=330)
@@ -192,6 +202,9 @@ class Textured3DCardboardRenderer:
         self._program["u_texture"].value = 0
         self._program["u_flap_angles"].value = (0.0, 0.0, 0.0)
         self._program["u_outer_flap_angles"].value = (0.0, 0.0)
+
+    def set_eye_sensitivity(self, sensitivity: EyeSensitivity) -> None:
+        self._eye_sensitivity = sensitivity
 
     def render(self, frame: ndarray, state: FaceTrackingState) -> None:
         if not state.detected:
@@ -285,15 +298,15 @@ class Textured3DCardboardRenderer:
 
     def _update_texture(self, state: FaceTrackingState) -> None:
         key = (
-            _eye_closed(
+            self._eye_sensitivity.closed(
                 state.left_eye_open,
                 state.right_eye_open,
-                self._config,
+                left_eye=True,
             ),
-            _eye_closed(
+            self._eye_sensitivity.closed(
                 state.right_eye_open,
                 state.left_eye_open,
-                self._config,
+                left_eye=False,
             ),
         )
         if key == self._eye_texture_key:
@@ -1366,13 +1379,7 @@ def _eye_closed(
     other_openness: float,
     config: Textured3DRendererConfig,
 ) -> bool:
-    if openness <= config.eye_closed_threshold:
-        return True
-    return (
-        openness <= config.wink_closed_threshold
-        and other_openness >= config.eye_open_threshold
-        and other_openness - openness >= config.wink_min_difference
-    )
+    return config.eye_sensitivity().closed(openness, other_openness, left_eye=True)
 
 
 def _perspective(fov: float, aspect: float, near: float, far: float) -> ndarray:

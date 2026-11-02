@@ -1,0 +1,23 @@
+Status: DONE
+Milestone: Source-grounded desktop studio design
+Dependencies: None
+Purpose: Select a toolkit and interaction model based on the real pipeline, not a mock UI.
+
+Tasks:
+  [x] Trace parser, resource lifecycle, composition/export order, and both eye renderers.
+  [x] Compare Qt Widgets, Tk/ttk, and Dear PyGui using primary documentation.
+  [x] Define all-feature control inventory, live/restart semantics, privacy and shutdown.
+  [x] Plan recording, model downloads, icon, tutorial, and screenshot provenance.
+
+Acceptance criteria:
+  Research has five progressive lenses, source citations, alternatives, risks, and unknowns.
+  Every existing CLI option is mapped to a GUI page.
+  Native UI dependency stays optional for CLI users.
+
+Completion evidence:
+  docs\09-desktop-studio\research-and-design.md
+  docs\09-desktop-studio\interface-specification.md
+  User selected "all" for scope and explicitly requested every feature plus a tutorial.
+Completion log:
+  2026-11-02: Design documented before runtime/UI implementation.
+  User visual approval: NOT REQUESTED YET; no UI exists at this milestone.

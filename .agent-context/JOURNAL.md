@@ -4,6 +4,42 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Explicit native machine camera selection
+
+- User requested a native machine/laptop camera option. Existing capture already accepted numeric devices; added a discoverable computer-camera input mode and named selector instead of requiring a masked index.
+- Reused the existing asynchronous subprocess lifecycle for metadata discovery. Reviewed the adapter's Windows source: Media Foundation attributes and DirectShow property bags are enumerated without capture/activation calls. No vendor client/driver was installed.
+- Named selections route matching API/index pairs. Custom phone/file/manual sources remain available, with separate in-memory source/backend restoration. A disappeared named choice is cleared on refresh, not silently replaced.
+- Actual metadata listed Integrated Camera through MSMF and DSHOW plus an OBS Virtual Camera entry. No streams or frame probes were opened. The full suite passed 236 tests and Ruff.
+- Added the native-source tutorial/README image using illustrative device names; inspected it with native Windows font rendering. Updated architecture, in-app help and handbook without claiming physical camera capture qualification.
+- Refreshed the Studio on its idle Camera setup page and verified its native window responds. Handbook remains 245 pages/97 diagrams with zero diagram failures and zero overflow.
+- Persisted the native-camera handoff as zmem `ep_834`; successful offload marker is `2026-11-02T14:33:17+05:30`. Shared chat and new incoming replies were read; no direct response obligation remained.
+
+## 2026-11-02 - Native studio delivered and opened for review
+
+- Completed all GUI workstreams: all 45 runtime controls plus model verification/force download and private recording, live per-eye calibration, source-free presets, native KC-box identity, themes, logs and the nine-step tutorial.
+- Final validation: 224 tests and Ruff passed. Added explicit startup-cancellation coverage so a cancelled model initialization does not then acquire a camera/output, preserved zero-duration CLI probes, bound literal sources so they cannot become flags, and reported unexpected parser exits as failures.
+- Captured/inspected actual synthetic dark/light/compact/tutorial widgets; updated README, book architecture/data contracts, algorithm/design-principle chapters, control rationale and operational tutorial.
+- Final PDF: 245 pages and 97 diagrams, zero Mermaid errors and zero overflowing pages. All four existing models verified offline. Authored handbook builders are now versioned independently of ignored generated output.
+- Recorded-input integration and live tuning succeeded. The measured post-warmup UI heartbeat p95/max were 31/47 ms on this machine; these do not establish end-to-end video latency, privacy coverage, or performance for every feature combination.
+- Three completed milestone commits are c84e6d7 (research), f233d09 (runtime), and 93a1fb1 (GUI); final delivery evidence belongs to the documentation commit. Commits ran on the observed `workDesk/agentic_GUI` branch; no push was performed.
+- Opened the final app in synthetic-demo mode and verified its actual native window is open/responding. Closed the earlier owned demo cooperatively before refreshing it. No live capture, real calling-app test, or private screenshot export occurred.
+- User appearance/usability acceptance is still pending. Existing distance tracking, real calling-app qualification and recording timing issues were not claimed solved.
+- Final source/log-boundary checks also cover quoted credentials, malformed source text, and already userinfo-redacted endpoints before they reach GUI log copies. The review demo was refreshed normally after these checks; no live source was opened by this agent.
+- Persisted delivery as zmem `ep_829` and final 224-test follow-up as `ep_832`; advanced the successful full-offload marker to `2026-11-02T13:48:33+05:30`. Read the day's shared chat and recent direct mentions before refreshing; none required a reply from this persona.
+
+## 2026-11-02 - Native desktop studio research and implementation
+
+- User requested a native GUI, live left/right blink sliders, a KC-box icon, deep design research, numbered implementation TODOs, README screenshots, and complete architecture/design rationale. They selected all existing features and explicitly added a tutorial.
+- Traced parser, composition/export order, both renderers' eye logic, action thresholds, capture shutdown, recorder and download helpers. Compared Qt Widgets, Tk/ttk and Dear PyGui using primary documentation before implementing.
+- Created the optional PySide6 studio, shared runtime hooks, bounded preview/log bridge, common per-eye rules, live tuning, source-free presets, seven task pages and a nine-part tutorial. Model and private recording actions use owned asynchronous subprocesses.
+- Preserved default face-only loss freeze and clean output before local debug. Raw modes require acknowledgement; experimental controls remain clearly marked.
+- The initial full suite passed 220 tests and Ruff. Native widget captures covered dark/light/compact/tutorial; initial demo framing was visibly too large, then corrected without changing the real camera renderer.
+- Offline integration on the private canonical recording used the real GUI, MediaPipe and GPU, displayed 55 packets with 54 effective detections, and exited 0. No private imagery was saved or published.
+- Deferred source/model inspection out of live slider validation, avoiding repeated filesystem work on the Qt event thread. Final rerun, refreshed screenshots, book generation, milestone commits and user review remain in progress.
+- Read the current shared chat and recent direct mentions before updating context; none targeted this persona. The older KardboardCode store remains unchanged.
+- Final code validation passed 220 tests and Ruff after moving live-validation file inspection off the UI thread. A six-second private replay applied a live edit and recorded 359 post-warmup UI heartbeat samples: p95 31 ms, maximum 47 ms. No latency/accuracy generalization is justified.
+- Refreshed and inspected the synthetic dark/compact screenshots after the framing correction. All four screenshot variants are present. The first handbook render produced 242 pages/97 diagrams with zero diagram failures; final screenshot/evidence inclusion and overflow checks remain.
+
 ## 2026-11-02 - Project recap and stale-context reconciliation
 
 - User asked for a summary of everything completed so far. Reread README, STATE, MEMORY, and JOURNAL in both mandatory stores, the full current mesh digest, and relevant project/creator-package documentation.

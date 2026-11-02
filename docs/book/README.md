@@ -29,7 +29,8 @@ No local `npm install` is required. The pipeline reuses:
 ## Structure
 
 - `docs\README.md` becomes the Introduction.
-- Numbered folders `00-*` through `08-*` become Parts I-IX.
+- Numbered folders `00-*` through `09-*` become Parts I-X, including the native desktop studio,
+  its research/design rationale, runtime architecture and tutorial.
 - Each folder's `README.md` leads its Part.
 - `docs\99-appendix\` becomes Appendices A-D.
 - Mermaid fences render to SVG before Paged.js paginates the book.
@@ -49,4 +50,3 @@ files are still included alphabetically, so content is not silently dropped.
 - `overflow-check.js` - checks every printed page for right-edge clipping.
 - `chapter-pages.txt` - generated chapter-to-page index.
 - `book.html` - generated printable HTML.
-

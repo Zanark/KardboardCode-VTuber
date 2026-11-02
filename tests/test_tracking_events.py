@@ -75,6 +75,21 @@ def test_detector_emits_blink_when_both_eyes_reopen_quickly() -> None:
     assert actions(detector, state(350)) == [FaceAction.BLINK, FaceAction.EYES_OPEN]
 
 
+def test_independent_thresholds_and_live_recalibration_do_not_invent_a_blink() -> None:
+    detector = FaceActionDetector(ActionThresholds(
+        hold_ms=0, eye_hold_ms=0, left_eye_closed=0.2, right_eye_closed=0.5,
+    ))
+    detector.update(state(1))
+    assert actions(detector, state(2, left_eye=0.3, right_eye=0.4)) == []
+    assert actions(detector, state(3, left_eye=0.1, right_eye=0.4)) == [
+        FaceAction.EYES_CLOSED,
+    ]
+    detector.set_thresholds(ActionThresholds(
+        hold_ms=0, eye_hold_ms=0, left_eye_closed=0.2, right_eye_closed=0.2,
+    ))
+    assert actions(detector, state(4)) == [FaceAction.EYES_OPEN]
+
+
 def test_lower_eye_thresholds_reduce_false_blinks_and_winks() -> None:
     detector = FaceActionDetector(
         ActionThresholds(

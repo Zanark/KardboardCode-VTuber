@@ -19,6 +19,12 @@ build/
 dist/
 *.egg-info/
 
+# Authored handbook builders live beside ignored generated book output.
+!/docs/book/build/
+/docs/book/build/*
+!/docs/book/build/*.js
+!/docs/book/build/package.json
+
 # IDE and OS files
 .idea/
 .vscode/
