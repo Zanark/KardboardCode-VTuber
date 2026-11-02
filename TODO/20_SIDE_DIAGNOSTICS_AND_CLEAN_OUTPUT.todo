@@ -9,8 +9,8 @@ Tasks:
   [x] Put a readable raw-face panel above face/pose or body diagnostics to the preview's right.
   [x] Reclaim the diagnostic rail when its channels are off; preserve the protected main preview.
   [x] Keep Logs, CLI and numeric signals in Tools rather than squeezing images into it.
-  [ ] Add a persistent Live-mode action/button to show or reopen clean output after closing it.
-  [ ] Verify image area, containment, settings access, privacy and real close/reopen behaviour.
+  [x] Add a persistent Live-mode action/button to show or reopen clean output after closing it.
+  [x] Verify image area, containment, settings access, privacy and real close/reopen behaviour.
   [ ] Update native dark/light README captures, gallery, guide and engineering handbook.
   [ ] Refresh current source/MSI artifacts, commit completed work and offload own context.
 
@@ -33,7 +33,16 @@ Completion evidence:
   aspect-fitted image area, attempted splitter collapse and Live/Video/headless visibility.
   Compact Tools must have an explicit 1px minimum rather than zero, which retains Qt's 70px
   scroll-area minimum hint. Removed a redundant raw-note row, not privacy/area assertions.
-  Clean-output reopen and final screenshot/docs/snapshot verification are still pending.
+  Show clean output is a persistent Live button sharing the View-menu action. Auto-open is a
+  separate preference, not a stale claim that a closed window is still visible. Reopening
+  retains the same window and active worker, including when Auto-open is unchecked.
+  Idle opening is black and opens no camera; Video/headless/raw configurations cannot display
+  a clean window. Closing clean output does not request worker shutdown or change the preference.
+  Full suite: 310 passed, one unsupported offscreen-widescreen case skipped; Ruff.
+  Final native Windows image/channel/close-reopen/primary-control set: 16 passed at each
+  100/125/150% scale. Compact error details shrink within 48-68px and retain full scrollable text
+  instead of forcing the protected image panels outside their parents.
+  Final screenshot/docs/snapshot verification is still pending.
   User usability approval remains separate from automated/synthetic evidence.
 
 Completion log:

@@ -68,7 +68,9 @@ class ErrorBanner(QPlainTextEdit):
         self.setObjectName("error")
         self.setAccessibleName("Session error details")
         self.setReadOnly(True)
-        self.setFixedHeight(68)
+        self.setMinimumHeight(48)
+        self.setMaximumHeight(68)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         self.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
 
     def setText(self, message: str) -> None:

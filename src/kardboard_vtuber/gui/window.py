@@ -521,6 +521,7 @@ class StudioWindow(QMainWindow):
         self.video_progress_panel.setVisible(index == 1)
         self.start_button.setText("Process video" if index == 1 else "Start camera")
         self.demo_button.setVisible(index == 0)
+        self.clean_output_button.setVisible(index == 0)
         self.show_output.setVisible(index == 0)
         self._set_preview_hint()
         self.preview.set_frame(None)
@@ -626,19 +627,24 @@ class StudioWindow(QMainWindow):
     def _toggle_clean_output(self, enabled: bool) -> None:
         if not hasattr(self, "output_window"):
             return
-        if enabled and self.worker is not None and not self._processing_video:
-            if not self._renders(settings.namespace(self.values)):
-                self._show_error("Clean output requires cardboard rendering; raw modes stay local.")
-                return
-            if self.controls["headless"].value():
-                self._show_error(
-                    "Suppress preview is enabled. Stop and disable it for local windows.",
-                )
-                return
-            self.output_window.show()
-            self.output_window.raise_()
-        else:
+        if not enabled:
             self.output_window.hide()
+            return
+        if self._mode != 0 or self._processing_video:
+            self._show_error("Clean output is available in Live mode, not video export.")
+            return
+        args = settings.namespace(self.values)
+        if not self._renders(args):
+            self._show_error("Clean output requires cardboard rendering; raw modes stay local.")
+            return
+        if args.headless:
+            self._show_error(
+                "Suppress preview is enabled. Stop and disable it for local windows.",
+            )
+            return
+        self.output_window.show()
+        self.output_window.raise_()
+        self.output_window.activateWindow()
 
     def start_eye_calibration(self) -> None:
         if (
@@ -822,11 +828,19 @@ class StudioWindow(QMainWindow):
         self.preview_note.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.preview_note.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed)
         top.addWidget(self.preview_note, 1)
-        self.show_output = QCheckBox("Clean output")
+        self.clean_output_action = QAction("Show clean output", self)
+        self.clean_output_action.triggered.connect(lambda: self._toggle_clean_output(True))
+        self.clean_output_button = QToolButton()
+        self.clean_output_button.setDefaultAction(self.clean_output_action)
+        self.clean_output_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextOnly)
+        self.clean_output_button.setAccessibleName("Show or reopen clean output window")
+        top.addWidget(self.clean_output_button)
+        self.show_output = QCheckBox("Auto-open")
         self.show_output.setChecked(True)
         self.show_output.setToolTip(
-            "Open the separate controls-free window for OBS Window Capture. "
-            "This is distinct from OBS Virtual Camera. Raw/debug panels never appear in it.",
+            "Open clean output automatically when Live/demo starts. "
+            "Unchecking hides it; Show clean output can reopen it without changing "
+            "this preference.",
         )
         self.show_output.toggled.connect(self._toggle_clean_output)
         top.addWidget(self.show_output)
@@ -1059,9 +1073,7 @@ class StudioWindow(QMainWindow):
         theme = QAction("Toggle dark / light", self)
         theme.triggered.connect(self.toggle_theme)
         view.addAction(theme)
-        clean = QAction("Show clean output window", self)
-        clean.triggered.connect(lambda: self._toggle_clean_output(True))
-        view.addAction(clean)
+        view.addAction(self.clean_output_action)
         help_menu = self.menuBar().addMenu("Help")
         guide = QAction("Studio tutorial", self)
         guide.setShortcut("F1")
@@ -1163,8 +1175,20 @@ class StudioWindow(QMainWindow):
         self.values = values
         self._sync_diagnostics()
         self._sync_resolution()
-        if self.worker is None:
-            self.show_output.setEnabled(self._renders(args) and not args.headless)
+        clean_available = self._mode == 0 and self._renders(args) and not args.headless
+        self.clean_output_action.setEnabled(clean_available)
+        self.show_output.setEnabled(clean_available)
+        self.clean_output_action.setToolTip(
+            "Stop and disable Suppress preview to use local output windows."
+            if args.headless else
+            "Enable cardboard rendering; unmasked/raw modes cannot populate clean output."
+            if not self._renders(args) else
+            "Show or reopen the controls-free window for OBS Window Capture. "
+            "Closing it does not stop the session. No raw/debug pixels are included.",
+        )
+        if not clean_available:
+            self.output_window.hide()
+            self.output_window.canvas.set_frame(None)
         pair = (str(values["source"]), str(values["backend"]))
         if self._source_mode == 0 and pair != self._native_pair_shown:
             self._populate_native_cameras()

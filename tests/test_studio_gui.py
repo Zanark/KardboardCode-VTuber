@@ -217,6 +217,62 @@ def test_video_canvas_copies_buffer_before_owner_changes(window: StudioWindow) -
     assert (color.red(), color.green(), color.blue()) == (30, 20, 10)
 
 
+def test_clean_output_reopens_from_button_and_view_without_restarting_the_session(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    window.controls["physics"].set_value(False)
+    window.controls["cardboard_renderer"].set_value("procedural-2d")
+    window.start_demo()
+    wait_until(app, lambda: not window.output_window.canvas.image.isNull())
+    worker = window.worker
+    clean = window.output_window
+    assert worker is not None and window.clean_output_button.isEnabled()
+    for automatic in (True, False):
+        window.show_output.setChecked(automatic)
+        for reopen in (window.clean_output_button.click, window.clean_output_action.trigger):
+            clean.close()
+            app.processEvents()
+            assert not clean.isVisible()
+            assert window.worker is worker and window.bridge is not None
+            assert not window.bridge.stop_event.is_set()
+            reopen()
+            app.processEvents()
+            assert window.output_window is clean and clean.isVisible()
+            assert not clean.canvas.image.isNull()
+            assert window.show_output.isChecked() == automatic
+    window.stop()
+    wait_until(app, lambda: window.worker is None)
+
+
+@pytest.mark.parametrize("unavailable", ["headless", "raw", "video"])
+def test_clean_output_button_is_safe_before_capture_and_in_unavailable_modes(
+    app: QApplication, window: StudioWindow, unavailable: str,
+) -> None:
+    window.clean_output_button.click()
+    app.processEvents()
+    assert window.output_window.isVisible()
+    assert window.output_window.canvas.image.isNull()
+    assert window.worker is None and window.job is None
+    if unavailable == "headless":
+        window.controls["headless"].set_value(True)
+    elif unavailable == "raw":
+        for field in (
+            "render_cardboard", "physics", "full_body", "body_head_fallback",
+            "hood_marker_tracking", "virtual_camera",
+        ):
+            window.controls[field].set_value(False)
+    else:
+        window.work_mode.setCurrentIndex(1)
+    window._refresh_settings()
+    app.processEvents()
+    assert not window.clean_output_action.isEnabled()
+    assert not window.output_window.isVisible()
+    assert window.clean_output_button.isVisible() == (unavailable != "video")
+    window._toggle_clean_output(True)
+    assert window.error_label.isVisible() and not window.output_window.isVisible()
+    assert window.worker is None and window.job is None
+
+
 def test_close_while_demo_running_defers_until_thread_finishes(
     app: QApplication,
     window: StudioWindow,
@@ -635,6 +691,10 @@ def test_primary_actions_fit_both_work_modes_and_themes(
             for button in (
                 window.theme_button, window.help_button, window.start_button, window.stop_button,
             ):
+                assert QRegion(button.rect()).subtracted(button.visibleRegion()).isEmpty()
+            assert window.clean_output_button.isVisible() == (mode == 0)
+            if mode == 0:
+                button = window.clean_output_button
                 assert QRegion(button.rect()).subtracted(button.visibleRegion()).isEmpty()
             assert_whole_preview_visible(window)
             window.toggle_theme()
