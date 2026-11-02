@@ -4,6 +4,43 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-03 - User-directed readable diagnostic rail and clean-output follow-up
+
+- User rejected the tiny raw-face strip and supplied a settings/preview/right-stacked-diagnostics
+  illustration. Implemented the protected horizontal preview/rail split with raw above face/pose
+  or body, reclaiming width when channels are off. Tools now holds Logs/CLI/numeric Signals only.
+- Actual native tests found compact Tools/error clipping. Qt's zero minimum retains its 70px
+  scroll-area hint; an explicit 1px minimum permits proper secondary shrinking. Removed a
+  redundant raw-note row while keeping local-only warning and full image-area assertions.
+- Native Windows channel/geometry/readable-image/primary-action set: 12 passed at each Qt
+  100/125/150%; Ruff. Covers 1440x810, 1280x720, 960x600, Tools/errors and splitter collapse.
+- Persistent Show clean output now shares the View action; Auto-open is a separate preference.
+  Actual closing/reopening retains the same window/worker and clean pixels without restarting.
+  Idle opening is black/no capture; Video/headless/raw states cannot display a clean window.
+- Complete suite: 310 passed/one unsupported offscreen-widescreen skip; final native image/
+  containment/close-reopen/primary-action set 16 passed at each Qt 100/125/150%; Ruff.
+  Error details now shrink within 48-68px rather than clipping the protected image areas.
+- Layout commit 342c4cb; clean-output commit 973dc1d; public screenshots/docs/version1.2.2
+  inputs 63aefe9. Eight actual native captures and banner refreshed; reviewed contact sheet
+  and full dark/light/tutorial views. README remains seven images/GIF-first, gallery24;
+  media/navigation links resolve. In-app/source guide and architecture match the new layout.
+- Engineering handbook rebuilt:274pages/103diagrams, zero Mermaid failures/overflow. Final
+  current-source suite310passed/one existing skip; Ruff. Actual extracted wheel outside the
+  checkout verifies exact GUI/resource bytes, readable side panels, safe clean pixels and
+  button/menu reopening in both themes. No new MSI lifecycle is claimed.
+- Workstream20 completed; final public inputs3141d0dab504f33a1d55672158075cf435087b78 and
+  generated artifacts2704a53. Both --check commands pass; clean source/MSI receipts align,
+  and all nine release files match committed blobs.
+- ZIP33116630bytes SHA256
+  dab08656e88d43c5ed3b57946939efc08308b5e05c7c19c55a12353927f33b3d;
+  MSI19709952bytes SHA256
+  9d74b1926f563b5b29f1fdf50b477c6d7a73eca50b02b355be48ba30691432f0.
+- Latest installed context-offload/context-mesh files reread completely. Active room and own
+  attention checked; no incoming obligations or reason for duplicate filler. Preserve identity,
+  archived boundaries and prior participation. No camera, portrait or remote publication.
+- Persisted/read back ep_906, then advanced the exact full-offload marker after successful
+  store/episodic persistence: 2026-11-03T04:10:20+05:30.
+
 ## 2026-11-03 - Numeric controls and trailing tab-line fixed in v1.2.1
 
 - User reported unlabeled numeric buttons after the stray Live/Video underline. Confirmed

@@ -47,8 +47,9 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 - Face-only output must be black before safe acquisition and reuse a copied last-safe composite on face loss, never fresh raw camera pixels. This is a fail-closed design requirement, not proof that every detected pose masks every identifying pixel.
 - Synthetic face-mesh/XYZ diagnostics are the normal inspection path. `--debug-face-preview`
-  exposes raw face imagery locally and stays opt-in. Studio places raw/mesh/body in separate
-  Tools > Diagnostics tabs, never over the clean program image. CLI local overlays remain available.
+  exposes raw face imagery locally and stays opt-in. Studio places raw face above face/pose
+  or body in a right-hand diagnostic rail, never over the clean program image. Tools contains
+  numeric Signals, not tiny image previews. CLI local overlays remain available.
 - The separate clean output window is for OBS Window Capture and is independent of OBS Virtual
   Camera. It receives only owned clean frames, never raw/debug/body-calibration text. Unmasked
   camera modes do not populate that channel. Windows controls native icon-slot size.
@@ -96,7 +97,11 @@ No personal identities, device credentials, face imagery, or personal calibratio
   states. Qt's native PlusMinus setting alone painted empty slots through this custom stylesheet.
   Verify actual glyph pixels/shapes and click behaviour, not only a button-symbol property.
   The Live/Video QTabBar disables drawBase so no baseline extends beyond its buttons.
-- The owner chose the left settings inspector and right large preview. Default startup is a
+- The owner chose the left settings inspector, main preview directly beside it and optional
+  right-hand stacked visual diagnostics. Raw face belongs above Face / pose or Body, with both
+  requested images visible without opening Tools. Reclaim the rail when channels are off;
+  protect actual visible and fitted image area, not only isVisible or declared minima.
+  Default startup is a
   display-fitted 16:9 workbench; resizing stays responsive and never changes source/output
   video dimensions or stretches/crops pixels. Keep all operating options reachable through
   labelled sections rather than expanding every advanced field permanently.
@@ -104,9 +109,16 @@ No personal identities, device credentials, face imagery, or personal calibratio
   only isVisible or the canvas minimum size. Prevent splitter collapse; secondary Tools must
   shrink/scroll rather than force a fixed-height dock to clip the viewer. Keep Stop, true
   state, privacy warnings, errors and video progress visible outside optional details.
-- Tools / Ctrl+J contains Logs, CLI and Diagnostics, closed by default. Hidden tools still
+- Tools / Ctrl+J contains Logs, CLI and numeric Signals, closed by default. Hidden tools still
   collect bounded logs and owned diagnostic data. Keep compact eye decisions near tuning,
   detailed numeric signals in Tools, and the separate clean-output window independent.
+- Keep Show clean output visible beside the Live preview, sharing the View-menu action.
+  Auto-open is a separate startup preference. Closing hides the same window without stopping
+  its worker; manual reopening works with Auto-open off and displays current owned clean pixels.
+  Idle opening is black/no capture; raw/headless/Video states cannot display clean output.
+- Qt's zero QScrollArea minimum retains its 70px minimum hint. Tools uses an explicit 1px
+  minimum so secondary content can yield space. Error details may shrink within 48-68px while
+  keeping all text scrollable. Neither may clip the main or diagnostic canvases at compact sizes.
 - Successful Studio VIDEO exports open the actual completed worker result in the OS default
   player, on the UI thread after cleanup. Never use editable output text to choose playback.
   Cancellation/failure must not launch. Launch refusal preserves the saved file and displays

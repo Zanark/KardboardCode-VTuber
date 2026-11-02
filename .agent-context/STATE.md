@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered v1.2.1 numeric +/- clarity and mode-baseline fix with current source/MSI artifacts. All 178 tasks done. No portrait work.
-> **Last context offload:** 2026-11-03T03:26:57+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered v1.2.2 readable side diagnostics, persistent clean-output access, updated README/handbook and current source/MSI snapshots. No portrait work.
+> **Last context offload:** 2026-11-03T04:10:20+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,7 +7,40 @@
 
 ## Current focus
 
-**DELIVERED: numeric-control clarity and stray tab underline, v1.2.1.** Code input
+**DELIVERED: readable side diagnostics and clean-output access, v1.2.2.** Followed the owner's
+illustration: settings at the left, main preview snug beside them, raw face above Face / pose
+or Body in a resizable protected right-hand rail. Inactive channels reclaim width; Tools holds
+Logs/CLI/numeric Signals, not tiny image previews. Raw consent and pixel-channel ownership stay
+unchanged. Main containment alone was insufficient evidence of diagnostic readability.
+
+Persistent **Show clean output** shares the View action; **Auto-open** is a separate startup
+preference. Closing/reopening retains the same window and running worker, including when
+Auto-open is off. Idle opening is black/no capture; raw/headless/Video states cannot display
+clean output. Error details may shrink within 48-68px, retaining complete scrollable text.
+
+Workstream 20 is done. Code commits: 342c4cb/973dc1d; screenshots/docs/version: 63aefe9.
+Final current-source suite: 310 passed/one unsupported offscreen-widescreen skip; Ruff.
+Native image/channel/containment/close-reopen/primary-action set: 16 passed at each Qt
+100/125/150%. Actual wheel GUI/resource bytes match source; extracted-package proof outside
+the checkout verifies readable panels, safe clean pixels and button/menu reopening in both
+themes. No new MSI install/uninstall lifecycle or live-camera qualification is claimed.
+
+Eight actual synthetic native captures and banner refreshed; contact sheet and full dark/
+light/tutorial views reviewed. Minimal README still has seven images, with all three GIFs
+directly under banner/hero; the linked gallery has 24 captioned images. Media/navigation paths
+resolve. In-app/source guides and architecture match the correction. Engineering handbook:
+274 pages/103 diagrams, zero Mermaid failures/overflow. Frozen documentary is unchanged.
+
+Final public inputs: 3141d0dab504f33a1d55672158075cf435087b78; artifact commit: 2704a53.
+Both --check commands pass; source/MSI receipts align with clean inputs and all nine release
+files match committed blobs. Source fingerprint:
+1cab79620299728e2cdf751cbb7a5dc19944b42918e3e204bb978077f72e0cd9.
+ZIP: 33,116,630 bytes / SHA256 dab08656e88d43c5ed3b57946939efc08308b5e05c7c19c55a12353927f33b3d.
+MSI: 19,709,952 bytes / SHA256 9d74b1926f563b5b29f1fdf50b477c6d7a73eca50b02b355be48ba30691432f0.
+No new research, package build, camera, tracking/rendering algorithm, numeric semantics, portrait
+or remote publication remains. Existing user Studio processes were not terminated.
+
+**Historical delivered baseline: numeric-control clarity and tab underline, v1.2.1.** Code input
 21e4077 adds explicit 12px plus/minus SVG glyphs, contrasting wider step surfaces and muted
 disabled/boundary states for all integer/decimal controls. Existing values/steps/bindings are
 unchanged. Live/Video drawBase is disabled; raster tests confirm no trailing baseline.
@@ -33,7 +66,7 @@ Only the existing GUI affordances changed. No tracking/rendering algorithm, nume
 camera, output, portrait or remote-publication changes. Current base remains ctx-42d505fb393f;
 routine social reads remain active-only, with archive/history preserved.
 
-**Earlier delivered layout, preserved in v1.2.1: minimal animation-first README.** Core change committed as 67becce:
+**Earlier delivered layout, preserved in v1.2.2: minimal animation-first README.** Core change committed as 67becce:
 banner/runtime hero, immediately followed by all three GIFs, then only dark/light GUI shots.
 Main has seven images total. `docs\visual-gallery.md` contains the other 24 captioned images.
 All 31 original references remain; local media/navigation links resolve; no table framing.
@@ -256,7 +289,18 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
-### Current GUI handoff - v1.2.1 Numeric-Control Clarity
+### Current GUI handoff - v1.2.2 Readable Diagnostics
+
+- Layout 342c4cb: main preview beside the left inspector, with raw face above face/pose or body
+  in an independently resizable protected right-hand rail. Inactive channels reclaim width.
+- Clean output 973dc1d: persistent Live Show clean output button and shared View action;
+  Auto-open is a separate startup preference. Actual closing/reopening retains window/worker.
+- Public v1.2.2 screenshots/docs/version inputs 63aefe9; completion inputs 3141d0d; generated
+  artifacts 2704a53. Current source/MSI snapshots and committed release-byte checks pass.
+- All requested product work is complete. No new research, design questionnaire, installer
+  lifecycle, camera, portrait or remote publication. Await the owner's next concrete feedback.
+
+### Historical GUI baseline - v1.2.1 Numeric-Control Clarity
 
 - Explicit visible upper + / lower minus steps in both themes, with muted disabled and
   unavailable directions. Native drawBase disabled for the Live/Video mode strip.
@@ -396,8 +440,9 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-GUI implementation, widescreen follow-up, numeric-control patch and v1.2.1 release artifacts are complete. Await the owner's
-next concrete GUI feedback, not another design/research/installer loop. An already-running
+Workstream 20's code, native screenshots, documentation and source/MSI snapshots are complete
+as v1.2.2. Await the owner's next concrete GUI feedback, not another design/research/installer
+loop. An already-running
 Studio must be restarted to load external source changes; do not terminate it for the user.
 Do not resume portrait work or silently revert the completed drawing. Real visual/live-camera/
 calling-app approval remains separate from the recorded synthetic/native evidence.
@@ -412,7 +457,7 @@ cutoff and hashes define this edition. Rebuild only intentionally using the priv
 This private documentary does not belong in source-release ZIPs. Its original 977-page PDF hash
 was rechecked unchanged after the installer work.
 
-The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.1. Hand off the current full MSI path;
+The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.2. Hand off the current full MSI path;
 the owner creates the final GitHub release manually. No automatic push/tag/merge/release,
 live camera, driver installation or system Python/PATH/security change is authorized.
 Use approved signing/IT handling if unsigned packages are blocked; never disable protections.
@@ -433,7 +478,9 @@ Earlier live accuracy/privacy/calling-app and private recorder timing limits rem
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_904` (completed v1.2.1 numeric-control/tab-line patch,
+- Latest cross-base receipt: `ep_906` (completed v1.2.2 owner-directed right diagnostic rail,
+  persistent clean-output access, native/current-package proof, refreshed docs and snapshots).
+  Previous receipt: `ep_904` (completed v1.2.1 numeric-control/tab-line patch,
   current source/MSI handoff and all 178 tasks done; current-protocol active-only refresh).
   Previous receipt: `ep_900` (explicit context-only refresh, active-only archive
   boundary and preserved completed work; no application/artwork/package changes).
