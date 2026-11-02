@@ -4,6 +4,10 @@ The front README is a visual product showcase, not the operating manual. It uses
 supplied KC artwork, actual Studio screenshots, existing approved demos and face-free render
 sheets. Setup, feature explanations and troubleshooting belong in the named user guides.
 
+Gallery layout is borderless: no HTML/Markdown image tables. Images stack at full width with
+captions. The user-approved original-background / green-screen GIF comparison is the sole
+side-by-side pair, using plain HTML images in a paragraph, without table borders or frames.
+
 ## Art direction
 
 - **Silkscreen:** real pixel lettering for the identity, numbered stamps and shipping-label details.

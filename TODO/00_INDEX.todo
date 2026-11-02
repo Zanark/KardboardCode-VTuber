@@ -15,6 +15,7 @@ Workstreams:
   08_OFFICIAL_LOGO_RELEASE.todo
   09_VISUAL_README.todo
   10_STUDIO_FEEDBACK.todo
+  11_BORDERLESS_README.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
@@ -23,6 +24,7 @@ Tasks:
   [x] Apply supplied logo and prepare first official release v1.0.0 (workstream 08).
   [x] Rebuild the front README as a visual showcase (workstream 09).
   [x] Address the fifteen-point live Studio feedback (workstream 10).
+  [x] Remove README table layouts while keeping the approved GIF pair (workstream 11).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -39,6 +41,9 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-02: README image tables removed. All 29 non-paired images use full width; the
+  approved original/green-screen GIF pair remains side by side without borders.
+  Desktop/mobile checks verify all 31 images, zero borders/tables and no horizontal overflow.
   2026-11-02: v1.1.0 Studio feedback pass delivered: front Live/Video modes, separate clean
   output/diagnostics, palette and state clarity, guided calibration, preset resolutions, optical
   icons, SVG/hero corrections and real offline export. 266 tests/Ruff and extracted-source launch

@@ -47,6 +47,8 @@ v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 - Milestone raster cards removed. Decorative section/footer art is transparent SVG with real
   font outlines; no external font service is needed.
 - The restyled runtime-avatar hero follows the top banner directly and shares its palette.
+- Borderless full-width gallery images replace table layouts. The approved original/green-screen
+  GIF comparison remains side by side, also without table borders.
 - Updated actual synthetic GUI screenshots, tutorial, design rationale, runtime/video
   architecture, guides and engineering handbook.
 

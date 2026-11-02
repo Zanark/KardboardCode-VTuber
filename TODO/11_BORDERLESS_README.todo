@@ -1,0 +1,27 @@
+Status: DONE
+Milestone: Borderless, full-width README gallery
+Dependencies: 10_STUDIO_FEEDBACK.todo
+Purpose: Remove table framing while preserving the approved two-GIF comparison.
+
+Tasks:
+  [x] Replace all image-table markup with full-width images and captions.
+  [x] Keep original/green-screen GIFs side by side using borderless HTML.
+  [x] Verify desktop/mobile geometry, unchanged image inventory and links.
+  [x] Prepare refreshed source/context handoff for the layout-only work.
+
+Acceptance criteria:
+  README contains no tables/table cells, visible table borders or CSS-only border-hiding tricks.
+  Approved GIF pair retains its source files and relative order.
+  Every other gallery image may occupy full content width.
+  Alt text, captions, links, top hero ordering and source-release freshness remain intact.
+
+Completion evidence:
+  Browser checks at 1120px and 390px: 31 loaded images, zero tables/image borders/overflow,
+  all 29 non-paired images fill content width, and both approved GIFs share the same row.
+  All image references and source files retained; approved GIF order and captions preserved.
+  No application, video, artwork or handbook changes; v1.1.0 source export is refreshed at handoff.
+  User visual approval remains unrecorded.
+Completion log:
+  2026-11-02: User rejected README table borders/grids, but explicitly approved the paired
+  original-background / green-screen animation arrangement.
+  2026-11-02: Borderless layout verified and source-release refresh prepared.

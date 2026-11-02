@@ -24,6 +24,11 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-02: Removed README table framing after user feedback. Full-width stacked images
+  replace every gallery grid except the approved original/green-screen comparison, which stays
+  side by side using plain HTML. Browser 1120px/390px checks: zero tables/image borders,
+  all 31 images loaded, 29 full-width images, GIF pair aligned, no horizontal overflow.
+  Images/artwork/application remain unchanged; local v1.1.0 source export is refreshed.
   2026-11-02: Addressed fifteen live-use feedback items as v1.1.0. Implemented banner-derived
   dark/light themes, native contrasting ticks/locked badges, separate raw/mesh/body panels and
   a full-resolution clean output window, bottom command/log tabs and standard/monitor presets.
