@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered v1.2.2 readable side diagnostics, persistent clean-output access, updated README/handbook and current source/MSI snapshots. No portrait work.
-> **Last context offload:** 2026-11-03T04:10:20+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered v1.2.3 preferred metric cards beside viewer-only Tools, full-height settings, updated screenshots/handbook and current source/MSI snapshots. No portrait work.
+> **Last context offload:** 2026-11-03T04:44:40+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,7 +7,35 @@
 
 ## Current focus
 
-**DELIVERED: readable side diagnostics and clean-output access, v1.2.2.** Followed the owner's
+**DELIVERED: preferred metric cards in the viewer footer, v1.2.3.** The owner liked the
+earlier boxed camera FPS/tracking FPS/internal frame age/output values and rejected flattened
+Signals text. Restored compact rounded cards below the preview beside Tools, always outside
+the drawer. Tools now opens under the viewer only, keeping settings full-height. Existing
+metric values/units/demo states, right diagnostic rail and clean-output action are unchanged.
+
+Workstream21 is done. Core20542ad; native screenshots/docs/version7528541; final public
+inputs f999b74e282cb5e5840b21b52b0c817573a84cb7; artifacts ff92565.
+Native card/font/border/containment/channel/actions/Tools set:18passed at each100/125/150%.
+Final current-source suite:313passed,2skipped (unsupported offscreen widescreen work area and
+missing native Segoe UI metrics); Ruff. Border/layout checks still run offscreen; actual font
+readability is checked on Windows. The selected rail's real minimum height propagates into
+its horizontal splitter so footer content cannot clip diagnostic pixels.
+
+Eight actual native captures/banner refreshed; contact sheet and full dark/diagnostic views
+reviewed. Minimal README remains7images with all3GIFs directly below banner/hero; gallery24
+captioned images and local links preserved. Guide/in-app tutorial/design rationale match the
+restoration. Handbook274pages/103diagrams, zero Mermaid failures/overflow.
+
+Actual extracted native wheel outside checkout verifies matching GUI/resources, real card
+text, full-height settings, protected images and clean-output reopening in both themes.
+Both source/MSI checks pass; clean receipts align and all9release files match committed blobs.
+Source fingerprint: ad370079ad887183b574f8c05832e9f1e80279e5122496968e494d6b72e2f0d1.
+ZIP:33,183,074bytes / SHA256 4c858c78d7e782e8dab6d4e9f692416fee7eb4d979d8358c5520a3ab51378eb1.
+MSI:19,714,048bytes / SHA256 4b4be94ca80ea2015bb741daa2c370c481c89577e09a3f397107e4be6b10b894.
+No new installer lifecycle, live camera, tracking/data-sampling change, portrait or remote
+publication. Existing user Studio processes were not terminated. Await concrete owner feedback.
+
+**Historical delivered baseline: side diagnostics and clean-output access, v1.2.2.** Followed the owner's
 illustration: settings at the left, main preview snug beside them, raw face above Face / pose
 or Body in a resizable protected right-hand rail. Inactive channels reclaim width; Tools holds
 Logs/CLI/numeric Signals, not tiny image previews. Raw consent and pixel-channel ownership stay
@@ -66,7 +94,7 @@ Only the existing GUI affordances changed. No tracking/rendering algorithm, nume
 camera, output, portrait or remote-publication changes. Current base remains ctx-42d505fb393f;
 routine social reads remain active-only, with archive/history preserved.
 
-**Earlier delivered layout, preserved in v1.2.2: minimal animation-first README.** Core change committed as 67becce:
+**Earlier delivered layout, preserved in v1.2.3: minimal animation-first README.** Core change committed as 67becce:
 banner/runtime hero, immediately followed by all three GIFs, then only dark/light GUI shots.
 Main has seven images total. `docs\visual-gallery.md` contains the other 24 captioned images.
 All 31 original references remain; local media/navigation links resolve; no table framing.
@@ -289,7 +317,16 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
-### Current GUI handoff - v1.2.2 Readable Diagnostics
+### Current GUI handoff - v1.2.3 Preferred Metric Cards
+
+- Four compact rounded metric cards stay below the preview beside Tools. The drawer is in
+  the viewer column only, keeping settings full-height. Preserve this owner-preferred grouping.
+- Core20542ad; native visuals/docs7528541; completion inputsf999b74; artifactsff92565.
+  Current source/MSI/native extracted-package checks and committed release-byte checks pass.
+- Workstream21 is complete. No source, screenshot, handbook, installer or portrait work
+  remains. Restart an existing Studio to load changes; do not terminate it for the user.
+
+### Historical GUI baseline - v1.2.2 Readable Diagnostics
 
 - Layout 342c4cb: main preview beside the left inspector, with raw face above face/pose or body
   in an independently resizable protected right-hand rail. Inactive channels reclaim width.
@@ -440,8 +477,8 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-Workstream 20's code, native screenshots, documentation and source/MSI snapshots are complete
-as v1.2.2. Await the owner's next concrete GUI feedback, not another design/research/installer
+Workstream 21's code, native screenshots, documentation and source/MSI snapshots are complete
+as v1.2.3. Await the owner's next concrete GUI feedback, not another design/research/installer
 loop. An already-running
 Studio must be restarted to load external source changes; do not terminate it for the user.
 Do not resume portrait work or silently revert the completed drawing. Real visual/live-camera/
@@ -457,7 +494,7 @@ cutoff and hashes define this edition. Rebuild only intentionally using the priv
 This private documentary does not belong in source-release ZIPs. Its original 977-page PDF hash
 was rechecked unchanged after the installer work.
 
-The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.2. Hand off the current full MSI path;
+The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.3. Hand off the current full MSI path;
 the owner creates the final GitHub release manually. No automatic push/tag/merge/release,
 live camera, driver installation or system Python/PATH/security change is authorized.
 Use approved signing/IT handling if unsigned packages are blocked; never disable protections.
@@ -478,7 +515,9 @@ Earlier live accuracy/privacy/calling-app and private recorder timing limits rem
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_906` (completed v1.2.2 owner-directed right diagnostic rail,
+- Latest cross-base receipt: `ep_908` (completed v1.2.3 preferred metric-card footer,
+  viewer-only Tools/full-height settings, native and current-package proof, docs/snapshots).
+  Previous receipt: `ep_906` (completed v1.2.2 owner-directed right diagnostic rail,
   persistent clean-output access, native/current-package proof, refreshed docs and snapshots).
   Previous receipt: `ep_904` (completed v1.2.1 numeric-control/tab-line patch,
   current source/MSI handoff and all 178 tasks done; current-protocol active-only refresh).

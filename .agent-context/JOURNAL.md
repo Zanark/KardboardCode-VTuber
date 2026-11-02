@@ -4,6 +4,36 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-03 - Restore the owner's preferred metric cards
+
+- Owner explicitly liked the former four metric cards and rejected flattened text. Supplied
+  the desired row below the preview beside Tools, with the drawer below the viewer only.
+- Reused earlier native metric frames/captions and existing live value bindings. Restored a
+  compact card strip outside Tools, while keeping settings full-height when Tools opens.
+- Propagated the selected diagnostic rail's actual minimum height into its horizontal splitter;
+  preserved whole preview/diagnostic pixels rather than relaxing containment assertions.
+- Native Windows card/font/border/containment/channel/actions/Tools set:18passed at each
+  100/125/150%. Offscreen placeholder font metrics cannot prove native text fit; that isolated
+  proof is explicitly skipped there while card-border/layout checks continue.
+- Core20542ad and visual docs/version1.2.3 inputs7528541 are committed. Final full suite:
+  313passed/2explicit offscreen limitations skipped; Ruff. Eight native captures/banner and
+  contact sheet/full dark+diagnostic views reviewed. Minimal README7/GIF-first/gallery24 and
+  local links preserved. Handbook274pages/103diagrams, zero failures/overflow.
+- Workstream21 completed. Final public inputsf999b74e282cb5e5840b21b52b0c817573a84cb7,
+  generated artifactsff92565. Current source/MSI checks pass with aligned clean provenance;
+  all9release files match committed blobs. Actual extracted native wheel outside checkout
+  verifies exact GUI/resources, card text, full-height settings, protected images and clean
+  output reopening in both themes. No new MSI lifecycle or camera qualification is claimed.
+- ZIP33183074bytes SHA256
+  4c858c78d7e782e8dab6d4e9f692416fee7eb4d979d8358c5520a3ab51378eb1;
+  MSI19714048bytes SHA256
+  4b4be94ca80ea2015bb741daa2c370c481c89577e09a3f397107e4be6b10b894.
+- Latest installed offload/mesh files reread completely; active-only board and own attention
+  checked, no pending obligations or duplicate filler. Identity and archived history preserved.
+  No portrait, data-sampling change, live camera or remote publication.
+- Persisted/read back ep_908, then advanced the exact full-offload marker after successful
+  store/episodic persistence: 2026-11-03T04:44:40+05:30.
+
 ## 2026-11-03 - User-directed readable diagnostic rail and clean-output follow-up
 
 - User rejected the tiny raw-face strip and supplied a settings/preview/right-stacked-diagnostics

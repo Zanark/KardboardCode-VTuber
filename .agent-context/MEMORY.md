@@ -112,6 +112,13 @@ No personal identities, device credentials, face imagery, or personal calibratio
 - Tools / Ctrl+J contains Logs, CLI and numeric Signals, closed by default. Hidden tools still
   collect bounded logs and owned diagnostic data. Keep compact eye decisions near tuning,
   detailed numeric signals in Tools, and the separate clean-output window independent.
+- Preserve the owner's preferred rounded camera-FPS/tracking-FPS/internal-frame-age/output
+  cards below the preview beside Tools. Keep them visible outside the drawer; do not flatten
+  them into Signals text. The drawer belongs under the viewer only, keeping settings full-height.
+- Propagate the selected diagnostic rail's real minimum height into its horizontal splitter;
+  otherwise footer content can override nested minimum-size hints and clip diagnostic pixels.
+  Native text-fit checks require a real font backend: offscreen Qt without Segoe UI returns
+  placeholder metrics, not proof of Windows caption/value readability.
 - Keep Show clean output visible beside the Live preview, sharing the View-menu action.
   Auto-open is a separate startup preference. Closing hides the same window without stopping
   its worker; manual reopening works with Auto-open off and displays current owned clean pixels.
