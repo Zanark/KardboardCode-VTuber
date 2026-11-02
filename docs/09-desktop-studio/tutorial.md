@@ -92,6 +92,7 @@ Relative wink rules also require the opposite eye to be open and sufficient asym
 Expand **Winks & timing** for those shared rules and debounce controls.
 Numeric fields use a visible upper **+** and lower **-** for one step. Direct typing and
 arrow keys still work; dimmed symbols indicate a disabled control or a reached bound.
+Their native text editor has explicit inner padding, so values no longer hug the border.
 
 ![Built-in calibration tutorial](../images/kardboardcode-studio-tutorial.png)
 
@@ -101,6 +102,8 @@ arrow keys still work; dimmed symbols indicate a disabled control or a reached b
 persistent Stop-to-unlock explanation. Video-mode Live-only controls are labelled. Offline
 processing locks every processing option until completion/cancellation. Internal brightness
 affects analysis only; width/brightness are not proven distance-tracking fixes.
+The optional **Local preview maximum height** is a typed integer display setting; it does
+not change processing or clean-output dimensions.
 
 ## 5. Avatar, effects and separate diagnostics
 

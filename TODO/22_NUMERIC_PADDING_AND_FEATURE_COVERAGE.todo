@@ -41,10 +41,18 @@ Completion evidence:
   Native padding/complete-value-forwarding/Video-scope/approved-layout set:22passed at each
   100/125/150% Qt scale; Ruff. Pixel proof covers enabled/disabled values in both themes,
   slider decimals/brightness, integer debounce and the corrected preview-height control.
-  Final complete suite, coverage documentation/current captures/snapshots remain pending.
+  Final current-source suite:315passed,3skipped (offscreen work area/native font/raster limits);
+  Ruff and diff checks pass. Eight current native screenshots/banner and the paired numeric
+  crop reviewed. All45runtime options explicitly named in the coverage table; operating scope
+  and developer/hardware/input limits documented. README7/GIF-first/gallery24 links preserved.
+  Handbook rebuilt:275pages/103diagrams, zero Mermaid failures/overflow. No global font/layout
+  change. Current source/MSI snapshots and completed continuity handoff remain pending.
   Owner perception/usability and hardware qualification are separate from automated evidence.
 
 Completion log:
   2026-11-03: Owner requested numeric text padding and confirmation that every current feature
   is in the GUI, citing large fonts/unused space. Audit scope is current operating features,
   not an unverified absolute claim. Preserve recently approved layout rather than redesign it.
+  2026-11-03: Core837b557 fixes real numeric padding and preview-height forwarding. Video
+  scope derives from its shared inventory; actual Live/recording bindings and native inset
+  pass. Current coverage documentation and275-page handbook verified.

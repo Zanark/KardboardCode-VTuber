@@ -1,10 +1,26 @@
-# v1.2.3 - Metric Cards and Full-height Settings
+# v1.2.4 - Numeric Padding and Verified GUI Coverage
 
 A quieter, preview-first native workspace with every operating option retained. Online Windows
 setup, cardboard-brown dark sliders, Live/Video processing and automatic playback remain included.
 v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 
 ## 2026-11-03
+
+### Numeric padding and actual feature coverage
+
+- Numeric editors now have explicit inner text margins so values do not hug their left
+  border. The existing +/- targets, numeric steps, bounds and approved layout are unchanged.
+- Audited all 45 Live/runtime options through actual nondefault GUI-to-parser forwarding,
+  not just widget counts. Fixed the optional preview-height field's custom integer binding.
+- Video scope and CLI copying derive from the shared 22-field Video inventory. Fixed/ignored
+  Live fields are clearly marked; the Video file page owns its already-mirrored input choice.
+- Private capture accounts for all 17 user-facing recorder settings plus the internal Stop
+  file. Four model helpers and the current GUI-only camera/preset/calibration/demo/log/
+  tutorial/output actions remain exposed.
+- Current user-facing operating features are covered; developer rendering/testing/release
+  utilities are not all GUI buttons. Presence does not promise every input value or hardware.
+- Refreshed current native screenshots, coverage documentation and engineering handbook.
+  No global font shrink, new layout, camera or privacy/output behaviour change.
 
 ### Preferred metric cards, always in view
 

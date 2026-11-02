@@ -76,13 +76,13 @@ fitted rather than stretched or cropped.
 | Page | CLI fields / feature | Interaction |
 |---|---|---|
 | Camera | `source` | Computer-camera chooser with names/Refresh, or masked URL/file/manual-index entry |
-| Camera | `backend`, `width`, `height`, `fps` | Choice and numeric requests; automatic values clearly labelled |
+| Camera | `backend`, `width`, `height`, `fps`, `tracking_width` | Capture requests plus the separate face-analysis input width; automatic capture values labelled |
 | Camera | `rotate`, `mirror`, `input_already_mirrored` | Rotation choice and separate checkboxes |
 | Camera | `brightness` | Live internal-only slider with numeric value |
 | Camera | `duration`, `preview_height`, `headless` | Optional duration, display-only height, preview suppression |
 | Avatar / eyes | `render_cardboard`, `track_face`, `cardboard_renderer`, `physics` | Independent features and renderer selection |
 | Avatar / eyes | `box_depth_offset` | Numeric perspective depth offset; no artificial positive cap |
-| Avatar / eyes | `blink_threshold`, independent left/right overrides | Shared baseline plus live per-eye sliders/numeric editing |
+| Avatar / eyes | `blink_threshold`, `left_blink_threshold`, `right_blink_threshold` | Shared baseline plus live per-eye sliders/numeric editing |
 | Avatar / eyes | `wink_threshold`, `eye_open_threshold`, `wink_min_difference` | Live calibrated controls with validation |
 | Avatar / eyes | `action_hold_ms`, `eye_action_hold_ms` | Live debounce values |
 | Avatar / eyes | `no_motion_filter` | Explicit smoothing toggle, restart-only |
@@ -96,6 +96,34 @@ fitted rather than stretched or cropped.
 
 The new independent-eye CLI overrides preserve the original shared `--blink-threshold` default.
 They do not change anatomical K-left/C-right mapping.
+
+### Verified operating-feature coverage
+
+The current audit checks actual settings forwarding and helpers, not only the number of
+widgets. Every one of the **45 current Live/runtime options** has a control and participates
+in the shared validated argument path. Two complete nondefault configurations exercise all
+bindings, including both mutually exclusive fallback choices. This exposed a real bug in
+the optional `preview_height` custom integer control, which is now corrected.
+
+| Operating surface | Verified GUI coverage |
+|---|---|
+| Live/runtime | All 45 parser destinations; source, capture, transforms, tracking, avatar, eyes, effects, diagnostics and output |
+| Prerecorded Video | All 22 parameters accepted by the Video CLI, plus input/output filenames and quality; mirrored input uses the Video file checkbox |
+| Private capture | All 17 user-facing recorder settings: 9 capture-specific controls and 8 inherited selections; the eighteenth internal stop-file is wired to Stop |
+| Models | All four checksum-verifying model helpers, configured paths and explicit force download |
+| GUI-only operation | Named-camera refresh, presets, guided calibration, demo, themes/tutorial, logs/CLI copying, diagnostic views, clean-output reopening and completed-video playback |
+
+Video always tracks/renders the avatar. Its supported inventory is shared with the Video CLI;
+inapplicable Live controls are labelled rather than masquerading as working Video settings.
+No current user-facing operating feature was omitted by the audited inventory/bindings.
+Developer rendering, test, build and release utilities are not all GUI buttons. This coverage
+does not promise every imaginable input value, future feature or hardware configuration.
+
+Sparse appearance is not the feature inventory: advanced sections are collapsed, only one
+inspector category is shown, and video is aspect-fitted rather than stretched. Standard widget
+text is 12 logical pixels; panel headings/metric values are 14 and the application title 17.
+OS/DPI scaling can make them physically larger. The approved layout/fonts remain unchanged
+by this padding/coverage fix.
 
 ## Video processing and private capture
 
@@ -163,6 +191,9 @@ through the custom Qt stylesheet. The Live/Video strip does not draw Qt's extra 
 Its canonical PNG stays unchanged; optical bounds discard near-invisible outer noise in derived
 icons, which fill their small native slots. Windows controls the title-bar/taskbar slot size.
 Actual screenshots must be generated from the running widgets, not a design mockup.
+Embedded numeric editors also have explicit 6px left/3px right text margins. Outer spin-box
+stylesheet padding alone did not reliably inset the native editor. Native raster checks cover
+decimals, integer fields, disabled states and both palettes without changing the step targets.
 
 <img src="../../src/kardboard_vtuber/gui/assets/kardboardcode-logo.png" alt="Official voxel KC cardboard-box tool logo" width="180">
 

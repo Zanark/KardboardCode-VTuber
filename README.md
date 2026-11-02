@@ -1,6 +1,6 @@
 # KardboardCode Studio
 
-[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.2.3.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
+[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.2.4.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
 
 ![The actual textured 3D avatar, presented in the forest-green and kraft-paper banner palette](docs/images/kardboardcode-hero.png)
 
@@ -23,13 +23,13 @@
 [Engineering book](docs/README.md) ·
 [Release files](release/README.md)
 
-**v1.2.3 — Metrics at a glance. Preview stays clear.** [What's included →](release/RELEASE_NOTES.md)
+**v1.2.4 — Padded controls. Verified feature coverage.** [What's included →](release/RELEASE_NOTES.md)
 
 ## Studio: dark and light
 
 <a href="docs/images/kardboardcode-studio-dark.png"><img src="docs/images/kardboardcode-studio-dark.png" alt="Dark Studio with compact metric cards below the preview, full-height settings and stacked right-hand diagnostics" width="100%"></a>
 
-*The preferred live data cards sit below the preview, beside Tools. Right-hand diagnostics use a synthetic pattern, not a face.*
+*Properly inset numeric values and the preferred data cards. Right-hand diagnostics use a synthetic pattern, not a face.*
 
 <a href="docs/images/kardboardcode-studio-light.png"><img src="docs/images/kardboardcode-studio-light.png" alt="Light Studio with the same readable diagnostic rail and persistent clean-output button" width="100%"></a>
 

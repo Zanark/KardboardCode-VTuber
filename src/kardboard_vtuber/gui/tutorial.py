@@ -81,7 +81,8 @@ LESSONS = (
         "Full raw/rendered/filtered "
         "readouts are under <b>Tools &gt; Signals</b>. "
         "Numeric fields use the upper <b>+</b> and lower <b>-</b> buttons for one step, or "
-        "accept direct typing. Eye debounce controls how long a state must hold before logging, "
+        "accept direct typing. Values have explicit inner padding rather than touching "
+        "the left border. Eye debounce controls how long a state must hold before logging, "
         "not preview frame rate.",
     ),
     (
@@ -136,6 +137,9 @@ LESSONS = (
         "Switch the front mode to <b>VIDEO</b>. The <b>Video file</b> inspector page opens. "
         "Choose an input and a NEW output filename. "
         "Use avatar, eye, model, green-screen and hand settings, then Process video.<br><br>"
+        "Video always renders/tracks the avatar. Inactive Live controls are labelled "
+        "<b>LIVE ONLY</b>; use this Video file page's already-mirrored checkbox, not Camera's "
+        "separate recording flag.<br><br>"
         "<b>Lossless MKV</b> preserves processed RGB frames without extra compression loss and "
         "can be large. <b>MP4</b> uses high-quality H.264 CRF 17 and is explicitly lossy. "
         "The avatar changes pixels; the output cannot be byte-identical to the input.<br><br>"

@@ -32,6 +32,9 @@ These are implemented features, not universal hardware/performance guarantees. E
 preview observations were around 28-30 FPS; an isolated renderer measurement was about 8.17 ms
 per 1080x1920 frame on AMD Radeon 780M. Neither is a current all-feature benchmark.
 See [scoped validation evidence](../07-quality-and-testing/validation-evidence.md).
+The [current GUI coverage audit](../09-desktop-studio/interface-specification.md#verified-operating-feature-coverage)
+accounts for all 45 Live/runtime controls, supported Video settings, private-capture/model
+helpers and GUI-only actions through actual bindings. Developer utilities are not all GUI buttons.
 
 ## Studio pages and live changes
 
