@@ -1,11 +1,157 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - Native desktop studio delivered locally and opened in a camera-free demo.
-> **Last context offload:** 2026-11-02T14:33:17+05:30
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - Brown dark sliders and refreshed README screenshots completed and pushed; installer paused.
+> **Last context offload:** 2026-11-02T23:25:25+05:30
 
 # KardboardCode-VTuber State
 
 > Resume as the KardboardCode VTuber engineering and streaming-output partner. Read both context stores below before continuing; preserve the user's face-only choice and privacy requirements.
 
 ## Current focus
+
+**Latest completed request:** cardboard-brown dark slider tracks/handles and refreshed native
+README screenshots are committed/pushed as `9938ac258d628759247019a757a36509001d03ec` on
+`workDesk/agentic_GUI`. Remote branch hash verified by `git ls-remote`. 35 focused theme/GUI/
+branding tests and Ruff pass, including actual enabled/disabled slider pixels in both palettes.
+Mint checked/live/primary states and green light sliders are preserved. Eight synthetic native
+captures regenerated (seven changed PNGs); contact sheet reviewed and captions updated.
+No live camera or published output; no user Studio termination.
+
+Important tooling fact: gh reported viewerPermission READ, but the normal configured Git push
+SUCCEEDED with existing credentials. Do not equate that API report with a proven push denial,
+invent the reason or switch accounts/extract credentials. The user explicitly authorized this
+branch push; no merge/tag/remote release or installer publication was performed.
+
+**Latest feature:** user clarified automatic video opening is a KardboardCode feature, not a
+global assistant-workflow preference. Successful Studio VIDEO exports now open their actual
+completed result through the system's default file association, after pipeline/worker cleanup.
+Failed/cancelled jobs never launch. A refused launch shows the saved path and an explicit error
+without changing successful export status or deleting output. CLI remains Qt-free/noninteractive.
+Tests mock the player; 46 focused GUI/runtime/video-export cases and Ruff passed. Documentation,
+in-app tutorial and workstream 14 are updated. Restart an already-running Studio to load changes.
+The installed MSI is still a stale paused draft; no installer rebuild/test or release export
+was resumed. This post-cutoff feature does not alter the sealed documentary edition.
+
+**COMPLETED: development documentary book, The Box That Learned to Follow.** User requested
+deep storytelling research and an exhaustive chronological PDF including every task in checkpoints,
+context, TODOs, histories and work_done sections. Private authoring package:
+`C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\YTScript\DevelopmentJourney`.
+Do not confuse it with the existing engineering handbook or resume the installer.
+
+Final PDF:
+`C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\YTScript\DevelopmentJourney\KardboardCode-Development-Journey.pdf`
+**977 pages, 30,570,619 bytes**, SHA256
+`2891a853af0e7553b3156196e4286091e16b490adb2fcde15b79772f7dd972d4`.
+HTML reading companion, chapter sources, research, frozen corpus, media provenance, coverage maps,
+PDF audit, `edition-receipt.json` and `SHA256SUMS.txt` are beside it. Entire package is Git-ignored.
+
+Frozen story cutoff is `2026-11-02T21:46:13.268+05:30`. Corpus: 117 textual files, 6,560
+occurrence-preserving records, 158 historical session tasks/66 dependencies, 245 checklist
+occurrences, 199 human messages +16 delegated instructions, 203 responses, four form decisions,
+80 Git milestones. Original research and both context stores are included. Redacted credentials/
+private URLs; no private camera images, system/developer prompts or internal model reasoning.
+
+Authored 31 chronological chapters (~17,000 words), researched six nonfiction-craft
+sources and produced 62 diagrams/12 captioned figures, including dated synthetic UI images
+retrieved from Git. Full visible evidence appendices preserve every nonblank source line.
+Three print/audit rounds corrected malformed SVG line breaks, duplicate IDs, repeated headings
+and a border-only blank page. Final actual-PDF comparison finds all 6,560 complete record
+occurrences inside their own spans, every task/message, 31,252 valid links, 51 bookmarks,
+stable contents folios and no blank/horizontally overflowing pages. Contact sheets inspected.
+See `build\coverage.json`, `pdf-audit.json` and pipeline scripts. Eight documentary work orders/
+nine dependencies are indexed separately from historical work. User reading approval is not recorded.
+
+User reiterated use of the CURRENT installed context-offload and context-mesh skills for final
+refresh. Both current files were reread completely. New room-wide mention obligations apply;
+the Alfred introduction was acknowledged in this session's own persona file only.
+
+**PAUSED BY USER:** the user requested pausing installer work unless nearly finished. It still
+needs a corrected build and actual installed GUI/helper verification, so stop rather than rush.
+Do not resume Windows setup implementation/build/testing until the user asks.
+
+The pending request is a Windows setup in `release` for manual publication. The user chose
+the smaller online bootstrap, not a fully offline/frozen application. v1.1.1 includes patched
+private Python 3.12.16 and the own app wheel in a per-user x64 MSI; first launch offers
+hash-locked upstream component downloads. Models remain explicit and OBS's installed camera
+component remains separate. System Python/PATH are unchanged. The MSI is unsigned.
+
+A 19,697,664-byte draft MSI exists, but it predates the latest source correction and is NOT
+release-ready. Real per-user installation succeeded and all 26 upstream component downloads
+worked through the configured verified HTTPS mirror, with hashes compared against PyPI metadata.
+Direct public-CDN TLS fails here; do not weaken TLS or embed the private feed. Bootstrap copies
+network-only pip settings into a clean child environment, rejects TLS bypasses and ignores
+user/prefix overrides. Do not revive the abandoned PyInstaller plan.
+
+Qt's deeply nested resource paths failed at Windows MAX_PATH during actual installation.
+A real reinstall of the locked wheels using a canonical extended-length private prefix worked
+without changing the registry. That prefix plus force-reinstall-on-retry fix and a real long-path
+regression are now in source, but NOT rebuilt/tested as a complete MSI. The last complete suite
+was 278 passed/Ruff; the last focused slice was 48 passed, both before the final prefix change.
+
+Safe stopping point: owned test MSI uninstalled (exit 0), Start shortcut removed, user-data
+sentinel preserved. It left 23 empty directories; removed only that exact verified-empty
+`build\wtest\Studio` tree. No task shell remains running and the user's existing Studio was not
+touched. Keep `build\windows` and `build\wtest` cache/log/probe files for resumption. The private
+environment there references the removed test runtime and is not ready/runnable until reinstall.
+
+The user's brown-slider side request is now completed/pushed as `9938ac2`; retain `#d5a568`
+and mint checked/live states. The separate v1.1.1 banner/installer/version edits remain local,
+unstaged and unfinished. Do not mistake the pushed theme for a completed Windows installer.
+The six old v1.1.0 source-export files are currently stale against dirty v1.1.1 inputs.
+Workstream 12 is PAUSED; draft warnings on README/guides/release notes prevent treating the
+unverified MSI or old ZIP as a completed v1.1.1 handoff.
+
+The latest README layout feedback is complete: no table/table-cell markup or visible image
+borders. All 29 non-paired images fill content width; only the approved original-background /
+green-screen GIFs remain side by side, in plain HTML with no table frame. Desktop/mobile
+checks retain all 31 images and captions with no overflow. Public source `4590ca7`, latest
+v1.1.0 source artifacts `a35f331`; app behavior, images/artwork and handbook are unchanged.
+
+All fifteen live-use feedback items are implemented and verified as **v1.1.0**. Workstream 10
+is complete; its functional-source milestone is `11a0e2b`. The complete suite
+passes 266 tests/Ruff, and a real private 30-frame synchronous MediaPipe VIDEO/GPU export at
+1080x1920 completed without a camera. The rebuilt handbook is 256 pages/99 diagrams, zero
+diagram failures/overflow. The actual extracted source launches camera CLI, Studio and video CLI;
+its demo/clean window/video workspace were checked. That completed feedback milestone is
+the baseline for the newer installer request above.
+
+The GUI now has forest/mint and kraft/cream themes, explicit contrasting checkbox ticks,
+LOCKED/live-only states, standard/monitor resolution choices, clearer capture-backend labels,
+bottom Logs/CLI-copy tabs, dedicated raw/mesh/body side panels and a separate **KardboardCode -
+Clean Output** window for OBS Window Capture. That full-resolution clean channel is independent
+from OBS Virtual Camera and never receives raw/debug/calibration text.
+
+Eyes use guided OPEN/BOTH-CLOSED numeric sampling and actual rendered decision readouts.
+Raw eye signals drive closure while geometry stays filtered. The user must calibrate their
+real current setup; automated/synthetic score regressions are not personal live-camera approval.
+Icons use tighter optical bounds without changing the supplied master.
+
+Front work modes are LIVE and VIDEO. VIDEO processes every source frame synchronously at
+original dimensions/timestamp spacing within container precision, copying compatible audio.
+User chose lossless FFV1/MKV by default and optional high-quality H.264/MP4 CRF17 (lossy).
+Supported input is opaque, progressive, square-pixel 8-bit SDR with valid timing/rate metadata;
+HDR/alpha/rotation/interlacing/extra subtitle-data-attachment streams fail explicitly. Never claim
+byte-identical modified video or silently convert quality. Old private RAW capture is a Live-only
+advanced utility, not the meaning of prerecorded-video processing.
+
+The user requested much less front README text, many more attractive images/banners, and fonts
+matching the cardboard/voxel aesthetic. Subsequent feedback removed milestone image cards,
+converted decorative section/footer art to transparent SVG font outlines and moved the restyled
+runtime-avatar hero immediately under the top banner. Actual screenshots now show both work
+modes, separate diagnostics and clean output. Desktop/mobile previews load all 31 images with
+no horizontal overflow. Three named guides remain under `docs\guides`.
+
+The supplied voxel KC box artwork is now the official tool logo. Its original 1345x1169 RGBA
+PNG is preserved byte-for-byte; derived transparent PNG/Windows ICO resources supply the
+application, window/taskbar and header identity. The 3D avatar itself is unchanged.
+v1.0.0 is the first official release version; v0.2.0 was unpublished local staging.
+
+The completed source-release handoff is in the tracked root `release` folder. Clean public
+inputs are committed as `4590ca7`; generated v1.1.0 artifacts as `a35f331`. The manifest has
+`sourceModified=false` and the current source fingerprint. All six release files match their
+committed Git blobs exactly. README preserves one tool screenshot above Current milestone,
+with separate logo branding above it and the GUI guide/gallery below. No remote publication,
+tag, merge or push was performed; the owner still publishes manually with Write authorization.
+This is a source release, not a standalone installer. The user requested this context refresh
+after completion, and there is no remaining logo/release implementation work.
 
 The native PySide6 studio is delivered. The user's follow-up request for explicit native machine/laptop camera selection is also implemented: Camera now separates computer cameras from custom URL/file/index sources, with asynchronous named Windows device discovery. Selection pairs the proper backend/index; refreshing/selecting does not open a stream. All 45 runtime options, live eye calibration, KC icon, recording/model actions, presets, themes, logs and tutorial remain available. No live camera has been opened by this agent; user appearance and physical-device capture qualification remain pending.
 
@@ -24,12 +170,47 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
+### Latest release handoff - v1.1.0 Studio Workspaces
+
+- Canonical handoff folder: `release` at this repository root, outside `src`. The user wants it
+  refreshed with the latest export after future public source/docs changes.
+- `scripts\export_release.py` packages tracked/staged public working-tree content, with authored
+  release instructions/notes but no generated self-recursion. Untracked public source fails
+  explicitly; private context, credentials/config, raw recordings, models, environments and caches are excluded.
+- Regenerate with `python scripts\export_release.py`; verify with `--check`. Source fingerprints,
+  per-file hashes, asset checksums, archive CRC/content and version alignment are checked.
+- `AGENTS.md` records the release freshness contract. Package metadata and `__version__` are 1.1.0.
+  If inputs were uncommitted, commit them and re-export before publication to update provenance.
+- Current validation: 266 tests/Ruff, real checkbox tick pixels in both palettes, separate owned
+  program/raw/debug channels, calibration on both renderers, real encoded VFR/PCM/AAC cases,
+  no-overwrite/cancel/HDR safety and actual extracted-source GUI/video CLI launch.
+- Handbook is 256 pages/99 diagrams with zero failures/overflow. Native captions accepted both
+  palette setters. A post-warmup demo heartbeat had p95 31ms/max 32ms across 161 intervals;
+  that is local UI service time, not end-to-end video latency or real-camera qualification.
+- Final export passed `--check` after committing its public inputs as `4590ca7`; manifest
+  `sourceModified` is false. Generated release/context files are committed afterward and do not
+  change the public-source fingerprint. Current ZIP is about 30 MB, below the regular Git file limit.
+- `.gitattributes` pins release text to LF and leaves ZIPs binary. Final artifact commit is
+  `a35f331`; all six release files match their committed Git blobs byte-for-byte.
+  Final archive size is 33,147,025 bytes. Source fingerprint:
+  `05e322ac47665f43f619792bb0df6277f7974123c5d69725ce4c744f326baea3`.
+- `gui\assets\kardboardcode-logo.png` is the unchanged supplied master. Derive PNG/ICO assets
+  with `python scripts\build_branding.py`, without redrawing or altering the avatar. The old
+  `kc-box.svg` is retired. User visual approval of the refreshed application is not recorded.
+- Visual README assets: `docs\images\readme`, generator `scripts\build_readme_art.py`, font
+  provenance/licenses `docs\branding`. Three clear guides live under `docs\guides`.
+  Top-banner version text comes from pyproject; rebuild on version changes. Decorative
+  section/footer output is transparent SVG, not raster cards. The separate runtime hero uses
+  `scripts\build_readme_art.py --avatar-hero` and real GPU rendering, never camera imagery.
+- No remote release/tag/merge/push is authorized for this local-preparation follow-up. The owner
+  will publish using the notes/context and an account with repository Write access.
+
 ### Native desktop studio - delivered; awaiting owner review
 
 - Follow-up native-camera workstream: `TODO\06_NATIVE_CAMERA_SELECTION.todo`. Choose Camera -> This computer's camera -> Refresh -> named laptop/USB device -> Start camera. Windows startup performs metadata-only listing when this input type is active.
 - `camera.devices` uses the optional `cv2-enumerate-cameras` Windows adapter through the existing owned subprocess job lifecycle. Explicit MSMF/DSHOW enumeration avoids cross-backend index mismatch. Device paths/serials are not exposed or persisted.
 - Source modes remember their separate source/backend pairs in session memory only. Named selections set both together; loading presets retains source-free semantics. Refresh/reselect after hardware changes; a missing previous selection is cleared.
-- Current follow-up validation: 236 tests and Ruff passed, including actual asynchronous metadata discovery. This machine reported Integrated Camera under MSMF and DSHOW and OBS Virtual Camera under DSHOW. These are backend entries, not three physical cameras. No capture stream or frame probe was used.
+- Native-selector checkpoint validation: 236 tests and Ruff passed, including actual asynchronous metadata discovery. This machine reported Integrated Camera under MSMF and DSHOW and OBS Virtual Camera under DSHOW. These are backend entries, not three physical cameras. No capture stream or frame probe was used.
 - The Studio was refreshed on its idle Camera page and verified responding. Windows local-camera mode lists metadata on startup; the user still must choose a device and press Start. The native-selector screenshot uses illustrative device names, not captured camera imagery.
 
 - Entry points: `python -m kardboard_vtuber.gui` and the optional `kardboard-studio` GUI launcher. PySide6-Essentials is an optional dependency; normal CLI imports do not import Qt.
@@ -109,7 +290,25 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-Wait for the user's review of the desktop studio. Do not repeat completed implementation/build/tests or launch another window without a reason. Address actual feedback with focused changes, preserve CLI compatibility, keep new context here, and continue reading both stores. Do not connect a live source or publish output automatically. All earlier distant-tracking, calling-app and recording-timing uncertainties remain.
+Default-player feature is implemented and source-tested; actual OS codec/player behavior
+depends on the user's file associations and installed codecs, especially FFV1/MKV. Do not
+silently install or hardcode a different player. Existing Studio processes were not terminated.
+
+The documentary is complete locally; await owner reading/revision requests. Do not silently
+re-freeze `sources\corpus.json` from newer live context or rerun the source collector: its exact
+cutoff and hashes define this edition. Rebuild only intentionally using the private package README.
+This private documentary does not belong in source-release ZIPs. Public export remains the older
+completed v1.1.0 baseline while installer/source v1.1.1 work is paused and explicitly marked draft.
+
+Installer work is paused; wait for explicit resumption. When requested: first run the new
+extended-path regression, rebuild and reinstall the MSI, then execute the retained camera-free
+`build\wtest\verify_installed.py` using installed pythonw with redirected pipes. Verify all six
+helpers, native metadata listing, checksum-only model job, CLI/video CLI, real textured demo,
+clean output and Video workspace. Address empty-directory uninstall residue, rebuild the
+handbook/source export, commit public inputs then regenerate clean installer/source provenance.
+No camera, remote publication, system Python/PATH change or security-policy bypass is authorized.
+The user's existing Studio must remain untouched. Earlier live accuracy/privacy/calling-app and
+private recorder timing limitations remain unresolved.
 
 ## Environment reminders
 
@@ -120,5 +319,25 @@ Wait for the user's review of the desktop studio. Do not repeat completed implem
 - Historical September validation: existing pytest/Ruff suites passed; native synthetic output was received with OBS closed; the synthetic no-face CLI sent black. These were not rerun for the October or November context tasks and do not establish live accuracy or actual calling-app success.
 - The earlier November recap was context-only. The subsequent GUI request changed application code, optional dependencies, tests, TODOs, and documentation and was committed in milestones. No live camera, raw screenshot capture, or push was performed for the GUI request.
 - Local session provenance: `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7`. Its checkpoints preserve earlier work. Raw artifacts are private; do not copy them into durable context or public docs.
+- Local README review preview:
+  `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-preview.html`.
+  Combined desktop/mobile review:
+  `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
+  These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_834` (native camera selector, 236 tests), following source-boundary validation `ep_832` and GUI delivery `ep_829`. Earlier recap: `ep_823`; registration: `ep_780`; mandatory dual-store routing: `sem_074`.
+- Latest cross-base receipt: `ep_876` (completed brown dark sliders/native README screenshots,
+  normal branch push succeeded and remote hash verified; installer remains paused).
+  Previous receipt: `ep_869` (successful Studio export auto-opens actual result in the
+  OS default player; failures/cancellation/refusal and frozen-edition/paused-installer boundaries).
+  Previous receipt: `ep_868` (completed exhaustive 977-page development documentary,
+  frozen source/task coverage, physical PDF audit and current-skill refresh).
+  Previous receipt: `ep_856` (installer explicitly paused; test uninstall complete,
+  brown sliders retained; unverified MSI must not be published).
+  Previous receipt: `ep_846` (borderless full-width README / retained GIF pair).
+  Previous receipt: `ep_844` (completed fifteen-point v1.1.0 Studio/video feedback pass).
+  Previous receipt: `ep_841` (explicit post-delivery context-only refresh).
+  Detailed delivery receipt: `ep_840` (visual README, named guides and refreshed export).
+  Previous receipt: `ep_838` (supplied-logo/first official v1.0.0 handoff).
+  Previous receipts: `ep_837` (Git-stable v0.2.0 staging bytes) and `ep_836`
+  (initial local export/README layout), following `ep_834`, `ep_832` and `ep_829`.
+  Earlier recap: `ep_823`; registration: `ep_780`; mandatory dual-store routing: `sem_074`.

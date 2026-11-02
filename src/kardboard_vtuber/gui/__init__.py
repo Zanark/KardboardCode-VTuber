@@ -24,20 +24,21 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
         return 2
+    identity_result = 0
+    if sys.platform == "win32":
+        import ctypes
+
+        identity_result = ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+            "KardboardCode.Studio",
+        )
     app = QApplication.instance() or QApplication(sys.argv[:1])
     app.setApplicationName("KardboardCode Studio")
     app.setOrganizationName("KardboardCode")
     app.setStyle("Fusion")
     window = StudioWindow()
     app.setWindowIcon(window.windowIcon())
-    if sys.platform == "win32":
-        import ctypes
-
-        result = ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
-            "KardboardCode.Studio",
-        )
-        if result:
-            window._append_log(f"[WARNING] Windows taskbar identity returned {result}.")
+    if identity_result:
+        window._append_log(f"[WARNING] Windows taskbar identity returned {identity_result}.")
     if args.preset is not None:
         window.load_preset(args.preset)
     window.show()

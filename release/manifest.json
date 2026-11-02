@@ -1,0 +1,910 @@
+{
+  "assets": {
+    "KardboardCode-VTuber-source.zip": {
+      "bytes": 33147025,
+      "sha256": "5799c7d78580db3c62ce8c5b96e7ca5e191640abc5fd80bd1b04e4931c21820d"
+    },
+    "RELEASE_CONTEXT.md": {
+      "bytes": 1754,
+      "sha256": "4536fa6f057d3f605745f979cebec3720c631b1ac9e3da3e790a20cb41dcd661"
+    },
+    "RELEASE_NOTES.md": {
+      "bytes": 5300,
+      "sha256": "bbcb59149a9dce8f3f051f35379fa58c57a4b66269c709f3fb61d08e9393165e"
+    }
+  },
+  "generatedAt": "2026-11-02T14:46:42+00:00",
+  "schemaVersion": 1,
+  "sourceBranch": "workDesk/agentic_GUI",
+  "sourceCommit": "4590ca7e6a6fa4b05ac13e1a9dae866782990e56",
+  "sourceFiles": {
+    ".gitattributes": {
+      "bytes": 124,
+      "sha256": "9f3a3e5a5022f732e7ce6acace0c1d60b4c30d1071cbea9f7447c50b23942245"
+    },
+    ".gitignore": {
+      "bytes": 842,
+      "sha256": "0f60df4be5771edfaa2a528711fc28ae5af9182bb2b5a3eb4b121bc416279128"
+    },
+    "AGENTS.md": {
+      "bytes": 1172,
+      "sha256": "736c35f4b5c22f9b462802e47f23b1569d90a378fab5f743ebbbc488728f554e"
+    },
+    "README.md": {
+      "bytes": 8507,
+      "sha256": "d51afb56b38f136fe13aec06a7d7c927be0ff7aad92861d73a728eda51523742"
+    },
+    "TODO/00_INDEX.todo": {
+      "bytes": 3467,
+      "sha256": "29a541b5dbe4e77915b9fb154becc51e6aa8d731bdfaa464df8e053337bd54ba"
+    },
+    "TODO/01_RESEARCH_AND_DESIGN.todo": {
+      "bytes": 1131,
+      "sha256": "7b0d44b7b504f25f70891745981e2976cedc2e79e7b9d9f2a60a40dd4aa2029b"
+    },
+    "TODO/02_RUNTIME_AND_CALIBRATION.todo": {
+      "bytes": 1430,
+      "sha256": "2fbfe6843fc00a774df61dd736ff8f5d80fe19f4a5fef3b85b3aeb9d1fcd483e"
+    },
+    "TODO/03_NATIVE_INTERFACE.todo": {
+      "bytes": 1565,
+      "sha256": "9a071186c189d936e97d2224949a41ec9182232dd05710bbfff1c80ddd0ba614"
+    },
+    "TODO/04_DOCUMENTATION_AND_DELIVERY.todo": {
+      "bytes": 2207,
+      "sha256": "f63eb4731d13d0f5065c0a1ff11841cf2a974c13d69fd08b85af95c992a89897"
+    },
+    "TODO/05_DEVELOPMENT_LEDGER.todo": {
+      "bytes": 4918,
+      "sha256": "8e32dfdfb32becbb6ea481a989eab728cb6f9d367dc0a9784a715b2b09a0baac"
+    },
+    "TODO/06_NATIVE_CAMERA_SELECTION.todo": {
+      "bytes": 1731,
+      "sha256": "d96052d3cdab78509d4fa08b5d35d6e7d5cf0f7787d34f6f207ecae1deb6afdf"
+    },
+    "TODO/07_RELEASE_STAGING.todo": {
+      "bytes": 1836,
+      "sha256": "29fdb5707cd280e959d967ce74d05aa8dca8ee3e616ccd50442cbf2abd9aab0a"
+    },
+    "TODO/08_OFFICIAL_LOGO_RELEASE.todo": {
+      "bytes": 1957,
+      "sha256": "e6acef444e8dbec26cb77c754531bc18d0d7e70ce727c19a9a9057fbb382d8ca"
+    },
+    "TODO/09_VISUAL_README.todo": {
+      "bytes": 2727,
+      "sha256": "56fac871502bf2077210b83ec8b1b88af73ba7e3bdd082533892fe2299976845"
+    },
+    "TODO/10_STUDIO_FEEDBACK.todo": {
+      "bytes": 4275,
+      "sha256": "1027ce2404bc06c8db3bccb86bf556c6f7f85deaadb316b506ac34e2c3166b88"
+    },
+    "TODO/11_BORDERLESS_README.todo": {
+      "bytes": 1530,
+      "sha256": "87caa4a2bc0a7dc0348d0027d57d5b0eefdde13d6b57d4cc33531d1d71589a0a"
+    },
+    "assets/PNGTuberV1/Eyes Closed.png": {
+      "bytes": 21259,
+      "sha256": "0260623c2d206e064b70bbd8d0a1e8290cb6fcfb803d66c53bd1213dbbc97a8d"
+    },
+    "assets/PNGTuberV1/Eyes Open.png": {
+      "bytes": 63548,
+      "sha256": "3c0a08e5afbd70b8702f5af83799e3f4552f3eccd57aaa9d2bed602f3771215c"
+    },
+    "assets/PNGTuberV1/FrontFlap1-2.png": {
+      "bytes": 10899,
+      "sha256": "5bf94c19d9fd712f2f31eba489b06c03b5b30b0119eb73cf7ce2eec4d1b9fc09"
+    },
+    "assets/PNGTuberV1/FrontFlap1.png": {
+      "bytes": 12164,
+      "sha256": "00f0e405ce3f6c0169d558b2d8973abb51172f068939539b7e16cca9840c6630"
+    },
+    "assets/PNGTuberV1/FrontFlap2-2.png": {
+      "bytes": 10784,
+      "sha256": "6123d21f9a99dcad7fcc4821e84015239ad531e183f40c5e279ea0406b12013f"
+    },
+    "assets/PNGTuberV1/FrontFlap2.png": {
+      "bytes": 14166,
+      "sha256": "7da2e339b93012fb1ccbac829d9b12f6e22f22c3659101bfd8707870011cb930"
+    },
+    "assets/PNGTuberV1/Full Body.png": {
+      "bytes": 672950,
+      "sha256": "ef35de73b14f4223aa1b2a4f7d6c95a54fe1d8fa5aa8cec1cd833a2401c09b33"
+    },
+    "assets/PNGTuberV1/KCAvatar.save": {
+      "bytes": 980012,
+      "sha256": "a44b432c08438edafaee391ccf9022d2ef8e9c9fd6a1685e572f7acbbcce68bb"
+    },
+    "assets/PNGTuberV1/README.md": {
+      "bytes": 14145,
+      "sha256": "ef58110a6daa2a83110fd30de5badf4523fbcf02a2b3c95c5d5e7d8c76e479b3"
+    },
+    "assets/PNGTuberV1/RightFlap1.png": {
+      "bytes": 11999,
+      "sha256": "4320029b5b261552367086c5afb1d0c3eeef94c7f85cf7e27f676567534a0128"
+    },
+    "assets/PNGTuberV1/model-manifest.json": {
+      "bytes": 4523,
+      "sha256": "7778ec71e7fd3658a157ef141a49552ce178ca5f8ab10641eb79f116d78ada3a"
+    },
+    "assets/PNGTuberV1/reference/idle-blink.png": {
+      "bytes": 603448,
+      "sha256": "eaf5f5a568832f7e5952e62c1b403c0dda1e48399f546d361456e43e69b1c444"
+    },
+    "assets/PNGTuberV1/reference/idle-open.png": {
+      "bytes": 651990,
+      "sha256": "b2330b1a64ba39ad23085dd4bc15e49640f2a25a5168c20b6865d02a3db83468"
+    },
+    "assets/PNGTuberV1/reference/state-sheet.png": {
+      "bytes": 682423,
+      "sha256": "00821e39ab6bb88c22ab911622119ddfa3b60c70749b354bd40bb2e96300950b"
+    },
+    "assets/PNGTuberV1/reference/talking-blink.png": {
+      "bytes": 597022,
+      "sha256": "92b978f0e85f38c6da89d70077ffcabf9ba4c3693b58590103e7f14b94d040a7"
+    },
+    "assets/PNGTuberV1/reference/talking-open.png": {
+      "bytes": 645453,
+      "sha256": "8f17a696f112e4506ba17394fb619303875ff542e4dc630929702e198d67c4fe"
+    },
+    "docs/00-onboarding/README.md": {
+      "bytes": 2489,
+      "sha256": "2f1403b307e54ea0a7c693da23b0c41785186202096a656c929634b421095135"
+    },
+    "docs/00-onboarding/principal-engineer-guide.md": {
+      "bytes": 5380,
+      "sha256": "2b43914991a886f13650fef6c574caef567422d7dfbd316e90fec1fd5de2b51f"
+    },
+    "docs/00-onboarding/zero-to-hero-guide.md": {
+      "bytes": 3776,
+      "sha256": "44d8211dbcda7acc80e250277b58e048fbfaab74e6c52b9b84282912eb13c14b"
+    },
+    "docs/01-foundations/README.md": {
+      "bytes": 4300,
+      "sha256": "857caef555cb1f2849804524ed151d572fa9b9a4eb1fd2dbde0db16f48384d4f"
+    },
+    "docs/01-foundations/product-requirements.md": {
+      "bytes": 4454,
+      "sha256": "b8d704c033cc7d8a5ab2a77a76fd56155fd83edf7b4a9dc49e3ff76db9951091"
+    },
+    "docs/01-foundations/visual-identity-and-source-avatar.md": {
+      "bytes": 6615,
+      "sha256": "dc6639b8d05a4f975504c93822cae52e0bbcd13f9217e0f966917b24cd486276"
+    },
+    "docs/02-architecture/README.md": {
+      "bytes": 3843,
+      "sha256": "d3b8aff8a21e882cb98ffe954485d8950b90252c02a4f786f073c0f181898dfd"
+    },
+    "docs/02-architecture/camera-lifecycle.md": {
+      "bytes": 2700,
+      "sha256": "23071c382aca2d870374730595ba9ce80ff9f3c6d3f9ccd0a084aa3c5a759901"
+    },
+    "docs/02-architecture/data-model.md": {
+      "bytes": 5688,
+      "sha256": "b5a6bbd89d1a01eb9b050b1cc475011bd7dc801f8512d5eebd860cf4ffd614a3"
+    },
+    "docs/02-architecture/green-screen-compositing.md": {
+      "bytes": 6843,
+      "sha256": "3b1afa609a9b208d2862e8b0981f919dc9f7d510424db26aafc34751e0987223"
+    },
+    "docs/02-architecture/ps1-cardboard-renderer.md": {
+      "bytes": 8063,
+      "sha256": "9c753de9dd0a92b3f9a9eba2948ca5993b2382c90a29352a4fb3b3e07f9be8fd"
+    },
+    "docs/02-architecture/system-architecture.md": {
+      "bytes": 6831,
+      "sha256": "51856a3e8b78cb789ec425e20443f34fd1103c048884ce1c64de8102abeb1f3c"
+    },
+    "docs/02-architecture/textured-3d-renderer.md": {
+      "bytes": 13676,
+      "sha256": "b737e6bbab4cd9788bbc2876f96ab4c8d4b057321a8b5e50cc9bb7917f73704c"
+    },
+    "docs/03-algorithms-and-data-structures/README.md": {
+      "bytes": 3907,
+      "sha256": "f69a29cde4e239f1dd724ec9d9e619d1cdd27c6c7d0734060a1bf5fd889659a2"
+    },
+    "docs/03-algorithms-and-data-structures/asynchronous-live-inference.md": {
+      "bytes": 2963,
+      "sha256": "35db4d3f18ee2fa1041074285d7a808f38e93e3fd4ea9f6c7edea2c09ac1abc5"
+    },
+    "docs/03-algorithms-and-data-structures/blendshape-normalization.md": {
+      "bytes": 2901,
+      "sha256": "a5a3ecdcfe4b587ba5f9b1b6e167796fbbf5485209ac3725b878a0d2219b447d"
+    },
+    "docs/03-algorithms-and-data-structures/bounded-studio-mailbox.md": {
+      "bytes": 2351,
+      "sha256": "7d1d30d578a3bb35630097c82835ac58f5b360ecac082023d83cf000f0b2bbd1"
+    },
+    "docs/03-algorithms-and-data-structures/condition-variable-synchronization.md": {
+      "bytes": 3124,
+      "sha256": "fef879c536e25e87211a596692abea47c49fbf65c32c31427502c492992411c3"
+    },
+    "docs/03-algorithms-and-data-structures/damped-spring-integration.md": {
+      "bytes": 4634,
+      "sha256": "68d56d1608b5dc6d9280da03e3b11070c87fef82a3d62ff4c4050b0e183b6d2b"
+    },
+    "docs/03-algorithms-and-data-structures/facial-action-state-machine.md": {
+      "bytes": 5895,
+      "sha256": "21eaa152cf8f8af4a19c4744a0744395bf33e410cfcec76d0d3710d199cfa62c"
+    },
+    "docs/03-algorithms-and-data-structures/finite-state-lifecycle.md": {
+      "bytes": 2963,
+      "sha256": "fe2340c08fcc335be5b3b5a4db5d95e98b2d1fdae8e31d668e4478d74327691b"
+    },
+    "docs/03-algorithms-and-data-structures/latest-frame-slot.md": {
+      "bytes": 2680,
+      "sha256": "f894f55a07282c40de5f21db29fbbbacd914f152fe31fd84c186da3744f6cef2"
+    },
+    "docs/03-algorithms-and-data-structures/low-resolution-overlay-compositing.md": {
+      "bytes": 5163,
+      "sha256": "621f1f681c0549cde3ea5d83f30193ba8ff3255f317045522f3cd5026838f09d"
+    },
+    "docs/03-algorithms-and-data-structures/monotonic-timing-and-fps.md": {
+      "bytes": 2609,
+      "sha256": "8d677a0f9f46bafb0033a0378f1891ddc985065ec2df9ff3bc56de785248a11b"
+    },
+    "docs/03-algorithms-and-data-structures/one-euro-filtering.md": {
+      "bytes": 5339,
+      "sha256": "15c70ae87226f2d14effc8258dbf8e0be4719b1503e8accc1371966a86be895d"
+    },
+    "docs/03-algorithms-and-data-structures/transformation-matrix-decomposition.md": {
+      "bytes": 2854,
+      "sha256": "2d8384546a17ff9d4d9e81ceaed5c676550a03e12455b7572b5cb7b0de38779c"
+    },
+    "docs/04-design-principles/README.md": {
+      "bytes": 2344,
+      "sha256": "9379993b3d1e352318cdee2990eb9d24c0a101576aeb28e0b86c0bca02c28d97"
+    },
+    "docs/04-design-principles/dependency-inversion.md": {
+      "bytes": 2481,
+      "sha256": "3c1de93cb7e8fa001782bc89a303c3a1d287ced0c6c05c36959ac3719e9d52ae"
+    },
+    "docs/04-design-principles/immutable-snapshots.md": {
+      "bytes": 2111,
+      "sha256": "f06c53505bf89f06cf56d3e921dd45d044ff47d2574f659b063eaef6dd1b7097"
+    },
+    "docs/04-design-principles/latency-over-completeness.md": {
+      "bytes": 2104,
+      "sha256": "35933a256f69e3012317b43f02448e9514ac0de275a8063d284d1f9cff43ab57"
+    },
+    "docs/04-design-principles/responsive-control-surfaces.md": {
+      "bytes": 2618,
+      "sha256": "5ebc8ce2709efbe0e4271a2c2cdbabffbdcc3b0486d30d5c71d4543dd11ae229"
+    },
+    "docs/04-design-principles/security-and-secret-boundaries.md": {
+      "bytes": 2474,
+      "sha256": "6b017dd830c465f94a83bd6809f7a1aaae55ae4d259fbd8738675eb627ccc087"
+    },
+    "docs/05-camera-ingestion/README.md": {
+      "bytes": 3027,
+      "sha256": "3e586ab2fa56dea4327290b344144b038767d2856ed6654d1b4b8c4811061a59"
+    },
+    "docs/05-camera-ingestion/android-ip-webcam.md": {
+      "bytes": 3394,
+      "sha256": "3179433ae4ecb440c42f0edc1ddcfbc7149f1bcba8c51954c236f1e80c986f90"
+    },
+    "docs/05-camera-ingestion/diagnostics-and-performance.md": {
+      "bytes": 2956,
+      "sha256": "ddbe161f6f92bd2595643b80e1be55d5cd35afa080b5cd21b287175b47324bc7"
+    },
+    "docs/05-camera-ingestion/runtime-flow.md": {
+      "bytes": 2459,
+      "sha256": "5138fdf54fa4cade01b9dcb0c01ff17cef016a1ac59ce0820724e736ffa5157e"
+    },
+    "docs/06-face-tracking/README.md": {
+      "bytes": 6757,
+      "sha256": "14af7a1ed94165bf2874d37d91e3366593b66a0ea3ed98d80fa857109c79cab7"
+    },
+    "docs/06-face-tracking/live-debugging-and-validation.md": {
+      "bytes": 9266,
+      "sha256": "df21af7feafc6cdc43de4ec48a8e2886a82cf080031d73021eebec880dbac18c"
+    },
+    "docs/06-face-tracking/normalized-face-state.md": {
+      "bytes": 3769,
+      "sha256": "b8eaa5b6fab65695b9fa64233ebee9674980cbb21db140d5731f8a85a1456c82"
+    },
+    "docs/07-quality-and-testing/README.md": {
+      "bytes": 5324,
+      "sha256": "e79a32b029a71eec84fe0f5140da329b330e88ff8d55f17fad87447aa59abe35"
+    },
+    "docs/07-quality-and-testing/validation-evidence.md": {
+      "bytes": 10471,
+      "sha256": "ec40a296871b7f03371511177f68824032446add1325db2061e7633e14dc0071"
+    },
+    "docs/08-roadmap/README.md": {
+      "bytes": 5018,
+      "sha256": "21faeb31dccf99b26c622b93fcb7f582b012125a97a68d5d5fbfb5e1c93fb375"
+    },
+    "docs/09-desktop-studio/README.md": {
+      "bytes": 2420,
+      "sha256": "b74f7e97336fc9bb0433e0e2ff3041424cc8dc299aa26fbc14bde4fa66a4002b"
+    },
+    "docs/09-desktop-studio/interface-specification.md": {
+      "bytes": 9048,
+      "sha256": "a43f6076eec205ba552c4096d6f8ac8fcf04c31c40c90f47bcdecf52240a2062"
+    },
+    "docs/09-desktop-studio/research-and-design.md": {
+      "bytes": 9587,
+      "sha256": "35c64dfc816ab65d70ef4fac49b7b07a3491e98fc16398d3679c873367a82865"
+    },
+    "docs/09-desktop-studio/runtime-architecture.md": {
+      "bytes": 12646,
+      "sha256": "d9d3746d76890620b2590606641686818ea0080cd593013b6c409559056e8a2b"
+    },
+    "docs/09-desktop-studio/tutorial.md": {
+      "bytes": 12005,
+      "sha256": "02cb2b7f972a0068172acf872f9aaac95001182bd30f648fc30ac120905eb699"
+    },
+    "docs/09-desktop-studio/video-processing.md": {
+      "bytes": 6747,
+      "sha256": "6e6b0ab0a8d3e2d8500fb0f7f0776c8175832a73be7636fd08152715b696b75c"
+    },
+    "docs/99-appendix/README.md": {
+      "bytes": 1561,
+      "sha256": "505fc624e0dfaf0940e958caa638a6a814eeddd9eef00d758c943c85cbb535a0"
+    },
+    "docs/99-appendix/command-reference.md": {
+      "bytes": 16986,
+      "sha256": "962669127feb6b06ad9582f059b828f2510fcfb1cec599e1ada3f697f72a9dce"
+    },
+    "docs/99-appendix/glossary.md": {
+      "bytes": 6037,
+      "sha256": "14aef7322a1d94aad5aed4b8c91297c901a0bf2bb5ea644255d124e286bd6ccd"
+    },
+    "docs/99-appendix/repository-map.md": {
+      "bytes": 5776,
+      "sha256": "c3c24ca66114069d6e63ce71acd2f328250f96bc259ad3bbc8ac6a42cf0f3edd"
+    },
+    "docs/KardboardCode-VTuber-Engineering-Handbook.pdf": {
+      "bytes": 10511227,
+      "sha256": "f411f148672d17c70c5f68755c37283c9d1be4d4e2d115a6482be08cc8fdb3a7"
+    },
+    "docs/README.md": {
+      "bytes": 8589,
+      "sha256": "a2f94e0d754e3c35f0a905d2fad30d644ac8a9e5ae77a0d948171e5e7d7019b4"
+    },
+    "docs/book/README.md": {
+      "bytes": 1855,
+      "sha256": "949cbcbca024e0b1543d08a254297568fad6271e201ea7f86fa512493a666d1e"
+    },
+    "docs/book/build/build.js": {
+      "bytes": 19892,
+      "sha256": "671e02ee2c192a8fa651ac46a6369865f0cb53fb0f753edca29c366d905f1e56"
+    },
+    "docs/book/build/overflow-check.js": {
+      "bytes": 3006,
+      "sha256": "c183d990403e8a9b6f31e019b8569bb82d5d3a7a3aa99739183f15b681059649"
+    },
+    "docs/book/build/package.json": {
+      "bytes": 395,
+      "sha256": "612ad201daa31cb375a09d0caa6883f55c16f5056557ef92811218352ba456a1"
+    },
+    "docs/book/build/render.js": {
+      "bytes": 3296,
+      "sha256": "1b9111e018555113782843006cbdaf0752607a8d022d3f22f129f18c2c8d0cfe"
+    },
+    "docs/branding/README.md": {
+      "bytes": 3108,
+      "sha256": "db182cb20e73fda793884d3a320485ff038375252b563cbccc3ea8fc9b761cb4"
+    },
+    "docs/branding/fonts/BarlowCondensed-OFL.txt": {
+      "bytes": 4376,
+      "sha256": "10b0e6bb43166a50fbe7cde2895bd7f703738a5da843acb5c97c95dc9ea26817"
+    },
+    "docs/branding/fonts/BarlowCondensed-Regular.ttf": {
+      "bytes": 102480,
+      "sha256": "583cec5da3b84bc4dc7c9c72e2a565c94d34e431518b19d7e250b7830ad5f996"
+    },
+    "docs/branding/fonts/BarlowCondensed-SemiBold.ttf": {
+      "bytes": 109428,
+      "sha256": "7b619d14bc2327509a9ef32b0890f709626f7ecc9ff61191c2a4314c5499d2d9"
+    },
+    "docs/branding/fonts/Silkscreen-Bold.ttf": {
+      "bytes": 30632,
+      "sha256": "768476aa712d4f5c3e18d3bce80f980a8bd3f72b7094d22ec5e768df3acfed61"
+    },
+    "docs/branding/fonts/Silkscreen-OFL.txt": {
+      "bytes": 4393,
+      "sha256": "0c0defe44c565904cdd3037f41254b55cb93e5999d4ff13c6c682f69d4c1c0a4"
+    },
+    "docs/branding/fonts/Silkscreen-Regular.ttf": {
+      "bytes": 32220,
+      "sha256": "c845473330b94c2079ce9af01c51ac8ba2d99c24f4d14c039843bbb8e642ebd8"
+    },
+    "docs/guides/camera-and-virtual-output.md": {
+      "bytes": 8607,
+      "sha256": "5b6702f5bcb01b3ad0c68a6f0de978c3a1ebd9b74608757fbe34f6a7b755a7fd"
+    },
+    "docs/guides/features-and-controls.md": {
+      "bytes": 10868,
+      "sha256": "bea9394797e11220bcc566350e96ea452b684b7de8d9ca38877611065107ad4b"
+    },
+    "docs/guides/getting-started.md": {
+      "bytes": 6540,
+      "sha256": "827c542c0d16b2bd5d605f612fe287568e2ab68444cd45a826bb8476661b13cf"
+    },
+    "docs/images/kardboardcode-angle-gallery.png": {
+      "bytes": 311408,
+      "sha256": "558907c64a0bf481c677b6c63e47ee2bc125d3d5d99c21c64fb0388adaba802c"
+    },
+    "docs/images/kardboardcode-body-skeleton-debug-window.png": {
+      "bytes": 52025,
+      "sha256": "da0378714b80aa74c814da4df0dc4169251cf68c03bc25701afb713cacd28370"
+    },
+    "docs/images/kardboardcode-cinematic-poses.png": {
+      "bytes": 211301,
+      "sha256": "da565da621dd7910a97cd21dd2ee2fc15da7228a84310cb60e3ce5ac3d698eef"
+    },
+    "docs/images/kardboardcode-detail-views.png": {
+      "bytes": 197874,
+      "sha256": "12b791b1b864db69fc6304817545cf4f8cf72ca54f04ba104224d73053ea743b"
+    },
+    "docs/images/kardboardcode-expression-states.png": {
+      "bytes": 107447,
+      "sha256": "90f87d3e9b7da487ccc1db7b2ddb963baffaf379bf43964601180f17460013f6"
+    },
+    "docs/images/kardboardcode-flap-motion-sequence.png": {
+      "bytes": 124169,
+      "sha256": "6b30085fa49af97686da3259708fc005da011939753859398edcae565421c37c"
+    },
+    "docs/images/kardboardcode-flap-physics.png": {
+      "bytes": 115756,
+      "sha256": "88ec97d665d35a2869cddd699b60732fc90a4efa0d0c4ef881e15ad1118906bb"
+    },
+    "docs/images/kardboardcode-green-screen-demo.gif": {
+      "bytes": 2227795,
+      "sha256": "cad4516f95055ec04b0553472873ec780b82105673fb562cac7c728ae60669b0"
+    },
+    "docs/images/kardboardcode-hero.png": {
+      "bytes": 48753,
+      "sha256": "b2982526e9fb1199800573a4010ffd807d275fee63a1e1b782e467073d487c10"
+    },
+    "docs/images/kardboardcode-live-demo.gif": {
+      "bytes": 9895314,
+      "sha256": "fbcc48efe88282b4f0a5fada896dd18a9657eb03663b669588136f7ed6e345e2"
+    },
+    "docs/images/kardboardcode-performance-states.png": {
+      "bytes": 220116,
+      "sha256": "910aa582b4983efaf73fc5f1014543ae511f5eafe2e87c63296c692412a5a82e"
+    },
+    "docs/images/kardboardcode-real-life-demo.gif": {
+      "bytes": 3560790,
+      "sha256": "f60d365d4104f43387a5d12c0ac276f17891f1e3e88dc5af257b87f2bbe497e9"
+    },
+    "docs/images/kardboardcode-render-mesh-debug.png": {
+      "bytes": 797288,
+      "sha256": "56766acf22c8af20859c817028563dbe455021115c76100dc54c0b3bcf9d5e1a"
+    },
+    "docs/images/kardboardcode-six-sides.png": {
+      "bytes": 166855,
+      "sha256": "ccba9f053eb583b7fa3178c3f1c7e763f78ddf35a12da707766b5d377be14627"
+    },
+    "docs/images/kardboardcode-studio-clean-output.png": {
+      "bytes": 14983,
+      "sha256": "d5126a3fb91e99bbc7771e298a102b17d9419719e046a9c3c2d05abaceff35f6"
+    },
+    "docs/images/kardboardcode-studio-compact.png": {
+      "bytes": 77517,
+      "sha256": "9c9797b13eb76f9e64b06b7cc3f78ae46920de53c2e5737440a5f188117a00bb"
+    },
+    "docs/images/kardboardcode-studio-dark.png": {
+      "bytes": 103328,
+      "sha256": "b1f2dd038cf64b392c64ce12ab01dde99fc6cbc37d4eac840c67742fc55f2559"
+    },
+    "docs/images/kardboardcode-studio-diagnostics.png": {
+      "bytes": 107094,
+      "sha256": "213481bbbeb7a5bd30dbcd82a9a6927ed5c1478eefeffbfb4d19ea1ade854b28"
+    },
+    "docs/images/kardboardcode-studio-light.png": {
+      "bytes": 103790,
+      "sha256": "6c6eb48e09f07fe3215f781def4e548d1e67255bbb7304e8c93ca1f9319ecee4"
+    },
+    "docs/images/kardboardcode-studio-native-camera.png": {
+      "bytes": 85082,
+      "sha256": "c02e37ff7b8635a735aa08b8f460ed52c39ab78ea1b775bc239adf685749e0ff"
+    },
+    "docs/images/kardboardcode-studio-tutorial.png": {
+      "bytes": 27837,
+      "sha256": "c777d8f4f2f85f078d58bcf5ed4cde402f620e347814df3e80fd3457f23e93e6"
+    },
+    "docs/images/kardboardcode-studio-video.png": {
+      "bytes": 88873,
+      "sha256": "24b8485b582a1579c165df83b2db29a56c371758ce285180659fcb7d7b0c5301"
+    },
+    "docs/images/kardboardcode-surface-tour.png": {
+      "bytes": 209672,
+      "sha256": "36361a7a6698466386ad920d663887b24ce19337b8a67031065f076b3b5f8d9e"
+    },
+    "docs/images/kardboardcode-tracking-debug-window.png": {
+      "bytes": 137496,
+      "sha256": "d72366b25af3d0245b5cd5ea875d6c11d458d94a4cbf1a8b9a4537438afd4681"
+    },
+    "docs/images/readme/debug.svg": {
+      "bytes": 17243,
+      "sha256": "0dff1f2c339d0819ace820f16bdbd4bc4941ce9c13bdd5aa09ce2155390f1ddc"
+    },
+    "docs/images/readme/details.svg": {
+      "bytes": 19345,
+      "sha256": "e9600fadec87a954d07ece5ef2f460cae95ed817cde44f20362734c51070590e"
+    },
+    "docs/images/readme/footer.svg": {
+      "bytes": 23461,
+      "sha256": "3087012b9d059e56040dd7f652167108ac827a3673f9c3c82c841487f6b35ee4"
+    },
+    "docs/images/readme/hero.png": {
+      "bytes": 210669,
+      "sha256": "e1280a0ffb7471807487f736526fe29c3e5d1050e812e774eb9025802072eb6d"
+    },
+    "docs/images/readme/motion.svg": {
+      "bytes": 13968,
+      "sha256": "78f8133833ae9302712c11e7165fec15f3d98f217dbec1a77e74c25d25735ab9"
+    },
+    "docs/images/readme/start.svg": {
+      "bytes": 18289,
+      "sha256": "2f0b286c047afea2dbd07f7674ef169da0c8334d77a574dd32c150d405101260"
+    },
+    "docs/images/readme/studio.svg": {
+      "bytes": 15709,
+      "sha256": "42636950d62b1b72b3d808e52cdf26b11955d89b4e9ca9163b0f2dae2f66baf4"
+    },
+    "models/.gitkeep": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pyproject.toml": {
+      "bytes": 1228,
+      "sha256": "c374a8ff57810d481cfcd6703694e50d6c8ae6967dbd89291eac7290f7557e02"
+    },
+    "release/README.md": {
+      "bytes": 3826,
+      "sha256": "53735f543efce4891e35693ba1b6d055b73c04447f4cfe700b84559fe9257a8d"
+    },
+    "release/RELEASE_NOTES.md": {
+      "bytes": 5300,
+      "sha256": "bbcb59149a9dce8f3f051f35379fa58c57a4b66269c709f3fb61d08e9393165e"
+    },
+    "requirements-dev.txt": {
+      "bytes": 53,
+      "sha256": "682b820449d562875906aeea82754f2f17dc8e6fce352b1094c09ce89170956d"
+    },
+    "requirements-tracking.txt": {
+      "bytes": 76,
+      "sha256": "daf3ad295d784d7d85bdf10fcad33b89d6f532a46ddf0f3875b22fb2ce380068"
+    },
+    "requirements.txt": {
+      "bytes": 46,
+      "sha256": "348ca0c0f40b450408880058008ff21aea807b96f6c08a553412690ad0311745"
+    },
+    "scripts/build_branding.py": {
+      "bytes": 3436,
+      "sha256": "0c8de9202096318b9244336743b84e25feaef15eb294e383d9a9d41e4151430a"
+    },
+    "scripts/build_readme_art.py": {
+      "bytes": 9698,
+      "sha256": "e360b7dc995c2a7bfdf4c70310fde64c902b4e98d22616c929f0269110965116"
+    },
+    "scripts/capture_studio_screenshots.py": {
+      "bytes": 7155,
+      "sha256": "4247ac294ae82b6f92e7874d8e5f4ca3fc697eadf6ed50dcb9bd22f3740ef360"
+    },
+    "scripts/download_face_landmarker_model.py": {
+      "bytes": 1673,
+      "sha256": "8dff28e5566e2d8142372534de1b46c8638e5dc4ade171195a08936e9002eb14"
+    },
+    "scripts/download_hand_landmarker_model.py": {
+      "bytes": 1673,
+      "sha256": "d63233b6ad8ac077a748db26b4bc6ce35fce62b79953f5ee461d41a33e498055"
+    },
+    "scripts/download_pose_landmarker_model.py": {
+      "bytes": 1693,
+      "sha256": "9e464a80a7f4f684380d29d12a030bcb43d5aef7742f5d510f100385a8b624be"
+    },
+    "scripts/download_selfie_segmenter_model.py": {
+      "bytes": 1681,
+      "sha256": "dc613c7f444cabfcefad524d3512997c3df1c1dc04f707c225d72304cd6ff531"
+    },
+    "scripts/export_release.py": {
+      "bytes": 13696,
+      "sha256": "10600ce7fda4d36b914e19123661e809093010a90ca8b6c976cc32993979d4f6"
+    },
+    "scripts/generate_documentation_gallery.py": {
+      "bytes": 19651,
+      "sha256": "e00897be9958e068a97a9dd2bea5881e2bc54e78e9f3436d827fcefddd760024"
+    },
+    "scripts/generate_readme_animation.py": {
+      "bytes": 8636,
+      "sha256": "c592df444539f6a8da1f50817261fb97473e74feedccfc5b92dedfb7c752c49e"
+    },
+    "scripts/generate_real_life_animation.py": {
+      "bytes": 13483,
+      "sha256": "44371f6fcb18f11022ba5f49e4e6b81f298e2436559a8a79884701e1b8a6d17c"
+    },
+    "scripts/list_local_cameras.py": {
+      "bytes": 182,
+      "sha256": "13ddf72c0b37172efe84a84b03f5004d6cdc863fb18af672ef4a71298edececa"
+    },
+    "scripts/record_guided_regression.py": {
+      "bytes": 18177,
+      "sha256": "26408dc4ebc7320c18b45a959390dfdfc4039d1f6ab6b0269d429e0b77534fe0"
+    },
+    "src/kardboard_vtuber/__init__.py": {
+      "bytes": 469,
+      "sha256": "4d8e9d746cb737d0930df09aa5acb9a38eae93ff2b637cec563d64d0f83014b0"
+    },
+    "src/kardboard_vtuber/__main__.py": {
+      "bytes": 101,
+      "sha256": "7dfe6d3e881d4ed5b849ea6120ef30ef72e4a4ea543e0e4cd426d75c5d26f3c1"
+    },
+    "src/kardboard_vtuber/camera/__init__.py": {
+      "bytes": 481,
+      "sha256": "c56fa7850ec84aaad5a7fb08a9061a981c74015c0a1fa1e43ad65396ad89d4dd"
+    },
+    "src/kardboard_vtuber/camera/devices.py": {
+      "bytes": 2935,
+      "sha256": "f9ade65c0c8c2c966c73a98cf5da40ffcf88b75ce02459f4650aa84e05db7306"
+    },
+    "src/kardboard_vtuber/camera/models.py": {
+      "bytes": 4673,
+      "sha256": "814a9cd38cd25552df05195dd48c63fce155a29eb47145d784b432fcad60ad4b"
+    },
+    "src/kardboard_vtuber/camera/stream.py": {
+      "bytes": 12014,
+      "sha256": "63e307225773e0640bd0e20c8f0bf6f3c40ef01f70960dbebb503eac045a6127"
+    },
+    "src/kardboard_vtuber/cli.py": {
+      "bytes": 43819,
+      "sha256": "ae915dd332c2197f4475cc931d84282271292ba078354e9567394c6ad24cbfb8"
+    },
+    "src/kardboard_vtuber/gui/__init__.py": {
+      "bytes": 2104,
+      "sha256": "29d47e8572938fcd59bfb1df193a4f8f3af0b8519f64b9b66b8c8e699c54cfe3"
+    },
+    "src/kardboard_vtuber/gui/__main__.py": {
+      "bytes": 67,
+      "sha256": "9a1658bd6c38b57b38eaef1baba86ff1952ed8a62b8695d8b5d1b4e8d37715fc"
+    },
+    "src/kardboard_vtuber/gui/assets/check-cream.svg": {
+      "bytes": 209,
+      "sha256": "8f8eab1167cc19c2bc4c13bb791bf3f2962c299f2e4194bfdd9cd920137fd7bc"
+    },
+    "src/kardboard_vtuber/gui/assets/check-ink.svg": {
+      "bytes": 209,
+      "sha256": "3568cd005d9023304850217c36151d38ad7d2f68dcb478a7561bb444c51f9c1b"
+    },
+    "src/kardboard_vtuber/gui/assets/kardboardcode-icon.ico": {
+      "bytes": 105957,
+      "sha256": "610207aa369b039d39c990bd651a4db5b5d196f01ec88c53dd7fa12ca879f142"
+    },
+    "src/kardboard_vtuber/gui/assets/kardboardcode-icon.png": {
+      "bytes": 68990,
+      "sha256": "8698e9a1ab8f8e9ea5a7a180766ce4c9932701db4f4cedbb3b46394cc76deaff"
+    },
+    "src/kardboard_vtuber/gui/assets/kardboardcode-logo.png": {
+      "bytes": 1011495,
+      "sha256": "9cefba6bc42ad8da9ac6b49c1d3543fba86cd8832bbc93059e8969419378e852"
+    },
+    "src/kardboard_vtuber/gui/calibration.py": {
+      "bytes": 4291,
+      "sha256": "2125444f9d11e6aca5db2871f6086f0a1609733742ff4873b010c6754b76f02b"
+    },
+    "src/kardboard_vtuber/gui/output.py": {
+      "bytes": 900,
+      "sha256": "34ab61ca3a8f4ac33ff357ea7bbcb6a71ef5f51cd10d548bf15bbdb21ce01f4a"
+    },
+    "src/kardboard_vtuber/gui/settings.py": {
+      "bytes": 15530,
+      "sha256": "5b18fe415619c77d00392d5e33970d3e070afb7b596d8809875ea78601911fa0"
+    },
+    "src/kardboard_vtuber/gui/theme.py": {
+      "bytes": 7722,
+      "sha256": "0e0461ff2a8cdc9b3299ea853997492976698980de0ebbcd19b3a319f2d5f26a"
+    },
+    "src/kardboard_vtuber/gui/tutorial.py": {
+      "bytes": 11433,
+      "sha256": "ec9260b418371d19576ecee184ec43abff92394086205ac679ca7504374e814f"
+    },
+    "src/kardboard_vtuber/gui/video_worker.py": {
+      "bytes": 1926,
+      "sha256": "87255ec7ff2521e38a2466b3d2467b046973f2da475ecb38390b3a39ab448135"
+    },
+    "src/kardboard_vtuber/gui/widgets.py": {
+      "bytes": 10184,
+      "sha256": "5b60ca1fce5ab59c73cfe5790dee14c9f12ce289dd0c283494d6193631a20306"
+    },
+    "src/kardboard_vtuber/gui/window.py": {
+      "bytes": 75671,
+      "sha256": "2858bab3c4cf0527dc8588b7b4c5d00316be31e5ac0e4afe96bc6ab1496cc9ff"
+    },
+    "src/kardboard_vtuber/gui/worker.py": {
+      "bytes": 6192,
+      "sha256": "c0fc53f82b1f554d1de27a9cea467c0fd824eb5fd67ee4a0b808d5881db3a42c"
+    },
+    "src/kardboard_vtuber/motion/__init__.py": {
+      "bytes": 168,
+      "sha256": "53308a3c7b13886cc07d4fb4d8df5b4bf1afda9d0af1f4c4e585044a29e158f4"
+    },
+    "src/kardboard_vtuber/motion/springs.py": {
+      "bytes": 3136,
+      "sha256": "6201136e90a998cbf40e7cfed649640fa97a9a15d456a38e855c8492f74dd668"
+    },
+    "src/kardboard_vtuber/renderer/__init__.py": {
+      "bytes": 614,
+      "sha256": "956744ba80b47dd19beaf2a18913ddba6daaf2a421a99ad1f764e09685f4e3b1"
+    },
+    "src/kardboard_vtuber/renderer/full_body.py": {
+      "bytes": 6395,
+      "sha256": "460643cd288b98098f49a51f086dfbdd8e977db757fe5129daa67e93e7745f41"
+    },
+    "src/kardboard_vtuber/renderer/ps1_cardboard.py": {
+      "bytes": 17361,
+      "sha256": "7e2dfca1bc9806eefcf6bce6f6646934b63cfa5a3d4f18e8d443ddacf17ad234"
+    },
+    "src/kardboard_vtuber/renderer/textured_3d.py": {
+      "bytes": 48167,
+      "sha256": "f2ba06b49c6fcb8700375997b89ec7493525e4be24b01189f3db9c0e38d312cf"
+    },
+    "src/kardboard_vtuber/runtime.py": {
+      "bytes": 5625,
+      "sha256": "c1c81909c383aca8f05f5ad7980bdb1f836e8aeedf42b4a9734392099f42b1f0"
+    },
+    "src/kardboard_vtuber/tracking/__init__.py": {
+      "bytes": 1915,
+      "sha256": "64e7a546c17e7e98bf03c2e3feeea734e2cb289237c49d559e90649a8fb6131a"
+    },
+    "src/kardboard_vtuber/tracking/body_head_fallback.py": {
+      "bytes": 15184,
+      "sha256": "495e73218b011600fee37483fbf6fa2bf796758dafe7f80a78b5bf3f04360ff5"
+    },
+    "src/kardboard_vtuber/tracking/events.py": {
+      "bytes": 8694,
+      "sha256": "706d376a0192dcb2c9add694274d2f786e81eb2ccc001c45cfa656fdd9ec10c2"
+    },
+    "src/kardboard_vtuber/tracking/eyes.py": {
+      "bytes": 3681,
+      "sha256": "ffcf66d84aa900da154a78228a63cf8f10ef3c8e0ae476d56623bb311a6ca772"
+    },
+    "src/kardboard_vtuber/tracking/filters.py": {
+      "bytes": 7151,
+      "sha256": "183f3da7bd07222239f889651c5ded5b95b2d6451394e4d9b5944cd9f3e5a18d"
+    },
+    "src/kardboard_vtuber/tracking/full_body.py": {
+      "bytes": 9461,
+      "sha256": "47873e14b5fa94faba334fbaf198f7581156214217c5bee139362869274fdbb9"
+    },
+    "src/kardboard_vtuber/tracking/green_screen.py": {
+      "bytes": 5895,
+      "sha256": "9fe8b03844693aeef08de9750731520edb717abe4c32d3e1d4aedfe3b0e07a8b"
+    },
+    "src/kardboard_vtuber/tracking/hand_occlusion.py": {
+      "bytes": 8136,
+      "sha256": "2adb551c4ab57bd87e7aaef6a91d6ab1a0c1343760935242d9cc340cf3ff7756"
+    },
+    "src/kardboard_vtuber/tracking/hood_markers.py": {
+      "bytes": 33548,
+      "sha256": "eda731d8ecebab9151b014fe94384805046671188a0c43b7b9348a9eca5f1880"
+    },
+    "src/kardboard_vtuber/tracking/mediapipe_tracker.py": {
+      "bytes": 16572,
+      "sha256": "7d54d046a1d52c7dc11360cf7f87116635a7e9a197d67da3052dade3ba3c3877"
+    },
+    "src/kardboard_vtuber/tracking/models.py": {
+      "bytes": 4845,
+      "sha256": "e37b08732ba5b2b6818241d9e5725751c62cb1749b86e0e6fe4720047ef3028d"
+    },
+    "src/kardboard_vtuber/video.py": {
+      "bytes": 10192,
+      "sha256": "18369511151ed3b09622f8b11ffba2ada286a21433595682581e284dd7d95eb9"
+    },
+    "src/kardboard_vtuber/video_cli.py": {
+      "bytes": 2835,
+      "sha256": "178de02674483830144573e10675b8ba35e4d09ee3eb8f5abe7a530aefded94b"
+    },
+    "src/kardboard_vtuber/video_pipeline.py": {
+      "bytes": 5637,
+      "sha256": "f72d9a33df70dd8fa9bfddc11fe41f3d1da489c1590a9d51a70e9387e352c5dc"
+    },
+    "src/kardboard_vtuber/virtual_camera.py": {
+      "bytes": 3925,
+      "sha256": "18b2ff42ef238eaf4267c375ff43d86de52fafd1ab533772bd307c329221b94b"
+    },
+    "tests/test_body_head_fallback.py": {
+      "bytes": 8237,
+      "sha256": "b08159e93daedd11059cfc1f9e4908aae5e4f066280f8e810e9082119a778c4e"
+    },
+    "tests/test_branding.py": {
+      "bytes": 4521,
+      "sha256": "d0c27e88baed6ad9635ee39f7621283cede1ffb1f049e574ca1ef90022282ff3"
+    },
+    "tests/test_camera_devices.py": {
+      "bytes": 1897,
+      "sha256": "d7c070a25625accfad4b50e945d70f2cb876ee82177fd2161822e1589648f153"
+    },
+    "tests/test_camera_models.py": {
+      "bytes": 1265,
+      "sha256": "c1b71df375d20c6f106e3f3ead3a5c9ba061434c43335a5df6fa92c431eadec9"
+    },
+    "tests/test_camera_stream.py": {
+      "bytes": 3896,
+      "sha256": "8b9a439dfeb6ebaab461541c51860f790c7f37005fe71d949a3172fe9aa8710d"
+    },
+    "tests/test_cli.py": {
+      "bytes": 6993,
+      "sha256": "4f3b0ee721c2de26e5b0c7b37c679e357c5b195f28507882dc00759aacb09dd2"
+    },
+    "tests/test_full_body.py": {
+      "bytes": 3512,
+      "sha256": "7e641bd1d7dd1d93a0d159bc71e9ec9f547abb399d439af0c89a7777ba75dca3"
+    },
+    "tests/test_green_screen.py": {
+      "bytes": 1518,
+      "sha256": "794203b043767af96480603bc8c89eaa38ff54e7c257ab9441e57afa351af2b1"
+    },
+    "tests/test_guided_recording.py": {
+      "bytes": 3627,
+      "sha256": "2ac149d47356a1146944b6861e5ef76b1e1618802317667a6543606bb7ee3649"
+    },
+    "tests/test_hand_occlusion.py": {
+      "bytes": 1688,
+      "sha256": "e5610afe03c6e800bb3d9cc5249796a37f91e04a0c35b771ade9c2859f53fead"
+    },
+    "tests/test_hood_markers.py": {
+      "bytes": 12454,
+      "sha256": "171fce755c6a1b96b2bbe70898ac20532ca84d3401e9714b76017a89a65c18e5"
+    },
+    "tests/test_motion_springs.py": {
+      "bytes": 1932,
+      "sha256": "bf3eeff9a19c695dd6ae24a85b9b1d48b910ad4d5943098bb6d597eaaa8fb00d"
+    },
+    "tests/test_ps1_cardboard_renderer.py": {
+      "bytes": 8275,
+      "sha256": "b2249759eb9deb40f0763cbb2b13a0fc401e429f6055ef3e9653c9ef23d3bd4d"
+    },
+    "tests/test_release_export.py": {
+      "bytes": 5451,
+      "sha256": "52590800ef486f785d458deed505fddf8a752df5d7ae012627814d958d8724fa"
+    },
+    "tests/test_studio_gui.py": {
+      "bytes": 18736,
+      "sha256": "81b845e98dd21ed1d3eb249c379cbfd022e446c9622e5b33797f0ffd6fef7677"
+    },
+    "tests/test_studio_runtime.py": {
+      "bytes": 9970,
+      "sha256": "6575ba305af6cfc5228a799f89899f94c42e9d083e9ca65b2570e966cfeb09c3"
+    },
+    "tests/test_studio_settings.py": {
+      "bytes": 3495,
+      "sha256": "e25f3d2ffc5031ab8b690a127500865946df45bfb358ee19da624f15a0051dc4"
+    },
+    "tests/test_textured_3d_renderer.py": {
+      "bytes": 16655,
+      "sha256": "ea3ebb3de317f2f2c02cea08ad8b72cdc9aa64e8ca7db2102a1eb594a0b40e4f"
+    },
+    "tests/test_tracking_events.py": {
+      "bytes": 5251,
+      "sha256": "5402fc339edc7769681c146316ec83a173d87d04ba7dd0a22e67a076bcc5f0c6"
+    },
+    "tests/test_tracking_filters.py": {
+      "bytes": 2837,
+      "sha256": "05afd3efa5496a4f48f5ed9d1f41cf78838b128d08938091e4201424af0ca7ec"
+    },
+    "tests/test_tracking_models.py": {
+      "bytes": 8146,
+      "sha256": "5c0ae87afd6d0cb719473a528e9d06b30a224dfabf10405c0466fc7ee7108102"
+    },
+    "tests/test_video_export.py": {
+      "bytes": 7086,
+      "sha256": "e04a8e2df3cda61e9d97fac2e1b4d34e84c3a4a64c7f53c4f7bbea275bb7db8f"
+    },
+    "tests/test_virtual_camera.py": {
+      "bytes": 5498,
+      "sha256": "da4e958ab9acfe1f51b1312226de42d67586e7207355659a7f211031b6c2af15"
+    },
+    "tests/test_virtual_camera_cli.py": {
+      "bytes": 7972,
+      "sha256": "8136e2a43043bc9cbfe3ee72147e6bae8e9ff1afd180b26f5281998bbf6892f0"
+    }
+  },
+  "sourceFingerprint": "05e322ac47665f43f619792bb0df6277f7974123c5d69725ce4c744f326baea3",
+  "sourceModified": false,
+  "tag": "v1.1.0",
+  "version": "1.1.0"
+}

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kardboard-vtuber"
-version = "0.1.0"
+version = "1.1.0"
 description = "A lightweight PS1-style camera-tracked KardboardCode avatar."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -16,6 +16,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "Pillow>=12,<13",
+    "fonttools>=4.60,<5",
     "pytest>=8.3,<9",
     "ruff>=0.9,<1",
 ]
@@ -28,10 +30,12 @@ virtual-camera = [
 gui = [
     "PySide6-Essentials>=6.8,<7",
     "cv2-enumerate-cameras>=1.4,<2; sys_platform == 'win32'",
+    "av>=16,<17",
 ]
 
 [project.scripts]
 kardboard-camera = "kardboard_vtuber.cli:main"
+kardboard-video = "kardboard_vtuber.video_cli:main"
 
 [project.gui-scripts]
 kardboard-studio = "kardboard_vtuber.gui:main"

@@ -1,0 +1,28 @@
+Status: DONE
+Milestone: Tracked latest source release and manual-publishing handoff
+Dependencies: 06_NATIVE_CAMERA_SELECTION.todo
+Purpose: Keep one public release folder ready for the owner to upload, without publishing through read-only authorization.
+
+Tasks:
+  [x] Reorder README: one tool screenshot above Current milestone, GUI guide/gallery below.
+  [x] Align package/release version and author release notes/setup context.
+  [x] Add reproducible tracked-source export and freshness/checksum validation.
+  [x] Exclude private context, credentials, raw media, models, environments and self-recursion.
+  [x] Verify the archive and extracted launch path; record evidence/context and commit.
+
+Acceptance criteria:
+  release is outside src and can be tracked/pushed with the repository.
+  Source ZIP, release text, generated context, manifest and checksums are ready to copy/upload.
+  Future source/docs changes can be exported and stale exports are detected.
+  No GitHub publication, account switching or permission workaround is performed.
+
+Completion evidence:
+  Publishing account has repository read access only; user explicitly requested local staging.
+  Full suite: 241 passed; Ruff and README ordering checks passed.
+  Source ZIP CRC, exact contents, source fingerprint and checksums validated.
+  Extracted archive launched CLI/GUI help and the real synthetic GUI preview with correct source root.
+  No camera capture, model download, GitHub publication, tag, merge or push occurred.
+  Public source commit precedes the final clean-provenance export; generated assets are committed separately.
+Completion log:
+  2026-11-02: Preparing source release v0.2.0; this is not a standalone Windows installer.
+  2026-11-02: README rearranged and local latest-export workflow completed for manual publication.

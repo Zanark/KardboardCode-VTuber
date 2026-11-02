@@ -84,8 +84,9 @@ lifecycle (`src/kardboard_vtuber/camera/stream.py:39-73`).
 ### Presentation boundary
 
 `cli.main` reads packets, submits optional asynchronous inference, resolves the head mode,
-orders green-screen/head/hand composition, publishes the clean virtual output, and only then adds
-local diagnostics. It does not implement capture or reconnection. Full-body diagnostics stay
+orders green-screen/head/hand composition and publishes clean output. The CLI then adds local
+overlays; Studio instead transfers diagnostics in independent side-panel channels. It does not
+implement capture or reconnection. Full-body diagnostics stay
 separate rather than adding a filled body to the output.
 
 The optional native studio calls this same pipeline from `SessionWorker.run`. `RuntimeBridge`
@@ -94,13 +95,19 @@ painting stay on the main thread; native capture/tracking/rendering and the Mode
 off it. [Desktop runtime architecture](../09-desktop-studio/runtime-architecture.md) traces the
 complete ownership, stop, error, and live-calibration contracts.
 
+The separate VIDEO host uses PyAV and synchronous MediaPipe VIDEO tasks to process every source
+frame without a live camera/latest-frame dropping. Studio and the Qt-free video CLI share this
+offline engine, reusing the existing renderer and effects. Source size/timing and compatible
+audio are preserved within format precision. See [video processing](../09-desktop-studio/video-processing.md).
+
 ### Live calibration boundary
 
 `tracking.eyes.EyeSensitivity` owns effective anatomical left/right thresholds. `LiveTuning`
 atomically carries them and processing brightness to the worker. `FaceActionDetector.set_thresholds`
 and both renderers' `set_eye_sensitivity` use the same validated snapshot, without rebuilding the
-renderer or discarding its safe-frame hold. Raw action signals and filtered visual signals remain
-distinct; the GUI displays both rather than inventing agreement.
+renderer or discarding its safe-frame hold. Raw eye signals now drive both action and visual
+closure decisions so smoothing cannot erase a blink. Geometry/pose remain filtered; telemetry
+also records the actual rendered state so fallback expressions are not confused with raw scores.
 
 ## Why not one giant loop?
 
@@ -127,6 +134,9 @@ flowchart TD
     GUI["Qt widgets"] --> Bridge["Toolkit-neutral RuntimeBridge"]
     GUI --> Session["Session worker"]
     Session --> CLI["Shared CLI pipeline"]
+    GUI --> Export["VideoExportWorker"]
+    Export --> Offline["Qt-free video pipeline"]
+    Offline --> PyAV["PyAV decode / encode / audio remux"]
     CLI --> Bridge
     CLI --> CameraAPI["camera package API"]
     CameraAPI --> Models["models.py"]

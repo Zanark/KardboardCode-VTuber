@@ -50,3 +50,6 @@ config.local.toml
 
 # Local YouTube production package
 /YTScript/
+
+# Atomic release-export staging; the finished release folder is tracked.
+/release/.export-*/

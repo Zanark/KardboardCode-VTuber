@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: DONE
+Status: Documentary DONE; Windows setup PAUSED; preceding Studio workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -11,11 +11,28 @@ Workstreams:
   04_DOCUMENTATION_AND_DELIVERY.todo
   05_DEVELOPMENT_LEDGER.todo
   06_NATIVE_CAMERA_SELECTION.todo
+  07_RELEASE_STAGING.todo
+  08_OFFICIAL_LOGO_RELEASE.todo
+  09_VISUAL_README.todo
+  10_STUDIO_FEEDBACK.todo
+  11_BORDERLESS_README.todo
+  12_WINDOWS_SETUP.todo
+  13_DEVELOPMENT_DOCUMENTARY.todo
+  14_VIDEO_DEFAULT_PLAYER.todo
+  15_DARK_CARDBOARD_ACCENTS.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
   [x] Include the user's follow-up requirement: a tutorial.
   [x] Complete the four delivery workstreams in dependency order.
+  [x] Apply supplied logo and prepare first official release v1.0.0 (workstream 08).
+  [x] Rebuild the front README as a visual showcase (workstream 09).
+  [x] Address the fifteen-point live Studio feedback (workstream 10).
+  [x] Remove README table layouts while keeping the approved GIF pair (workstream 11).
+  [ ] Deliver the user-selected online Windows setup and brown slider accents (workstream 12).
+  [x] Create the exhaustive chronological documentary PDF (workstream 13).
+  [x] Open successful Studio VIDEO exports in the default media player (workstream 14).
+  [x] Finish cardboard-brown dark sliders and refresh/push README screenshots (workstream 15).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -32,5 +49,31 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-02: Brown dark-slider tracks/handles and eight native synthetic captures completed.
+  35 focused theme/GUI/branding tests/Ruff passed; captions and palette rationale updated.
+  Theme commit 9938ac2 pushed and remote branch hash verified. Installer remains paused/local.
+  2026-11-02: Successful Studio VIDEO exports now open the actual completed result in the
+  default media player; failed/cancelled jobs do not. Launch refusal preserves saved output
+  and surfaces an actionable error. 46 focused tests/Ruff pass; CLI remains noninteractive.
+  2026-11-02: Documentary delivered locally: 977 pages, 31 chronological chapters, 62 diagrams,
+  12 captioned figures and all 6,560 source records from 117 textual files. All 158 historical
+  tasks, 66 dependencies, 245 checklist occurrences and dated conversation evidence retained.
+  Book is private under ignored YTScript\DevelopmentJourney; installer remains paused.
+  2026-11-02: Windows setup workstream 12 paused by the user. Brown dark-slider changes and
+  refreshed synthetic screenshots are retained. The installer remains an unverified draft;
+  final installed application/helper checks, rebuilt MSI and current release handoff are pending.
+  2026-11-02: README image tables removed. All 29 non-paired images use full width; the
+  approved original/green-screen GIF pair remains side by side without borders.
+  Desktop/mobile checks verify all 31 images, zero borders/tables and no horizontal overflow.
+  2026-11-02: v1.1.0 Studio feedback pass delivered: front Live/Video modes, separate clean
+  output/diagnostics, palette and state clarity, guided calibration, preset resolutions, optical
+  icons, SVG/hero corrections and real offline export. 266 tests/Ruff and extracted-source launch
+  checks passed. Handbook: 256 pages/99 diagrams, zero failures/overflow. Owner review remains separate.
+  2026-11-02: Image-first README delivered with 29 images, eight coordinated graphics and
+  licensed pixel/industrial typography. Three named guides preserve detailed operating text.
+  Desktop/mobile previews, relative links, six guide diagrams and targeted tests verified.
+  2026-11-02: Supplied voxel KC logo adopted for first official v1.0.0 source release.
+  245 tests/Ruff passed; native icon sizes, branded screenshots and extracted source launch verified.
+  Refreshed handbook: 247 pages, 97 diagrams, zero failures/overflow. Publication remains manual.
   2026-11-02: Workstreams created following source and toolkit research.
   2026-11-02: Studio opened in synthetic-demo mode; documentation and implementation delivered locally.

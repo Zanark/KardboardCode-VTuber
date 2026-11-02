@@ -1,0 +1,32 @@
+Status: DONE
+Milestone: Finished cardboard-brown dark sliders and refreshed README screenshots
+Dependencies: 10_STUDIO_FEEDBACK.todo, 14_VIDEO_DEFAULT_PLAYER.todo
+Purpose: Bring the cardboard material into dark-theme controls without losing state clarity.
+
+Tasks:
+  [x] Use warm cardboard brown on enabled dark slider tracks and handles.
+  [x] Preserve mint checked/live/primary states and contrasting light-theme sliders.
+  [x] Verify rendered track/handle pixels and disabled states in both themes.
+  [x] Regenerate and review native synthetic Studio screenshots and README captions.
+  [x] Commit only completed theme/docs/screenshots and attempt the authorized branch push.
+
+Acceptance criteria:
+  Enabled dark sliders are visibly brown; light sliders remain green against warm paper.
+  Disabled sliders are visibly dimmed; checkboxes retain contrasting explicit ticks.
+  README uses actual native synthetic captures, full-width images and existing approved GIF pair.
+  No live camera, raw face imagery, installer build or frozen documentary change.
+  Push permission failures remain explicit; never switch accounts or bypass repository permissions.
+
+Completion evidence:
+  35 focused theme/GUI/branding tests and Ruff pass. Actual enabled track/handle pixels match
+  brown in dark mode and green in light mode; disabled colors remain distinguishable.
+  All eight synthetic native captures regenerated; dark/light/compact/video contact sheet reviewed.
+  Seven PNGs changed; tutorial capture was byte-identical. README captions describe both palettes.
+  No live camera or published/virtual output. Installer/version/banner WIP excluded from staging.
+  Normal Git push succeeded despite gh reporting READ. Verified remote workDesk/agentic_GUI
+  equals 9938ac258d628759247019a757a36509001d03ec.
+  Owner visual approval remains separate from automated/synthetic evidence.
+Completion log:
+  2026-11-02: Completed, committed and pushed as 9938ac2. No account switch, forced push or
+  permission bypass. Paused installer/version/banner changes remain unstaged; frozen PDF unchanged.
+  2026-11-02: User requested completing brown accents, refreshing README screenshots, commit/push.

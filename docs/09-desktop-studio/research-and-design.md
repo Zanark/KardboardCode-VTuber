@@ -72,8 +72,8 @@ Primary sources, read on the research date:
    community and commercial distributions have different licensing terms. Adding the
    community dependency is not a legal determination about a future packaged distribution.
 
-**Decision:** optional `PySide6-Essentials` (QtCore/QtGui/QtWidgets and the SVG support used
-by the icon), not a browser server and not a mandatory CLI dependency. Widgets provide the
+**Decision:** optional `PySide6-Essentials` (QtCore/QtGui/QtWidgets and image/icon loading),
+not a browser server and not a mandatory CLI dependency. Widgets provide the
 sliders, numeric editing, splitter, logs, dialogs and tutorial without an HTML bridge or
 per-frame JavaScript encoding. This is a fit decision, not an unmeasured speed ranking.
 

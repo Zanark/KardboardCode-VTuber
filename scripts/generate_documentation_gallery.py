@@ -120,61 +120,12 @@ def _write(name: str, image: np.ndarray) -> None:
 
 
 def _generate_hero() -> None:
-    hero = np.full((720, 1200, 3), BACKGROUND, dtype=np.uint8)
-    tracking_state = FaceTrackingState(
-        timestamp_ms=1,
-        detected=True,
-        landmarks=(),
-        center_x=0.29,
-        center_y=0.65,
-        face_width=0.125,
-        face_height=0.105,
-        left_eye_open=1.0,
-        right_eye_open=1.0,
-        mouth_open=0.0,
-        head_pose=HeadPose(
-            translation_x=0.0,
-            translation_y=0.0,
-            translation_z=0.0,
-            pitch_degrees=-18.0,
-            yaw_degrees=32.0,
-            roll_degrees=-2.0,
-        ),
-    )
-    renderer = Textured3DCardboardRenderer()
-    renderer.render(hero, tracking_state)
-    renderer.close()
-    cv2.putText(
-        hero,
-        "KARDBOARDCODE VTUBER",
-        (650, 92),
-        cv2.FONT_HERSHEY_DUPLEX,
-        1.18,
-        PRIMARY_TEXT,
-        2,
-        cv2.LINE_AA,
-    )
-    cv2.putText(
-        hero,
-        "Privacy-first PS1-style tracked avatar",
-        (654, 132),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.61,
-        SECONDARY_TEXT,
-        1,
-        cv2.LINE_AA,
-    )
-    cv2.putText(
-        hero,
-        "ModernGL  |  MediaPipe  |  OpenCV",
-        (654, 164),
-        cv2.FONT_HERSHEY_SIMPLEX,
-        0.43,
-        SECONDARY_TEXT,
-        1,
-        cv2.LINE_AA,
-    )
-    _write("kardboardcode-hero.png", hero)
+    if __package__:
+        from .build_readme_art import avatar_hero
+    else:
+        from build_readme_art import avatar_hero
+
+    avatar_hero()
 
 
 def _generate_six_sides() -> None:

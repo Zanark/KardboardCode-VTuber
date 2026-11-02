@@ -1,375 +1,159 @@
-# KardboardCode-VTuber
+# KardboardCode Studio
 
-A lightweight Python VTuber tool that places a low-poly, PS1-style KardboardCode box over the user's head in a real camera feed.
+[![KardboardCode Studio: your camera, your cardboard. Native Python VTuber, v1.1.0 source edition.](docs/images/readme/hero.png)](docs/guides/getting-started.md)
 
-## Native desktop studio
+![The actual textured 3D avatar, presented in the forest-green and kraft-paper banner palette](docs/images/kardboardcode-hero.png)
 
-The optional **PySide6 desktop GUI** exposes every camera CLI option, live independent left/right
-eye calibration, virtual-camera output, green screen, hands, experimental tracking, private
-recording, model setup, redacted logs, and a nine-part built-in tutorial. The CLI remains available.
+*Official KC identity above; the real runtime character directly below. No camera imagery.*
 
-<p align="center">
-  <img src="./docs/images/kardboardcode-studio-dark.png" alt="KardboardCode Studio native GUI with live left/right blink sliders and a synthetic cardboard avatar preview" width="1200">
-</p>
-<p align="center"><em>
-Actual desktop widgets running the real textured renderer on a labelled synthetic stage.
-No live camera, raw face image, or virtual output was used for this screenshot.
-</em></p>
+**A real 3D cardboard head for your real camera.**
 
-From `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber`:
+[Get started](docs/guides/getting-started.md) ·
+[Features & controls](docs/guides/features-and-controls.md) ·
+[Camera setup](docs/guides/camera-and-virtual-output.md) ·
+[Engineering book](docs/README.md) ·
+[Release files](release/README.md)
 
-```powershell
-.\.venv312\Scripts\python.exe -m pip install -e ".[dev,tracking,virtual-camera,gui]"
-.\.venv312\Scripts\python.exe -m kardboard_vtuber.gui
-```
+![Actual KardboardCode Studio with live eye sliders and a synthetic avatar preview](docs/images/kardboardcode-studio-dark.png)
 
-Click **Try demo** to explore without a camera, then **Tutorial** for the complete walkthrough.
-Opening the GUI does not start capture. **LIVE** sliders update the current session; other
-settings unlock after **Stop**. Presets never retain camera sources or raw-preview consent.
-The installed launcher is `.\.venv312\Scripts\kardboard-studio.exe`.
-
-### Use this laptop's camera
-
-Open **Camera → Input type → This computer's camera**, click **Refresh**, select the laptop
-or USB camera by name, then click **Start camera**. Refresh reads Windows device metadata only:
-it does not open a camera or capture frames. Each named choice uses its matching capture
-backend/index. The same physical camera may appear under both Media Foundation and DirectShow.
-
-Choose **Phone stream / video file / manual source** to keep using a phone URL or recording.
-Manual numeric indices such as `0` remain supported. Refresh/reselect after device changes;
-index `0` is not guaranteed to be the laptop camera on every machine.
-
-![Native camera selection](docs/images/kardboardcode-studio-native-camera.png)
-
-*Actual native-source controls with illustrative laptop/USB device names. No camera was opened;
-Refresh retrieves the real names on the machine running the tool.*
-
-<details>
-<summary>Light theme and built-in tutorial</summary>
-
-![Native studio light theme](docs/images/kardboardcode-studio-light.png)
-
-*The same actual controls in the light theme, including both sun and moon icons; theme changes
-affect the interface, not video pixels.*
-
-![Built-in anatomical eye calibration tutorial](docs/images/kardboardcode-studio-tutorial.png)
-
-*The in-app tutorial explains per-eye thresholds, relative winks, validation, and navigation to
-the corresponding settings. It works before connecting a camera.*
-
-</details>
-
-Read the [studio tutorial](docs/09-desktop-studio/tutorial.md),
-[research and design rationale](docs/09-desktop-studio/research-and-design.md),
-[complete control inventory](docs/09-desktop-studio/interface-specification.md), and
-[GUI/runtime architecture](docs/09-desktop-studio/runtime-architecture.md).
-The numbered implementation workstreams and evidence live in [`TODO`](TODO/00_INDEX.todo).
-
-<p align="center">
-  <img src="./docs/images/kardboardcode-hero.png" alt="Current KardboardCode textured 3D avatar" width="1000">
-</p>
-<p align="center"><em>
-Current face-free synthetic render of the default textured GPU avatar.
-</em></p>
-
-## Live avatar demo
-
-<p align="center">
-  <img src="./docs/images/kardboardcode-live-demo.gif" alt="Animated KardboardCode avatar demonstrating tracked head movement, expressions, and flap physics" width="1000">
-</p>
-<p align="center"><em>
-Real motion telemetry from the private regression recording drives this entirely synthetic render.
-The GIF contains no camera frames or human face pixels.
-</em></p>
-
-### Real-life body composite
-
-<p align="center">
-  <img src="./docs/images/kardboardcode-real-life-demo.gif" alt="Real-life black-hoodie demonstration with the user's face and hairline fully covered by the KardboardCode avatar" width="420">
-</p>
-<p align="center"><em>
-User-approved camera example with the black hoodie and body visible.
-The cardboard shell and opaque head-region backing cover the face and hairline in every frame.
-</em></p>
-
-### Green-screen body composite
-
-<p align="center">
-  <img src="./docs/images/kardboardcode-green-screen-demo.gif" alt="Green-screen black-hoodie demonstration with the user's face and hairline fully covered by the KardboardCode avatar" width="420">
-</p>
-<p align="center"><em>
-The same user-approved performance processed through the runtime person-segmentation compositor.
-The body remains visible while every background pixel becomes chroma green.
-</em></p>
+*Cardboard-brown sliders on forest green. Real Windows widgets on a labelled synthetic stage;
+no camera input or published video.*
 
 ## Current milestone
 
-The current working vertical slice includes:
+**v1.1.0 — Live + Video workspaces.** [What's included →](release/RELEASE_NOTES.md)
 
-- Local Windows cameras.
-- Phone-hosted MJPEG/RTSP streams.
-- Android USB-tethered streams without a Windows vendor camera client.
-- Latest-frame-only buffering.
-- Automatic stream reconnection.
-- Negotiated-format and latency diagnostics.
-- Rotation and selfie-style mirroring.
-- MediaPipe face tracking, calibrated pose, and anatomical blink/wink controls.
-- Optional MediaPipe 33-point full-body tracking with a separate skeleton diagnostic window.
-- An opt-in separate 33-point line-skeleton diagnostic window.
-- A default ModernGL textured 3D cardboard character with corrugated edges, hollow underside,
-  front/side flaps, low-poly headphones, side shipping stickers and barcodes, and a top `FRAGILE`
-  label. The paper decals use dirty beige stock, torn corners, stains, and coarse pixel lettering.
-  The two left-side labels use separate irregular tear silhouettes rather than mirrored cuts.
-- Optional underdamped hinge physics for three underside flaps and both external side tabs.
-- Optional person segmentation that preserves the camera-visible body over pure chroma green.
-- Clean output by default; face mesh, pose, action, FPS, and latency overlays require
-  `--tracking-debug`.
-- Fail-closed privacy: black before safe face acquisition, frozen last-safe output after face loss,
-  and fully green output before a fresh segmentation mask.
-- A privacy-safe procedural 2D fallback.
-- Direct Windows virtual-camera output through the installed OBS camera component, without
-  running OBS or capturing a preview window.
-- An optional native desktop studio with complete CLI controls, live per-eye calibration,
-  source-free presets, a synthetic demo, and built-in tutorial.
+## Inside the Studio
 
-The phone preview has been verified around 28-30 FPS. The isolated GPU renderer measures about
-8.17 ms per 1080x1920 frame on the validated AMD Radeon 780M environment.
+![01: The control room. Real widgets, live sliders, your setup.](docs/images/readme/studio.svg)
 
-## Use as a camera in Discord, Teams, or Meet
+<a href="docs/images/kardboardcode-studio-light.png"><img src="docs/images/kardboardcode-studio-light.png" alt="Studio in its light theme" width="100%"></a>
 
-On Windows, install OBS Studio once to register **OBS Virtual Camera**, then install the optional
-Python dependency:
+*Same controls, warm paper and contrasting green sliders. A lighter workbench.*
 
-```powershell
-.\.venv312\Scripts\python.exe -m pip install -e ".[tracking,virtual-camera]"
-```
+<a href="docs/images/kardboardcode-studio-native-camera.png"><img src="docs/images/kardboardcode-studio-native-camera.png" alt="Native laptop and USB camera selection with illustrative device names" width="100%"></a>
 
-Run the tool with your camera source. Set `KARDBOARD_CAMERA_URL` in the same terminal;
-an assignment in another terminal does not populate this one:
+*Your laptop camera, without memorizing device numbers. Illustrative names.*
 
-```powershell
-$env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
-.\.venv312\Scripts\python.exe -m kardboard_vtuber `
-  --source $env:KARDBOARD_CAMERA_URL `
-  --mirror `
-  --physics `
-  --tracking-width 1280 `
-  --brightness 30 `
-  --virtual-camera
-```
+<a href="docs/images/kardboardcode-studio-compact.png"><img src="docs/images/kardboardcode-studio-compact.png" alt="Compact Studio layout with anatomical eye calibration" width="100%"></a>
 
-Select **OBS Virtual Camera** in the calling application's camera settings. OBS does **not**
-need to run: Python sends the composed frames directly to its installed camera component.
-Do not start OBS's virtual-camera output or another sender at the same time; the OBS backend
-has only one camera instance. This is an existing Windows camera device, not a new custom-named
-KardboardCode device. App permissions or organizational policies can restrict virtual cameras.
+*A smaller desk. The same cardboard-brown live eye controls.*
 
-`--virtual-camera` automatically enables face tracking and cardboard rendering. With face-only
-tracking, output is black before the first face acquisition and freezes on the last safe frame
-when face tracking is lost or its result becomes stale. Debug text, face-mesh panels, and even `--debug-face-preview` stay
-local; they are never sent to the virtual camera. Processing-only brightness remains internal.
-Video output defaults to **1280x720 at an advertised 30 FPS**; delivered motion depends on capture
-and tracking speed. Input is fitted with black bars if necessary, not stretched or cropped.
-Use `--virtual-camera-width`, `--virtual-camera-height` (positive even values), and
-`--virtual-camera-fps` (1-60) to change the output format. These are separate from capture settings
-and `--preview-height`.
+<a href="docs/images/kardboardcode-studio-tutorial.png"><img src="docs/images/kardboardcode-studio-tutorial.png" alt="Built-in tutorial explaining left and right eye calibration" width="100%"></a>
 
-Add `--headless` to send video without opening any preview windows. Use Ctrl+C to stop and
-release the device. Select your microphone separately in the calling application; this output
-carries video only. Window Capture in OBS remains available when you do not use this mode.
+*A built-in walkthrough, before you connect a camera.*
 
-Backend details: [pyvirtualcam supported cameras](https://github.com/letmaik/pyvirtualcam#supported-virtual-cameras).
+<a href="docs/images/kardboardcode-studio-video.png"><img src="docs/images/kardboardcode-studio-video.png" alt="Video processing workspace with original-size lossless MKV and optional high-quality MP4" width="100%"></a>
 
-## Current avatar
+*Process an existing video. Original size, every frame, compatible audio.*
+
+<a href="docs/images/kardboardcode-studio-clean-output.png"><img src="docs/images/kardboardcode-studio-clean-output.png" alt="Separate clean output window for OBS Window Capture, without controls or diagnostics" width="100%"></a>
+
+*A separate clean window for OBS. No debug panels in the feed.*
+
+[Open the Studio tutorial →](docs/09-desktop-studio/tutorial.md)
+
+## Cardboard in motion
+
+![02: Built to move. Real 3D, little pixels, big expressions.](docs/images/readme/motion.svg)
+
+<img src="docs/images/kardboardcode-live-demo.gif" alt="Animated cardboard avatar with head rotation, eye expressions and flap physics" width="100%">
+
+*Recorded motion telemetry, rendered on a synthetic stage. No camera pixels in this GIF.*
 
 <p align="center">
-  <img src="./docs/images/kardboardcode-six-sides.png" alt="Six-sided turnaround of the current cardboard avatar" width="1000">
-</p>
-<p align="center"><em>
-Front, rear, left, right, top, and underside views generated without camera imagery.
-</em></p>
-
-<p align="center">
-  <img src="./docs/images/kardboardcode-expression-states.png" alt="K and C eye expression states" width="1000">
+<img src="docs/images/kardboardcode-real-life-demo.gif" alt="User-approved masked cardboard-camera example with the original background" width="49%">
+<img src="docs/images/kardboardcode-green-screen-demo.gif" alt="The same approved cardboard-camera performance over chroma green" width="49%">
 </p>
 
-### More angles and scenarios
+*Left: user-approved masked camera example. Right: the same performance with person-segmentation green screen.*
 
-<p align="center">
-  <img src="./docs/images/kardboardcode-angle-gallery.png" alt="Nine-angle gallery of the textured cardboard avatar" width="1000">
-</p>
-<p align="center"><em>
-High, low, profile, rear-quarter, and rolled camera angles rendered from the runtime mesh.
-</em></p>
+![Open eyes, left wink, right wink and blink states of the K/C lettering](docs/images/kardboardcode-expression-states.png)
 
-<p align="center">
-  <img src="./docs/images/kardboardcode-cinematic-poses.png" alt="Six cinematic pose scenarios for the cardboard avatar" width="1000">
-</p>
+*K follows your left eye. C follows your right.*
 
-<p align="center">
-  <img src="./docs/images/kardboardcode-performance-states.png" alt="Pose and K C expression combinations" width="1000">
-</p>
+<a href="docs/images/kardboardcode-flap-physics.png"><img src="docs/images/kardboardcode-flap-physics.png" alt="Left turn, neutral and right turn with spring-driven cardboard flaps" width="100%"></a>
 
-### Face-free debug views
+*Head turns tug at the spring-driven flaps.*
 
-<p align="center">
-  <img src="./docs/images/kardboardcode-tracking-debug-window.png" alt="Synthetic tracking-debug preview with face mesh inset" width="1000">
-</p>
+<a href="docs/images/kardboardcode-flap-motion-sequence.png"><img src="docs/images/kardboardcode-flap-motion-sequence.png" alt="Five rendered frames showing independent side-flap motion" width="100%"></a>
 
-<p align="center">
-  <img src="./docs/images/kardboardcode-render-mesh-debug.png" alt="Wireframe mesh hinge and privacy-volume diagnostics" width="900">
-</p>
+*Five moments. Independent little hinges.*
 
-<p align="center">
-  <img src="./docs/images/kardboardcode-body-skeleton-debug-window.png" alt="Synthetic 33-point body skeleton debug window" width="420">
-</p>
+## Every side has a story
 
-The first and third images use the real runtime debug drawing functions with synthetic landmarks.
-The wireframe sheet is generated directly from the renderer's vertex buffer and color-codes the
-five hinge groups and internal privacy volume. None contains camera imagery.
+![03: Every side has a story. Corrugation, shipping labels and headphones.](docs/images/readme/details.svg)
 
-The complete visual breakdown—including decals, hinges, underside privacy geometry, materials,
-lighting, and depth settings—is documented in the
-[textured renderer chapter](docs/02-architecture/textured-3d-renderer.md).
+<a href="docs/images/kardboardcode-six-sides.png"><img src="docs/images/kardboardcode-six-sides.png" alt="Front, rear, left, right, top and underside of the character" width="100%"></a>
 
-## Quick start
+*A proper six-sided box, including its hollow underside.*
 
-Python 3.11 or newer is required.
+<a href="docs/images/kardboardcode-angle-gallery.png"><img src="docs/images/kardboardcode-angle-gallery.png" alt="Nine synthetic angles including profiles, rear quarters and roll" width="100%"></a>
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -e ".[dev]"
-```
+*Nine angles. No cardboard-flat shortcuts.*
 
-Face tracking currently uses a separate Python 3.12 environment:
+<a href="docs/images/kardboardcode-cinematic-poses.png"><img src="docs/images/kardboardcode-cinematic-poses.png" alt="Curious, hero, side-eye, upward and leaning poses" width="100%"></a>
 
-```powershell
-py -3.12 -m venv .venv312
-.\.venv312\Scripts\Activate.ps1
-python -m pip install -e ".[dev,tracking]"
-python scripts\download_face_landmarker_model.py
-python scripts\download_pose_landmarker_model.py
-python scripts\download_hand_landmarker_model.py
-python scripts\download_selfie_segmenter_model.py
-```
+*Small geometry. Plenty of attitude.*
 
-Preview the integrated laptop camera:
+<a href="docs/images/kardboardcode-performance-states.png"><img src="docs/images/kardboardcode-performance-states.png" alt="Expression and head-pose combinations rendered from the model" width="100%"></a>
 
-```powershell
-python -m kardboard_vtuber --source 0 --backend auto --mirror
-```
+*Blinks, winks and turns in combination.*
 
-Preview the portrait-oriented Android IP Webcam stream over Wi-Fi or USB tethering:
+<a href="docs/images/kardboardcode-surface-tour.png"><img src="docs/images/kardboardcode-surface-tour.png" alt="Shipping labels, worn surfaces, neck opening and headphone details" width="100%"></a>
 
-```powershell
-python -m kardboard_vtuber `
-  --source "http://USERNAME:PASSWORD@PHONE_IP:8080/video" `
-  --backend auto `
-  --rotate left
-```
+*Tape, labels, corrugation, and a little wear.*
 
-Do not commit an authenticated stream URL. Camera diagnostics redact embedded credentials.
+<a href="docs/images/kardboardcode-detail-views.png"><img src="docs/images/kardboardcode-detail-views.png" alt="Close views of aged paper labels, top stamp and underside" width="100%"></a>
 
-Press `Q` or `Escape` to exit.
+*Shipping marks and deliberately scruffy details.*
 
-Enable the live tracking overlay by adding:
+[Explore the avatar's visual design →](docs/02-architecture/textured-3d-renderer.md)
+
+## Under the cardboard
+
+![04: Under the cardboard. Synthetic debug views, real geometry.](docs/images/readme/debug.svg)
+
+![Dedicated local diagnostic side panels leaving the central program image unobstructed](docs/images/kardboardcode-studio-diagnostics.png)
+
+*Synthetic diagnostic layout. Private raw-face pixels stay in their own panel, not the output.*
+
+<a href="docs/images/kardboardcode-tracking-debug-window.png"><img src="docs/images/kardboardcode-tracking-debug-window.png" alt="Synthetic tracking debug view with face mesh and XYZ inset" width="100%"></a>
+
+*Synthetic face mesh and XYZ diagnostics. No camera pixels.*
+
+<a href="docs/images/kardboardcode-render-mesh-debug.png"><img src="docs/images/kardboardcode-render-mesh-debug.png" alt="Actual mesh wireframe, five hinge groups and internal privacy volume" width="100%"></a>
+
+*Real vertices, hinge groups and the internal privacy volume.*
+
+<a href="docs/images/kardboardcode-body-skeleton-debug-window.png"><img src="docs/images/kardboardcode-body-skeleton-debug-window.png" alt="Synthetic 33-point body skeleton diagnostic" width="100%"></a>
+
+*A separate line-skeleton diagnostic—not a full-body avatar.*
+
+## Unbox your setup
+
+![05: Unbox your setup. Quick start, camera output and the engineering book.](docs/images/readme/start.svg)
+
+**Already installed?**
 
 ```powershell
---tracking-debug
+.\.venv312\Scripts\kardboard-studio.exe
 ```
 
-This opt-in flag shows the face mesh and pose inset plus action, pose, FPS, and latency text.
-Without it, cardboard rendering remains visually clean. The tracker still logs debounced face,
-eye, blink, wink, and mouth transitions. Use
-`--action-hold-ms 100` to tune how long a candidate action must remain stable before it is logged.
-One Euro smoothing is enabled by default; add `--no-motion-filter` to compare raw visual tracking.
+[Install & first launch](docs/guides/getting-started.md) ·
+[All controls & CLI flags](docs/guides/features-and-controls.md) ·
+[Phone / laptop / calling apps](docs/guides/camera-and-virtual-output.md) ·
+[Troubleshooting](docs/guides/camera-and-virtual-output.md#troubleshooting-and-known-limits)
 
-If eye tracking blinks or winks too easily, lower the closed-eye thresholds and require a larger
-difference between the two eyes:
+[Engineering book](docs/README.md) ·
+[PDF handbook](docs/KardboardCode-VTuber-Engineering-Handbook.pdf) ·
+[Original PNGTuber assets](assets/PNGTuberV1/README.md) ·
+[Release package & notes](release/README.md)
 
-```powershell
---blink-threshold 0.20 `
---wink-threshold 0.50 `
---eye-open-threshold 0.72 `
---wink-min-difference 0.25
-```
+*Source release, not an installer. Face-only loss freezes the last-safe frame; real calling-app
+qualification remains unconfirmed. [Privacy and known limits →](docs/guides/camera-and-virtual-output.md#troubleshooting-and-known-limits)*
 
-Lower blink/wink values are less sensitive. A higher open-eye threshold and wink difference also
-make accidental winks less likely. These settings affect both action detection and the rendered
-K/C expressions.
+![Handle with character. Built in Python, wrapped in cardboard.](docs/images/readme/footer.svg)
 
-Render the current PS1-style cardboard prototype by adding:
-
-```powershell
---render-cardboard
-```
-
-This automatically enables face tracking and uses the textured 3D renderer. Add
-`--cardboard-renderer procedural-2d` to use the original fallback.
-
-Add `--physics` to automatically enable the textured cardboard renderer and give all three
-underside flaps spring hinge motion. The two external side tabs are especially sensitive to
-left-right head turns and swing independently around the box-side hinges.
-
-The textured box defaults to a small `0.16` perspective Z offset away from the camera. Use
-`--box-depth-offset 0` to restore its previous depth instantly, or provide any finite positive
-value to move it farther away. Large values can make the box too small to preserve head coverage.
-
-Add `--full-body` to open the independent 33-point line-skeleton window. The skeleton is
-diagnostic-only and is not composited into the camera preview beneath the cardboard head. The
-complete body must be visible to the camera for reliable limb tracking.
-
-Add `--body-head-fallback` to enable cardboard rendering and keep the head attached to a
-shoulder-derived anchor when the face turns away or face tracking is briefly lost. The option
-automatically starts face and pose tracking without rendering the synthetic full body or opening
-its skeleton window. It first learns several normal face-to-shoulder observations while the face is
-visible, then uses neutral expressions during fallback. It will not guess a generic head size
-before calibration and returns to the existing frozen fail-safe if both shoulders cannot be
-tracked confidently. Fallback-only pose inference is capped at 256-pixel input and 8 FPS to avoid
-starving camera capture and face tracking.
-
-Start each session facing the camera normally for about one second so the fallback can collect its
-initial calibration before you turn away. Until calibration completes, the preview keeps the lower
-body visible, masks everything above the detected shoulders, and displays calibration progress
-instead of showing an unexplained black frame.
-
-For a hoodie carrying a green square on the wearer's anatomical left and a blue square on the
-anatomical right, use `--hood-marker-tracking`. It automatically enables cardboard, face, and
-low-rate pose tracking. Face landmarks plus body pose mean front-facing; a side square selects the
-corresponding profile; body pose without face landmarks or either side square selects the rear.
-Side markers change orientation and position while retaining the most recent face/body-derived
-head size. Red and pink are not marker colours. Recent side-marker motion is held briefly through
-occlusion, then the existing privacy-safe freeze resumes if body tracking is also lost.
-
-For a camera-visible body over a chroma background, download the verified segmentation model once:
-
-```powershell
-python scripts\download_selfie_segmenter_model.py
-```
-
-Then add `--green-screen`. The detected person remains visible while all non-person pixels become
-pure green `(0, 255, 0)` for OBS chroma keying. Before the first fresh segmentation mask, output is
-entirely green rather than exposing the room.
-
-A representative full command is:
-
-```powershell
-python -m kardboard_vtuber `
-  --source "YOUR_CAMERA_URL" `
-  --backend auto `
-  --rotate left `
-  --mirror `
-  --physics `
-  --green-screen `
-  --preview-height 900
-```
-
-## Documentation
-
-- [Engineering book](docs/README.md) - chaptered, diagram-first documentation covering onboarding, architecture, every current algorithm/data structure, design principles, camera operations, testing, roadmap, glossary, and source map.
-- [PNGTuber V1 model](assets/PNGTuberV1/README.md) - preserved original avatar layers and behavior.
-
-## Assets
-
-- [`assets/PNGTuberV1`](assets/PNGTuberV1/README.md) - original PNGTuber Plus model, source layers, behavior specification, and reference renders.
+*Official supplied logo. Original banner compositions with licensed Silkscreen and Barlow
+Condensed typography. [Artwork and font credits →](docs/branding/README.md)*

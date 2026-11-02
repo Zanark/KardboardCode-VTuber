@@ -1,0 +1,34 @@
+Status: DONE
+Milestone: Automatically open successful Studio video exports
+Dependencies: 10_STUDIO_FEEDBACK.todo
+Purpose: Let the user immediately view the processed video through their normal media player.
+
+Tasks:
+  [x] Preserve the actual completed export result across the worker boundary.
+  [x] Dispatch the saved local file through the OS default application on the UI thread.
+  [x] Never launch for cancellation/failure; report launch refusal without losing saved output.
+  [x] Validate real encoded synthetic export, bound path, launch refusal and incomplete jobs.
+  [x] Update documentation/context and commit only this feature's changes.
+
+Acceptance criteria:
+  A successful Studio VIDEO export opens its actual result once, after pipeline cleanup.
+  The selected app comes from the system file association; no hardcoded player or shell command.
+  Editable filename fields cannot redirect playback to a different file.
+  Cancellation/failure never launches a player.
+  A player-launch refusal is visible while the successful output remains saved.
+  CLI stays Qt-free/noninteractive. Installer work remains paused; frozen documentary unchanged.
+
+Completion evidence:
+  46 focused Studio/runtime/video-export tests and Ruff pass.
+  The existing real four-frame encoded export now verifies main-thread launch after tracker/
+  renderer cleanup, exact bound output despite edited fields, spaces/# URI handling and refusal.
+  Cancellation/failure regressions prove no player launch and no completed output.
+  Player dispatch is mocked; no real camera or user media player is opened by automated tests.
+  Frozen 977-page documentary PDF remains byte-identical.
+  User reading/playback approval remains separate from implementation evidence.
+Completion log:
+  2026-11-02: Saved/read back ep_869, refreshed current context/mesh and verified feature
+  indexing/clear incoming obligations. Feature-only staging preserves paused installer hunks.
+  2026-11-02: Implemented native default-file association through QDesktopServices, with
+  successful worker result ownership and visible saved-file-preserving launch errors.
+  2026-11-02: User clarified this is a KardboardCode feature, not a global assistant preference.

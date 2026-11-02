@@ -4,6 +4,267 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Brown dark theme and README captures completed and pushed
+
+- User explicitly requested finishing brown accents, refreshed README screenshots, commit/push.
+- Enabled dark slider tracks/handles use #d5a568; mint semantic states and green light sliders
+  are preserved. New actual pixel tests cover both track/handle and disabled states.
+  35 focused theme/GUI/branding tests and Ruff passed.
+- Regenerated all eight native synthetic views; seven PNGs changed, tutorial image was identical.
+  Reviewed dark/light/compact/video contact sheet and updated brown/light README captions.
+- Staged theme/docs/screenshots only. Overlapping installer README/version/banner and runtime
+  edits remain local and unstaged. Frozen documentary PDF hash remains identical.
+- gh reported READ, but the normal Git push succeeded without any account/security change.
+  Remote workDesk/agentic_GUI matches 9938ac258d628759247019a757a36509001d03ec exactly.
+  Do not repeat the earlier assumption that publishing/push is necessarily blocked.
+- No live camera, user process termination, installer build/test, merge/tag or remote release.
+- Persisted/readable handoff ep_876; advanced the exact marker only after store/episode
+  persistence to 2026-11-02T23:25:25+05:30.
+
+## 2026-11-02 - Default media-player opening added to Studio VIDEO
+
+- User clarified the request applies to KardboardCode, not a global assistant preference.
+- Worker retains its typed completed export result. On successful thread finish, Studio uses
+  QDesktopServices/QUrl.fromLocalFile for that actual path on the main thread, after cleanup.
+  It does not read mutable output controls or hardcode/install a player.
+- Failure/cancellation opens nothing. A declined OS launch retains VIDEO SAVED and displays
+  a clear error with the saved filename. Player codec support is an OS/application boundary.
+- Extended real encoded synthetic export test for both launch outcomes, cleanup/thread/path
+  binding and spaces/# handling; added failed/cancelled-job regressions. 46 focused tests and
+  Ruff pass. No real player, live camera, paused installer tests or user process touched.
+- Updated source/in-app tutorials and workstream 14. CLI remains noninteractive. The frozen
+  documentary PDF is byte-identical; this feature is after its recorded cutoff. Release files
+  remain explicitly stale/draft while installer work is paused.
+- Persisted/readable handoff `ep_869`; marker advanced after store/episode persistence to
+  `2026-11-02T23:12:03+05:30`. Feature staging excludes overlapping unfinished installer hunks.
+
+## 2026-11-02 - Exhaustive development documentary completed
+
+- Delivered The Box That Learned to Follow as a private local PDF under
+  YTScript\DevelopmentJourney. Final 977 pages/31 chronological chapters/62 diagrams/12 figures;
+  ~17,000 original narrative words followed by complete visible evidence appendices.
+- Scope: 117 textual files, 6,560 records, 158 historical tasks/66 dependencies, 245 checklist
+  occurrences, 199 human messages +16 delegated instructions, 203 responses, four form decisions,
+  80 Git milestones. Eight documentary work orders/nine dependencies are indexed separately.
+- Three print/audit rounds fixed SVG XML breaks, duplicate IDs, repeated chapter headings and
+  one border-only empty page. The final PDF preserves every complete record occurrence, task
+  and message; 31,252 links resolve; 51 bookmarks and stable printed folios are present.
+  Zero blank pages, horizontal margin overflow, missing images or omitted source lines.
+- Final cover/content/diagram/screenshot/source-appendix contact sheets inspected. PDF is
+  30,570,619 bytes; SHA256 2891a853af0e7553b3156196e4286091e16b490adb2fcde15b79772f7dd972d4.
+  edition-receipt.json and SHA256SUMS.txt seal the final audited files. Package remains ignored.
+- User explicitly requested rereading current installed context skills before final offload.
+  Read both complete current SKILL.md files; acknowledged Alfred's room-wide introduction
+  only in own persona file. No sibling store, camera, installer implementation or publication.
+- Completed evidence is separate from owner reading approval. Live accuracy/privacy/calling-app
+  and installer/recording limitations remain as previously recorded.
+- Persisted/readable final handoff as zmem `ep_868`; advanced the exact marker only after
+  store/episode persistence, to `2026-11-02T22:51:42+05:30`. Source release remains the older
+  completed v1.1.0 baseline while installer/source work is paused; the private book is not exported.
+
+## 2026-11-02 - Development documentary drafted; print review in progress
+
+- User requested a proper chronological documentary PDF with every task/detail, research,
+  diagrams, repeated review and final context refresh. Installer remains paused.
+- Froze 117 sanitized textual sources, 6,560 records, 158 historical task rows, 66 dependencies,
+  245 checklist occurrences, 215 human/delegated requests, 203 responses, four form choices
+  and 80 Git milestones. Sources include original research and both context stores.
+- Built an original 31-chapter narrative, 62 diagrams and 12 captioned figures, with historical
+  synthetic UI captures from specific Git revisions rather than mislabelling current UI as old.
+- First complete PDF was 1,050 pages/~30.7 MB. Actual PDF text audit recovered every complete
+  source-record occurrence, task and conversation entry; links resolve and horizontal bounds pass.
+  Visual review found duplicate chapter headings and one blank border-only page; fixes are
+  applied but final rendering, page-map, visual review and delivery remain pending.
+- Local private production folder is YTScript\DevelopmentJourney; no raw camera imagery,
+  credentials, publication or installer work. User explicitly requested rereading current
+  installed context skills before the final offload.
+
+## 2026-11-02 - Windows installer paused at the user's request
+
+- User asked to pause unless almost finished. Final corrected MSI and actual installed
+  application/helper verification remain, so paused instead of claiming a ready deliverable.
+- Last full suite: 278 passed/Ruff; focused slice: 48 passed. Those predate the final
+  extended-prefix/retry source change and its new unrun real-wheel regression.
+- Genuine per-user MSI installation succeeded. All 26 component downloads worked through
+  the configured verified HTTPS mirror, but Qt wheel extraction hit Windows MAX_PATH.
+  A locked-wheel reinstall using a canonical extended-length private prefix succeeded.
+  Added that source fix and forced exact-wheel reinstall on retry; did not rebuild after pause.
+- Draft MSI is 19,697,664 bytes and stale against source. Existing ZIP remains completed
+  v1.1.0, not v1.1.1. Added clear paused/draft warnings; no artifacts were published.
+- Uninstalled only the owned test MSI (exit 0), removed its Start shortcut and confirmed
+  user-data sentinel preservation. It left 23 empty directories; removed only the exact empty
+  test installation tree after verifying zero files. No running task shell remains.
+- Retained ignored build/runtime/wheelhouse/download cache, logs and the unrun camera-free
+  installed-runtime probe for resumption. Do not resume setup until asked. All unfinished
+  source/docs/theme changes remain uncommitted; brown sliders and native screenshots retained.
+- No live camera, user Studio termination, system Python/PATH or security-setting changes.
+- Persisted/readable handoff episode: `ep_856`. Advanced the full-offload marker only after
+  store/episode persistence, to `2026-11-02T21:42:29+05:30`.
+
+## 2026-11-02 - Online Windows setup requested; initial MSI built
+
+- User requested a Windows setup in the existing release folder and selected the smaller
+  online bootstrap. Adopted per-user x64 MSI with patched private Python 3.12.16, own wheel
+  and first-launch Tk component wizard; no frozen runtime/system Python/PATH modifications.
+- Added install-aware models/data/helper paths and packaged the six fixed helper scripts.
+  The user's brown-slider refinement is included in dirty v1.1.1 inputs.
+- Initial installed-path/Studio slice: 38 passed and Ruff passed. Downloaded all 26 dependency
+  wheels through the configured verified HTTPS mirror and checked each against PyPI hashes.
+  Direct public package-CDN TLS is blocked here; no TLS verification was disabled.
+- Initial MSI is 19,689,472 bytes. Installation, installed helper/GUI checks, uninstall/data
+  preservation, release documentation and final artifacts/provenance are still pending.
+  Existing v1.1.0 source export is stale. No camera or remote publication was performed.
+
+## 2026-11-02 - Borderless README gallery completed
+
+- User rejected table rows/borders around README images, while explicitly approving the
+  original-background / green-screen two-GIF composition. Preserved that pair side by side,
+  removed its table frame too, and stacked all other images at full content width.
+- Actual browser checks at 1120px and 390px: 31 loaded images, zero tables/image borders,
+  all 29 non-paired images full width, paired GIFs aligned and no horizontal overflow.
+  Source inventory, order, captions and links retained; no image files or runtime code changed.
+- Recorded the convention in branding docs and workstream 11. No handbook/application rebuild.
+  Public source committed as `4590ca7e6a6fa4b05ac13e1a9dae866782990e56`; artifacts `a35f331`.
+- Current v1.1.0 ZIP is 33,147,025 bytes, sourceModified=false, source fingerprint
+  `05e322ac47665f43f619792bb0df6277f7974123c5d69725ce4c744f326baea3`.
+  Export freshness and all six committed release-file bytes are checked. No remote publication.
+- All new context stays here only; older KardboardCode context remains read-only.
+- Read current shared chat/recent mentions; no new response obligation or useful hook required
+  another post. Persisted the layout decision as zmem `ep_846`, then advanced the offload marker
+  to `2026-11-02T20:19:41+05:30`.
+
+## 2026-11-02 - Fifteen-point Studio feedback completed as v1.1.0
+
+- User supplied actual-use screenshots and requested a coherent layout/workflow refinement.
+  Raw-face/debug overlays obscure the preview, disabled and checked states are unclear,
+  closed-eye output is unreliable, and the clean OBS-capturable output window is missing.
+- Required two front-level modes: live camera and processing an existing video into a new
+  cardboard-avatar output. Existing private raw capture is an advanced utility, not that mode.
+- User selected both export formats with lossless MKV default; MP4 must be labelled high-quality
+  but lossy. Preserve source dimensions/timing/audio where supported and reject unsupported
+  quality conversions explicitly. No source/camera access is authorized automatically.
+- README milestone cards should go; transparent SVG is preferred for decorative UI art.
+  The runtime-avatar hero belongs directly below the top banner and should share its palette.
+- Created workstream 10 and began direct source tracing. No private screenshots copied into
+  public documentation; older context and sibling stores remain read-only.
+- Implementation milestone: both banner-derived palettes, visible tick/lock states, separate
+  diagnostic buffers, full-resolution clean output window, bottom CLI/log tabs, preset resolutions,
+  clarified camera routes, guided eye calibration and raw-eye rendering are implemented.
+- Added synchronous VIDEO processing with lossless MKV / optional high-quality MP4, preserved
+  dimensions/PTS and copied compatible audio. No-overwrite publication, cancel cleanup, HDR/extra
+  stream refusal and a Qt-free video CLI are included. Advanced RAW capture remains Live-only.
+- Full suite passed 266 tests and Ruff. Real private 30-frame MediaPipe VIDEO + GPU export at
+  1080x1920 completed with face detection; temporary files removed. Synthetic encoded tests cover
+  lossless pixels, VFR spacing, PCM/AAC packet identity and concurrent destination safety.
+- Refreshed/inspected eight native synthetic UI views, tighter icons and the fully framed hero.
+  Fixed an actual missing checkbox-tick resource issue exposed by native review; pixel-level
+  regression now checks it. Body-calibration text is also excluded from clean program output.
+- UI demo service intervals after warm-up: 161 samples, p95 31ms/max 32ms on this machine.
+  This is not end-to-end video latency or real-camera qualification. Finishing handbook/export.
+- Completed handbook: 256 pages/99 diagrams, zero failures/overflow. Actual extracted v1.1.0
+  source launches all three help entry points, renders Studio/clean output and opens VIDEO mode.
+- Public inputs committed as `11a0e2b2aa261875f89534612194137584fd67fe`; final artifacts as
+  `c803653`. ZIP 33,145,546 bytes, sourceModified=false, fingerprint
+  `34f7fd0e9bddea186631cf296612a38e7fc8c641654ea548a0fecdde7c7bf1bd`.
+  Export freshness and all six committed release-file bytes are verified.
+- No live camera or user Studio process was touched; no remote tag/push/merge/publication.
+  Owner must restart Studio to load changes and calibrate actual open/closed eye scores.
+  Unsupported video formats remain explicit limitations; real calling-app/privacy qualification
+  and the old private recorder's fixed-FPS duration issue are not claimed solved.
+- Read the current-day shared chat, latest general history and recent mentions; acknowledged
+  the new reply to this persona with an emoji in its own file only. No routine work post.
+- Persisted the completed handoff as zmem `ep_844`; after store/episode persistence, advanced
+  the exact full-offload marker to `2026-11-02T20:07:23+05:30`.
+
+## 2026-11-02 - Explicit post-delivery context refresh
+
+- User requested a fresh offload after the visual README delivery. Reconciled current state,
+  durable conventions, prior handoff episode, clean Git history and unchanged v1.0.0 manifest.
+- Public inputs remain `4b85fad`, release artifacts `f607adc`, and the preceding delivery context
+  was committed as `4219b61`. No application/source/artwork/release regeneration was requested.
+- Preserved the completed 29-image/eight-graphic README, three named guides, font licenses,
+  first-official source-release designation, manual-publication boundary and unresolved limits.
+- Added exact local preview/contact-sheet paths so a resumed session can review existing results
+  without regenerating or reopening a camera. Prior validation remains dated evidence, not new tests.
+- Read the current day's chat, latest general messages and recent mentions. No new incoming
+  obligation or natural new contribution required another social post.
+- Updated only this repository's current context. The older KardboardCode store and all sibling
+  stores remain read-only; no live capture, model download, publication, tag, merge or push.
+- Persisted this requested refresh as zmem `ep_841`, then advanced the successful-offload marker
+  to `2026-11-02T18:12:06+05:30` after store/episode persistence.
+
+## 2026-11-02 - Visual README redesign completed
+
+- User requested fewer front-page words, many pretty images/banners, matching typography and
+  named files for extra text. Rebuilt the README as an image-first showcase, retaining all
+  existing public imagery and one actual Studio screenshot above Current milestone.
+- Created eight reproducible kraft-paper/deep-green/mint graphics using the unchanged supplied
+  logo. Pinned Silkscreen and Barlow Condensed font files from Google Fonts; included both OFL
+  licenses. Fonts are baked into PNGs, without viewer-installed fonts or custom GitHub CSS.
+- Moved setup, features/flags and camera/virtual-output/troubleshooting into three named guides.
+  Preserved all original README CLI flags through those guides and linked release instructions.
+- Browser previews at 1120px and 390px load all 29 images with no page/table overflow; visible
+  text is 324 words. Approximate source prose is 75% lower. All six new guide diagrams parse.
+- Ruff and 11 targeted branding/export tests passed; master preservation, banner repeatability,
+  87 relative references, alt text and screenshot ordering are checked. All six guide diagrams
+  were also rendered to SVG. All 16 prior front-page public images remain.
+- Public source committed as `4b85fad7d6e6682342eecbff83002db701f77cd3`; generated source handoff
+  committed as `f607adc`. v1.0.0 remains the first official version, with latest local source
+  fingerprint `defd8552ba1d1557e4b1a49b239faad7ae44ed6054b9c8ffc32a5521f344e70e`.
+  ZIP: 32,592,509 bytes; sourceModified=false. All six release files match committed Git bytes.
+- Canonical app logo, runtime behavior and GUI fonts are unchanged. No new camera capture,
+  model download, private imagery, remote tag/push/merge/publication or installer was introduced.
+- Read the day's shared chat, latest general messages and recent mentions before refreshing.
+  No incoming reply obligation remained; joined the new calculator joke from this session's own
+  persona file only. The older KardboardCode store and all sibling stores remain read-only.
+- Persisted the completed redesign as zmem `ep_840`; after store/episode persistence, advanced
+  the exact full-offload marker to `2026-11-02T18:05:02+05:30`.
+
+## 2026-11-02 - Supplied logo and first official v1.0.0 release completed
+
+- User supplied voxel KC cardboard-box artwork for the tool logo and asked that the post-logo
+  version count as the first official release. Preparing v1.0.0; GitHub currently lists no releases.
+- Preserved the original 1345x1169 RGBA PNG byte-for-byte. Derived a transparent PNG and seven-size
+  Windows ICO using existing OpenCV/NumPy dependencies, without modifying the avatar mesh.
+  Master SHA256: `9cefba6bc42ad8da9ac6b49c1d3543fba86cd8832bbc93059e8969419378e852`.
+- Updated package versions, README branding/design/architecture, and five real Windows screenshot
+  variants. Contact-sheet inspection confirmed the new header identity; native-camera controls use
+  illustrative names and no capture. One tool screenshot remains above Current milestone.
+- Full suite passed 245 tests and Ruff. Native Qt decodes all seven ICO sizes. The engineering
+  handbook was rebuilt to 247 pages/97 diagrams with zero Mermaid failures and zero overflow.
+- Extracted the v1.0.0 source ZIP privately: CLI/GUI help and a real synthetic GUI preview loaded
+  the extracted modules/resources and exited normally. The temporary extraction was removed.
+- Public inputs committed as `92c32b93039b35942de63ff57273feb149a05e95`; final generated artifacts
+  committed as `e7ac0e3`. ZIP is 32,097,090 bytes, manifest `sourceModified=false`, fingerprint
+  `0d046cfd359d2b5dbb93f464cadea0feef2433322a64a75dbd0b21ce0201bec7`.
+  Export freshness and all six committed release-file bytes were verified after artifact commit.
+- No tag, release, merge, push, live camera or model download was performed. Publication is still
+  manual; logo/UI visual acceptance, distant tracking, calling-app qualification and recording
+  timing remain distinct/unverified.
+- User explicitly requested a context refresh after the current work. Updated only this current
+  store; mandatory older KardboardCode context remains read-only. Read the day's shared chat,
+  latest general messages and recent mentions; no unacknowledged incoming obligation remained.
+- Persisted the completed handoff as zmem `ep_838` and advanced the exact full-offload marker
+  to `2026-11-02T17:35:11+05:30` after store/episode persistence succeeded.
+
+## 2026-11-02 - README layout and local source release preparation
+
+- User requested moving GUI text/gallery below Current milestone while leaving one tool screenshot above it. Reordered the existing sections without discarding the other avatar/demo images.
+- GitHub reported read-only repository authorization and no existing releases. User explicitly redirected to a separate tracked local release folder that remains current with the latest tool export. No account switch or publishing workaround was attempted.
+- Prepared v0.2.0 package/version alignment, release notes, manual setup/publication context, and a standard-library public-source ZIP exporter. Added AGENTS release-freshness guidance and workstream 07.
+- Export excludes private context, local credentials/config, recordings, models, environments, caches and generated self-recursion. Authored release instructions/notes stay inside source packages so README links work.
+- Full suite passed 241 tests and Ruff. Verified stale/tampered detection, staged-file gating, repeatability and clean-commit provenance refresh. README order has exactly one tool image before the milestone.
+- A candidate archive was extracted privately and launched both help entry points and the real synthetic GUI preview from its extracted root. No camera capture, model download or private imagery was used.
+- Final handoff uses a public-input commit followed by a clean-provenance archive/export commit. Remote publication remains the owner's action; no tag, release, merge or push has been created.
+- Public inputs were committed as `e5e2db3`; the final v0.2.0 export passed freshness/content/checksum checks with `sourceModified=false`. The tracked handoff ZIP is about 30 MB.
+- A Git line-ending warning exposed a checksum portability risk. Pinned release text to LF,
+  kept ZIPs binary, and added committed-byte verification to the exporter tests. Final clean
+  source commit is `1067ade`, final asset commit `dc72392`; all six Git blobs match the verified
+  files exactly. Final archive is 29,909,091 bytes and `--check` passes after artifact commit.
+- Persisted the release handoff as zmem `ep_836` and set the full-offload marker to `2026-11-02T17:06:20+05:30`. Repository-memory API was unavailable; the durable rule remains in AGENTS.md, release instructions, this store and zmem.
+- Final byte-stable provenance is persisted as `ep_837`; successful offload marker advanced to
+  `2026-11-02T17:13:00+05:30`. No public inputs changed during this private-context update.
+
 ## 2026-11-02 - Explicit native machine camera selection
 
 - User requested a native machine/laptop camera option. Existing capture already accepted numeric devices; added a discoverable computer-camera input mode and named selector instead of requiring a masked index.

@@ -1,0 +1,55 @@
+Status: DONE
+Milestone: Studio workspaces, unobstructed output and usable calibration
+Dependencies: 09_VISUAL_README.todo
+Purpose: Address the user's fifteen-point live-use feedback without mixing diagnostics into deliverable video.
+
+Tasks:
+  [x] Apply banner-derived dark/light palette to all controls and readable checkbox states (1,7).
+  [x] Remove milestone image cards; move/restyle the avatar hero directly below the top banner;
+      use transparent SVG decorative section art rather than raster UI cards (2,3).
+  [x] Clarify manual device indices and named-camera backend alternatives (4,5).
+  [x] Make restart-only controls visibly locked/dimmed while work runs (6).
+  [x] Separate raw face, mesh, text and skeleton diagnostics from the clean central preview (8,9).
+  [x] Move command-copy and log views into bottom tabs with one-click full-command copy (10).
+  [x] Offer standard and current-monitor output resolution presets instead of unit spin boxes (11).
+  [x] Reproduce closed-eye values, expose effective closure decisions and add guided eye calibration (12).
+  [x] Derive tight optical icon bounds without modifying the supplied master (13).
+  [x] Add front-level Live and Process video work modes; keep private capture as an advanced utility (14).
+  [x] Process every prerecorded frame with original dimensions/timestamps and remux audio;
+      offer lossless MKV by default and high-quality MP4 as an explicit lossy option (14).
+  [x] Open a separate clean output window for OBS Window Capture, distinct from virtual camera (15).
+  [x] Validate offline and prepare updated tutorial/docs/screenshots/release/context handoff.
+
+Acceptance criteria:
+  No diagnostic/raw-face pixels appear in clean preview, output window, virtual camera or exported video.
+  Camera indexing/backends and locked/live/checked states are visually understandable.
+  Blink tests cover the reported 0.51/0.66 closed-eye scenario through explicit calibration,
+  actual renderer output and transient blink responsiveness, not just classifier constants.
+  Lossless export preserves processed frame pixels, dimensions, source timing and compatible audio;
+  unsupported HDR/rotation/format cases fail explicitly, never silently convert quality.
+  Output is written safely without overwriting input/existing files, with progress and cooperative cancel.
+  Existing CLI behavior and privacy fail-closed boundaries remain intact.
+  User screenshots/raw imagery stay private; no automatic live capture or remote publication.
+
+Completion evidence:
+  Full suite: 266 passed; Ruff passed. Strong native checkbox tests inspect actual tick pixels.
+  Synthetic encoded fixtures verify lossless processed pixels, VFR PTS, copied PCM/AAC payloads,
+  cancellation, unsupported high-bit-depth refusal and concurrent-destination safety.
+  Actual MediaPipe VIDEO + GPU export processed 30 private recorded frames at 1080x1920;
+  face detected at end, no camera opened, temporary files removed.
+  Native dark/light/video/diagnostic/clean-window captures inspected; hero framing and optical
+  icons reviewed on contact sheets. Native caption-color setters accepted both palettes.
+  Native demo heartbeat after warm-up: 161 intervals, p95 31ms/max 32ms; not video latency.
+  Browser 1120px/390px previews: every README image loaded, no horizontal overflow.
+  New/revised tutorial, guides, ownership/data-model architecture and video chapter written.
+  Final handbook: 256 pages, 99 diagrams, zero Mermaid errors and zero overflow.
+  v1.1.0 source candidate verified: camera CLI, Studio and video CLI help, actual extracted
+  GUI clean preview/output plus video workspace, resource identity and private exclusions.
+  Final handoff uses committed public inputs followed by regenerated clean-provenance assets;
+  current-context refresh follows packaging completion.
+  User visual approval remains unrecorded.
+Completion log:
+  2026-11-02: User provided fifteen feedback points and screenshots from actual Studio use.
+  User selected both video export formats, with lossless MKV as default.
+  2026-11-02: All fifteen feedback points implemented and verified offline; no user live
+  camera/process was opened/terminated and no remote publication performed.

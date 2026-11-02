@@ -109,7 +109,9 @@ def test_tutorial_can_jump_to_every_task_without_starting_camera(
 ) -> None:
     window.show_tutorial(3)
     app.processEvents()
-    assert window._tutorial is not None and window._tutorial.selector.count() == 9
+    from kardboard_vtuber.gui.tutorial import LESSONS
+
+    assert window._tutorial is not None and window._tutorial.selector.count() == len(LESSONS)
     window._tutorial.navigate.emit("Avatar & eyes")
     assert window.page_selector.currentText() == "Avatar & eyes"
     assert window.worker is None
@@ -141,6 +143,10 @@ def test_demo_keeps_ui_heartbeat_and_cooperatively_stops(
         wait_until(app, lambda: not window.preview.image.isNull())
         assert window.controls["left_blink_threshold"].isEnabled()
         assert not window.controls["source"].isEnabled()
+        assert "LOCKED" in window.controls["source"].state_badge.text()
+        assert "LOCKED" in window.live_hint.text()
+        assert window.output_window.isVisible()
+        assert not window.output_window.canvas.image.isNull()
         window.controls["left_blink_threshold"].set_value(0.22)
         window.controls["left_blink_threshold"].changed.emit()
         assert window.bridge is not None and window.bridge.tuning().eyes.left_closed == 0.22
@@ -295,3 +301,222 @@ def test_native_inventory_job_completes_without_starting_capture(
     wait_until(app, lambda: window.job is None, timeout=15)
     assert "[CAMERAS] Listed" in window.console.toPlainText()
     assert window.worker is None and window.start_button.isEnabled()
+
+
+def test_bottom_command_tab_copies_the_complete_redacted_command(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    from PySide6.QtCore import Qt
+
+    window.controls["source"].set_value("https://synthetic:secret@invalid/video")
+    window._refresh_settings()
+    window.console_tabs.setCurrentIndex(1)
+    app.processEvents()
+    QTest.mouseClick(window.copy_command, Qt.MouseButton.LeftButton)
+    copied = app.clipboard().text()
+    assert copied == window.command.toPlainText()
+    assert "secret" not in copied and "Read-Host" in copied
+    assert window.console_tabs.tabText(0) == "Logs"
+    assert window.console_tabs.tabText(1) == "CLI equivalent"
+
+
+def test_standard_resolution_selector_updates_both_values_without_unit_editors(
+    window: StudioWindow,
+) -> None:
+    index = next(
+        i for i in range(window.output_resolution.count())
+        if window.output_resolution.itemData(i) == (1920, 1080)
+    )
+    window.output_resolution.setCurrentIndex(index)
+    assert window.controls["virtual_camera_width"].value() == 1920
+    assert window.controls["virtual_camera_height"].value() == 1080
+    assert not window.controls["virtual_camera_width"].isVisible()
+    assert not window.controls["virtual_camera_height"].isVisible()
+
+
+def test_video_work_mode_is_not_private_camera_recording(window: StudioWindow) -> None:
+    window.work_mode.setCurrentIndex(1)
+    window.video_input.setText(r"C:\videos\my input.mp4")
+    window.video_output.setText(r"C:\videos\my output.mkv")
+    assert window.video_setup.isVisible()
+    assert window.start_button.text() == "Process video"
+    assert "VIDEO READY" in window.status.text()
+    assert "input video" in window.preview.placeholder
+    assert not window.controls["source"].isEnabled()
+    assert window.controls["source"].state_badge.text() == "LIVE ONLY"
+    assert "video_cli" in window.command.toPlainText()
+    assert "--input-video=" in window.command.toPlainText()
+    assert "record_guided_regression" not in window.command.toPlainText()
+    window.work_mode.setCurrentIndex(0)
+    assert window.controls["source"].isEnabled()
+
+
+def test_raw_debug_channels_never_cover_program_or_clean_window(window: StudioWindow) -> None:
+    from kardboard_vtuber.runtime import RuntimeTelemetry
+
+    window.bridge = RuntimeBridge()
+    clean = np.full((60, 80, 3), (10, 20, 30), np.uint8)
+    raw = np.full_like(clean, (100, 110, 120))
+    debug = np.full_like(clean, (200, 210, 220))
+    window.bridge.publish(
+        clean, RuntimeTelemetry(), clean_frame=clean, raw_face=raw, face_mesh=debug,
+    )
+    window._poll_runtime()
+    assert window.raw_panel.isVisible() and window.diagnostic_panel.isVisible()
+    assert window.preview.image.pixelColor(5, 5).red() == 30
+    assert window.output_window.canvas.image.pixelColor(5, 5).red() == 30
+    assert window.raw_face.image.pixelColor(5, 5).red() == 120
+    assert window.face_mesh.image.pixelColor(5, 5).red() == 220
+    window.bridge = None
+
+
+def test_checkbox_visual_states_are_distinct_in_both_themes(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    from PySide6.QtWidgets import QCheckBox, QStyle, QStyleOptionButton
+
+    window.page_selector.setCurrentText("Tracking labs")
+    editor = window.controls["full_body"].editor
+    assert isinstance(editor, QCheckBox)
+    for _ in range(2):
+        editor.setChecked(False)
+        app.processEvents()
+        unchecked = editor.grab().toImage()
+        editor.setChecked(True)
+        app.processEvents()
+        checked = editor.grab().toImage()
+        assert unchecked != checked
+        option = QStyleOptionButton()
+        editor.initStyleOption(option)
+        indicator = editor.style().subElementRect(
+            QStyle.SubElement.SE_CheckBoxIndicator, option, editor,
+        )
+        tick = checked.copy(indicator)
+        expected = "#19332b" if window._dark else "#fff4db"
+        assert any(
+            tick.pixelColor(x, y).name() == expected
+            for x in range(4, tick.width() - 4)
+            for y in range(4, tick.height() - 4)
+        ), "A filled square without a visible tick is not a checked-state affordance."
+        assert "QCheckBox::indicator:checked" in window.styleSheet()
+        window.toggle_theme()
+
+
+def test_effective_calibrated_eye_decisions_are_visible(window: StudioWindow) -> None:
+    from dataclasses import replace
+
+    from kardboard_vtuber.runtime import RuntimeTelemetry
+    from kardboard_vtuber.tracking.eyes import calibrate_eyes
+    from tests.test_ps1_cardboard_renderer import state
+
+    window.bridge = RuntimeBridge()
+    window._apply_eye_calibration(calibrate_eyes([(.93, .94)] * 15, [(.51, .66)] * 15))
+    raw = replace(state(1), left_eye_open=.51, right_eye_open=.66)
+    window._display_telemetry(RuntimeTelemetry(face=raw, raw_face=raw), False)
+    assert "CLOSED" in window.eye_labels["left"].text()
+    assert "CLOSED" in window.eye_labels["right"].text()
+    assert not window.error_label.isVisible()
+    window.bridge = None
+
+
+@pytest.mark.parametrize("player_accepts", [True, False])
+def test_video_mode_exports_and_opens_actual_result_without_opening_a_camera(
+    app: QApplication, window: StudioWindow, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    player_accepts: bool,
+) -> None:
+    from types import SimpleNamespace
+
+    from PySide6.QtCore import QThread
+
+    from tests.test_ps1_cardboard_renderer import state
+    from tests.test_video_export import clip
+
+    closed = {"tracker": False, "renderer": False}
+
+    class Tracker:
+        def __init__(self, config) -> None:
+            assert config.video_mode
+            self.current = state(0)
+
+        def submit(self, frame, captured_at_ns) -> None:
+            self.current = state(captured_at_ns // 1_000_000)
+
+        def snapshot(self):
+            return SimpleNamespace(state=self.current, raw_state=self.current)
+
+        def close(self) -> None:
+            closed["tracker"] = True
+
+    class Renderer:
+        def render(self, frame, face) -> None:
+            frame[10:20, 10:20] = (5, 15, 25)
+
+        def close(self) -> None:
+            closed["renderer"] = True
+
+    source, target = tmp_path / "input.mkv", tmp_path / "processed video #1.mkv"
+    clip(source)
+    opened = []
+
+    def open_player(url) -> bool:
+        assert QThread.currentThread() == app.thread()
+        assert target.is_file()
+        assert all(closed.values())
+        assert url.isLocalFile()
+        opened.append(Path(url.toLocalFile()))
+        return player_accepts
+
+    monkeypatch.setattr("kardboard_vtuber.gui.window.QDesktopServices.openUrl", open_player)
+    model = tmp_path / "face.task"
+    model.write_bytes(b"synthetic model fixture")
+    window.controls["face_model"].set_value(str(model))
+    monkeypatch.setattr("kardboard_vtuber.video_pipeline.MediaPipeFaceTracker", Tracker)
+    monkeypatch.setattr("kardboard_vtuber.cli._create_renderer", lambda *args, **kw: Renderer())
+    monkeypatch.setattr(
+        "kardboard_vtuber.cli.LatestFrameCamera",
+        lambda *args: pytest.fail("Offline processing must not open a camera"),
+    )
+    window.work_mode.setCurrentIndex(1)
+    window.video_input.setText(str(source))
+    window.video_output.setText(str(target))
+    window.start_camera()
+    assert window._processing_video and window.worker is not None
+    assert not window.controls["left_blink_threshold"].isEnabled()
+    window.video_output.setText(str(tmp_path / "not-the-exported-file.mkv"))
+    wait_until(app, lambda: window.worker is None, timeout=15)
+    assert target.is_file()
+    assert opened == [target.resolve()]
+    assert "VIDEO SAVED" in window.status.text()
+    assert "4 frames" in window.video_progress_label.text()
+    assert window.error_label.isVisible() == (not player_accepts)
+    if not player_accepts:
+        assert "video was saved" in window.error_label.text()
+        assert str(target.resolve()) in window.error_label.text()
+
+
+@pytest.mark.parametrize("cancelled", [True, False])
+def test_failed_or_cancelled_video_never_opens_default_player(
+    app: QApplication, window: StudioWindow, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    cancelled: bool,
+) -> None:
+    from kardboard_vtuber.video import ExportCancelled
+
+    def fail(*args, **kwargs):
+        if cancelled:
+            raise ExportCancelled()
+        raise RuntimeError("Simulated video export failure")
+
+    monkeypatch.setattr("kardboard_vtuber.gui.video_worker.render_avatar_video", fail)
+    monkeypatch.setattr(
+        "kardboard_vtuber.gui.window.QDesktopServices.openUrl",
+        lambda *_: pytest.fail("An incomplete export must never launch a player"),
+    )
+    target = tmp_path / "unfinished.mkv"
+    window.work_mode.setCurrentIndex(1)
+    window.video_input.setText(str(tmp_path / "input.mkv"))
+    window.video_output.setText(str(target))
+    window.start_camera()
+    wait_until(app, lambda: window.worker is None)
+    expected_status = "VIDEO CANCELLED" if cancelled else "VIDEO EXPORT FAILED"
+    assert expected_status in window.status.text()
+    assert not target.exists()

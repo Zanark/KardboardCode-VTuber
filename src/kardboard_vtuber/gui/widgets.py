@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import textwrap
 
 from numpy import ndarray
 from PySide6.QtCore import QRectF, Qt, Signal
@@ -70,11 +71,16 @@ class OptionControl(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 2, 0, 5)
         layout.setSpacing(5)
-        label = field.label + ("  [LIVE]" if field.name in LIVE_FIELDS else "")
+        label = field.label
+        self.state_badge = QLabel("LIVE" if field.name in LIVE_FIELDS else "")
+        self.state_badge.setObjectName("lockBadge")
         self.editor: QCheckBox | QLineEdit | QComboBox | QSpinBox | QDoubleSpinBox | ValueSlider
         if isinstance(action, argparse._StoreTrueAction):
-            self.editor = QCheckBox(label)
-            layout.addWidget(self.editor)
+            self.editor = QCheckBox(textwrap.fill(label, width=32))
+            title = QHBoxLayout()
+            title.addWidget(self.editor, 1)
+            title.addWidget(self.state_badge)
+            layout.addLayout(title)
             self.editor.toggled.connect(lambda _: self.changed.emit())
         else:
             title = QHBoxLayout()
@@ -85,6 +91,7 @@ class OptionControl(QWidget):
                 self.optional = QCheckBox("Override" if field.kind == "slider" else "Set")
                 title.addWidget(self.optional)
                 self.optional.toggled.connect(self._optional_changed)
+            title.addWidget(self.state_badge)
             layout.addLayout(title)
             if field.kind in {"slider", "slider100"}:
                 self.editor = ValueSlider(100 if field.kind == "slider100" else 1)
@@ -128,6 +135,14 @@ class OptionControl(QWidget):
             hint.setWordWrap(True)
             layout.addWidget(hint)
         self.set_value(value)
+
+    def set_locked(self, locked: bool) -> None:
+        self.state_badge.setText("LOCKED" if locked else (
+            "LIVE" if self.field.name in LIVE_FIELDS else ""
+        ))
+        self.state_badge.setToolTip("Stop the session to edit this setting." if locked else "")
+        self.setProperty("locked", locked)
+        self.setEnabled(not locked)
 
     def _optional_changed(self, enabled: bool) -> None:
         self.editor.setEnabled(enabled)

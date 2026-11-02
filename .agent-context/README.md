@@ -51,6 +51,10 @@ Reconcile overlapping history using the newer verified decisions and current sou
 
 ## Canonical references
 
+- `YTScript\DevelopmentJourney\README.md`: separate private chronological documentary production
+  package; final PDF is `KardboardCode-Development-Journey.pdf` in that folder. Frozen-source/
+  task coverage and printed-record audits are part of the edition; never export it publicly or
+  replace its corpus with newer context without an intentional new edition.
 - `README.md` in the repository: current visual overview and direct-camera setup.
 - `docs\README.md`: engineering-book entry point and reading paths.
 - `docs\02-architecture\textured-3d-renderer.md`: detailed avatar geometry/materials/hinges/privacy specification.
