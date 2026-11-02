@@ -10,11 +10,12 @@ import tempfile
 import time
 from pathlib import Path
 
-from PySide6.QtCore import QProcess, QSize, Qt, QTimer
+from PySide6.QtCore import QProcess, QSize, Qt, QTimer, QUrl
 from PySide6.QtGui import (
     QAction,
     QCloseEvent,
     QColor,
+    QDesktopServices,
     QIcon,
     QPainter,
     QPen,
@@ -421,7 +422,8 @@ class StudioWindow(QMainWindow):
         note = QLabel(
             "Every frame is processed, not live-dropped. Original dimensions and source timing "
             "are retained; compatible audio is copied. Opaque 8-bit SDR inputs only. "
-            "Lossless MKV can be large. MP4 is not mathematically lossless.",
+            "Lossless MKV can be large. MP4 is not mathematically lossless. "
+            "Completed exports open in your default media player.",
         )
         note.setObjectName("hint")
         note.setWordWrap(True)
@@ -1160,6 +1162,7 @@ class StudioWindow(QMainWindow):
     def _worker_finished(self) -> None:
         self._poll_runtime()
         worker, self.worker = self.worker, None
+        export_result = worker.export_result if isinstance(worker, VideoExportWorker) else None
         self.bridge = None
         was_video = self._processing_video
         self._processing_video = False
@@ -1179,6 +1182,15 @@ class StudioWindow(QMainWindow):
         if self._calibration is not None:
             self._calibration.reject()
         self._append_log(f"[STUDIO] Session ended with exit code {self._exit_code}.")
+        if was_video and self._exit_code == 0 and export_result is not None:
+            path = export_result.path.resolve()
+            if QDesktopServices.openUrl(QUrl.fromLocalFile(str(path))):
+                self._append_log(f"[VIDEO] Opened in the default media player: {path}")
+            else:
+                self._show_error(
+                    "The video was saved, but the default media player could not be opened. "
+                    f"Open the saved file manually: {path}",
+                )
         if self._closing:
             QTimer.singleShot(0, self.close)
 

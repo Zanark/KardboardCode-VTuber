@@ -1,11 +1,21 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - Exhaustive 977-page development documentary completed; installer remains paused.
-> **Last context offload:** 2026-11-02T22:51:42+05:30
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - Studio opens successful video exports in the default player; documentary frozen and installer paused.
+> **Last context offload:** 2026-11-02T23:12:03+05:30
 
 # KardboardCode-VTuber State
 
 > Resume as the KardboardCode VTuber engineering and streaming-output partner. Read both context stores below before continuing; preserve the user's face-only choice and privacy requirements.
 
 ## Current focus
+
+**Latest feature:** user clarified automatic video opening is a KardboardCode feature, not a
+global assistant-workflow preference. Successful Studio VIDEO exports now open their actual
+completed result through the system's default file association, after pipeline/worker cleanup.
+Failed/cancelled jobs never launch. A refused launch shows the saved path and an explicit error
+without changing successful export status or deleting output. CLI remains Qt-free/noninteractive.
+Tests mock the player; 46 focused GUI/runtime/video-export cases and Ruff passed. Documentation,
+in-app tutorial and workstream 14 are updated. Restart an already-running Studio to load changes.
+The installed MSI is still a stale paused draft; no installer rebuild/test or release export
+was resumed. This post-cutoff feature does not alter the sealed documentary edition.
 
 **COMPLETED: development documentary book, The Box That Learned to Follow.** User requested
 deep storytelling research and an exhaustive chronological PDF including every task in checkpoints,
@@ -267,6 +277,10 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
+Default-player feature is implemented and source-tested; actual OS codec/player behavior
+depends on the user's file associations and installed codecs, especially FFV1/MKV. Do not
+silently install or hardcode a different player. Existing Studio processes were not terminated.
+
 The documentary is complete locally; await owner reading/revision requests. Do not silently
 re-freeze `sources\corpus.json` from newer live context or rerun the source collector: its exact
 cutoff and hashes define this edition. Rebuild only intentionally using the private package README.
@@ -298,7 +312,9 @@ private recorder timing limitations remain unresolved.
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_868` (completed exhaustive 977-page development documentary,
+- Latest cross-base receipt: `ep_869` (successful Studio export auto-opens actual result in the
+  OS default player; failures/cancellation/refusal and frozen-edition/paused-installer boundaries).
+  Previous receipt: `ep_868` (completed exhaustive 977-page development documentary,
   frozen source/task coverage, physical PDF audit and current-skill refresh).
   Previous receipt: `ep_856` (installer explicitly paused; test uninstall complete,
   brown sliders retained; unverified MSI must not be published).

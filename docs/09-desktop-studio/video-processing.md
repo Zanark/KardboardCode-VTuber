@@ -7,6 +7,7 @@ description: "Frame-complete synchronous tracking, explicit lossless/lossy expor
 
 > **TL;DR:** Choose **VIDEO**, select an existing input and a new output filename, tune the avatar
 > and process. This is not the old private camera recorder. No live camera opens.
+> After a successful Studio export, the completed file opens in your default media player.
 
 ## Why a separate mode exists
 
@@ -61,6 +62,14 @@ Unsupported inputs are not silently downconverted.
 5. Configure avatar/eyes, models and optional green-screen/hand effects.
 6. Press **Process video**. All processing settings lock; progress reports frame count, source
    seconds and original dimensions. Stop cancels cooperatively.
+7. Once export and worker cleanup finish successfully, Studio opens the actual saved output
+   using the system's default application for its file type. Failed/cancelled jobs open nothing.
+   If the OS cannot launch a player, Studio keeps **VIDEO SAVED** and shows an explicit error
+   with the saved path; the export is not discarded or retried.
+
+The selected player must support the exported codec/container, especially lossless FFV1/MKV.
+Accepting a launch request does not guarantee codec support. No particular player is installed
+or hardcoded. Command-line video exports remain noninteractive and Qt-free.
 
 ![Native video-processing workspace](../images/kardboardcode-studio-video.png)
 
@@ -124,6 +133,8 @@ visual/privacy or every-codec certification (`tests/test_video_export.py`;
 - `video.py` — format checks, frame loop, remux, temporary ownership and publication.
 - `video_pipeline.py` — shared tracking/render pipeline and effect ownership.
 - `gui/video_worker.py` — Qt thread boundary, progress and explicit error reporting.
+- `gui/window.py`, `_worker_finished` — main-thread default-player dispatch for the successful
+  worker result, independently of editable output fields.
 - `video_cli.py` — runnable command-line host without Qt.
 - `tracking/mediapipe_tracker.py` — synchronous VIDEO versus asynchronous LIVE_STREAM.
 - `tracking/green_screen.py`, `tracking/hand_occlusion.py` — synchronous optional effects.

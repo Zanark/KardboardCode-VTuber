@@ -91,6 +91,10 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Native studio conventions
 
+- Successful Studio VIDEO exports open the actual completed worker result in the OS default
+  player, on the UI thread after cleanup. Never use editable output text to choose playback.
+  Cancellation/failure must not launch. Launch refusal preserves the saved file and displays
+  an actionable path/error. CLI exports stay noninteractive and Qt-free.
 - Windows setup is the explicitly chosen online, per-user x64 bootstrap, not an offline
   PyInstaller bundle. Include patched private Python and the application wheel; first launch
   offers hash-locked upstream wheels. Models remain explicit; OBS's camera component is separate.

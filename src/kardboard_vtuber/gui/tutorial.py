@@ -121,7 +121,10 @@ LESSONS = (
         "container's timing precision; compatible audio streams are copied. No live camera "
         "opens, no source mirroring/rotation is applied, and output cannot replace existing files."
         "<br><br>Opaque 8-bit SDR only. Rotated, interlaced, non-square-pixel, HDR or unsupported "
-        "codec/container cases fail explicitly. Stop cancels and removes temporary output.",
+        "codec/container cases fail explicitly. Stop cancels and removes temporary output."
+        "<br><br>Successful exports open in your default media player after processing finishes. "
+        "Failed or cancelled jobs open nothing. If a player cannot be launched, the saved video "
+        "is kept and its path is shown. Your player must support the chosen output format.",
     ),
     (
         "8. Advanced private capture and replay",

@@ -4,6 +4,23 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Default media-player opening added to Studio VIDEO
+
+- User clarified the request applies to KardboardCode, not a global assistant preference.
+- Worker retains its typed completed export result. On successful thread finish, Studio uses
+  QDesktopServices/QUrl.fromLocalFile for that actual path on the main thread, after cleanup.
+  It does not read mutable output controls or hardcode/install a player.
+- Failure/cancellation opens nothing. A declined OS launch retains VIDEO SAVED and displays
+  a clear error with the saved filename. Player codec support is an OS/application boundary.
+- Extended real encoded synthetic export test for both launch outcomes, cleanup/thread/path
+  binding and spaces/# handling; added failed/cancelled-job regressions. 46 focused tests and
+  Ruff pass. No real player, live camera, paused installer tests or user process touched.
+- Updated source/in-app tutorials and workstream 14. CLI remains noninteractive. The frozen
+  documentary PDF is byte-identical; this feature is after its recorded cutoff. Release files
+  remain explicitly stale/draft while installer work is paused.
+- Persisted/readable handoff `ep_869`; marker advanced after store/episode persistence to
+  `2026-11-02T23:12:03+05:30`. Feature staging excludes overlapping unfinished installer hunks.
+
 ## 2026-11-02 - Exhaustive development documentary completed
 
 - Delivered The Box That Learned to Follow as a private local PDF under

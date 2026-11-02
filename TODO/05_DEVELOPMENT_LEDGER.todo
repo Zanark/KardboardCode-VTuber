@@ -24,6 +24,10 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-02: Added default-player launch after successful Studio VIDEO export/worker cleanup.
+  Real encoded synthetic tests verify immutable result path, UI-thread dispatch, spaces/#,
+  launch refusal and cancellation/failure. 46 focused tests/Ruff pass, no real player/camera
+  opened. CLI and paused installer unchanged; frozen documentary PDF hash remains identical.
   2026-11-02: Built The Box That Learned to Follow, a separate local documentary PDF.
   31 chapters/~17,000 narrative words precede complete source/task/conversation appendices.
   Final 977 pages/62 diagrams/12 figures. Full printed-record comparison: 6,560/6,560 complete,

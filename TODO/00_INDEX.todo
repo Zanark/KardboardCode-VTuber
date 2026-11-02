@@ -18,6 +18,7 @@ Workstreams:
   11_BORDERLESS_README.todo
   12_WINDOWS_SETUP.todo
   13_DEVELOPMENT_DOCUMENTARY.todo
+  14_VIDEO_DEFAULT_PLAYER.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
@@ -29,6 +30,7 @@ Tasks:
   [x] Remove README table layouts while keeping the approved GIF pair (workstream 11).
   [ ] Deliver the user-selected online Windows setup and brown slider accents (workstream 12).
   [x] Create the exhaustive chronological documentary PDF (workstream 13).
+  [x] Open successful Studio VIDEO exports in the default media player (workstream 14).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -45,6 +47,9 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-02: Successful Studio VIDEO exports now open the actual completed result in the
+  default media player; failed/cancelled jobs do not. Launch refusal preserves saved output
+  and surfaces an actionable error. 46 focused tests/Ruff pass; CLI remains noninteractive.
   2026-11-02: Documentary delivered locally: 977 pages, 31 chronological chapters, 62 diagrams,
   12 captioned figures and all 6,560 source records from 117 textual files. All 158 historical
   tasks, 66 dependencies, 245 checklist occurrences and dated conversation evidence retained.

@@ -8,7 +8,7 @@ from PySide6.QtCore import QThread, Signal
 
 from kardboard_vtuber.gui import settings
 from kardboard_vtuber.runtime import RuntimeBridge
-from kardboard_vtuber.video import ExportCancelled, VideoExportOptions
+from kardboard_vtuber.video import ExportCancelled, VideoExportOptions, VideoExportResult
 from kardboard_vtuber.video_pipeline import render_avatar_video
 
 
@@ -26,8 +26,10 @@ class VideoExportWorker(QThread):
         self.bridge = bridge
         self.already_mirrored = already_mirrored
         self.demo = False
+        self.export_result: VideoExportResult | None = None
 
     def run(self) -> None:
+        self.export_result = None
         try:
             values = dict(self.values)
             values.update({
@@ -37,7 +39,7 @@ class VideoExportWorker(QThread):
                 "debug_face_preview": False, "tracking_debug": False,
                 "render_cardboard": True, "headless": False,
             })
-            render_avatar_video(
+            self.export_result = render_avatar_video(
                 settings.namespace(values), self.options, self.bridge, self.progress.emit,
             )
         except ExportCancelled:

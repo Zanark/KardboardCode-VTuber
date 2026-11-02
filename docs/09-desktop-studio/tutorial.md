@@ -169,6 +169,11 @@ Supported input is opaque, progressive, square-pixel 8-bit SDR with valid timing
 HDR/alpha/rotation/interlacing or container/codecs fail explicitly, never through hidden quality
 conversion. Stop cancels and cleans owned temporary output. See [video processing](video-processing.md).
 
+When processing succeeds, Studio automatically opens the completed file in your default media
+player. Failed or cancelled jobs do not open anything. If no application can be launched, the
+video remains saved and Studio displays its path and an actionable error. Your selected player
+must support the output format; lossless FFV1/MKV support varies between players.
+
 ![Video-processing mode](../images/kardboardcode-studio-video.png)
 
 *Actual export controls with illustrative paths. No camera opens.*

@@ -419,13 +419,19 @@ def test_effective_calibrated_eye_decisions_are_visible(window: StudioWindow) ->
     window.bridge = None
 
 
-def test_video_mode_exports_through_the_worker_without_opening_a_camera(
+@pytest.mark.parametrize("player_accepts", [True, False])
+def test_video_mode_exports_and_opens_actual_result_without_opening_a_camera(
     app: QApplication, window: StudioWindow, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    player_accepts: bool,
 ) -> None:
     from types import SimpleNamespace
 
+    from PySide6.QtCore import QThread
+
     from tests.test_ps1_cardboard_renderer import state
     from tests.test_video_export import clip
+
+    closed = {"tracker": False, "renderer": False}
 
     class Tracker:
         def __init__(self, config) -> None:
@@ -439,17 +445,28 @@ def test_video_mode_exports_through_the_worker_without_opening_a_camera(
             return SimpleNamespace(state=self.current, raw_state=self.current)
 
         def close(self) -> None:
-            pass
+            closed["tracker"] = True
 
     class Renderer:
         def render(self, frame, face) -> None:
             frame[10:20, 10:20] = (5, 15, 25)
 
         def close(self) -> None:
-            pass
+            closed["renderer"] = True
 
-    source, target = tmp_path / "input.mkv", tmp_path / "output.mkv"
+    source, target = tmp_path / "input.mkv", tmp_path / "processed video #1.mkv"
     clip(source)
+    opened = []
+
+    def open_player(url) -> bool:
+        assert QThread.currentThread() == app.thread()
+        assert target.is_file()
+        assert all(closed.values())
+        assert url.isLocalFile()
+        opened.append(Path(url.toLocalFile()))
+        return player_accepts
+
+    monkeypatch.setattr("kardboard_vtuber.gui.window.QDesktopServices.openUrl", open_player)
     model = tmp_path / "face.task"
     model.write_bytes(b"synthetic model fixture")
     window.controls["face_model"].set_value(str(model))
@@ -465,7 +482,41 @@ def test_video_mode_exports_through_the_worker_without_opening_a_camera(
     window.start_camera()
     assert window._processing_video and window.worker is not None
     assert not window.controls["left_blink_threshold"].isEnabled()
+    window.video_output.setText(str(tmp_path / "not-the-exported-file.mkv"))
     wait_until(app, lambda: window.worker is None, timeout=15)
     assert target.is_file()
+    assert opened == [target.resolve()]
     assert "VIDEO SAVED" in window.status.text()
     assert "4 frames" in window.video_progress_label.text()
+    assert window.error_label.isVisible() == (not player_accepts)
+    if not player_accepts:
+        assert "video was saved" in window.error_label.text()
+        assert str(target.resolve()) in window.error_label.text()
+
+
+@pytest.mark.parametrize("cancelled", [True, False])
+def test_failed_or_cancelled_video_never_opens_default_player(
+    app: QApplication, window: StudioWindow, tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+    cancelled: bool,
+) -> None:
+    from kardboard_vtuber.video import ExportCancelled
+
+    def fail(*args, **kwargs):
+        if cancelled:
+            raise ExportCancelled()
+        raise RuntimeError("Simulated video export failure")
+
+    monkeypatch.setattr("kardboard_vtuber.gui.video_worker.render_avatar_video", fail)
+    monkeypatch.setattr(
+        "kardboard_vtuber.gui.window.QDesktopServices.openUrl",
+        lambda *_: pytest.fail("An incomplete export must never launch a player"),
+    )
+    target = tmp_path / "unfinished.mkv"
+    window.work_mode.setCurrentIndex(1)
+    window.video_input.setText(str(tmp_path / "input.mkv"))
+    window.video_output.setText(str(target))
+    window.start_camera()
+    wait_until(app, lambda: window.worker is None)
+    expected_status = "VIDEO CANCELLED" if cancelled else "VIDEO EXPORT FAILED"
+    assert expected_status in window.status.text()
+    assert not target.exists()
