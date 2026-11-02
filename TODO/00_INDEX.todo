@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: All Studio workstreams DONE
+Status: Workstream 22 IN PROGRESS; earlier Studio workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -26,6 +26,7 @@ Workstreams:
   19_NUMERIC_CONTROL_CLARITY.todo
   20_SIDE_DIAGNOSTICS_AND_CLEAN_OUTPUT.todo
   21_METRIC_CARD_FOOTER.todo
+  22_NUMERIC_PADDING_AND_FEATURE_COVERAGE.todo
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
@@ -45,6 +46,7 @@ Tasks:
   [x] Make numeric +/- controls readable and remove the stray mode-strip baseline (workstream 19).
   [x] Deliver readable stacked side diagnostics and a persistent clean-output button (workstream 20).
   [x] Restore the preferred metric cards in the viewer footer beside Tools (workstream 21).
+  [ ] Fix numeric text padding and verify current GUI feature coverage (workstream 22).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.

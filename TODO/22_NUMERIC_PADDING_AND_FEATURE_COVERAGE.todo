@@ -1,0 +1,50 @@
+Status: IN PROGRESS
+Milestone: Proper numeric-editor inset and verified GUI feature coverage
+Dependencies: 21_METRIC_CARD_FOOTER.todo
+Purpose: Fix border-hugging numeric text and answer the owner's exhaustive-feature question
+  from current runtime/GUI/helper bindings, not from visual density or an option count alone.
+
+Tasks:
+  [x] Inspect the native embedded numeric editor and current feature entry points.
+  [x] Add real inner text margins consistently without losing +/- targets or value readability.
+  [x] Verify all 45 Live/runtime controls forward current settings into the shared pipeline.
+  [x] Audit 22 Video processing settings, file/quality/mirroring controls and mode restrictions.
+  [x] Audit private-recorder options, four model helpers and GUI-only operating actions.
+  [x] Verify native text raster inset, disabled/theme/DPI states and existing GUI behaviour.
+  [ ] Document complete audited scope and limitations; update current screenshots/handbook.
+  [ ] Refresh current snapshots, commit work and persist only the owned context.
+
+Acceptance criteria:
+  Numeric value text has visible inset from its left border in both themes; typed values,
+  bounds, steps and +/- glyphs are preserved. All relevant numeric controls use the same inset.
+  Current operational options/actions are accounted for by actual bindings. Mode-inapplicable
+  controls are labelled, not presented as effective Video knobs. No claim of universal GUI
+  coverage for developer utilities, future features or unsupported hardware.
+  Preserve the approved card footer, diagnostic rail, clean-output recovery and minimal README.
+  No new font/layout redesign, camera, portrait or remote publication.
+
+Completion evidence:
+  Current inventory:45 Live/runtime options,22 shared Video fields plus3file/quality fields,
+  18 recorder options (17user-facing plus the internal cooperative stop-file),4model helpers.
+  No Live option lacks a GUI control. Two nondefault complete configurations roundtrip actual
+  GUI values to the parser, including both mutually exclusive fallback choices.
+  Audit found a real preview-height application bug: its custom integer parser was represented
+  as text. It now uses a proper integer control and forwards valid values correctly.
+  Video scope and CLI preview now derive from canonical VIDEO_FIELDS. Fixed/ignored Live
+  fields are labelled LIVE ONLY; already-mirrored input uses the separate Video file control.
+  All18recorder options are accounted for by9capture-specific controls,8inherited settings
+  and the internal stop-file wired to Stop. Existing model/helper/preset/calibration/demo/log/
+  tutorial/clean-window/default-player actions remain exposed.
+  Native value text initially starts about4px from the outer left edge with zero textMargins.
+  Embedded numeric editors now use6px left/3px right text margins in addition to their native
+  field geometry, without changing numeric steps or +/- controls.
+  Native padding/complete-value-forwarding/Video-scope/approved-layout set:22passed at each
+  100/125/150% Qt scale; Ruff. Pixel proof covers enabled/disabled values in both themes,
+  slider decimals/brightness, integer debounce and the corrected preview-height control.
+  Final complete suite, coverage documentation/current captures/snapshots remain pending.
+  Owner perception/usability and hardware qualification are separate from automated evidence.
+
+Completion log:
+  2026-11-03: Owner requested numeric text padding and confirmation that every current feature
+  is in the GUI, citing large fonts/unused space. Audit scope is current operating features,
+  not an unverified absolute claim. Preserve recently approved layout rather than redesign it.

@@ -13,12 +13,24 @@ pytest.importorskip("PySide6")
 from PySide6.QtCore import QPoint, QRect, Qt, QTimer
 from PySide6.QtGui import QFontDatabase, QRegion
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QFrame, QLabel, QLineEdit, QScrollArea
+from PySide6.QtWidgets import (
+    QAbstractSpinBox,
+    QApplication,
+    QFrame,
+    QLabel,
+    QLineEdit,
+    QScrollArea,
+    QStyle,
+    QStyleOptionSpinBox,
+)
 
 from kardboard_vtuber.camera.devices import LocalCameraDevice
+from kardboard_vtuber.cli import build_parser
 from kardboard_vtuber.gui import settings
+from kardboard_vtuber.gui.widgets import ValueSlider
 from kardboard_vtuber.gui.window import StudioWindow
 from kardboard_vtuber.runtime import RuntimeBridge
+from kardboard_vtuber.video_pipeline import VIDEO_FIELDS
 
 
 @pytest.fixture(scope="module")
@@ -61,6 +73,34 @@ def test_window_has_all_controls_and_no_implicit_capture(window: StudioWindow) -
     assert isinstance(source, QLineEdit) and source.echoMode() == QLineEdit.EchoMode.Password
     assert not window.error_label.isVisible()
     assert not window.windowIcon().isNull()
+
+
+@pytest.mark.parametrize("fallback", ["body_head_fallback", "hood_marker_tracking"])
+def test_all_runtime_controls_forward_a_nondefault_configuration(
+    window: StudioWindow, tmp_path: Path, fallback: str,
+) -> None:
+    values = dict(settings.defaults(), source="gui-fixture.mkv", backend="ffmpeg",
+                  width=960, height=540, fps=29.97, rotate="left", mirror=True,
+                  input_already_mirrored=True, brightness=27, track_face=True,
+                  tracking_debug=True, tracking_width=960, action_hold_ms=120,
+                  eye_action_hold_ms=50, blink_threshold=.25, left_blink_threshold=.20,
+                  right_blink_threshold=.30, wink_threshold=.70, eye_open_threshold=.80,
+                  wink_min_difference=.17, no_motion_filter=True, render_cardboard=True,
+                  cardboard_renderer="textured-3d", box_depth_offset=-.75, physics=True,
+                  debug_face_preview=True, hand_occlusion=True, hand_tracking_width=240,
+                  green_screen=True, segmentation_width=256, full_body=True,
+                  body_head_fallback=fallback == "body_head_fallback",
+                  hood_marker_tracking=fallback == "hood_marker_tracking",
+                  pose_tracking_width=320, preview_height=600, virtual_camera=True,
+                  virtual_camera_width=960, virtual_camera_height=540,
+                  virtual_camera_fps=25.0, headless=True, duration=2.5)
+    for name in settings.PATH_FIELDS:
+        values[name] = str(tmp_path / (name + ".model"))
+    window._apply_values(values)
+    expected = settings.namespace(values)
+    forwarded = build_parser().parse_args(settings.arguments(window.collected_values()))
+    assert vars(forwarded) == vars(expected)
+    assert window.worker is None and window.job is None
 
 
 def test_default_window_is_display_fitted_widescreen(
@@ -453,8 +493,68 @@ def test_video_work_mode_is_not_private_camera_recording(window: StudioWindow) -
     assert "video_cli" in window.command.toPlainText()
     assert "--input-video=" in window.command.toPlainText()
     assert "record_guided_regression" not in window.command.toPlainText()
+    unavailable = (window.controls.keys() - VIDEO_FIELDS) | {"input_already_mirrored"}
+    assert {name for name, control in window.controls.items() if not control.isEnabled()} == (
+        unavailable
+    )
+    assert window.controls["input_already_mirrored"].state_badge.text() == "LIVE ONLY"
+    assert window.video_mirrored.isEnabled()
     window.work_mode.setCurrentIndex(0)
     assert window.controls["source"].isEnabled()
+
+
+def test_numeric_text_has_real_inset_in_both_native_themes(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    if "Segoe UI" not in QFontDatabase.families():
+        pytest.skip("Native numeric-text raster proof requires real Segoe UI glyphs.")
+    for page, field in (
+        ("Avatar & eyes", "blink_threshold"),
+        ("Camera", "brightness"),
+        ("Avatar & eyes", "action_hold_ms"),
+        ("Camera", "preview_height"),
+    ):
+        window.page_selector.setCurrentText(page)
+        for (section_page, _), section in window.sections.items():
+            if section_page == page:
+                section.set_expanded(True)
+        scroll = window.pages.currentWidget()
+        assert isinstance(scroll, QScrollArea)
+        control = window.controls[field]
+        if field == "preview_height":
+            control.set_value(600)
+        spin = control.editor.number if isinstance(control.editor, ValueSlider) else control.editor
+        assert isinstance(spin, QAbstractSpinBox)
+        scroll.ensureWidgetVisible(spin, 0, 10)
+        for _ in range(2):
+            for disabled in (False, True):
+                control.set_locked(disabled)
+                app.processEvents()
+                option = QStyleOptionSpinBox()
+                spin.initStyleOption(option)
+                rect = spin.style().subControlRect(
+                    QStyle.ComplexControl.CC_SpinBox, option,
+                    QStyle.SubControl.SC_SpinBoxEditField, spin,
+                )
+                image = spin.grab().toImage()
+                ratio = image.devicePixelRatio()
+                ink = (
+                    (129, 147, 133) if window._dark else (120, 110, 92)
+                ) if disabled else (
+                    (255, 244, 219) if window._dark else (25, 51, 43)
+                )
+                pixels = []
+                for x in range(round(rect.left() * ratio), round((rect.right() + 1) * ratio)):
+                    for y in range(round(rect.top() * ratio), round((rect.bottom() + 1) * ratio)):
+                        color = image.pixelColor(x, y)
+                        if max(abs(a - b) for a, b in zip(
+                            (color.red(), color.green(), color.blue()), ink, strict=True,
+                        )) <= 24:
+                            pixels.append(x)
+                assert pixels, "The value text must remain visibly painted."
+                assert min(pixels) / ratio >= 8, "Numeric text must not hug the left border."
+            control.set_locked(False)
+            window.toggle_theme()
 
 
 def test_raw_debug_channels_never_cover_program_or_clean_window(

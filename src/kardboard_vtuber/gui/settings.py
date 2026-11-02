@@ -76,7 +76,7 @@ PAGES: dict[str, tuple[Field, ...]] = {
             hint="1280 can retain more distant detail; it is not a guaranteed distance fix.",
         ),
         Field("duration", "Stop after seconds (unlimited when off)"),
-        Field("preview_height", "Local preview maximum height"),
+        Field("preview_height", "Local preview maximum height", "integer"),
         Field(
             "headless",
             "Suppress preview; keep processing / output",

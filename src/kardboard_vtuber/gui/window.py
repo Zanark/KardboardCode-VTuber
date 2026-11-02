@@ -23,6 +23,7 @@ from PySide6.QtGui import (
     QResizeEvent,
 )
 from PySide6.QtWidgets import (
+    QAbstractSpinBox,
     QApplication,
     QCheckBox,
     QComboBox,
@@ -78,6 +79,7 @@ from kardboard_vtuber.gui.worker import SessionWorker
 from kardboard_vtuber.runtime import RuntimeBridge, RuntimeTelemetry, redact
 from kardboard_vtuber.tracking.eyes import EyeSensitivity
 from kardboard_vtuber.video import VideoExportOptions, VideoProgress
+from kardboard_vtuber.video_pipeline import VIDEO_FIELDS
 
 ICON_PATH = Path(__file__).parent / "assets" / "kardboardcode-icon.ico"
 
@@ -542,11 +544,7 @@ class StudioWindow(QMainWindow):
             "  --output-video=" + quote(self.video_output.text()) + " `",
             "  --video-quality " + str(self.video_quality.currentData()) + " `",
         ]
-        supported = {
-            "physics", "cardboard_renderer", "box_depth_offset", "tracking_width", "face_model",
-            "hand_model", "segmentation_model", "brightness", "green_screen", "segmentation_width",
-            "hand_occlusion", "hand_tracking_width", "no_motion_filter", *LIVE_FIELDS,
-        }
+        supported = VIDEO_FIELDS - {"input_already_mirrored"}
         for name in sorted(supported):
             value = self.values[name]
             if value is False or value is None:
@@ -1411,12 +1409,7 @@ class StudioWindow(QMainWindow):
         self.live_hint.setProperty("busy", busy)
         self.live_hint.style().unpolish(self.live_hint)
         self.live_hint.style().polish(self.live_hint)
-        live_only = {
-            "source", "backend", "width", "height", "fps", "rotate", "mirror", "duration",
-            "headless", "preview_height", "virtual_camera", "virtual_camera_width",
-            "virtual_camera_height", "virtual_camera_fps", "full_body", "body_head_fallback",
-            "hood_marker_tracking", "pose_tracking_width", "tracking_debug", "debug_face_preview",
-        }
+        live_only = (self.controls.keys() - VIDEO_FIELDS) | {"input_already_mirrored"}
         for name, control in self.controls.items():
             mode_locked = self._mode == 1 and name in live_only
             editable = (
@@ -1852,6 +1845,8 @@ class StudioWindow(QMainWindow):
         from kardboard_vtuber.gui.theme import stylesheet
 
         self.setStyleSheet(stylesheet(self._dark))
+        for spin in self.findChildren(QAbstractSpinBox):
+            spin.lineEdit().setTextMargins(6, 0, 3, 0)
         self.theme_button.setIcon(_theme_icon(self._dark))
         self.theme_button.setIconSize(QSize(38, 20))
         self.theme_button.setText("Light" if self._dark else "Dark")

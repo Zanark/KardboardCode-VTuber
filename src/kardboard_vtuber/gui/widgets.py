@@ -154,7 +154,7 @@ class OptionControl(QWidget):
                 self.editor = QComboBox()
                 self.editor.addItems([str(item) for item in action.choices])
                 self.editor.currentTextChanged.connect(lambda _: self.changed.emit())
-            elif action.type is int:
+            elif action.type is int or field.kind == "integer":
                 self.editor = QSpinBox()
                 self.editor.setRange(0, 1_000_000)
                 self.editor.valueChanged.connect(lambda _: self.changed.emit())
