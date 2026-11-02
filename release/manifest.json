@@ -1,0 +1,746 @@
+{
+  "assets": {
+    "KardboardCode-VTuber-source.zip": {
+      "bytes": 29908555,
+      "sha256": "d087cc6fd947521d72d2cf81aad0f5aad88211425d9c4fa60782d94636e064be"
+    },
+    "RELEASE_CONTEXT.md": {
+      "bytes": 1754,
+      "sha256": "95b38cadb9092160f31c81f3ad26467b32114e29aab2ec848721c54d08834868"
+    },
+    "RELEASE_NOTES.md": {
+      "bytes": 3365,
+      "sha256": "614181915ecae4c08e76cada44228a2e358ff1ad505f5d48243f5201abdb75cb"
+    }
+  },
+  "generatedAt": "2026-11-02T11:34:10+00:00",
+  "schemaVersion": 1,
+  "sourceBranch": "workDesk/agentic_GUI",
+  "sourceCommit": "e5e2db34ad49933b349c05123ed155dbd2e2979e",
+  "sourceFiles": {
+    ".gitignore": {
+      "bytes": 842,
+      "sha256": "0f60df4be5771edfaa2a528711fc28ae5af9182bb2b5a3eb4b121bc416279128"
+    },
+    "AGENTS.md": {
+      "bytes": 1172,
+      "sha256": "736c35f4b5c22f9b462802e47f23b1569d90a378fab5f743ebbbc488728f554e"
+    },
+    "README.md": {
+      "bytes": 18024,
+      "sha256": "bbc26610cd125aedc4945b58f004fed1bcd77b1d5352128bc4c61ed28c0a730c"
+    },
+    "TODO/00_INDEX.todo": {
+      "bytes": 1810,
+      "sha256": "777703845474faa7e60562b071fa8f6a1e22da6d9b02940e20d0f08a721a1f9f"
+    },
+    "TODO/01_RESEARCH_AND_DESIGN.todo": {
+      "bytes": 1131,
+      "sha256": "7b0d44b7b504f25f70891745981e2976cedc2e79e7b9d9f2a60a40dd4aa2029b"
+    },
+    "TODO/02_RUNTIME_AND_CALIBRATION.todo": {
+      "bytes": 1430,
+      "sha256": "2fbfe6843fc00a774df61dd736ff8f5d80fe19f4a5fef3b85b3aeb9d1fcd483e"
+    },
+    "TODO/03_NATIVE_INTERFACE.todo": {
+      "bytes": 1565,
+      "sha256": "9a071186c189d936e97d2224949a41ec9182232dd05710bbfff1c80ddd0ba614"
+    },
+    "TODO/04_DOCUMENTATION_AND_DELIVERY.todo": {
+      "bytes": 2207,
+      "sha256": "f63eb4731d13d0f5065c0a1ff11841cf2a974c13d69fd08b85af95c992a89897"
+    },
+    "TODO/05_DEVELOPMENT_LEDGER.todo": {
+      "bytes": 2388,
+      "sha256": "9f041bdaa7f2c94658d2a55a813cecb250c9dd7291f06414259f7f8c4648f4e6"
+    },
+    "TODO/06_NATIVE_CAMERA_SELECTION.todo": {
+      "bytes": 1731,
+      "sha256": "d96052d3cdab78509d4fa08b5d35d6e7d5cf0f7787d34f6f207ecae1deb6afdf"
+    },
+    "TODO/07_RELEASE_STAGING.todo": {
+      "bytes": 1836,
+      "sha256": "29fdb5707cd280e959d967ce74d05aa8dca8ee3e616ccd50442cbf2abd9aab0a"
+    },
+    "assets/PNGTuberV1/Eyes Closed.png": {
+      "bytes": 21259,
+      "sha256": "0260623c2d206e064b70bbd8d0a1e8290cb6fcfb803d66c53bd1213dbbc97a8d"
+    },
+    "assets/PNGTuberV1/Eyes Open.png": {
+      "bytes": 63548,
+      "sha256": "3c0a08e5afbd70b8702f5af83799e3f4552f3eccd57aaa9d2bed602f3771215c"
+    },
+    "assets/PNGTuberV1/FrontFlap1-2.png": {
+      "bytes": 10899,
+      "sha256": "5bf94c19d9fd712f2f31eba489b06c03b5b30b0119eb73cf7ce2eec4d1b9fc09"
+    },
+    "assets/PNGTuberV1/FrontFlap1.png": {
+      "bytes": 12164,
+      "sha256": "00f0e405ce3f6c0169d558b2d8973abb51172f068939539b7e16cca9840c6630"
+    },
+    "assets/PNGTuberV1/FrontFlap2-2.png": {
+      "bytes": 10784,
+      "sha256": "6123d21f9a99dcad7fcc4821e84015239ad531e183f40c5e279ea0406b12013f"
+    },
+    "assets/PNGTuberV1/FrontFlap2.png": {
+      "bytes": 14166,
+      "sha256": "7da2e339b93012fb1ccbac829d9b12f6e22f22c3659101bfd8707870011cb930"
+    },
+    "assets/PNGTuberV1/Full Body.png": {
+      "bytes": 672950,
+      "sha256": "ef35de73b14f4223aa1b2a4f7d6c95a54fe1d8fa5aa8cec1cd833a2401c09b33"
+    },
+    "assets/PNGTuberV1/KCAvatar.save": {
+      "bytes": 980012,
+      "sha256": "a44b432c08438edafaee391ccf9022d2ef8e9c9fd6a1685e572f7acbbcce68bb"
+    },
+    "assets/PNGTuberV1/README.md": {
+      "bytes": 14145,
+      "sha256": "ef58110a6daa2a83110fd30de5badf4523fbcf02a2b3c95c5d5e7d8c76e479b3"
+    },
+    "assets/PNGTuberV1/RightFlap1.png": {
+      "bytes": 11999,
+      "sha256": "4320029b5b261552367086c5afb1d0c3eeef94c7f85cf7e27f676567534a0128"
+    },
+    "assets/PNGTuberV1/model-manifest.json": {
+      "bytes": 4523,
+      "sha256": "7778ec71e7fd3658a157ef141a49552ce178ca5f8ab10641eb79f116d78ada3a"
+    },
+    "assets/PNGTuberV1/reference/idle-blink.png": {
+      "bytes": 603448,
+      "sha256": "eaf5f5a568832f7e5952e62c1b403c0dda1e48399f546d361456e43e69b1c444"
+    },
+    "assets/PNGTuberV1/reference/idle-open.png": {
+      "bytes": 651990,
+      "sha256": "b2330b1a64ba39ad23085dd4bc15e49640f2a25a5168c20b6865d02a3db83468"
+    },
+    "assets/PNGTuberV1/reference/state-sheet.png": {
+      "bytes": 682423,
+      "sha256": "00821e39ab6bb88c22ab911622119ddfa3b60c70749b354bd40bb2e96300950b"
+    },
+    "assets/PNGTuberV1/reference/talking-blink.png": {
+      "bytes": 597022,
+      "sha256": "92b978f0e85f38c6da89d70077ffcabf9ba4c3693b58590103e7f14b94d040a7"
+    },
+    "assets/PNGTuberV1/reference/talking-open.png": {
+      "bytes": 645453,
+      "sha256": "8f17a696f112e4506ba17394fb619303875ff542e4dc630929702e198d67c4fe"
+    },
+    "docs/00-onboarding/README.md": {
+      "bytes": 2489,
+      "sha256": "2f1403b307e54ea0a7c693da23b0c41785186202096a656c929634b421095135"
+    },
+    "docs/00-onboarding/principal-engineer-guide.md": {
+      "bytes": 5380,
+      "sha256": "2b43914991a886f13650fef6c574caef567422d7dfbd316e90fec1fd5de2b51f"
+    },
+    "docs/00-onboarding/zero-to-hero-guide.md": {
+      "bytes": 3776,
+      "sha256": "44d8211dbcda7acc80e250277b58e048fbfaab74e6c52b9b84282912eb13c14b"
+    },
+    "docs/01-foundations/README.md": {
+      "bytes": 4300,
+      "sha256": "857caef555cb1f2849804524ed151d572fa9b9a4eb1fd2dbde0db16f48384d4f"
+    },
+    "docs/01-foundations/product-requirements.md": {
+      "bytes": 4454,
+      "sha256": "b8d704c033cc7d8a5ab2a77a76fd56155fd83edf7b4a9dc49e3ff76db9951091"
+    },
+    "docs/01-foundations/visual-identity-and-source-avatar.md": {
+      "bytes": 6615,
+      "sha256": "dc6639b8d05a4f975504c93822cae52e0bbcd13f9217e0f966917b24cd486276"
+    },
+    "docs/02-architecture/README.md": {
+      "bytes": 3843,
+      "sha256": "d3b8aff8a21e882cb98ffe954485d8950b90252c02a4f786f073c0f181898dfd"
+    },
+    "docs/02-architecture/camera-lifecycle.md": {
+      "bytes": 2700,
+      "sha256": "23071c382aca2d870374730595ba9ce80ff9f3c6d3f9ccd0a084aa3c5a759901"
+    },
+    "docs/02-architecture/data-model.md": {
+      "bytes": 5272,
+      "sha256": "9355daadab6bc28362a7118e6d853db3756dcb2ea0ba2fb93159db546d7249d4"
+    },
+    "docs/02-architecture/green-screen-compositing.md": {
+      "bytes": 6843,
+      "sha256": "3b1afa609a9b208d2862e8b0981f919dc9f7d510424db26aafc34751e0987223"
+    },
+    "docs/02-architecture/ps1-cardboard-renderer.md": {
+      "bytes": 8063,
+      "sha256": "9c753de9dd0a92b3f9a9eba2948ca5993b2382c90a29352a4fb3b3e07f9be8fd"
+    },
+    "docs/02-architecture/system-architecture.md": {
+      "bytes": 6096,
+      "sha256": "bb01eea2f14039f3a21fae84da46829792292f3d11327b569d08d469966275dc"
+    },
+    "docs/02-architecture/textured-3d-renderer.md": {
+      "bytes": 13676,
+      "sha256": "b737e6bbab4cd9788bbc2876f96ab4c8d4b057321a8b5e50cc9bb7917f73704c"
+    },
+    "docs/03-algorithms-and-data-structures/README.md": {
+      "bytes": 3907,
+      "sha256": "f69a29cde4e239f1dd724ec9d9e619d1cdd27c6c7d0734060a1bf5fd889659a2"
+    },
+    "docs/03-algorithms-and-data-structures/asynchronous-live-inference.md": {
+      "bytes": 2963,
+      "sha256": "35db4d3f18ee2fa1041074285d7a808f38e93e3fd4ea9f6c7edea2c09ac1abc5"
+    },
+    "docs/03-algorithms-and-data-structures/blendshape-normalization.md": {
+      "bytes": 2901,
+      "sha256": "a5a3ecdcfe4b587ba5f9b1b6e167796fbbf5485209ac3725b878a0d2219b447d"
+    },
+    "docs/03-algorithms-and-data-structures/bounded-studio-mailbox.md": {
+      "bytes": 2165,
+      "sha256": "6e26ad293dc520179972111a908c0f64a71f5bd2c19c89836ab22b9163c7629b"
+    },
+    "docs/03-algorithms-and-data-structures/condition-variable-synchronization.md": {
+      "bytes": 3124,
+      "sha256": "fef879c536e25e87211a596692abea47c49fbf65c32c31427502c492992411c3"
+    },
+    "docs/03-algorithms-and-data-structures/damped-spring-integration.md": {
+      "bytes": 4634,
+      "sha256": "68d56d1608b5dc6d9280da03e3b11070c87fef82a3d62ff4c4050b0e183b6d2b"
+    },
+    "docs/03-algorithms-and-data-structures/facial-action-state-machine.md": {
+      "bytes": 5895,
+      "sha256": "21eaa152cf8f8af4a19c4744a0744395bf33e410cfcec76d0d3710d199cfa62c"
+    },
+    "docs/03-algorithms-and-data-structures/finite-state-lifecycle.md": {
+      "bytes": 2963,
+      "sha256": "fe2340c08fcc335be5b3b5a4db5d95e98b2d1fdae8e31d668e4478d74327691b"
+    },
+    "docs/03-algorithms-and-data-structures/latest-frame-slot.md": {
+      "bytes": 2680,
+      "sha256": "f894f55a07282c40de5f21db29fbbbacd914f152fe31fd84c186da3744f6cef2"
+    },
+    "docs/03-algorithms-and-data-structures/low-resolution-overlay-compositing.md": {
+      "bytes": 5163,
+      "sha256": "621f1f681c0549cde3ea5d83f30193ba8ff3255f317045522f3cd5026838f09d"
+    },
+    "docs/03-algorithms-and-data-structures/monotonic-timing-and-fps.md": {
+      "bytes": 2609,
+      "sha256": "8d677a0f9f46bafb0033a0378f1891ddc985065ec2df9ff3bc56de785248a11b"
+    },
+    "docs/03-algorithms-and-data-structures/one-euro-filtering.md": {
+      "bytes": 5339,
+      "sha256": "15c70ae87226f2d14effc8258dbf8e0be4719b1503e8accc1371966a86be895d"
+    },
+    "docs/03-algorithms-and-data-structures/transformation-matrix-decomposition.md": {
+      "bytes": 2854,
+      "sha256": "2d8384546a17ff9d4d9e81ceaed5c676550a03e12455b7572b5cb7b0de38779c"
+    },
+    "docs/04-design-principles/README.md": {
+      "bytes": 2344,
+      "sha256": "9379993b3d1e352318cdee2990eb9d24c0a101576aeb28e0b86c0bca02c28d97"
+    },
+    "docs/04-design-principles/dependency-inversion.md": {
+      "bytes": 2481,
+      "sha256": "3c1de93cb7e8fa001782bc89a303c3a1d287ced0c6c05c36959ac3719e9d52ae"
+    },
+    "docs/04-design-principles/immutable-snapshots.md": {
+      "bytes": 2111,
+      "sha256": "f06c53505bf89f06cf56d3e921dd45d044ff47d2574f659b063eaef6dd1b7097"
+    },
+    "docs/04-design-principles/latency-over-completeness.md": {
+      "bytes": 2104,
+      "sha256": "35933a256f69e3012317b43f02448e9514ac0de275a8063d284d1f9cff43ab57"
+    },
+    "docs/04-design-principles/responsive-control-surfaces.md": {
+      "bytes": 2618,
+      "sha256": "5ebc8ce2709efbe0e4271a2c2cdbabffbdcc3b0486d30d5c71d4543dd11ae229"
+    },
+    "docs/04-design-principles/security-and-secret-boundaries.md": {
+      "bytes": 2474,
+      "sha256": "6b017dd830c465f94a83bd6809f7a1aaae55ae4d259fbd8738675eb627ccc087"
+    },
+    "docs/05-camera-ingestion/README.md": {
+      "bytes": 3027,
+      "sha256": "3e586ab2fa56dea4327290b344144b038767d2856ed6654d1b4b8c4811061a59"
+    },
+    "docs/05-camera-ingestion/android-ip-webcam.md": {
+      "bytes": 3394,
+      "sha256": "3179433ae4ecb440c42f0edc1ddcfbc7149f1bcba8c51954c236f1e80c986f90"
+    },
+    "docs/05-camera-ingestion/diagnostics-and-performance.md": {
+      "bytes": 2956,
+      "sha256": "ddbe161f6f92bd2595643b80e1be55d5cd35afa080b5cd21b287175b47324bc7"
+    },
+    "docs/05-camera-ingestion/runtime-flow.md": {
+      "bytes": 2459,
+      "sha256": "5138fdf54fa4cade01b9dcb0c01ff17cef016a1ac59ce0820724e736ffa5157e"
+    },
+    "docs/06-face-tracking/README.md": {
+      "bytes": 6757,
+      "sha256": "14af7a1ed94165bf2874d37d91e3366593b66a0ea3ed98d80fa857109c79cab7"
+    },
+    "docs/06-face-tracking/live-debugging-and-validation.md": {
+      "bytes": 9266,
+      "sha256": "df21af7feafc6cdc43de4ec48a8e2886a82cf080031d73021eebec880dbac18c"
+    },
+    "docs/06-face-tracking/normalized-face-state.md": {
+      "bytes": 3769,
+      "sha256": "b8eaa5b6fab65695b9fa64233ebee9674980cbb21db140d5731f8a85a1456c82"
+    },
+    "docs/07-quality-and-testing/README.md": {
+      "bytes": 5324,
+      "sha256": "e79a32b029a71eec84fe0f5140da329b330e88ff8d55f17fad87447aa59abe35"
+    },
+    "docs/07-quality-and-testing/validation-evidence.md": {
+      "bytes": 7128,
+      "sha256": "7b6a7bb31243d55ccf15b1a29a33eab093155e088eab77d7d346949f28a3ce16"
+    },
+    "docs/08-roadmap/README.md": {
+      "bytes": 5018,
+      "sha256": "21faeb31dccf99b26c622b93fcb7f582b012125a97a68d5d5fbfb5e1c93fb375"
+    },
+    "docs/09-desktop-studio/README.md": {
+      "bytes": 2075,
+      "sha256": "42c06ca523766e87ac8e9e4e077c3d42e07dd188b1eaf5897c40c5a7584fb325"
+    },
+    "docs/09-desktop-studio/interface-specification.md": {
+      "bytes": 6588,
+      "sha256": "c58d3bc4a0af57ae9aaf2610e7ca08c7d652c534a48dfb1267d98b6d0f90f05e"
+    },
+    "docs/09-desktop-studio/research-and-design.md": {
+      "bytes": 9601,
+      "sha256": "65ddb00afd7f74ee507d1f2ce378537ba0f7248e1ff06295575617edb0e558eb"
+    },
+    "docs/09-desktop-studio/runtime-architecture.md": {
+      "bytes": 9975,
+      "sha256": "cf38e5a4b18797bda0ac13994f5891163cbacc49fefbc157dd7907324e00698a"
+    },
+    "docs/09-desktop-studio/tutorial.md": {
+      "bytes": 10222,
+      "sha256": "5d513ce5120ed3e110e04dd17b6580359f4ce067736dc7c1d1438a0832c31121"
+    },
+    "docs/99-appendix/README.md": {
+      "bytes": 1561,
+      "sha256": "505fc624e0dfaf0940e958caa638a6a814eeddd9eef00d758c943c85cbb535a0"
+    },
+    "docs/99-appendix/command-reference.md": {
+      "bytes": 16986,
+      "sha256": "962669127feb6b06ad9582f059b828f2510fcfb1cec599e1ada3f697f72a9dce"
+    },
+    "docs/99-appendix/glossary.md": {
+      "bytes": 6037,
+      "sha256": "14aef7322a1d94aad5aed4b8c91297c901a0bf2bb5ea644255d124e286bd6ccd"
+    },
+    "docs/99-appendix/repository-map.md": {
+      "bytes": 5776,
+      "sha256": "c3c24ca66114069d6e63ce71acd2f328250f96bc259ad3bbc8ac6a42cf0f3edd"
+    },
+    "docs/KardboardCode-VTuber-Engineering-Handbook.pdf": {
+      "bytes": 8823606,
+      "sha256": "bf6567c3f48bb80c0a4377c275edba59a3b0fbcad37bdb7b05d270d3d6bf1fad"
+    },
+    "docs/README.md": {
+      "bytes": 8589,
+      "sha256": "a2f94e0d754e3c35f0a905d2fad30d644ac8a9e5ae77a0d948171e5e7d7019b4"
+    },
+    "docs/book/README.md": {
+      "bytes": 1855,
+      "sha256": "949cbcbca024e0b1543d08a254297568fad6271e201ea7f86fa512493a666d1e"
+    },
+    "docs/book/build/build.js": {
+      "bytes": 19892,
+      "sha256": "671e02ee2c192a8fa651ac46a6369865f0cb53fb0f753edca29c366d905f1e56"
+    },
+    "docs/book/build/overflow-check.js": {
+      "bytes": 3006,
+      "sha256": "c183d990403e8a9b6f31e019b8569bb82d5d3a7a3aa99739183f15b681059649"
+    },
+    "docs/book/build/package.json": {
+      "bytes": 395,
+      "sha256": "612ad201daa31cb375a09d0caa6883f55c16f5056557ef92811218352ba456a1"
+    },
+    "docs/book/build/render.js": {
+      "bytes": 3296,
+      "sha256": "1b9111e018555113782843006cbdaf0752607a8d022d3f22f129f18c2c8d0cfe"
+    },
+    "docs/images/kardboardcode-angle-gallery.png": {
+      "bytes": 311408,
+      "sha256": "558907c64a0bf481c677b6c63e47ee2bc125d3d5d99c21c64fb0388adaba802c"
+    },
+    "docs/images/kardboardcode-body-skeleton-debug-window.png": {
+      "bytes": 52025,
+      "sha256": "da0378714b80aa74c814da4df0dc4169251cf68c03bc25701afb713cacd28370"
+    },
+    "docs/images/kardboardcode-cinematic-poses.png": {
+      "bytes": 211301,
+      "sha256": "da565da621dd7910a97cd21dd2ee2fc15da7228a84310cb60e3ce5ac3d698eef"
+    },
+    "docs/images/kardboardcode-detail-views.png": {
+      "bytes": 197874,
+      "sha256": "12b791b1b864db69fc6304817545cf4f8cf72ca54f04ba104224d73053ea743b"
+    },
+    "docs/images/kardboardcode-expression-states.png": {
+      "bytes": 107447,
+      "sha256": "90f87d3e9b7da487ccc1db7b2ddb963baffaf379bf43964601180f17460013f6"
+    },
+    "docs/images/kardboardcode-flap-motion-sequence.png": {
+      "bytes": 124169,
+      "sha256": "6b30085fa49af97686da3259708fc005da011939753859398edcae565421c37c"
+    },
+    "docs/images/kardboardcode-flap-physics.png": {
+      "bytes": 115756,
+      "sha256": "88ec97d665d35a2869cddd699b60732fc90a4efa0d0c4ef881e15ad1118906bb"
+    },
+    "docs/images/kardboardcode-green-screen-demo.gif": {
+      "bytes": 2227795,
+      "sha256": "cad4516f95055ec04b0553472873ec780b82105673fb562cac7c728ae60669b0"
+    },
+    "docs/images/kardboardcode-hero.png": {
+      "bytes": 89569,
+      "sha256": "efc1ee2db7d513d0f5b44c6b9257bac0418fcdd7940a793d816e64d9c6975757"
+    },
+    "docs/images/kardboardcode-live-demo.gif": {
+      "bytes": 9895314,
+      "sha256": "fbcc48efe88282b4f0a5fada896dd18a9657eb03663b669588136f7ed6e345e2"
+    },
+    "docs/images/kardboardcode-performance-states.png": {
+      "bytes": 220116,
+      "sha256": "910aa582b4983efaf73fc5f1014543ae511f5eafe2e87c63296c692412a5a82e"
+    },
+    "docs/images/kardboardcode-real-life-demo.gif": {
+      "bytes": 3560790,
+      "sha256": "f60d365d4104f43387a5d12c0ac276f17891f1e3e88dc5af257b87f2bbe497e9"
+    },
+    "docs/images/kardboardcode-render-mesh-debug.png": {
+      "bytes": 797288,
+      "sha256": "56766acf22c8af20859c817028563dbe455021115c76100dc54c0b3bcf9d5e1a"
+    },
+    "docs/images/kardboardcode-six-sides.png": {
+      "bytes": 166855,
+      "sha256": "ccba9f053eb583b7fa3178c3f1c7e763f78ddf35a12da707766b5d377be14627"
+    },
+    "docs/images/kardboardcode-studio-compact.png": {
+      "bytes": 86305,
+      "sha256": "a16992bc1dce085dd8985a5af7e79dc14ff5576b87aaf64da83c86a9b1220689"
+    },
+    "docs/images/kardboardcode-studio-dark.png": {
+      "bytes": 96302,
+      "sha256": "9131da846e0394af6486b15f9bc094e8f9c1ab920dbf5f4bade02aab4f05c987"
+    },
+    "docs/images/kardboardcode-studio-light.png": {
+      "bytes": 99778,
+      "sha256": "c071d6fc201eb6d12f51fc47412a14a57ded274193cda100d6faf371be3ed2f9"
+    },
+    "docs/images/kardboardcode-studio-native-camera.png": {
+      "bytes": 75184,
+      "sha256": "3bc33a0c5e50530508e6cee566c602ef4f0b56fc732cfc49530ee846e3b53571"
+    },
+    "docs/images/kardboardcode-studio-tutorial.png": {
+      "bytes": 21631,
+      "sha256": "c5b2c027729bf6f5b3e95f95c4dfd1b95917face1c6f82451219a6f893d87be6"
+    },
+    "docs/images/kardboardcode-surface-tour.png": {
+      "bytes": 209672,
+      "sha256": "36361a7a6698466386ad920d663887b24ce19337b8a67031065f076b3b5f8d9e"
+    },
+    "docs/images/kardboardcode-tracking-debug-window.png": {
+      "bytes": 137496,
+      "sha256": "d72366b25af3d0245b5cd5ea875d6c11d458d94a4cbf1a8b9a4537438afd4681"
+    },
+    "models/.gitkeep": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "pyproject.toml": {
+      "bytes": 1106,
+      "sha256": "db6458de48a8b444cd274b90bc714cd167b25633b7b430c846822983e0fe7881"
+    },
+    "release/README.md": {
+      "bytes": 3356,
+      "sha256": "f9f18452fdc2c1d891aac50c017fd4fb6c9a356a48f3f063be6178bbfd59c39d"
+    },
+    "release/RELEASE_NOTES.md": {
+      "bytes": 3365,
+      "sha256": "614181915ecae4c08e76cada44228a2e358ff1ad505f5d48243f5201abdb75cb"
+    },
+    "requirements-dev.txt": {
+      "bytes": 53,
+      "sha256": "682b820449d562875906aeea82754f2f17dc8e6fce352b1094c09ce89170956d"
+    },
+    "requirements-tracking.txt": {
+      "bytes": 76,
+      "sha256": "daf3ad295d784d7d85bdf10fcad33b89d6f532a46ddf0f3875b22fb2ce380068"
+    },
+    "requirements.txt": {
+      "bytes": 46,
+      "sha256": "348ca0c0f40b450408880058008ff21aea807b96f6c08a553412690ad0311745"
+    },
+    "scripts/capture_studio_screenshots.py": {
+      "bytes": 3530,
+      "sha256": "e291de4ac9f2986b3abf500f0b12dcb96e48c0275ac1bb48b394228e2a3a483d"
+    },
+    "scripts/download_face_landmarker_model.py": {
+      "bytes": 1673,
+      "sha256": "8dff28e5566e2d8142372534de1b46c8638e5dc4ade171195a08936e9002eb14"
+    },
+    "scripts/download_hand_landmarker_model.py": {
+      "bytes": 1673,
+      "sha256": "d63233b6ad8ac077a748db26b4bc6ce35fce62b79953f5ee461d41a33e498055"
+    },
+    "scripts/download_pose_landmarker_model.py": {
+      "bytes": 1693,
+      "sha256": "9e464a80a7f4f684380d29d12a030bcb43d5aef7742f5d510f100385a8b624be"
+    },
+    "scripts/download_selfie_segmenter_model.py": {
+      "bytes": 1681,
+      "sha256": "dc613c7f444cabfcefad524d3512997c3df1c1dc04f707c225d72304cd6ff531"
+    },
+    "scripts/export_release.py": {
+      "bytes": 13494,
+      "sha256": "bc76f4f19dc35525d42d9ba821b0a97ec2eeaa46534e83ced960baefb20a6249"
+    },
+    "scripts/generate_documentation_gallery.py": {
+      "bytes": 20891,
+      "sha256": "e8ed38353aad6b352293efe00802083e66db410fdba45c7e44eca2486796794c"
+    },
+    "scripts/generate_readme_animation.py": {
+      "bytes": 8636,
+      "sha256": "c592df444539f6a8da1f50817261fb97473e74feedccfc5b92dedfb7c752c49e"
+    },
+    "scripts/generate_real_life_animation.py": {
+      "bytes": 13483,
+      "sha256": "44371f6fcb18f11022ba5f49e4e6b81f298e2436559a8a79884701e1b8a6d17c"
+    },
+    "scripts/list_local_cameras.py": {
+      "bytes": 182,
+      "sha256": "13ddf72c0b37172efe84a84b03f5004d6cdc863fb18af672ef4a71298edececa"
+    },
+    "scripts/record_guided_regression.py": {
+      "bytes": 18177,
+      "sha256": "26408dc4ebc7320c18b45a959390dfdfc4039d1f6ab6b0269d429e0b77534fe0"
+    },
+    "src/kardboard_vtuber/__init__.py": {
+      "bytes": 469,
+      "sha256": "47195af771b7be92adef0b89d9d74eb9a5a364d6a3a906f2d8b368ae48c862f8"
+    },
+    "src/kardboard_vtuber/__main__.py": {
+      "bytes": 101,
+      "sha256": "7dfe6d3e881d4ed5b849ea6120ef30ef72e4a4ea543e0e4cd426d75c5d26f3c1"
+    },
+    "src/kardboard_vtuber/camera/__init__.py": {
+      "bytes": 481,
+      "sha256": "c56fa7850ec84aaad5a7fb08a9061a981c74015c0a1fa1e43ad65396ad89d4dd"
+    },
+    "src/kardboard_vtuber/camera/devices.py": {
+      "bytes": 2935,
+      "sha256": "f9ade65c0c8c2c966c73a98cf5da40ffcf88b75ce02459f4650aa84e05db7306"
+    },
+    "src/kardboard_vtuber/camera/models.py": {
+      "bytes": 4673,
+      "sha256": "814a9cd38cd25552df05195dd48c63fce155a29eb47145d784b432fcad60ad4b"
+    },
+    "src/kardboard_vtuber/camera/stream.py": {
+      "bytes": 12014,
+      "sha256": "63e307225773e0640bd0e20c8f0bf6f3c40ef01f70960dbebb503eac045a6127"
+    },
+    "src/kardboard_vtuber/cli.py": {
+      "bytes": 41677,
+      "sha256": "3d673f10e729247b9fe306d3ad7be501153ef40ffaa26d4aea59daeaa83fb415"
+    },
+    "src/kardboard_vtuber/gui/__init__.py": {
+      "bytes": 2060,
+      "sha256": "daf6a39537eddb3cf30ebd419024504c18d717174c8727eccd27838da7b58bd2"
+    },
+    "src/kardboard_vtuber/gui/__main__.py": {
+      "bytes": 67,
+      "sha256": "9a1658bd6c38b57b38eaef1baba86ff1952ed8a62b8695d8b5d1b4e8d37715fc"
+    },
+    "src/kardboard_vtuber/gui/assets/kc-box.svg": {
+      "bytes": 1050,
+      "sha256": "01d2ce4184a21160f24bd7b96cc8673873e77ac1139010e4ddc2016316a811e5"
+    },
+    "src/kardboard_vtuber/gui/settings.py": {
+      "bytes": 15530,
+      "sha256": "5b18fe415619c77d00392d5e33970d3e070afb7b596d8809875ea78601911fa0"
+    },
+    "src/kardboard_vtuber/gui/tutorial.py": {
+      "bytes": 9070,
+      "sha256": "34db1780c741ab349ff5dd1104e02017352c64ccc2dcde81ed898db31ebae575"
+    },
+    "src/kardboard_vtuber/gui/widgets.py": {
+      "bytes": 9530,
+      "sha256": "12e78a006648444d2bded0b596a93d4c31a8c4659a041e49b024cd338b72a6d9"
+    },
+    "src/kardboard_vtuber/gui/window.py": {
+      "bytes": 53124,
+      "sha256": "5bb9da0b2f495647ef91a24fadc4519cbe9875b806904b40336b7cfe35a2655d"
+    },
+    "src/kardboard_vtuber/gui/worker.py": {
+      "bytes": 6372,
+      "sha256": "d7064677b975a4d7465b556079a2f14289e2fb17fa6870aa9bca34405b5fab6b"
+    },
+    "src/kardboard_vtuber/motion/__init__.py": {
+      "bytes": 168,
+      "sha256": "53308a3c7b13886cc07d4fb4d8df5b4bf1afda9d0af1f4c4e585044a29e158f4"
+    },
+    "src/kardboard_vtuber/motion/springs.py": {
+      "bytes": 3136,
+      "sha256": "6201136e90a998cbf40e7cfed649640fa97a9a15d456a38e855c8492f74dd668"
+    },
+    "src/kardboard_vtuber/renderer/__init__.py": {
+      "bytes": 614,
+      "sha256": "956744ba80b47dd19beaf2a18913ddba6daaf2a421a99ad1f764e09685f4e3b1"
+    },
+    "src/kardboard_vtuber/renderer/full_body.py": {
+      "bytes": 6395,
+      "sha256": "460643cd288b98098f49a51f086dfbdd8e977db757fe5129daa67e93e7745f41"
+    },
+    "src/kardboard_vtuber/renderer/ps1_cardboard.py": {
+      "bytes": 17361,
+      "sha256": "7e2dfca1bc9806eefcf6bce6f6646934b63cfa5a3d4f18e8d443ddacf17ad234"
+    },
+    "src/kardboard_vtuber/renderer/textured_3d.py": {
+      "bytes": 48167,
+      "sha256": "f2ba06b49c6fcb8700375997b89ec7493525e4be24b01189f3db9c0e38d312cf"
+    },
+    "src/kardboard_vtuber/runtime.py": {
+      "bytes": 5125,
+      "sha256": "11fb0b43a6e68d74e6d7884343ac3cc3413849084f0ab9901cd7ba0884ffa59e"
+    },
+    "src/kardboard_vtuber/tracking/__init__.py": {
+      "bytes": 1915,
+      "sha256": "64e7a546c17e7e98bf03c2e3feeea734e2cb289237c49d559e90649a8fb6131a"
+    },
+    "src/kardboard_vtuber/tracking/body_head_fallback.py": {
+      "bytes": 15100,
+      "sha256": "01e82eb7c52599fc2c0b8377d8b87259d68ca4df0d41203cbfd23f250bb6b5b6"
+    },
+    "src/kardboard_vtuber/tracking/events.py": {
+      "bytes": 8694,
+      "sha256": "706d376a0192dcb2c9add694274d2f786e81eb2ccc001c45cfa656fdd9ec10c2"
+    },
+    "src/kardboard_vtuber/tracking/eyes.py": {
+      "bytes": 1524,
+      "sha256": "fb9283578430ee71f5bef57f638c16c45c216b93cfa187eecdc4eb2ded91ac73"
+    },
+    "src/kardboard_vtuber/tracking/filters.py": {
+      "bytes": 7151,
+      "sha256": "183f3da7bd07222239f889651c5ded5b95b2d6451394e4d9b5944cd9f3e5a18d"
+    },
+    "src/kardboard_vtuber/tracking/full_body.py": {
+      "bytes": 9461,
+      "sha256": "47873e14b5fa94faba334fbaf198f7581156214217c5bee139362869274fdbb9"
+    },
+    "src/kardboard_vtuber/tracking/green_screen.py": {
+      "bytes": 5528,
+      "sha256": "67ba8b7f269183a93f40d2e60e1b46bcebeb098cb062ee694cd98f16c69b7d28"
+    },
+    "src/kardboard_vtuber/tracking/hand_occlusion.py": {
+      "bytes": 7769,
+      "sha256": "0e658eb63640db35f4c39e5bacd7983d2e71f6d0ecac3b8fd1ec7fe962e091ee"
+    },
+    "src/kardboard_vtuber/tracking/hood_markers.py": {
+      "bytes": 33548,
+      "sha256": "eda731d8ecebab9151b014fe94384805046671188a0c43b7b9348a9eca5f1880"
+    },
+    "src/kardboard_vtuber/tracking/mediapipe_tracker.py": {
+      "bytes": 15636,
+      "sha256": "652d0e50605e8285923bb6ac491f6a9ad789004a1661dd97946f635c6a2c3b0e"
+    },
+    "src/kardboard_vtuber/tracking/models.py": {
+      "bytes": 4845,
+      "sha256": "e37b08732ba5b2b6818241d9e5725751c62cb1749b86e0e6fe4720047ef3028d"
+    },
+    "src/kardboard_vtuber/virtual_camera.py": {
+      "bytes": 3925,
+      "sha256": "18b2ff42ef238eaf4267c375ff43d86de52fafd1ab533772bd307c329221b94b"
+    },
+    "tests/test_body_head_fallback.py": {
+      "bytes": 8237,
+      "sha256": "b08159e93daedd11059cfc1f9e4908aae5e4f066280f8e810e9082119a778c4e"
+    },
+    "tests/test_camera_devices.py": {
+      "bytes": 1897,
+      "sha256": "d7c070a25625accfad4b50e945d70f2cb876ee82177fd2161822e1589648f153"
+    },
+    "tests/test_camera_models.py": {
+      "bytes": 1265,
+      "sha256": "c1b71df375d20c6f106e3f3ead3a5c9ba061434c43335a5df6fa92c431eadec9"
+    },
+    "tests/test_camera_stream.py": {
+      "bytes": 3896,
+      "sha256": "8b9a439dfeb6ebaab461541c51860f790c7f37005fe71d949a3172fe9aa8710d"
+    },
+    "tests/test_cli.py": {
+      "bytes": 6993,
+      "sha256": "4f3b0ee721c2de26e5b0c7b37c679e357c5b195f28507882dc00759aacb09dd2"
+    },
+    "tests/test_full_body.py": {
+      "bytes": 3512,
+      "sha256": "7e641bd1d7dd1d93a0d159bc71e9ec9f547abb399d439af0c89a7777ba75dca3"
+    },
+    "tests/test_green_screen.py": {
+      "bytes": 1518,
+      "sha256": "794203b043767af96480603bc8c89eaa38ff54e7c257ab9441e57afa351af2b1"
+    },
+    "tests/test_guided_recording.py": {
+      "bytes": 3627,
+      "sha256": "2ac149d47356a1146944b6861e5ef76b1e1618802317667a6543606bb7ee3649"
+    },
+    "tests/test_hand_occlusion.py": {
+      "bytes": 1688,
+      "sha256": "e5610afe03c6e800bb3d9cc5249796a37f91e04a0c35b771ade9c2859f53fead"
+    },
+    "tests/test_hood_markers.py": {
+      "bytes": 12454,
+      "sha256": "171fce755c6a1b96b2bbe70898ac20532ca84d3401e9714b76017a89a65c18e5"
+    },
+    "tests/test_motion_springs.py": {
+      "bytes": 1932,
+      "sha256": "bf3eeff9a19c695dd6ae24a85b9b1d48b910ad4d5943098bb6d597eaaa8fb00d"
+    },
+    "tests/test_ps1_cardboard_renderer.py": {
+      "bytes": 8275,
+      "sha256": "b2249759eb9deb40f0763cbb2b13a0fc401e429f6055ef3e9653c9ef23d3bd4d"
+    },
+    "tests/test_release_export.py": {
+      "bytes": 5086,
+      "sha256": "8a8aca6c8ba4823075e61e852479d8227b4e94c97cae9f07a67eddecedb5e1d3"
+    },
+    "tests/test_studio_gui.py": {
+      "bytes": 11310,
+      "sha256": "df03e3a31a9c162ba8aa8dfad174d4bb65c073e934a351e81498614cabdacb97"
+    },
+    "tests/test_studio_runtime.py": {
+      "bytes": 7021,
+      "sha256": "1c09069a821610314691f5dcd8f52c6faebfabb3778e867cead58cec27217f27"
+    },
+    "tests/test_studio_settings.py": {
+      "bytes": 3495,
+      "sha256": "e25f3d2ffc5031ab8b690a127500865946df45bfb358ee19da624f15a0051dc4"
+    },
+    "tests/test_textured_3d_renderer.py": {
+      "bytes": 16655,
+      "sha256": "ea3ebb3de317f2f2c02cea08ad8b72cdc9aa64e8ca7db2102a1eb594a0b40e4f"
+    },
+    "tests/test_tracking_events.py": {
+      "bytes": 5251,
+      "sha256": "5402fc339edc7769681c146316ec83a173d87d04ba7dd0a22e67a076bcc5f0c6"
+    },
+    "tests/test_tracking_filters.py": {
+      "bytes": 2837,
+      "sha256": "05afd3efa5496a4f48f5ed9d1f41cf78838b128d08938091e4201424af0ca7ec"
+    },
+    "tests/test_tracking_models.py": {
+      "bytes": 8146,
+      "sha256": "5c0ae87afd6d0cb719473a528e9d06b30a224dfabf10405c0466fc7ee7108102"
+    },
+    "tests/test_virtual_camera.py": {
+      "bytes": 5498,
+      "sha256": "da4e958ab9acfe1f51b1312226de42d67586e7207355659a7f211031b6c2af15"
+    },
+    "tests/test_virtual_camera_cli.py": {
+      "bytes": 7972,
+      "sha256": "8136e2a43043bc9cbfe3ee72147e6bae8e9ff1afd180b26f5281998bbf6892f0"
+    }
+  },
+  "sourceFingerprint": "e3c26a6a94e034b817113fbde128273a9ab23fb39e69dac3134489e3fbd11a29",
+  "sourceModified": false,
+  "tag": "v0.2.0",
+  "version": "0.2.0"
+}

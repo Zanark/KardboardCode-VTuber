@@ -1,5 +1,5 @@
 > **Last updated:** 2026-11-02 (Asia/Kolkata) - Native desktop studio delivered locally and opened in a camera-free demo.
-> **Last context offload:** 2026-11-02T14:33:17+05:30
+> **Last context offload:** 2026-11-02T17:06:20+05:30
 
 # KardboardCode-VTuber State
 
@@ -10,8 +10,10 @@
 The user requested README reordering and a release, then explicitly chose a tracked local
 `release` folder for manual publication because current GitHub authorization is read-only.
 README now keeps one tool screenshot above Current milestone and the GUI text/gallery below it.
-Source release v0.2.0 is prepared with an exporter, release notes, public provenance and checksums;
-final clean-source export/persistence is being completed. This is not a standalone installer.
+Source release v0.2.0 is ready in the tracked `release` folder with its source ZIP, release notes,
+public provenance, manifest and checksums. The clean public-input commit is `e5e2db3`;
+the final source fingerprint is recorded in `release\manifest.json`. This is not a standalone installer,
+and no remote release/tag/push was created.
 
 The native PySide6 studio is delivered. The user's follow-up request for explicit native machine/laptop camera selection is also implemented: Camera now separates computer cameras from custom URL/file/index sources, with asynchronous named Windows device discovery. Selection pairs the proper backend/index; refreshing/selecting does not open a stream. All 45 runtime options, live eye calibration, KC icon, recording/model actions, presets, themes, logs and tutorial remain available. No live camera has been opened by this agent; user appearance and physical-device capture qualification remain pending.
 
@@ -43,6 +45,9 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
   If inputs were uncommitted, commit them and re-export before publication to update provenance.
 - Candidate validation passed: 241 tests/Ruff, README ordering, exact archive checks, and extracted
   CLI/GUI help plus a real synthetic GUI preview. No camera/model download was involved.
+- Final export passed `--check` after committing its public inputs as `e5e2db3`; manifest
+  `sourceModified` is false. Generated release/context files are committed afterward and do not
+  change the public-source fingerprint. Current ZIP is about 30 MB, below the regular Git file limit.
 - No remote release/tag/merge/push is authorized for this local-preparation follow-up. The owner
   will publish using the notes/context and an account with repository Write access.
 
@@ -143,4 +148,4 @@ Wait for the user's review of the desktop studio. Do not repeat completed implem
 - The earlier November recap was context-only. The subsequent GUI request changed application code, optional dependencies, tests, TODOs, and documentation and was committed in milestones. No live camera, raw screenshot capture, or push was performed for the GUI request.
 - Local session provenance: `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7`. Its checkpoints preserve earlier work. Raw artifacts are private; do not copy them into durable context or public docs.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_834` (native camera selector, 236 tests), following source-boundary validation `ep_832` and GUI delivery `ep_829`. Earlier recap: `ep_823`; registration: `ep_780`; mandatory dual-store routing: `sem_074`.
+- Latest cross-base receipt: `ep_836` (v0.2.0 local release export and README layout, 241 tests), following native selector `ep_834`, source-boundary validation `ep_832` and GUI delivery `ep_829`. Earlier recap: `ep_823`; registration: `ep_780`; mandatory dual-store routing: `sem_074`.

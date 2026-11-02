@@ -13,6 +13,8 @@
 - Full suite passed 241 tests and Ruff. Verified stale/tampered detection, staged-file gating, repeatability and clean-commit provenance refresh. README order has exactly one tool image before the milestone.
 - A candidate archive was extracted privately and launched both help entry points and the real synthetic GUI preview from its extracted root. No camera capture, model download or private imagery was used.
 - Final handoff uses a public-input commit followed by a clean-provenance archive/export commit. Remote publication remains the owner's action; no tag, release, merge or push has been created.
+- Public inputs were committed as `e5e2db3`; the final v0.2.0 export passed freshness/content/checksum checks with `sourceModified=false`. The tracked handoff ZIP is about 30 MB.
+- Persisted the release handoff as zmem `ep_836` and set the full-offload marker to `2026-11-02T17:06:20+05:30`. Repository-memory API was unavailable; the durable rule remains in AGENTS.md, release instructions, this store and zmem.
 
 ## 2026-11-02 - Explicit native machine camera selection
 
