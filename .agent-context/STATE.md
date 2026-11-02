@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - Native desktop studio delivered locally and opened in a camera-free demo.
-> **Last context offload:** 2026-11-02T17:13:00+05:30
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - Supplied logo and first official v1.0.0 source release completed locally; requested context refresh.
+> **Last context offload:** 2026-11-02T17:35:11+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,13 +7,19 @@
 
 ## Current focus
 
-The user requested README reordering and a release, then explicitly chose a tracked local
-`release` folder for manual publication because current GitHub authorization is read-only.
-README now keeps one tool screenshot above Current milestone and the GUI text/gallery below it.
-Source release v0.2.0 is ready in the tracked `release` folder with its source ZIP, release notes,
-public provenance, manifest and checksums. The final clean public-input commit is `1067ade`;
-the final source fingerprint is recorded in `release\manifest.json`. This is not a standalone installer,
-and no remote release/tag/push was created.
+The supplied voxel KC box artwork is now the official tool logo. Its original 1345x1169 RGBA
+PNG is preserved byte-for-byte; derived transparent PNG/Windows ICO resources supply the
+application, window/taskbar and header identity. The 3D avatar itself is unchanged.
+v1.0.0 is the first official release version; v0.2.0 was unpublished local staging.
+
+The completed source-release handoff is in the tracked root `release` folder. Clean public
+inputs are committed as `92c32b9`; generated v1.0.0 artifacts as `e7ac0e3`. The manifest has
+`sourceModified=false` and the current source fingerprint. All six release files match their
+committed Git blobs exactly. README preserves one tool screenshot above Current milestone,
+with separate logo branding above it and the GUI guide/gallery below. No remote publication,
+tag, merge or push was performed; the owner still publishes manually with Write authorization.
+This is a source release, not a standalone installer. The user requested this context refresh
+after completion, and there is no remaining logo/release implementation work.
 
 The native PySide6 studio is delivered. The user's follow-up request for explicit native machine/laptop camera selection is also implemented: Camera now separates computer cameras from custom URL/file/index sources, with asynchronous named Windows device discovery. Selection pairs the proper backend/index; refreshing/selecting does not open a stream. All 45 runtime options, live eye calibration, KC icon, recording/model actions, presets, themes, logs and tutorial remain available. No live camera has been opened by this agent; user appearance and physical-device capture qualification remain pending.
 
@@ -32,7 +38,7 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
-### Latest release staging - v0.2.0
+### Latest release handoff - v1.0.0, first official version
 
 - Canonical handoff folder: `release` at this repository root, outside `src`. The user wants it
   refreshed with the latest export after future public source/docs changes.
@@ -41,16 +47,21 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
   explicitly; private context, credentials/config, raw recordings, models, environments and caches are excluded.
 - Regenerate with `python scripts\export_release.py`; verify with `--check`. Source fingerprints,
   per-file hashes, asset checksums, archive CRC/content and version alignment are checked.
-- `AGENTS.md` records the release freshness contract. Package metadata and `__version__` are 0.2.0.
+- `AGENTS.md` records the release freshness contract. Package metadata and `__version__` are 1.0.0.
   If inputs were uncommitted, commit them and re-export before publication to update provenance.
-- Candidate validation passed: 241 tests/Ruff, README ordering, exact archive checks, and extracted
-  CLI/GUI help plus a real synthetic GUI preview. No camera/model download was involved.
-- Final export passed `--check` after committing its public inputs as `1067ade`; manifest
+- Validation passed: 245 tests/Ruff, exact original-logo bytes, seven native Qt ICO sizes,
+  refreshed branded Windows screenshots, README ordering, archive checks, and extracted
+  CLI/GUI help plus a real synthetic GUI preview. Handbook: 247 pages, 97 diagrams,
+  zero Mermaid failures and zero overflow. No camera/model download was involved.
+- Final export passed `--check` after committing its public inputs as `92c32b9`; manifest
   `sourceModified` is false. Generated release/context files are committed afterward and do not
   change the public-source fingerprint. Current ZIP is about 30 MB, below the regular Git file limit.
 - `.gitattributes` pins release text to LF and leaves ZIPs binary. Final artifact commit is
-  `dc72392`; all six release files were compared against their committed Git blobs byte-for-byte.
-  Final archive size is 29,909,091 bytes. The five exporter tests also cover committed-byte integrity.
+  `e7ac0e3`; all six release files were compared against their committed Git blobs byte-for-byte.
+  Final archive size is 32,097,090 bytes. The five exporter tests also cover committed-byte integrity.
+- `gui\assets\kardboardcode-logo.png` is the unchanged supplied master. Derive PNG/ICO assets
+  with `python scripts\build_branding.py`, without redrawing or altering the avatar. The old
+  `kc-box.svg` is retired. User visual approval of the refreshed application is not recorded.
 - No remote release/tag/merge/push is authorized for this local-preparation follow-up. The owner
   will publish using the notes/context and an account with repository Write access.
 
@@ -59,7 +70,7 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 - Follow-up native-camera workstream: `TODO\06_NATIVE_CAMERA_SELECTION.todo`. Choose Camera -> This computer's camera -> Refresh -> named laptop/USB device -> Start camera. Windows startup performs metadata-only listing when this input type is active.
 - `camera.devices` uses the optional `cv2-enumerate-cameras` Windows adapter through the existing owned subprocess job lifecycle. Explicit MSMF/DSHOW enumeration avoids cross-backend index mismatch. Device paths/serials are not exposed or persisted.
 - Source modes remember their separate source/backend pairs in session memory only. Named selections set both together; loading presets retains source-free semantics. Refresh/reselect after hardware changes; a missing previous selection is cleared.
-- Current follow-up validation: 236 tests and Ruff passed, including actual asynchronous metadata discovery. This machine reported Integrated Camera under MSMF and DSHOW and OBS Virtual Camera under DSHOW. These are backend entries, not three physical cameras. No capture stream or frame probe was used.
+- Native-selector checkpoint validation: 236 tests and Ruff passed, including actual asynchronous metadata discovery. This machine reported Integrated Camera under MSMF and DSHOW and OBS Virtual Camera under DSHOW. These are backend entries, not three physical cameras. No capture stream or frame probe was used.
 - The Studio was refreshed on its idle Camera page and verified responding. Windows local-camera mode lists metadata on startup; the user still must choose a device and press Start. The native-selector screenshot uses illustrative device names, not captured camera imagery.
 
 - Entry points: `python -m kardboard_vtuber.gui` and the optional `kardboard-studio` GUI launcher. PySide6-Essentials is an optional dependency; normal CLI imports do not import Qt.
@@ -139,7 +150,11 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-Wait for the user's review of the desktop studio. Do not repeat completed implementation/build/tests or launch another window without a reason. Address actual feedback with focused changes, preserve CLI compatibility, keep new context here, and continue reading both stores. Do not connect a live source or publish output automatically. All earlier distant-tracking, calling-app and recording-timing uncertainties remain.
+The requested supplied-logo/v1.0.0 work is complete locally and the context refresh is the final
+handoff. Wait for actual owner feedback or manual publication. Do not repeat completed builds,
+launch another window, connect a camera or publish automatically. Future public changes must
+refresh `release`; preserve CLI compatibility, read both context stores, and write new context
+only here. Distant tracking, real calling-app qualification and recording timing remain open.
 
 ## Environment reminders
 
@@ -151,4 +166,7 @@ Wait for the user's review of the desktop studio. Do not repeat completed implem
 - The earlier November recap was context-only. The subsequent GUI request changed application code, optional dependencies, tests, TODOs, and documentation and was committed in milestones. No live camera, raw screenshot capture, or push was performed for the GUI request.
 - Local session provenance: `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7`. Its checkpoints preserve earlier work. Raw artifacts are private; do not copy them into durable context or public docs.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipts: `ep_837` (final Git-stable release bytes and provenance) and `ep_836` (v0.2.0 local release export and README layout, 241 tests), following native selector `ep_834`, source-boundary validation `ep_832` and GUI delivery `ep_829`. Earlier recap: `ep_823`; registration: `ep_780`; mandatory dual-store routing: `sem_074`.
+- Latest cross-base receipt: `ep_838` (completed supplied-logo/first official v1.0.0 handoff).
+  Previous receipts: `ep_837` (Git-stable v0.2.0 staging bytes) and `ep_836`
+  (initial local export/README layout), following `ep_834`, `ep_832` and `ep_829`.
+  Earlier recap: `ep_823`; registration: `ep_780`; mandatory dual-store routing: `sem_074`.

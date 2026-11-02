@@ -4,6 +4,33 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Supplied logo and first official v1.0.0 release completed
+
+- User supplied voxel KC cardboard-box artwork for the tool logo and asked that the post-logo
+  version count as the first official release. Preparing v1.0.0; GitHub currently lists no releases.
+- Preserved the original 1345x1169 RGBA PNG byte-for-byte. Derived a transparent PNG and seven-size
+  Windows ICO using existing OpenCV/NumPy dependencies, without modifying the avatar mesh.
+  Master SHA256: `9cefba6bc42ad8da9ac6b49c1d3543fba86cd8832bbc93059e8969419378e852`.
+- Updated package versions, README branding/design/architecture, and five real Windows screenshot
+  variants. Contact-sheet inspection confirmed the new header identity; native-camera controls use
+  illustrative names and no capture. One tool screenshot remains above Current milestone.
+- Full suite passed 245 tests and Ruff. Native Qt decodes all seven ICO sizes. The engineering
+  handbook was rebuilt to 247 pages/97 diagrams with zero Mermaid failures and zero overflow.
+- Extracted the v1.0.0 source ZIP privately: CLI/GUI help and a real synthetic GUI preview loaded
+  the extracted modules/resources and exited normally. The temporary extraction was removed.
+- Public inputs committed as `92c32b93039b35942de63ff57273feb149a05e95`; final generated artifacts
+  committed as `e7ac0e3`. ZIP is 32,097,090 bytes, manifest `sourceModified=false`, fingerprint
+  `0d046cfd359d2b5dbb93f464cadea0feef2433322a64a75dbd0b21ce0201bec7`.
+  Export freshness and all six committed release-file bytes were verified after artifact commit.
+- No tag, release, merge, push, live camera or model download was performed. Publication is still
+  manual; logo/UI visual acceptance, distant tracking, calling-app qualification and recording
+  timing remain distinct/unverified.
+- User explicitly requested a context refresh after the current work. Updated only this current
+  store; mandatory older KardboardCode context remains read-only. Read the day's shared chat,
+  latest general messages and recent mentions; no unacknowledged incoming obligation remained.
+- Persisted the completed handoff as zmem `ep_838` and advanced the exact full-offload marker
+  to `2026-11-02T17:35:11+05:30` after store/episode persistence succeeded.
+
 ## 2026-11-02 - README layout and local source release preparation
 
 - User requested moving GUI text/gallery below Current milestone while leaving one tool screenshot above it. Reordered the existing sections without discarding the other avatar/demo images.

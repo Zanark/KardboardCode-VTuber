@@ -62,6 +62,12 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Native studio conventions
 
+- Official tool branding is the supplied voxel KC box PNG at
+  `src\kardboard_vtuber\gui\assets\kardboardcode-logo.png`, retained byte-for-byte. Derive its
+  transparent application PNG and seven-size Windows ICO using `scripts\build_branding.py`.
+  Do not redraw it or modify the avatar mesh merely to change tool branding.
+- v1.0.0 is the first official source-release version. Earlier v0.2.0 packages were unpublished
+  local staging; designation of an official version is not evidence of remote publication.
 - Keep the tracked root `release` folder synchronized with the latest public source/docs export.
   Run `python scripts\export_release.py` and `--check` after relevant changes; stage new public files first.
   `AGENTS.md` and `release\README.md` are the contributor contract.
