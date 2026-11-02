@@ -4,6 +4,37 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-03 - Numeric padding and actual GUI coverage audit
+
+- Owner requested left numeric padding and asked whether sparse presentation meant missing
+  features. Preserve the approved layout/fonts; audit actual bindings rather than count widgets.
+- All45Live/parser destinations have controls. Two complete nondefault GUI configurations
+  exposed a real custom preview-height bug: text could not pass numeric validation. Added its
+  proper integer control; both fallback configurations now forward every setting correctly.
+- Video has22canonical processing fields plus3file/quality fields. Scope/CLI preview now reuse
+  VIDEO_FIELDS; inactive Live controls are labelled and the separate mirrored-file choice stays
+  explicit. Recorder18options=9capture controls+8inherited settings+internal Stop file;4models.
+- Applied embedded numeric text margins6left/3right. Native padding/forwarding/Video-scope/
+  approved-layout set22passed at each100/125/150%;Ruff. Both themes/disabled states and custom
+  preview-height integer are covered by actual ink-inset checks. No camera or new font redesign.
+- Core837b557 and visual docs/version1.2.4 inputsd36505e are committed. Final suite315passed/
+  3explicit offscreen limitations skipped;Ruff. Eight native captures/banner and paired
+  padded-editor crop reviewed; all45runtime option names documented; README7/GIF-first/
+  gallery24 paths preserved. Handbook275pages/103diagrams,zero failures/overflow.
+- Workstream22 completed. Final public inputsa0d7c6f2a7262c16789302b5cc40cbb2e470c912;
+  artifactse8bd236. Source/MSI checks and clean provenance pass; all9release bytes match
+  committed blobs. Actual native extracted-wheel proof outside checkout verifies GUI/resources,
+  painted inset, all45controls, working integer and canonical Video scope.
+- ZIP33201709bytes SHA256
+  8f0e29ff0ff5d1db8a6713c45b7c08e873394d72fc3b58113c87bb911bc8684e;
+  MSI19714048bytes SHA256
+  dff5e71a330db9a96e434e8dec4e55d3ab90eb530a079a33e01044c8487de29c.
+- Latest installed context skills reread completely; active-only room and own attention checked,
+  no pending obligations or filler. Preserve identity/archives and approved UI. No new camera,
+  font/layout redesign, portrait, MSI lifecycle or remote publication.
+- Persisted/read back ep_910, then advanced the exact full-offload marker after successful
+  store/episodic persistence:2026-11-03T05:20:31+05:30.
+
 ## 2026-11-03 - Restore the owner's preferred metric cards
 
 - Owner explicitly liked the former four metric cards and rejected flattened text. Supplied

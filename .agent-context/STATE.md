@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered v1.2.3 preferred metric cards beside viewer-only Tools, full-height settings, updated screenshots/handbook and current source/MSI snapshots. No portrait work.
-> **Last context offload:** 2026-11-03T04:44:40+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered v1.2.4 numeric inner padding, corrected preview-height binding, truthful Video scope and verified operating-feature coverage with current snapshots. No portrait work.
+> **Last context offload:** 2026-11-03T05:20:31+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,7 +7,40 @@
 
 ## Current focus
 
-**DELIVERED: preferred metric cards in the viewer footer, v1.2.3.** The owner liked the
+**DELIVERED: numeric text inset and GUI coverage audit, v1.2.4.** Owner requested left numeric
+padding and asked whether sparse/large-font presentation hid missing features. Added real
+embedded spin-editor margins6left/3right, retaining +/- targets/steps and the approved layout.
+Standard text remains12logical px, metric values14; much space reflects collapsed sections,
+one inspector category and aspect-fitted video rather than omitted features.
+
+Actual audit:45Live/runtime controls forward full nondefault settings;22accepted Video fields
+plus input/output/quality choices;17user-facing recorder settings+internal Stopfile;4model
+helpers and current GUI-only camera/preset/calibration/demo/log/tutorial/output actions.
+Fixed a real preview_height bug: custom numeric input was text and could not apply. It now
+uses an integer control. Video scope/CLI preview derive from canonical VIDEO_FIELDS; inactive
+Live fields are labelled and the separate mirrored-video choice remains explicit. Coverage
+is current operating features, not all developer/future utilities or every input/hardware case.
+
+Workstream22 complete. Core837b557; screenshots/docs/versiond36505e; final public inputs
+a0d7c6f2a7262c16789302b5cc40cbb2e470c912; artifact commit e8bd236.
+Final suite315passed/3explicit offscreen limitations skipped;Ruff. Native text-inset/full-
+forwarding/Video-scope/approved-layout set22passed at each100/125/150%. Actual extracted native
+wheel outside checkout verifies exact GUI/resources, painted inset, all45controls, working
+preview-height integer and canonical mode restrictions. No new MSI lifecycle is claimed.
+
+Eight native captures/banner and paired padded-editor crop reviewed. Every45runtime option
+is explicitly named in the coverage table. README7/GIF-first/gallery24 and local links retained.
+Handbook275pages/103diagrams,zero Mermaid failures/overflow. No font/layout redesign, camera,
+privacy/output pipeline change, portrait or remote publication. Frozen documentary unchanged.
+
+Both source/MSI checks pass, clean receipts align and all9release files match committed blobs.
+Source fingerprint:39e2f9382e43e91a1d75a45999b916db1ec4360b3d5ae51e72016b2b5e64147b.
+ZIP:33,201,709bytes / SHA256 8f0e29ff0ff5d1db8a6713c45b7c08e873394d72fc3b58113c87bb911bc8684e.
+MSI:19,714,048bytes / SHA256 dff5e71a330db9a96e434e8dec4e55d3ab90eb530a079a33e01044c8487de29c.
+All requested product work is complete; await concrete feedback rather than another UI/
+installer loop. Restart an existing Studio to load changes; do not terminate it for the user.
+
+**Historical delivered baseline: preferred metric cards in the viewer footer, v1.2.3.** The owner liked the
 earlier boxed camera FPS/tracking FPS/internal frame age/output values and rejected flattened
 Signals text. Restored compact rounded cards below the preview beside Tools, always outside
 the drawer. Tools now opens under the viewer only, keeping settings full-height. Existing
@@ -94,7 +127,7 @@ Only the existing GUI affordances changed. No tracking/rendering algorithm, nume
 camera, output, portrait or remote-publication changes. Current base remains ctx-42d505fb393f;
 routine social reads remain active-only, with archive/history preserved.
 
-**Earlier delivered layout, preserved in v1.2.3: minimal animation-first README.** Core change committed as 67becce:
+**Earlier delivered layout, preserved in v1.2.4: minimal animation-first README.** Core change committed as 67becce:
 banner/runtime hero, immediately followed by all three GIFs, then only dark/light GUI shots.
 Main has seven images total. `docs\visual-gallery.md` contains the other 24 captioned images.
 All 31 original references remain; local media/navigation links resolve; no table framing.
@@ -317,7 +350,16 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
-### Current GUI handoff - v1.2.3 Preferred Metric Cards
+### Current GUI handoff - v1.2.4 Padded and Audited Controls
+
+- Native numeric inset6left/3right; corrected custom preview-height integer; Video scope uses
+  canonical fields and its separate mirrored-file checkbox. Current operating features covered.
+- Core837b557; native docs/screenshotsd36505e; completion inputsa0d7c6f; artifactse8bd236.
+  Source/MSI/native extracted-package and committed release-byte checks pass.
+- Workstream22 complete. No further source, screenshot, book, package, camera or portrait
+  work remains. Preserve the approved card/diagnostic layout and accurate coverage limits.
+
+### Historical GUI baseline - v1.2.3 Preferred Metric Cards
 
 - Four compact rounded metric cards stay below the preview beside Tools. The drawer is in
   the viewer column only, keeping settings full-height. Preserve this owner-preferred grouping.
@@ -477,8 +519,8 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-Workstream 21's code, native screenshots, documentation and source/MSI snapshots are complete
-as v1.2.3. Await the owner's next concrete GUI feedback, not another design/research/installer
+Workstream 22's code, native screenshots, documentation and source/MSI snapshots are complete
+as v1.2.4. Await the owner's next concrete GUI feedback, not another design/research/installer
 loop. An already-running
 Studio must be restarted to load external source changes; do not terminate it for the user.
 Do not resume portrait work or silently revert the completed drawing. Real visual/live-camera/
@@ -494,7 +536,7 @@ cutoff and hashes define this edition. Rebuild only intentionally using the priv
 This private documentary does not belong in source-release ZIPs. Its original 977-page PDF hash
 was rechecked unchanged after the installer work.
 
-The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.3. Hand off the current full MSI path;
+The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.4. Hand off the current full MSI path;
 the owner creates the final GitHub release manually. No automatic push/tag/merge/release,
 live camera, driver installation or system Python/PATH/security change is authorized.
 Use approved signing/IT handling if unsigned packages are blocked; never disable protections.
@@ -515,7 +557,9 @@ Earlier live accuracy/privacy/calling-app and private recorder timing limits rem
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_908` (completed v1.2.3 preferred metric-card footer,
+- Latest cross-base receipt: `ep_910` (completed v1.2.4 native numeric padding, corrected
+  preview-height/Video scope, actual operating-feature audit and current verified snapshots).
+  Previous receipt: `ep_908` (completed v1.2.3 preferred metric-card footer,
   viewer-only Tools/full-height settings, native and current-package proof, docs/snapshots).
   Previous receipt: `ep_906` (completed v1.2.2 owner-directed right diagnostic rail,
   persistent clean-output access, native/current-package proof, refreshed docs and snapshots).

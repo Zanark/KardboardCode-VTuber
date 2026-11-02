@@ -97,6 +97,15 @@ No personal identities, device credentials, face imagery, or personal calibratio
   states. Qt's native PlusMinus setting alone painted empty slots through this custom stylesheet.
   Verify actual glyph pixels/shapes and click behaviour, not only a button-symbol property.
   The Live/Video QTabBar disables drawBase so no baseline extends beyond its buttons.
+- Apply numeric padding to the embedded spin-box QLineEdit after theme styling, not only the
+  outer QSS box. Current text margins are6px left/3px right; native ink-inset tests cover both
+  palettes, disabled states and integer/decimal controls without shrinking the step targets.
+- Custom CLI numeric parser types need an explicit numeric GUI field kind. preview_height uses
+  the integer kind; a generic QLineEdit returned text that could not pass numeric validation.
+  Verify real nondefault control-to-parser forwarding, not only the option inventory.
+- Video availability/CLI copying reuse canonical VIDEO_FIELDS. Already-mirrored Video input
+  is owned by its Video file checkbox; the separate Camera field stays Live-only. Video always
+  tracks/renders; ignored Live controls must not look like effective Video knobs.
 - The owner chose the left settings inspector, main preview directly beside it and optional
   right-hand stacked visual diagnostics. Raw face belongs above Face / pose or Body, with both
   requested images visible without opening Tools. Reclaim the rail when channels are off;
