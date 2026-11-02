@@ -1,4 +1,4 @@
-Status: IN PROGRESS (functional/raster fix verified; final delivery pending)
+Status: DONE
 Milestone: v1.2.1 numeric affordances and mode-strip cleanup
 Dependencies: 16_PREVIEW_FIRST_STUDIO.todo, 18_MINIMAL_README_GALLERY.todo
 Purpose: Make increase/decrease actions understandable instead of presenting unlabeled dark slots.
@@ -9,8 +9,8 @@ Tasks:
   [x] Cover integer/decimal controls, both themes, disabled and numeric-boundary states.
   [x] Remove Qt's trailing Live/Video tab-bar baseline.
   [x] Verify actual painted glyph shapes and button click/value behaviour natively.
-  [ ] Refresh screenshots, documentation and current versioned release artifacts.
-  [ ] Commit completed work and current-base continuity without unrelated changes.
+  [x] Refresh screenshots, documentation and current versioned release artifacts.
+  [x] Commit completed work and current-base continuity without unrelated changes.
 
 Acceptance criteria:
   Upper step button visibly shows +; lower visibly shows - and steps the value correctly.
@@ -26,9 +26,15 @@ Completion evidence:
   Native mode-strip raster test confirms no trailing line in either palette.
   Final complete suite: 302 passed, one unsupported offscreen-widescreen case skipped; Ruff.
   Native glyph/shape/click/boundary/mode-strip set: 5 passed at each of 100/125/150% Qt scaling.
-  Eight actual native screenshots and existing v1.2.1 banner refreshed; final artifacts follow.
+  Eight actual native screenshots and existing v1.2.1 banner refreshed/reviewed.
+  Handbook: 272 pages/103 diagrams, zero Mermaid failures/overflow.
+  Actual 1.2.1 wheel includes all six matching SVG resources and paints both signs in both
+  themes outside the source checkout. Source and installer snapshots rebuilt with matching
+  clean provenance; final artifact/context commits record the completed handoff.
   No camera, tracking/rendering algorithm or portrait work.
 
 Completion log:
   2026-11-03: User reported unidentified numeric controls and the stray Live/Video underline.
   Replaced unreliable native glyph fallback with explicit visible symbols and removed drawBase.
+  2026-11-03: Completed raster/click/boundary/DPI/packaged-resource verification and current
+  screenshots/docs/release snapshots. No new installer lifecycle, camera or portrait work.

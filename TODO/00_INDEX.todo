@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: Numeric affordance delivery IN PROGRESS; earlier workstreams DONE
+Status: All Studio workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -40,7 +40,7 @@ Tasks:
   [x] Deliver a less-cluttered, preview-first layout without removing options (workstream 16).
   [x] Add cardboard-tool identity to this session's unobscured portrait (workstream 17).
   [x] Keep the main README animation-first and move detailed imagery to a gallery (workstream 18).
-  [ ] Make numeric +/- controls readable and remove the stray mode-strip baseline (workstream 19).
+  [x] Make numeric +/- controls readable and remove the stray mode-strip baseline (workstream 19).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -62,6 +62,9 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-03: Workstream 19 delivered as v1.2.1: explicit contrasted +/- numeric controls,
+  muted disabled/boundary states and no trailing mode-strip line. Actual raster/click/DPI/
+  wheel-resource checks pass. Screenshots, guide, handbook and patch artifacts refreshed.
   2026-11-03: Workstream 18 delivered: banner/hero then three GIFs, two GUI theme screenshots
   only, and a linked 24-image captioned gallery. All 31 original media references preserved.
   Documentation-only release metadata refreshed; runtime code/media bytes/version unchanged.

@@ -24,6 +24,11 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-03: v1.2.1 numeric-affordance patch completed. Full suite 302 passed/one unsupported
+  offscreen-widescreen case skipped; Ruff. Native glyph/shape/click/bounds/baseline set 5 passed
+  at each Qt factor 1/1.25/1.5. Actual wheel resolves all six glyph SVGs outside checkout.
+  Eight native captures refreshed and reviewed; handbook 272 pages/103 diagrams, no errors/
+  overflow. Public code inputs 21e4077; final evidence/artifact/context commits follow.
   2026-11-03: Workstream 19 fixes invisible numeric step controls and Qt's trailing mode-tab
   baseline. Native-symbol configuration alone did not paint through the stylesheet; explicit
   packaged plus/minus SVGs with contrast, wider targets and muted unavailable states pass
