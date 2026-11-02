@@ -11,6 +11,9 @@ No personal identities, device credentials, face imagery, or personal calibratio
 - Keep the front README image-first: cohesive cardboard/pixel banners, actual UI/demo galleries,
   short captions and navigation. Put detailed setup/features/camera/troubleshooting text in
   clearly named `docs\guides` files rather than rebuilding long front-page explanations.
+- README image galleries must not use table rows/cells or visible borders. Stack other images
+  at full content width. Keep only the explicitly approved original-background / green-screen
+  GIF comparison side by side, using borderless plain HTML rather than a table.
 - README artwork uses Silkscreen and Barlow Condensed. The top banner/runtime hero use PNG;
   decorative section/footer lettering is transparent SVG with outlined fonts, not raster UI
   cards or a solid canvas. No milestone image cards. The runtime hero follows the top banner.

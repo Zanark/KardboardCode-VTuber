@@ -4,6 +4,24 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Borderless README gallery completed
+
+- User rejected table rows/borders around README images, while explicitly approving the
+  original-background / green-screen two-GIF composition. Preserved that pair side by side,
+  removed its table frame too, and stacked all other images at full content width.
+- Actual browser checks at 1120px and 390px: 31 loaded images, zero tables/image borders,
+  all 29 non-paired images full width, paired GIFs aligned and no horizontal overflow.
+  Source inventory, order, captions and links retained; no image files or runtime code changed.
+- Recorded the convention in branding docs and workstream 11. No handbook/application rebuild.
+  Public source committed as `4590ca7e6a6fa4b05ac13e1a9dae866782990e56`; artifacts `a35f331`.
+- Current v1.1.0 ZIP is 33,147,025 bytes, sourceModified=false, source fingerprint
+  `05e322ac47665f43f619792bb0df6277f7974123c5d69725ce4c744f326baea3`.
+  Export freshness and all six committed release-file bytes are checked. No remote publication.
+- All new context stays here only; older KardboardCode context remains read-only.
+- Read current shared chat/recent mentions; no new response obligation or useful hook required
+  another post. Persisted the layout decision as zmem `ep_846`, then advanced the offload marker
+  to `2026-11-02T20:19:41+05:30`.
+
 ## 2026-11-02 - Fifteen-point Studio feedback completed as v1.1.0
 
 - User supplied actual-use screenshots and requested a coherent layout/workflow refinement.
