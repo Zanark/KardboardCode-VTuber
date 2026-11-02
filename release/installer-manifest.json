@@ -2,17 +2,17 @@
   "artifact": {
     "bytes": 19709952,
     "name": "KardboardCode-Studio-windows-x64.msi",
-    "sha256": "7fd085d51e89415dce23101e9f8309586b7db82488b060a676e5361a3bfabc05"
+    "sha256": "9d74b1926f563b5b29f1fdf50b477c6d7a73eca50b02b355be48ba30691432f0"
   },
   "platform": "windows-x64",
-  "productCode": "{E3E93798-AF33-5694-AAE4-34DAC43AB784}",
+  "productCode": "{7BA64191-89BA-583F-AE7E-0BAD778FE404}",
   "pythonVersion": "3.12.16",
-  "runtimeInputFingerprint": "cbf16f84e45591593acb1760ca78b539b48e02b7f33cb1a382b55f345499b9b4",
+  "runtimeInputFingerprint": "939178b3b0e0f44d33a7d0ce954916571fb225ec932960542604ae9dd03487ea",
   "schemaVersion": 1,
   "signed": false,
-  "sourceCommit": "b3f774d46f16693aaadeb9d7c1e366f9ad133ce3",
+  "sourceCommit": "3141d0dab504f33a1d55672158075cf435087b78",
   "sourceModified": false,
   "type": "online-per-user-msi",
   "upgradeCode": "{D4D3399E-CB0D-5F86-BDB7-A9CC98020C86}",
-  "version": "1.2.1"
+  "version": "1.2.2"
 }
