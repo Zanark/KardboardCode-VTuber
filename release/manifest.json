@@ -1,22 +1,22 @@
 {
   "assets": {
     "KardboardCode-VTuber-source.zip": {
-      "bytes": 32097090,
-      "sha256": "dfd9140fa9f7710e4f0817a59aedd06ca95928fca7ca8534d94897c9d30d4fbe"
+      "bytes": 32592509,
+      "sha256": "2be79214ef248141d7cb433d2b5dc740a0bdeca178c3b22bb7e08c71b6502dee"
     },
     "RELEASE_CONTEXT.md": {
       "bytes": 1754,
-      "sha256": "7d735ca0d8b4e86b3b52a314c31228e429f92b5d949aea05beba2b31aa569eb1"
+      "sha256": "ebe6a7023693be095a84618af0ad6187d36cec8a0483ab3f2aa438bb056980d9"
     },
     "RELEASE_NOTES.md": {
-      "bytes": 3604,
-      "sha256": "9e5b131ffdb225dc0030716f44b5b6ed8ad14d6e0c50e2bd4e9ae5a32b3612da"
+      "bytes": 3843,
+      "sha256": "0522f0cf7988d749a91e86b713d44955733a072f09c96785003e6eafcb7c189e"
     }
   },
-  "generatedAt": "2026-11-02T12:01:42+00:00",
+  "generatedAt": "2026-11-02T12:30:59+00:00",
   "schemaVersion": 1,
   "sourceBranch": "workDesk/agentic_GUI",
-  "sourceCommit": "92c32b93039b35942de63ff57273feb149a05e95",
+  "sourceCommit": "4b85fad7d6e6682342eecbff83002db701f77cd3",
   "sourceFiles": {
     ".gitattributes": {
       "bytes": 124,
@@ -31,12 +31,12 @@
       "sha256": "736c35f4b5c22f9b462802e47f23b1569d90a378fab5f743ebbbc488728f554e"
     },
     "README.md": {
-      "bytes": 18489,
-      "sha256": "efbc0f50ac7c406075b482a72e2b1beea202c91dc54be0e650121e8a5ea5483c"
+      "bytes": 8792,
+      "sha256": "93ac31af4b8f2b47b7d1b3a81d00d07ccf8cdec46f3c71ec7b02c1627b0dbe60"
     },
     "TODO/00_INDEX.todo": {
-      "bytes": 2219,
-      "sha256": "3add8184e22b251e465d56ec2625607d3902c785a894d60744fd36c9e3c4f698"
+      "bytes": 2591,
+      "sha256": "46b9ab4b88ea956ad3abfd342bcad83f7d4625c03788d10d6cda2e9436f5fdaa"
     },
     "TODO/01_RESEARCH_AND_DESIGN.todo": {
       "bytes": 1131,
@@ -55,8 +55,8 @@
       "sha256": "f63eb4731d13d0f5065c0a1ff11841cf2a974c13d69fd08b85af95c992a89897"
     },
     "TODO/05_DEVELOPMENT_LEDGER.todo": {
-      "bytes": 2931,
-      "sha256": "ce483bdf7dafd73305a777b5d3eaedbaafba1147a673e80142495bff7fb0a27f"
+      "bytes": 3492,
+      "sha256": "d95fb0b55387e6a5396374cdef8006193ca2ed0b75e29fa6396fae603d6ee29c"
     },
     "TODO/06_NATIVE_CAMERA_SELECTION.todo": {
       "bytes": 1731,
@@ -69,6 +69,10 @@
     "TODO/08_OFFICIAL_LOGO_RELEASE.todo": {
       "bytes": 1957,
       "sha256": "e6acef444e8dbec26cb77c754531bc18d0d7e70ce727c19a9a9057fbb382d8ca"
+    },
+    "TODO/09_VISUAL_README.todo": {
+      "bytes": 2727,
+      "sha256": "56fac871502bf2077210b83ec8b1b88af73ba7e3bdd082533892fe2299976845"
     },
     "assets/PNGTuberV1/Eyes Closed.png": {
       "bytes": 21259,
@@ -366,6 +370,46 @@
       "bytes": 3296,
       "sha256": "1b9111e018555113782843006cbdaf0752607a8d022d3f22f129f18c2c8d0cfe"
     },
+    "docs/branding/README.md": {
+      "bytes": 2343,
+      "sha256": "89a56779678bbdfeb85bf2b386d91e9b84abcde6ed1403c6c97e3f05304e2597"
+    },
+    "docs/branding/fonts/BarlowCondensed-OFL.txt": {
+      "bytes": 4376,
+      "sha256": "10b0e6bb43166a50fbe7cde2895bd7f703738a5da843acb5c97c95dc9ea26817"
+    },
+    "docs/branding/fonts/BarlowCondensed-Regular.ttf": {
+      "bytes": 102480,
+      "sha256": "583cec5da3b84bc4dc7c9c72e2a565c94d34e431518b19d7e250b7830ad5f996"
+    },
+    "docs/branding/fonts/BarlowCondensed-SemiBold.ttf": {
+      "bytes": 109428,
+      "sha256": "7b619d14bc2327509a9ef32b0890f709626f7ecc9ff61191c2a4314c5499d2d9"
+    },
+    "docs/branding/fonts/Silkscreen-Bold.ttf": {
+      "bytes": 30632,
+      "sha256": "768476aa712d4f5c3e18d3bce80f980a8bd3f72b7094d22ec5e768df3acfed61"
+    },
+    "docs/branding/fonts/Silkscreen-OFL.txt": {
+      "bytes": 4393,
+      "sha256": "0c0defe44c565904cdd3037f41254b55cb93e5999d4ff13c6c682f69d4c1c0a4"
+    },
+    "docs/branding/fonts/Silkscreen-Regular.ttf": {
+      "bytes": 32220,
+      "sha256": "c845473330b94c2079ce9af01c51ac8ba2d99c24f4d14c039843bbb8e642ebd8"
+    },
+    "docs/guides/camera-and-virtual-output.md": {
+      "bytes": 8147,
+      "sha256": "6f830cac3df2006aebba41a7e4b9b070bb3fe796944a8442164e285a5034e681"
+    },
+    "docs/guides/features-and-controls.md": {
+      "bytes": 10304,
+      "sha256": "8420a05d84f935864e5307525762008a983dafc56d84510b232f69c8085f9141"
+    },
+    "docs/guides/getting-started.md": {
+      "bytes": 5760,
+      "sha256": "04b8057efd81b650a6d29b85db830af33dbd8ed8580d0b23264fdb215c167369"
+    },
     "docs/images/kardboardcode-angle-gallery.png": {
       "bytes": 311408,
       "sha256": "558907c64a0bf481c677b6c63e47ee2bc125d3d5d99c21c64fb0388adaba802c"
@@ -450,21 +494,53 @@
       "bytes": 137496,
       "sha256": "d72366b25af3d0245b5cd5ea875d6c11d458d94a4cbf1a8b9a4537438afd4681"
     },
+    "docs/images/readme/debug.png": {
+      "bytes": 14337,
+      "sha256": "9320f7d861aab0624224f8f497e3a06eb491c6cf3a13464c1805302d346019fa"
+    },
+    "docs/images/readme/details.png": {
+      "bytes": 15103,
+      "sha256": "82a34ecac42f5aece80ce0bda64424e86883b671f5c6bc17efd1984877ebeec0"
+    },
+    "docs/images/readme/feature-cards.png": {
+      "bytes": 23189,
+      "sha256": "ad22c99b42a366e2b142d63a13bd04f36698f9277ee2086f44e965df3b2a9b55"
+    },
+    "docs/images/readme/footer.png": {
+      "bytes": 53499,
+      "sha256": "40ab81ca483a92ef19f7b4efbef2582c1888787b91e3d7f2462c30d68fa51486"
+    },
+    "docs/images/readme/hero.png": {
+      "bytes": 210649,
+      "sha256": "c927e47dd5e81985af677312b0977d0e5d9c066b8bbe3922f6e3c1910e8f8d32"
+    },
+    "docs/images/readme/motion.png": {
+      "bytes": 11794,
+      "sha256": "b2c07864f1409d3018aa83db6c158e273424c2801258c39d92e83ddeec2d7045"
+    },
+    "docs/images/readme/start.png": {
+      "bytes": 15386,
+      "sha256": "cd310c9b39c85168adb038db79e2799d74cdbb0c705a5503080d5ac3fe85374b"
+    },
+    "docs/images/readme/studio.png": {
+      "bytes": 12172,
+      "sha256": "a603c17779052f411d1f0561a6ef006042996b1c14816a41e653b141add40650"
+    },
     "models/.gitkeep": {
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     "pyproject.toml": {
-      "bytes": 1106,
-      "sha256": "ac8d05b88771ce5c10a525292f870c0f7901ac5c4abf5b88b634eb82f7e55881"
+      "bytes": 1129,
+      "sha256": "750d342e95d205798706bc89c2febad0e836fc2811af97220cd63e06abe5f380"
     },
     "release/README.md": {
       "bytes": 3700,
       "sha256": "e56fcc35b4ce94bc66a5ad30a8a24248c414823407e52932f465a3ea0f4d6824"
     },
     "release/RELEASE_NOTES.md": {
-      "bytes": 3604,
-      "sha256": "9e5b131ffdb225dc0030716f44b5b6ed8ad14d6e0c50e2bd4e9ae5a32b3612da"
+      "bytes": 3843,
+      "sha256": "0522f0cf7988d749a91e86b713d44955733a072f09c96785003e6eafcb7c189e"
     },
     "requirements-dev.txt": {
       "bytes": 53,
@@ -481,6 +557,10 @@
     "scripts/build_branding.py": {
       "bytes": 3409,
       "sha256": "2dde78bf1d57881c998c138ebe510136dd04d7fedc8d4f94af4f77a85772a1f6"
+    },
+    "scripts/build_readme_art.py": {
+      "bytes": 7047,
+      "sha256": "a0ac39d654e33493b9e53777feffc83813118529881a45975d441b87cfea8e53"
     },
     "scripts/capture_studio_screenshots.py": {
       "bytes": 4598,
@@ -675,8 +755,8 @@
       "sha256": "b08159e93daedd11059cfc1f9e4908aae5e4f066280f8e810e9082119a778c4e"
     },
     "tests/test_branding.py": {
-      "bytes": 2475,
-      "sha256": "a0f959718f3b61a48d70b50e3ec3c790a40940da36bf2a97b98c3780c5eb4c40"
+      "bytes": 3793,
+      "sha256": "ee89f2d4aada76f646c3e3ceb7e468c8cdf00dd43919e0b942daa7bc560f1304"
     },
     "tests/test_camera_devices.py": {
       "bytes": 1897,
@@ -763,7 +843,7 @@
       "sha256": "8136e2a43043bc9cbfe3ee72147e6bae8e9ff1afd180b26f5281998bbf6892f0"
     }
   },
-  "sourceFingerprint": "0d046cfd359d2b5dbb93f464cadea0feef2433322a64a75dbd0b21ce0201bec7",
+  "sourceFingerprint": "defd8552ba1d1557e4b1a49b239faad7ae44ed6054b9c8ffc32a5521f344e70e",
   "sourceModified": false,
   "tag": "v1.0.0",
   "version": "1.0.0"
