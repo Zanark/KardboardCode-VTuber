@@ -1,4 +1,4 @@
-Status: IN PROGRESS (media restructure verified; release/context handoff pending)
+Status: DONE
 Milestone: Animation-first minimal README with a complete visual gallery
 Dependencies: 16_PREVIEW_FIRST_STUDIO.todo
 Purpose: Put the best animation and two GUI themes at the front without losing detailed visual documentation.
@@ -10,8 +10,8 @@ Tasks:
   [x] Move other images into docs\visual-gallery.md with organized sections and captions.
   [x] Link the gallery prominently and preserve the approved borderless GIF pair.
   [x] Check exact media order/counts, complete preservation, local paths and no table framing.
-  [ ] Commit public inputs and refresh matching source/installer metadata artifacts.
-  [ ] Record completion and update the current-base context.
+  [x] Commit public inputs and refresh matching source/installer metadata artifacts.
+  [x] Record completion and update the current-base context.
 
 Acceptance criteria:
   Main README has exactly banner, hero, three GIFs and two theme screenshots.
@@ -26,8 +26,12 @@ Completion evidence:
   Image order is banner, hero, synthetic animation, approved original/green-screen GIF pair,
   dark Studio, light Studio. All local media/navigation links resolve; no table framing.
   Existing media bytes and runtime code are unchanged. Version remains 1.2.0.
-  Release regeneration and final context handoff pending.
+  Public media restructure committed as 67becce. Source export verified and installer metadata
+  rebuilt because README is embedded in the wheel; no application-code or dependency changes.
+  Clean final receipts/checksums and current-base handoff are recorded in delivery commits.
 
 Completion log:
   2026-11-03: User requested GIFs immediately below banner/hero, only two front-page GUI shots,
   and a separate detailed image file. Implemented the minimal front page and captioned gallery.
+  2026-11-03: Verified exact media/links and refreshed version-aligned release snapshots.
+  No new images, code tests, installer lifecycle, camera activity or remote publication.
