@@ -411,7 +411,7 @@ error and fixed-height tools were both visible. The final drawer is therefore a 
 shrinkable scroll area, not another hard-height panel. The full error text stays in a bounded
 plain-text surface; secondary content can scroll instead of clipping the viewer.
 
-The complete suite passes 295 cases/Ruff. The native geometry/access/keyboard set plus explicit
+The final complete suite passes 297 cases/Ruff. The native geometry/access/keyboard set plus explicit
 headless coverage passes at Qt scale 1.0/1.25/1.5: 27 distinct parameterized cases across the
 three factors, including compact sizes, portrait/landscape, errors, diagnostics and video mode.
 Actual synthetic dark/light/compact/diagnostic captures were reviewed. No real camera or
