@@ -165,6 +165,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Output filename stem; a timestamp is appended.",
     )
     parser.add_argument("--countdown", type=float, default=3.0)
+    parser.add_argument("--stop-file", type=Path, help=argparse.SUPPRESS)
     parser.add_argument(
         "--preview-height",
         type=int,
@@ -188,6 +189,9 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("--pose-tracking-fps must be positive")
     if args.duration <= 0:
         raise SystemExit("--duration must be positive")
+    if args.stop_file is not None and args.stop_file.exists():
+        print("Recording cancelled before camera initialization.")
+        return 0
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
@@ -234,6 +238,9 @@ def main(argv: list[str] | None = None) -> int:
     skeleton_window_name = "KardboardCode Recording Body Skeleton"
 
     try:
+        if args.stop_file is not None and args.stop_file.exists():
+            print("Recording cancelled during model initialization.")
+            return 0
         camera.start()
         first = camera.read(timeout=5.0, copy=True)
         if first is None:
@@ -252,7 +259,13 @@ def main(argv: list[str] | None = None) -> int:
 
         countdown_started = time.monotonic()
         while time.monotonic() - countdown_started < args.countdown:
-            packet = camera.read(after_sequence=last_sequence, timeout=2.0, copy=True)
+            if args.stop_file is not None and args.stop_file.exists():
+                print("Recording cancelled during countdown.")
+                return 0
+            packet = camera.read(
+                after_sequence=last_sequence,
+                timeout=0.1 if args.stop_file is not None else 2.0, copy=True,
+            )
             if packet is None:
                 continue
             last_sequence = packet.sequence
@@ -274,9 +287,14 @@ def main(argv: list[str] | None = None) -> int:
 
             while True:
                 elapsed = time.monotonic() - recording_started
-                if elapsed >= total_duration:
+                if elapsed >= total_duration or (
+                    args.stop_file is not None and args.stop_file.exists()
+                ):
                     break
-                packet = camera.read(after_sequence=last_sequence, timeout=2.0, copy=True)
+                packet = camera.read(
+                    after_sequence=last_sequence,
+                    timeout=0.1 if args.stop_file is not None else 2.0, copy=True,
+                )
                 if packet is None:
                     continue
                 last_sequence = packet.sequence

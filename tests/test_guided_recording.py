@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import numpy as np
+import pytest
 
 from kardboard_vtuber.tracking.full_body import FullBodyPoseState, PoseLandmark
 from scripts.record_guided_regression import (
@@ -11,6 +14,7 @@ from scripts.record_guided_regression import (
     _resize_preview,
     _stage_at,
     _telemetry_row,
+    main,
 )
 from tests.test_ps1_cardboard_renderer import state
 
@@ -112,3 +116,15 @@ def test_guided_recording_instruction_panel_is_at_top_left() -> None:
 
     assert not frame[20, 20].any()
     assert frame[-20, 20].all()
+
+
+def test_studio_cancellation_before_start_never_opens_camera(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    stop_file = tmp_path / "stop"
+    stop_file.touch()
+    monkeypatch.setattr(
+        "scripts.record_guided_regression.LatestFrameCamera",
+        lambda config: pytest.fail("Cancelled recording must not initialize a camera"),
+    )
+    assert main(["--source", "0", "--stop-file", str(stop_file)]) == 0

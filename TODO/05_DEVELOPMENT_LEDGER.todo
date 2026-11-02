@@ -1,0 +1,20 @@
+Status: IN_PROGRESS
+Milestone: Desktop studio development ledger
+Dependencies: None
+Purpose: Preserve chronological implementation and validation evidence separately from owner approval.
+
+Tasks:
+  [x] Record initial source-grounded design.
+  [ ] Record runtime, interface and delivery milestones with actual outcomes.
+
+Acceptance criteria:
+  Each entry names changes and evidence; failures and unverified outcomes remain explicit.
+Completion evidence:
+  2026-11-02: Compared Qt/Tk/DPG primary docs and traced existing CLI/export/eye paths.
+  2026-11-02: User requested all features and a tutorial; no live camera authorized or started.
+  2026-11-02: Shared runtime and native studio implemented; complete 220-test suite and Ruff passed.
+  2026-11-02: Private offline replay exercised actual MediaPipe/GPU and live tuning. Post-warmup
+  UI heartbeat: 359 samples, p95 31 ms, max 47 ms. This is not end-to-end video latency.
+  2026-11-02: Dark/light/compact/tutorial screenshots inspected; synthetic framing corrected.
+Completion log:
+  GUI work in progress. No visual acceptance has been supplied.

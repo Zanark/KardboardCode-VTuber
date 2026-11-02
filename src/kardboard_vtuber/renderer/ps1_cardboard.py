@@ -10,6 +10,7 @@ import numpy as np
 from numpy import ndarray
 
 from kardboard_vtuber.motion import DampedSpring, SpringParameters
+from kardboard_vtuber.tracking.eyes import EyeSensitivity
 from kardboard_vtuber.tracking.models import FaceTrackingState
 
 
@@ -28,6 +29,8 @@ class CardboardRendererConfig:
     eye_open_threshold: float = 0.65
     wink_closed_threshold: float = 0.70
     wink_min_difference: float = 0.15
+    left_eye_closed_threshold: float | None = None
+    right_eye_closed_threshold: float | None = None
 
     def __post_init__(self) -> None:
         if self.pixel_scale < 1:
@@ -42,12 +45,18 @@ class CardboardRendererConfig:
             raise ValueError("opacity must be between 0 and 1")
         if not math.isfinite(self.neutral_pitch_degrees):
             raise ValueError("neutral_pitch_degrees must be finite")
-        if not 0.0 <= self.eye_closed_threshold < self.eye_open_threshold <= 1.0:
-            raise ValueError("eye thresholds must satisfy 0 <= closed < open <= 1")
-        if not self.eye_closed_threshold < self.wink_closed_threshold <= 1.0:
-            raise ValueError("wink threshold must be greater than the blink threshold")
-        if not 0.0 <= self.wink_min_difference <= 1.0:
-            raise ValueError("wink_min_difference must be between 0 and 1")
+        self.eye_sensitivity()
+
+    def eye_sensitivity(self) -> EyeSensitivity:
+        return EyeSensitivity(
+            self.eye_closed_threshold
+            if self.left_eye_closed_threshold is None else self.left_eye_closed_threshold,
+            self.eye_closed_threshold
+            if self.right_eye_closed_threshold is None else self.right_eye_closed_threshold,
+            self.eye_open_threshold,
+            self.wink_closed_threshold,
+            self.wink_min_difference,
+        )
 
 
 class PS1CardboardRenderer:
@@ -55,9 +64,13 @@ class PS1CardboardRenderer:
 
     def __init__(self, config: CardboardRendererConfig | None = None) -> None:
         self._config = config or CardboardRendererConfig()
+        self._eye_sensitivity = self._config.eye_sensitivity()
         self._side_flap = DampedSpring(parameters=SpringParameters(3.0, 0.48))
         self._last_timestamp_ms: int | None = None
         self._last_safe_frame: ndarray | None = None
+
+    def set_eye_sensitivity(self, sensitivity: EyeSensitivity) -> None:
+        self._eye_sensitivity = sensitivity
 
     def render(self, frame: ndarray, state: FaceTrackingState) -> None:
         if not state.detected:
@@ -368,7 +381,9 @@ class PS1CardboardRenderer:
             strict=True,
         ):
             eye_x = round(center_x + direction * box_width * 0.22)
-            if self._eye_closed(openness, other_openness):
+            if self._eye_sensitivity.closed(
+                openness, other_openness, left_eye=letter == "K",
+            ):
                 half_width = max(4, round(box_width * 0.08))
                 arc_height = max(2, round(box_height * 0.025))
                 cv2.ellipse(
@@ -425,10 +440,4 @@ class PS1CardboardRenderer:
             )
 
     def _eye_closed(self, openness: float, other_openness: float) -> bool:
-        if openness <= self._config.eye_closed_threshold:
-            return True
-        return (
-            openness <= self._config.wink_closed_threshold
-            and other_openness >= self._config.eye_open_threshold
-            and other_openness - openness >= self._config.wink_min_difference
-        )
+        return self._eye_sensitivity.closed(openness, other_openness, left_eye=True)

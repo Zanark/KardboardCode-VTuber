@@ -1,0 +1,26 @@
+Status: DONE
+Milestone: Reusable cooperative runtime and independent eye tuning
+Dependencies: 01_RESEARCH_AND_DESIGN.todo
+Purpose: Reuse the actual CLI pipeline without blocking Qt or maintaining a second compositor.
+
+Tasks:
+  [x] Share validated per-eye blink/wink rules between actions and both renderers.
+  [x] Preserve global CLI thresholds and add independent left/right overrides.
+  [x] Add cooperative stop, bounded logs/preview, telemetry, and live tuning hooks.
+  [x] Preserve clean export, freeze behavior, headless semantics, and resource cleanup.
+  [x] Exercise fake capture/tracker lifecycle and per-eye regression cases.
+
+Acceptance criteria:
+  A threshold edit changes rendered K/C eyes and detection without restarting the camera.
+  Invalid settings are explicit; edits are applied as one validated immutable snapshot.
+  Renderer/GL allocation and release stay on the worker thread.
+  Partial initialization failure closes already acquired resources.
+  Existing CLI tests remain valid.
+
+Completion evidence:
+  tests\test_studio_runtime.py; per-eye cases in tracking/renderer/CLI tests.
+  Full suite: 220 passed; Ruff passed on 2026-11-02.
+  Real offline GUI/MediaPipe/GPU replay completed without opening a live camera.
+Completion log:
+  2026-11-02: Runtime work started after design.
+  2026-11-02: Shared runtime/calibration contracts verified; actual live accuracy remains unqualified.

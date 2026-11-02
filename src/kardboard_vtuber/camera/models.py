@@ -80,7 +80,7 @@ class CameraSource:
     def redacted(self) -> str:
         if not isinstance(self.value, str):
             return str(self.value)
-        if "@" not in self.value:
+        if not self.is_network_stream or "@" not in self.value:
             return self.value
         scheme, remainder = self.value.split("://", 1)
         return f"{scheme}://***@{remainder.rsplit('@', 1)[-1]}"

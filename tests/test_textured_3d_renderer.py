@@ -14,6 +14,7 @@ from kardboard_vtuber.renderer.textured_3d import (
     _eye_closed,
     _FlapPhysics,
 )
+from kardboard_vtuber.tracking.eyes import EyeSensitivity
 from tests.test_ps1_cardboard_renderer import state
 
 
@@ -74,6 +75,28 @@ def test_textured_renderer_respects_less_sensitive_eye_thresholds() -> None:
     assert not _eye_closed(0.30, 0.30, strict_config)
     assert _eye_closed(0.55, 0.80, default_config)
     assert not _eye_closed(0.55, 0.80, strict_config)
+
+
+def test_live_per_eye_tuning_updates_gpu_expression_and_preserves_safe_hold() -> None:
+    renderer = Textured3DCardboardRenderer(Textured3DRendererConfig(
+        eye_closed_threshold=0.8,
+        left_eye_closed_threshold=0.2, right_eye_closed_threshold=0.2,
+    ))
+    face = replace(state(1), left_eye_open=0.4, right_eye_open=0.4)
+    frame = np.full((480, 640, 3), 90, dtype=np.uint8)
+    try:
+        renderer.render(frame, face)
+        assert renderer._eye_texture_key == (False, False)
+        renderer.set_eye_sensitivity(EyeSensitivity(left_closed=0.5, right_closed=0.2))
+        after = np.full_like(frame, 90)
+        renderer.render(after, replace(face, timestamp_ms=34))
+        assert renderer._eye_texture_key == (True, False)
+        assert not np.array_equal(frame, after)
+        held = np.zeros_like(frame)
+        renderer.render(held, state(67, detected=False))
+        np.testing.assert_array_equal(held, after)
+    finally:
+        renderer.close()
 
 
 def test_headphone_band_is_enlarged_and_has_dark_beige_cushion() -> None:
