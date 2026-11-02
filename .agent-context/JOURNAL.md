@@ -14,7 +14,13 @@
 - A candidate archive was extracted privately and launched both help entry points and the real synthetic GUI preview from its extracted root. No camera capture, model download or private imagery was used.
 - Final handoff uses a public-input commit followed by a clean-provenance archive/export commit. Remote publication remains the owner's action; no tag, release, merge or push has been created.
 - Public inputs were committed as `e5e2db3`; the final v0.2.0 export passed freshness/content/checksum checks with `sourceModified=false`. The tracked handoff ZIP is about 30 MB.
+- A Git line-ending warning exposed a checksum portability risk. Pinned release text to LF,
+  kept ZIPs binary, and added committed-byte verification to the exporter tests. Final clean
+  source commit is `1067ade`, final asset commit `dc72392`; all six Git blobs match the verified
+  files exactly. Final archive is 29,909,091 bytes and `--check` passes after artifact commit.
 - Persisted the release handoff as zmem `ep_836` and set the full-offload marker to `2026-11-02T17:06:20+05:30`. Repository-memory API was unavailable; the durable rule remains in AGENTS.md, release instructions, this store and zmem.
+- Final byte-stable provenance is persisted as `ep_837`; successful offload marker advanced to
+  `2026-11-02T17:13:00+05:30`. No public inputs changed during this private-context update.
 
 ## 2026-11-02 - Explicit native machine camera selection
 
