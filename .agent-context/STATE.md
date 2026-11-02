@@ -1,4 +1,4 @@
-> **Last updated:** 2026-11-02 (Asia/Kolkata) - Both context stores reread; project recap and repository snapshot reconciled.
+> **Last updated:** 2026-11-02 (Asia/Kolkata) - Native desktop studio requested and implemented; final delivery checks in progress.
 > **Last context offload:** 2026-11-02T11:24:57+05:30
 
 # KardboardCode-VTuber State
@@ -7,7 +7,9 @@
 
 ## Current focus
 
-The user requested a summary of all work so far. All four files in both context stores were reread on 2026-11-02, together with current project documentation and repository history. No feature work or live capture is requested. The user chose **face mesh tracking with a frozen last-safe frame on face loss** after unreliable body/hood-marker experiments. Direct camera output is implemented through the installed **OBS Virtual Camera** component, without running OBS. Actual Discord/Teams/Meet use and reliable distant-face tracking remain unconfirmed.
+After the recap, the user requested deep GUI research/design documentation, numbered implementation TODOs, and an actual fast native Python GUI with independent eye sliders, a KC cardboard icon, README screenshots, architecture/design rationale, and a tutorial. They explicitly selected **all existing features**, including experiments and raw debugging. An optional PySide6 desktop studio is now implemented; final documentation, screenshot refresh and delivery checks are in progress. No live camera has been opened.
+
+The user still chose **face mesh tracking with a frozen last-safe frame on face loss** as the default after unreliable body/hood-marker experiments. Exposing every feature in the GUI does not replace that choice. Actual Discord/Teams/Meet use and reliable distant-face tracking remain unconfirmed.
 
 This repository is now the explicitly designated home for VTuber implementation continuity. The older KardboardCode OBS store remains a read-only origin reference, not the destination for new runtime updates.
 
@@ -21,6 +23,19 @@ Before starting or resuming VTuber work, read all four context files (`README.md
 This is the user's explicit 2026-10-11 instruction. The older store is required context, not optional background. Keep it unchanged and reconcile its historical notes against later verified decisions here.
 
 ## Threads
+
+### Native desktop studio - delivery in progress
+
+- Entry points: `python -m kardboard_vtuber.gui` and the optional `kardboard-studio` GUI launcher. PySide6-Essentials is an optional dependency; normal CLI imports do not import Qt.
+- Research, complete control inventory, layout rationale, runtime architecture and tutorial live in `docs\09-desktop-studio`. Numbered workstreams/evidence live under `TODO`.
+- Native settings cover all 45 current camera flags plus model verification/force download and existing private guided/free recording. The nine-part tutorial navigates to the matching page.
+- `cli.main(runtime=RuntimeBridge(...))` reuses the actual pipeline on a QThread. Widget updates use one owned preview slot and bounded logs, not per-frame queued signals. Resource cleanup uses ExitStack, including partial initialization failure.
+- `tracking.eyes.EyeSensitivity` is shared by actions and both renderers. Left/right blink overrides, relative wink parameters, brightness and debounce intervals are live; resource topology/settings unlock after Stop.
+- Source URLs and raw-preview consent are excluded from presets. Local raw modes require acknowledgement. Model/source file inspection is deferred from slider callbacks to the worker.
+- Recorded-footage integration exercised the actual native GUI, MediaPipe and GPU path: 55 displayed packets, 54 effective detections, exit 0. No imagery was saved and this is not privacy/accuracy qualification.
+- The final full suite passed 220 cases and Ruff after the responsive-validation refinements. Refreshed synthetic dark/light/compact/tutorial screenshots show the complete avatar. A six-second recorded-input run applied live tuning successfully; 359 post-warmup Qt heartbeat intervals had p95 31 ms/max 47 ms. These are local UI service intervals, not video latency.
+- Handbook source built and the first updated PDF rendered with 242 pages/97 diagrams and no diagram failures. The final edition is being refreshed with GUI screenshots and measured evidence; overflow checking and milestone commits remain.
+- User visual approval, real camera qualification and calling-app confirmation remain pending. Do not equate synthetic demo evidence with those outcomes.
 
 ### Preferred face-only workflow
 
@@ -86,7 +101,7 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-Wait for the user's next runtime request. For calling-app troubleshooting, first distinguish source acquisition, face detection, renderer coverage, virtual-camera registration/producer ownership, and consumer permissions. Do not start the live camera or revive marker experiments merely because the base was resumed.
+Finish the desktop studio delivery workstream: final checks/screenshots, handbook generation, TODO evidence, milestone commits, context/mesh refresh, and opening a synthetic-only GUI for review. Do not connect a live source or publish output automatically. Preserve all earlier tracking/calling-app uncertainties.
 
 ## Environment reminders
 
@@ -95,7 +110,7 @@ Wait for the user's next runtime request. For calling-app troubleshooting, first
 - Python tracking workflow uses `.venv312`; the tracking extra is conditional on Python below 3.13. `pyproject.toml` uses `opencv-contrib-python` as the single OpenCV distribution.
 - October source review covered `cli.py:288-620`, `virtual_camera.py:13-109`, `pyproject.toml:17-27`, and README direct-camera instructions. November reconciliation reread the current README, book index, and creator-package README; the commit comparison found no application changes since that review.
 - Historical September validation: existing pytest/Ruff suites passed; native synthetic output was received with OBS closed; the synthetic no-face CLI sent black. These were not rerun for the October or November context tasks and do not establish live accuracy or actual calling-app success.
-- The November summary task changes only this context store and its own session-persona file, plus zmem/generated mesh output. No application edits, live capture, dependency changes, commits, or pushes were performed.
+- The earlier November recap was context-only. The subsequent GUI request now changes application code, optional dependencies, tests, TODOs, and documentation. No live camera, raw screenshot capture, or push has been performed for the GUI request.
 - Local session provenance: `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7`. Its checkpoints preserve earlier work. Raw artifacts are private; do not copy them into durable context or public docs.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
 - Latest cross-base offload receipt: zmem episodic `ep_823` (`KardboardCode-VTuber November project recap and context reconciliation`). Earlier registration receipt: `ep_780`; mandatory dual-store routing: `sem_074`.

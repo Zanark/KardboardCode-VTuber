@@ -4,6 +4,19 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Native desktop studio research and implementation
+
+- User requested a native GUI, live left/right blink sliders, a KC-box icon, deep design research, numbered implementation TODOs, README screenshots, and complete architecture/design rationale. They selected all existing features and explicitly added a tutorial.
+- Traced parser, composition/export order, both renderers' eye logic, action thresholds, capture shutdown, recorder and download helpers. Compared Qt Widgets, Tk/ttk and Dear PyGui using primary documentation before implementing.
+- Created the optional PySide6 studio, shared runtime hooks, bounded preview/log bridge, common per-eye rules, live tuning, source-free presets, seven task pages and a nine-part tutorial. Model and private recording actions use owned asynchronous subprocesses.
+- Preserved default face-only loss freeze and clean output before local debug. Raw modes require acknowledgement; experimental controls remain clearly marked.
+- The initial full suite passed 220 tests and Ruff. Native widget captures covered dark/light/compact/tutorial; initial demo framing was visibly too large, then corrected without changing the real camera renderer.
+- Offline integration on the private canonical recording used the real GUI, MediaPipe and GPU, displayed 55 packets with 54 effective detections, and exited 0. No private imagery was saved or published.
+- Deferred source/model inspection out of live slider validation, avoiding repeated filesystem work on the Qt event thread. Final rerun, refreshed screenshots, book generation, milestone commits and user review remain in progress.
+- Read the current shared chat and recent direct mentions before updating context; none targeted this persona. The older KardboardCode store remains unchanged.
+- Final code validation passed 220 tests and Ruff after moving live-validation file inspection off the UI thread. A six-second private replay applied a live edit and recorded 359 post-warmup UI heartbeat samples: p95 31 ms, maximum 47 ms. No latency/accuracy generalization is justified.
+- Refreshed and inspected the synthetic dark/compact screenshots after the framing correction. All four screenshot variants are present. The first handbook render produced 242 pages/97 diagrams with zero diagram failures; final screenshot/evidence inclusion and overflow checks remain.
+
 ## 2026-11-02 - Project recap and stale-context reconciliation
 
 - User asked for a summary of everything completed so far. Reread README, STATE, MEMORY, and JOURNAL in both mandatory stores, the full current mesh digest, and relevant project/creator-package documentation.
