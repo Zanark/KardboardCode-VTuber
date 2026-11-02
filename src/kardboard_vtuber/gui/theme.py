@@ -73,7 +73,7 @@ def stylesheet(dark: bool) -> str:
     return f"""
         QMainWindow, QDialog {{ background:{bg}; color:{text}; }}
         QWidget {{ color:{text}; font-family:'Segoe UI'; font-size:12px; }}
-        QFrame#panel, QFrame#toolsPanel, QGroupBox {{
+        QFrame#panel, QFrame#toolsPanel, QFrame#diagnosticCard, QGroupBox {{
             background:{panel}; border:1px solid {border}; border-radius:9px;
         }}
         QGroupBox {{ margin-top:10px; padding:14px 10px 8px; }}

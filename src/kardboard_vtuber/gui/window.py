@@ -272,7 +272,7 @@ class StudioWindow(QMainWindow):
         self._build_console()
         footer = QHBoxLayout()
         footer.addWidget(self.tools_button)
-        tools_hint = QLabel("Logs / CLI / Diagnostics")
+        tools_hint = QLabel("Logs / CLI / Signals")
         tools_hint.setObjectName("hint")
         footer.addWidget(tools_hint)
         self.session_summary = QLabel("No input / not publishing")
@@ -804,12 +804,19 @@ class StudioWindow(QMainWindow):
         workspace = QWidget()
         workspace.setObjectName("previewWorkspace")
         layout = QVBoxLayout(workspace)
-        layout.setContentsMargins(6, 0, 0, 0)
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(8)
         top = QHBoxLayout()
         heading = QLabel("Preview")
         heading.setObjectName("panelTitle")
         top.addWidget(heading)
+        self.diagnostics_notice = QLabel("Diagnostics / local only")
+        self.diagnostics_notice.setObjectName("privateNotice")
+        self.diagnostics_notice.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed,
+        )
+        self.diagnostics_notice.hide()
+        top.addWidget(self.diagnostics_notice, 1)
         self.preview_note = QLabel("No input / nothing is being published")
         self.preview_note.setObjectName("hint")
         self.preview_note.setAlignment(Qt.AlignmentFlag.AlignRight)
@@ -824,17 +831,19 @@ class StudioWindow(QMainWindow):
         self.show_output.toggled.connect(self._toggle_clean_output)
         top.addWidget(self.show_output)
         layout.addLayout(top)
-        self.diagnostics_notice = QLabel("Diagnostics active / local only")
-        self.diagnostics_notice.setObjectName("privateNotice")
-        self.diagnostics_notice.hide()
-        layout.addWidget(self.diagnostics_notice)
         self.preview = VideoCanvas(
             "Your stage is ready.\n\nStart camera when you are ready, or Try demo "
             "to explore with synthetic imagery.\n\nNo camera starts automatically.",
         )
         self.preview.setMinimumSize(320, 180)
         self.preview.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        layout.addWidget(self.preview, 1)
+        self.preview_split = QSplitter(Qt.Orientation.Horizontal)
+        self.preview_split.setChildrenCollapsible(False)
+        self.preview_split.addWidget(self.preview)
+        self.preview_split.addWidget(self._build_diagnostics())
+        self.preview_split.setStretchFactor(0, 1)
+        self.preview_split.setStretchFactor(1, 0)
+        layout.addWidget(self.preview_split, 1)
         self.video_progress_panel = QWidget()
         progress = QVBoxLayout(self.video_progress_panel)
         progress.setContentsMargins(0, 0, 0, 0)
@@ -856,8 +865,65 @@ class StudioWindow(QMainWindow):
         return workspace
 
     def _build_diagnostics(self) -> QWidget:
-        self.diagnostic_panel = QWidget()
-        layout = QVBoxLayout(self.diagnostic_panel)
+        self.raw_face = VideoCanvas("No face observation.\nNever included in clean output.")
+        self.raw_face.setAccessibleName("Raw face diagnostic, local only")
+        self.raw_face.setAccessibleDescription("Private pixels; never included in clean output.")
+        self.face_mesh = VideoCanvas("Face mesh / pose diagnostic")
+        self.face_mesh.setAccessibleName("Face mesh and pose diagnostic, local only")
+        self.skeleton = VideoCanvas(
+            "Waiting for a body observation.\nThe skeleton never enters clean output.",
+        )
+        self.skeleton.setAccessibleName("Body skeleton diagnostic, local only")
+        for canvas in (self.raw_face, self.face_mesh, self.skeleton):
+            canvas.setMinimumSize(120, 120)
+            canvas.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.raw_panel = QFrame()
+        self.raw_panel.setObjectName("diagnosticCard")
+        raw_layout = QVBoxLayout(self.raw_panel)
+        raw_layout.setContentsMargins(6, 4, 6, 4)
+        raw_layout.setSpacing(4)
+        raw_note = QLabel("RAW FACE / LOCAL ONLY")
+        raw_note.setObjectName("privateNotice")
+        raw_note.setToolTip("Private diagnostic; never included in clean output.")
+        raw_layout.addWidget(raw_note)
+        raw_layout.addWidget(self.raw_face, 1)
+        self.diagnostic_tabs = QTabWidget()
+        self.diagnostic_tabs.setAccessibleName("Tracking diagnostics beside the preview")
+        self.diagnostic_tabs.addTab(self.face_mesh, "Face / pose")
+        self.diagnostic_tabs.addTab(self.skeleton, "Body")
+        self.diagnostic_panel = QSplitter(Qt.Orientation.Vertical)
+        self.diagnostic_panel.setChildrenCollapsible(False)
+        self.diagnostic_panel.setMinimumWidth(240)
+        self.diagnostic_panel.setMaximumWidth(480)
+        self.diagnostic_panel.addWidget(self.raw_panel)
+        self.diagnostic_panel.addWidget(self.diagnostic_tabs)
+        self.diagnostic_panel.setStretchFactor(0, 1)
+        self.diagnostic_panel.setStretchFactor(1, 1)
+        self.diagnostic_panel.hide()
+        return self.diagnostic_panel
+
+    def _sync_diagnostics(self) -> None:
+        local = self._mode == 0 and not self.values["headless"]
+        raw = local and bool(self.values["debug_face_preview"])
+        mesh = local and bool(self.values["tracking_debug"])
+        body = local and bool(self.values["full_body"])
+        opening = self.diagnostic_panel.isHidden() and (raw or mesh or body)
+        stacking = raw and (mesh or body) and (
+            self.raw_panel.isHidden() or self.diagnostic_tabs.isHidden()
+        )
+        self.raw_panel.setVisible(raw)
+        self.diagnostic_tabs.setTabVisible(0, mesh)
+        self.diagnostic_tabs.setTabVisible(1, body)
+        self.diagnostic_tabs.setVisible(mesh or body)
+        self.diagnostic_panel.setVisible(raw or mesh or body)
+        if opening:
+            self.preview_split.setSizes([max(320, self.preview_split.width() - 324), 320])
+        if opening or stacking:
+            self.diagnostic_panel.setSizes([300, 300])
+
+    def _build_signals(self) -> QWidget:
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
         layout.setContentsMargins(6, 4, 6, 4)
         layout.setSpacing(6)
         self.metrics: dict[str, QLabel] = {}
@@ -873,7 +939,6 @@ class StudioWindow(QMainWindow):
             metrics_row.addWidget(caption)
             metrics_row.addWidget(value, 1)
         layout.addLayout(metrics_row)
-        self.diagnostic_tabs = QTabWidget()
         signals_page = QWidget()
         signals = QGridLayout(signals_page)
         signals.setContentsMargins(6, 4, 6, 4)
@@ -897,28 +962,8 @@ class StudioWindow(QMainWindow):
         self.pose_label = QLabel("Yaw --   Pitch --   Roll --   /   Action --")
         self.pose_label.setObjectName("hint")
         signals.addWidget(self.pose_label, 2, 0, 1, 3)
-        self.diagnostic_tabs.addTab(signals_page, "Signals")
-        self.skeleton = VideoCanvas(
-            "Enable the separate skeleton diagnostic in Tracking labs.\n"
-            "The skeleton is not composited onto your camera output.",
-        )
-        self.raw_face = VideoCanvas("No face observation / raw pixels stay local")
-        self.raw_face.setAccessibleName("Raw face diagnostic, local only")
-        self.face_mesh = VideoCanvas("Face mesh / pose diagnostic")
-        for canvas in (self.raw_face, self.face_mesh, self.skeleton):
-            canvas.setMinimumSize(0, 0)
-        self.raw_panel = QWidget()
-        raw_layout = QVBoxLayout(self.raw_panel)
-        raw_layout.setContentsMargins(6, 4, 6, 4)
-        raw_note = QLabel("RAW FACE / PRIVATE / Never included in clean output")
-        raw_note.setObjectName("privateNotice")
-        raw_layout.addWidget(raw_note)
-        raw_layout.addWidget(self.raw_face, 1)
-        self.diagnostic_tabs.addTab(self.raw_panel, "Raw face")
-        self.diagnostic_tabs.addTab(self.face_mesh, "Face / pose")
-        self.diagnostic_tabs.addTab(self.skeleton, "Body")
-        layout.addWidget(self.diagnostic_tabs, 1)
-        return self.diagnostic_panel
+        layout.addWidget(signals_page, 1)
+        return panel
 
     def _build_console(self) -> None:
         self.console = QPlainTextEdit()
@@ -930,7 +975,8 @@ class StudioWindow(QMainWindow):
         self.tools_drawer = QScrollArea()
         self.tools_drawer.setObjectName("toolsPanel")
         self.tools_drawer.setWidgetResizable(True)
-        self.tools_drawer.setMinimumSize(0, 0)
+        # Zero retains Qt's 70px scroll-area minimum hint and can clip the image workspace.
+        self.tools_drawer.setMinimumSize(0, 1)
         self.tools_drawer.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         body = QWidget()
         layout = QVBoxLayout(body)
@@ -968,7 +1014,7 @@ class StudioWindow(QMainWindow):
         command_layout.addLayout(command_toolbar)
         command_layout.addWidget(self.command, 1)
         self.console_tabs.addTab(command_page, "CLI equivalent")
-        self.console_tabs.addTab(self._build_diagnostics(), "Diagnostics")
+        self.console_tabs.addTab(self._build_signals(), "Signals")
         close = QToolButton()
         close.setText("Hide")
         close.setAccessibleName("Hide session tools")
@@ -980,7 +1026,9 @@ class StudioWindow(QMainWindow):
         self.tools_action = QAction("Tools", self)
         self.tools_action.setCheckable(True)
         self.tools_action.setShortcut("Ctrl+J")
-        self.tools_action.setToolTip("Show or hide logs, CLI equivalent and diagnostics (Ctrl+J)")
+        self.tools_action.setToolTip(
+            "Show or hide logs, CLI equivalent and numeric signals (Ctrl+J)",
+        )
         self.tools_action.toggled.connect(self._set_tools_visible)
         self.addAction(self.tools_action)
         self.tools_button = QToolButton()
@@ -1113,6 +1161,7 @@ class StudioWindow(QMainWindow):
             self.error_label.show()
             return
         self.values = values
+        self._sync_diagnostics()
         self._sync_resolution()
         if self.worker is None:
             self.show_output.setEnabled(self._renders(args) and not args.headless)
@@ -1371,8 +1420,8 @@ class StudioWindow(QMainWindow):
             raw = packet.raw_face is not None or packet.telemetry.raw_preview
             diagnostics = raw or packet.face_mesh is not None or packet.skeleton is not None
             self.diagnostics_notice.setText(
-                "RAW diagnostics active / LOCAL ONLY / excluded from clean output"
-                if raw else "Diagnostics active / local only / open Tools to inspect",
+                "RAW diagnostics / local only"
+                if raw else "Diagnostics / local only",
             )
             self.diagnostics_notice.setVisible(diagnostics)
             if packet.clean_frame is not None:

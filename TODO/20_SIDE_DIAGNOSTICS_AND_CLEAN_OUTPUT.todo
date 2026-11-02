@@ -1,0 +1,43 @@
+Status: IN PROGRESS
+Milestone: Readable side-by-side diagnostics and persistent clean-output access
+Dependencies: 16_PREVIEW_FIRST_STUDIO.todo, 19_NUMERIC_CONTROL_CLARITY.todo
+Purpose: Follow the user's illustrated settings/preview/stacked-diagnostics layout instead of
+  shrinking visual diagnostics into a bottom text drawer.
+
+Tasks:
+  [x] Inspect the actual diagnostic widget allocation and clean-window lifecycle.
+  [x] Put a readable raw-face panel above face/pose or body diagnostics to the preview's right.
+  [x] Reclaim the diagnostic rail when its channels are off; preserve the protected main preview.
+  [x] Keep Logs, CLI and numeric signals in Tools rather than squeezing images into it.
+  [ ] Add a persistent Live-mode action/button to show or reopen clean output after closing it.
+  [ ] Verify image area, containment, settings access, privacy and real close/reopen behaviour.
+  [ ] Update native dark/light README captures, gallery, guide and engineering handbook.
+  [ ] Refresh current source/MSI artifacts, commit completed work and offload own context.
+
+Acceptance criteria:
+  With the relevant settings enabled, raw face and a tracking diagnostic are simultaneously
+  readable beside the main preview without opening Tools. Splitters cannot collapse the
+  preview or diagnostic image area. Smaller supported sizes retain the complete preview.
+  Flags, raw consent, local-only channels and original output dimensions remain unchanged.
+  Closing clean output does not stop the session; a visible Live button reopens the existing
+  clean window with current clean pixels. Raw/debug images never appear in that window.
+  The front README remains banner/hero, three GIFs and exactly two GUI screenshots; detailed
+  screenshots remain in the linked gallery. No camera, portrait or remote publication.
+
+Completion evidence:
+  Right-hand raw/face-pose/body rail implemented with independently resizable protected panels.
+  Off channels return the full width to the preview; selected channels stay visible with Tools
+  closed. No more visual-diagnostic tabs inside the small bottom drawer.
+  Native Windows containment/channel/readable-area/primary-action set: 12 passed at each
+  100/125/150% Qt scale; Ruff. Covers 1440x810, 1280x720 and 960x600, Tools/errors, actual
+  aspect-fitted image area, attempted splitter collapse and Live/Video/headless visibility.
+  Compact Tools must have an explicit 1px minimum rather than zero, which retains Qt's 70px
+  scroll-area minimum hint. Removed a redundant raw-note row, not privacy/area assertions.
+  Clean-output reopen and final screenshot/docs/snapshot verification are still pending.
+  User usability approval remains separate from automated/synthetic evidence.
+
+Completion log:
+  2026-11-03: User rejected the tiny raw-face strip and supplied a concrete illustration:
+  move the main preview beside the settings edge and use the freed right column for two
+  stacked diagnostics. Also requested an always-accessible clean-output reopen button and
+  refreshed README. No additional design questionnaire or unrelated research is needed.

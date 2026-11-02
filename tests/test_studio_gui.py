@@ -10,7 +10,7 @@ import pytest
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 pytest.importorskip("PySide6")
 
-from PySide6.QtCore import QRect, Qt, QTimer
+from PySide6.QtCore import QPoint, QRect, Qt, QTimer
 from PySide6.QtGui import QRegion
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QLineEdit, QScrollArea
@@ -401,9 +401,14 @@ def test_video_work_mode_is_not_private_camera_recording(window: StudioWindow) -
     assert window.controls["source"].isEnabled()
 
 
-def test_raw_debug_channels_never_cover_program_or_clean_window(window: StudioWindow) -> None:
+def test_raw_debug_channels_never_cover_program_or_clean_window(
+    app: QApplication, window: StudioWindow,
+) -> None:
     from kardboard_vtuber.runtime import RuntimeTelemetry
 
+    window.controls["debug_face_preview"].set_value(True)
+    window.controls["tracking_debug"].set_value(True)
+    window._refresh_settings()
     window.bridge = RuntimeBridge()
     clean = np.full((60, 80, 3), (10, 20, 30), np.uint8)
     raw = np.full_like(clean, (100, 110, 120))
@@ -412,18 +417,91 @@ def test_raw_debug_channels_never_cover_program_or_clean_window(window: StudioWi
         clean, RuntimeTelemetry(), clean_frame=clean, raw_face=raw, face_mesh=debug,
     )
     window._poll_runtime()
+    app.processEvents()
     assert not window.tools_drawer.isVisible()
     assert window.diagnostics_notice.isVisible()
     assert window.preview.image.pixelColor(5, 5).red() == 30
     assert window.output_window.canvas.image.pixelColor(5, 5).red() == 30
     assert window.raw_face.image.pixelColor(5, 5).red() == 120
     assert window.face_mesh.image.pixelColor(5, 5).red() == 220
-    window.tools_action.setChecked(True)
-    window.console_tabs.setCurrentIndex(2)
-    window.diagnostic_tabs.setCurrentIndex(1)
     assert window.raw_panel.isVisible()
     assert window.diagnostic_panel.isVisible()
+    assert window.face_mesh.isVisible()
+    window.tools_action.setChecked(True)
+    window.console_tabs.setCurrentIndex(2)
+    app.processEvents()
+    assert window.console_tabs.tabText(2) == "Signals"
+    assert window.raw_face.isVisible() and window.face_mesh.isVisible()
     window.bridge = None
+
+
+def test_diagnostic_rail_follows_selected_channels_without_opening_tools(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    for raw, mesh, body in (
+        (False, False, False), (True, False, False), (False, True, False),
+        (False, False, True), (True, True, True),
+    ):
+        for field, value in (
+            ("debug_face_preview", raw), ("tracking_debug", mesh), ("full_body", body),
+        ):
+            window.controls[field].set_value(value)
+        window._refresh_settings()
+        app.processEvents()
+        assert window.diagnostic_panel.isVisible() == (raw or mesh or body)
+        assert window.raw_face.isVisible() == raw
+        assert window.diagnostic_tabs.isVisible() == (mesh or body)
+        assert window.diagnostic_tabs.isTabVisible(0) == mesh
+        assert window.diagnostic_tabs.isTabVisible(1) == body
+        assert not window.tools_drawer.isVisible()
+    window.controls["headless"].set_value(True)
+    window._refresh_settings()
+    assert not window.diagnostic_panel.isVisible()
+    window.controls["headless"].set_value(False)
+    window._refresh_settings()
+    window.work_mode.setCurrentIndex(1)
+    assert not window.diagnostic_panel.isVisible()
+    window.work_mode.setCurrentIndex(0)
+    assert window.raw_face.isVisible() and window.diagnostic_tabs.isVisible()
+    assert window.worker is None and window.job is None
+
+
+@pytest.mark.parametrize("size", [(1440, 810), (1280, 720), (960, 600)])
+def test_stacked_diagnostics_have_real_image_area_beside_the_whole_preview(
+    app: QApplication, window: StudioWindow, size: tuple[int, int],
+) -> None:
+    window.resize(*size)
+    for field in ("debug_face_preview", "tracking_debug", "full_body"):
+        window.controls[field].set_value(True)
+    window._refresh_settings()
+    window.preview.set_frame(np.full((720, 1280, 3), (10, 20, 30), np.uint8))
+    window.raw_face.set_frame(np.full((260, 230, 3), (40, 50, 60), np.uint8))
+    window.face_mesh.set_frame(np.full((360, 640, 3), (70, 80, 90), np.uint8))
+    for tools in (False, True):
+        window.tools_action.setChecked(tools)
+        for error in (False, True):
+            window.error_label.setVisible(error)
+            app.processEvents()
+            assert_whole_preview_visible(window)
+            for canvas in (window.raw_face, window.face_mesh):
+                assert QRegion(canvas.rect()).subtracted(canvas.visibleRegion()).isEmpty()
+                assert canvas.width() >= 120 and canvas.height() >= 120
+            preview = window.preview.mapTo(window, QPoint())
+            raw = window.raw_face.mapTo(window, QPoint())
+            mesh = window.face_mesh.mapTo(window, QPoint())
+            assert raw.x() > preview.x() + window.preview.width()
+            assert mesh.y() > raw.y() + window.raw_face.height()
+            if size == (1440, 810) and not tools and not error:
+                fitted = window.raw_face.image.size().scaled(
+                    window.raw_face.size(), Qt.AspectRatioMode.KeepAspectRatio,
+                )
+                assert fitted.height() >= 200 and fitted.width() >= 170
+    window.error_label.hide()
+    window.preview_split.setSizes([0, 1000])
+    window.diagnostic_panel.setSizes([0, 1000])
+    app.processEvents()
+    assert_whole_preview_visible(window)
+    assert window.raw_face.height() >= 120 and window.face_mesh.height() >= 120
 
 
 def assert_whole_preview_visible(window: StudioWindow) -> None:
