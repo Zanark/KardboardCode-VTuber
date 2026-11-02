@@ -1,0 +1,33 @@
+Status: DONE
+Milestone: Verified, illustrated, documented delivery
+Dependencies: 03_NATIVE_INTERFACE.todo
+Purpose: Deliver a GUI the user can launch and understand, with honest validation boundaries.
+
+Tasks:
+  [x] Test live controls, failure paths, preset safety, lifecycle, and CLI compatibility.
+  [x] Run existing pytest/Ruff checks and applicable documentation checks.
+  [x] Inspect actual dark/light and smaller-window UI captures; capture synthetic-demo screenshots.
+  [x] Update README, architecture, algorithm/design chapters, command reference and handbook index.
+  [x] Update context, TODO evidence and ledger without modifying the older context store.
+
+Acceptance criteria:
+  README embeds a real GUI screenshot with a synthetic-data caption.
+  Tutorial covers first run, calibration, outputs, experiments, recording and troubleshooting.
+  Documentation explains control placement and implementation tradeoffs.
+  No live camera/app compatibility claims without corresponding evidence.
+
+Completion evidence:
+  224 pytest cases passed; Ruff and patch checks passed.
+  README/book relative paths and fences passed; all four installed models verified offline.
+  Native GUI/MediaPipe/GPU recording replay succeeded and accepted live tuning.
+  UI heartbeat scope/results are recorded in docs\07-quality-and-testing\validation-evidence.md.
+  Final handbook: 245 pages, 97 diagrams, zero Mermaid failures; PAGES_WITH_OVERFLOW=0.
+  Original KC SVG icon and four actual-widget screenshots are committed assets.
+  Installed kardboard-studio.exe exists; native review window verified open and responsive.
+  Startup cancellation does not acquire capture/output afterward; zero-duration CLI probes remain valid.
+  Literal sources cannot become CLI flags; parser exits are reported as session failures.
+  Quoted, malformed and pre-redacted source variants are removed from GUI log copies.
+Completion log:
+  User appearance/usability approval remains pending until review.
+  2026-11-02: Engineering delivery complete; camera-free demo opened. No live camera/app qualification
+  or Git push was performed. Authored book builders are versioned; generated HTML/cache stays ignored.

@@ -10,13 +10,15 @@ from kardboard_vtuber.gui import settings
 from scripts.record_guided_regression import build_parser as recording_parser
 
 
-def test_every_cli_option_has_a_native_control_and_roundtrips() -> None:
+@pytest.mark.parametrize("source", ["0", "--relative-recording.mp4"])
+def test_every_cli_option_has_a_native_control_and_roundtrips(source: str) -> None:
     controls = [field.name for fields in settings.PAGES.values() for field in fields]
     assert len(controls) == len(set(controls))
     assert set(controls) == set(settings.parser_actions())
-    values = settings.defaults()
+    values = dict(settings.defaults(), source=source)
     args = build_parser().parse_args(settings.arguments(values))
     assert args.render_cardboard and args.physics
+    assert args.source == source
     assert live_tuning(args).eyes.left_closed == 0.35
 
 

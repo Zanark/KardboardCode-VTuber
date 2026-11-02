@@ -12,10 +12,11 @@ description: "The implemented end-to-end runtime and its independent timing, pri
 ## End-to-end runtime
 
 ```mermaid
-flowchart LR
+flowchart TD
     subgraph Sources
       Local["Windows camera index"]
       Phone["Android IP Webcam"]
+      Recorded["Private recorded file"]
     end
     subgraph Capture["Camera domain"]
       Open["OpenCV VideoCapture"]
@@ -36,9 +37,15 @@ flowchart LR
       Hands["Hand Landmarker"]
       Person["Selfie Segmenter"]
     end
-    Output["Preview / OBS"]
+    Clean["Clean composite"]
+    Virtual["OBS virtual-camera component"]
+    Debug["Local diagnostics / opt-in raw debug"]
+    Output["CLI preview / OBS Window Capture"]
+    Mailbox["Latest display packet"]
+    Qt["Native Qt studio"]
     Local --> Open
     Phone --> Open
+    Recorded --> Open
     Open --> Worker --> Latest
     Worker --> Diag
     Latest --> Resize --> MP --> Normalize --> Smooth --> PS1 --> Compose
@@ -49,7 +56,12 @@ flowchart LR
     Pose --> Compose
     Hands --> Compose
     Person --> Compose
-    Compose --> Output
+    Compose --> Clean
+    Clean --> Virtual
+    Clean --> Debug
+    Debug --> Output
+    Debug --> Mailbox
+    Mailbox --> Qt
 ```
 
 ## Component boundaries
@@ -71,9 +83,24 @@ lifecycle (`src/kardboard_vtuber/camera/stream.py:39-73`).
 
 ### Presentation boundary
 
-The CLI reads packets, submits optional asynchronous inference, orders green-screen/body/head/hand
-composition, gates diagnostics behind `--tracking-debug`, and displays the preview
-(`src/kardboard_vtuber/cli.py:215-414`). It does not implement capture or reconnection.
+`cli.main` reads packets, submits optional asynchronous inference, resolves the head mode,
+orders green-screen/head/hand composition, publishes the clean virtual output, and only then adds
+local diagnostics. It does not implement capture or reconnection. Full-body diagnostics stay
+separate rather than adding a filled body to the output.
+
+The optional native studio calls this same pipeline from `SessionWorker.run`. `RuntimeBridge`
+replaces HighGUI presentation with a one-slot owned preview and typed telemetry. Qt widgets and
+painting stay on the main thread; native capture/tracking/rendering and the ModernGL lifecycle stay
+off it. [Desktop runtime architecture](../09-desktop-studio/runtime-architecture.md) traces the
+complete ownership, stop, error, and live-calibration contracts.
+
+### Live calibration boundary
+
+`tracking.eyes.EyeSensitivity` owns effective anatomical left/right thresholds. `LiveTuning`
+atomically carries them and processing brightness to the worker. `FaceActionDetector.set_thresholds`
+and both renderers' `set_eye_sensitivity` use the same validated snapshot, without rebuilding the
+renderer or discarding its safe-frame hold. Raw action signals and filtered visual signals remain
+distinct; the GUI displays both rather than inventing agreement.
 
 ## Why not one giant loop?
 
@@ -97,7 +124,11 @@ lets capture stay current even when inference or rendering slows down.
 
 ```mermaid
 flowchart TD
-    CLI["CLI / presentation"] --> CameraAPI["camera package API"]
+    GUI["Qt widgets"] --> Bridge["Toolkit-neutral RuntimeBridge"]
+    GUI --> Session["Session worker"]
+    Session --> CLI["Shared CLI pipeline"]
+    CLI --> Bridge
+    CLI --> CameraAPI["camera package API"]
     CameraAPI --> Models["models.py"]
     CameraAPI --> Stream["stream.py"]
     Stream --> Models
@@ -116,6 +147,8 @@ Higher-level code depends on project abstractions. OpenCV-specific constants are
 - Renderers consume normalized project-owned tracking state, not raw MediaPipe objects.
 - Compositors consume the current full frame plus project-owned masks or rendered overlays.
 - OBS transport should consume composed output and remain independent of tracking.
+- Native widgets consume owned display packets and send validated control snapshots, not mutable
+  OpenCV/MediaPipe/ModernGL objects.
 
 These seams are implemented in the camera, tracking, renderer, and CLI packages
 (`src/kardboard_vtuber/tracking/models.py:15-100`,

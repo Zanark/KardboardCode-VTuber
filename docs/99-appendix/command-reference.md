@@ -5,6 +5,39 @@ description: "Environment setup, model downloads, runtime modes, privacy flags, 
 
 # Command reference
 
+## Native desktop studio
+
+From `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber`:
+
+```powershell
+.\.venv312\Scripts\python.exe -m pip install -e ".[dev,tracking,virtual-camera,gui]"
+.\.venv312\Scripts\python.exe -m kardboard_vtuber.gui
+```
+
+Use `--demo` for the synthetic, camera-free demonstration or `--preset "C:\path\studio.json"` to
+load source-free controls without starting capture. The GUI entry point is
+`.\.venv312\Scripts\kardboard-studio.exe`; existing valid camera commands remain supported,
+including zero-duration CLI probes. The new per-eye overrides are opt-in.
+
+The native interface includes all camera flags below, model verification/download, guided/free
+private recording, and a built-in **Tutorial**. Read the
+[complete walkthrough](../09-desktop-studio/tutorial.md).
+
+Independent eye overrides are also available directly:
+
+```powershell
+$env:KARDBOARD_CAMERA_URL = Read-Host "Paste your current camera source"
+.\.venv312\Scripts\python.exe -m kardboard_vtuber `
+  --source $env:KARDBOARD_CAMERA_URL `
+  --physics --mirror `
+  --left-blink-threshold 0.30 `
+  --right-blink-threshold 0.40
+```
+
+Each override falls back to `--blink-threshold` when omitted. Effective blink values must be
+lower than both `--eye-open-threshold` and `--wink-threshold`. In the GUI these values, relative
+wink tuning, action hold times and brightness are live. Other settings unlock after Stop.
+
 ```mermaid
 flowchart LR
     Source["Camera or recording"] --> Base["Base preview"]
@@ -25,7 +58,7 @@ flowchart LR
 ## Environment
 
 ```powershell
-cd C:\devdesk\KardboardCode\KardboardCode-VTuber
+cd C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -e ".[dev]"

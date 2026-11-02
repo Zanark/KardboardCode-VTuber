@@ -21,6 +21,8 @@ KardboardCode-VTuber/
 │   ├── camera/stream.py     Thread, latest slot, lifecycle, reconnects, metrics
 │   ├── tracking/            Face, pose, hand, person-mask, filtering, events
 │   ├── motion/springs.py    Bounded damped-spring primitive
+│   ├── gui/                 Optional native studio, controls, presets, tutorial and icon
+│   ├── runtime.py           Toolkit-neutral bounded preview/log bridge and live tuning
 │   ├── renderer/            Textured GPU, procedural fallback, and body renderers
 │   ├── cli.py               Arguments, orchestration, composition, preview, shutdown
 │   └── __main__.py          python -m entry
@@ -46,8 +48,8 @@ KardboardCode-VTuber/
 | `src/kardboard_vtuber/motion/springs.py:26-85` | Bounded damped spring |
 | `src/kardboard_vtuber/renderer/textured_3d.py:111-1414` | Default mesh, shader, atlas, decals, privacy, and hinges |
 | `src/kardboard_vtuber/renderer/ps1_cardboard.py:35-370` | Procedural privacy-safe fallback |
-| `src/kardboard_vtuber/cli.py:32-213` | Command-line interface |
-| `src/kardboard_vtuber/cli.py:215-414` | Runtime orchestration and cleanup |
+| `src\kardboard_vtuber\cli.py`, `build_parser` | Command-line interface |
+| `src\kardboard_vtuber\cli.py`, `main` / `validate_options` | Shared runtime orchestration, validation and cleanup |
 | `scripts/generate_documentation_gallery.py:1` | Face-free angle, scenario, physics, surface, tracking, skeleton, and mesh-debug galleries |
 | `scripts/generate_readme_animation.py:1` | Face-free animated GIF driven by private numeric tracking telemetry |
 | `tests/test_camera_models.py:6-34` | Model tests |
@@ -55,6 +57,13 @@ KardboardCode-VTuber/
 | `tests/test_textured_3d_renderer.py:1-409` | GPU geometry, decals, privacy, depth, and physics |
 | `tests/test_green_screen.py:1-47` | Segmentation composition and stale-mask behavior |
 | `assets/PNGTuberV1/model-manifest.json:1` | Original avatar state/layer semantics |
+| `src\kardboard_vtuber\gui\settings.py`, `PAGES` | Complete runtime control inventory and source-free validated presets |
+| `src\kardboard_vtuber\gui\window.py`, `StudioWindow` | Native controls, preview, recording/model jobs, logs and lifecycle |
+| `src\kardboard_vtuber\gui\worker.py`, `SessionWorker` | Shared pipeline worker and explicitly synthetic demo |
+| `src\kardboard_vtuber\gui\tutorial.py`, `LESSONS` | Built-in nine-step walkthrough |
+| `src\kardboard_vtuber\tracking\eyes.py`, `EyeSensitivity` | Shared independent-eye rules for actions and both renderers |
+| `scripts\capture_studio_screenshots.py` | Real widget screenshots with synthetic-only data |
+| `TODO\00_INDEX.todo` | Numbered studio workstreams and completion evidence |
 
 ## Change-impact guide
 

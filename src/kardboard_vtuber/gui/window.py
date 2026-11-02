@@ -566,7 +566,7 @@ class StudioWindow(QMainWindow):
                     "sent to virtual output, but screen capture can still see them. Continue?",
                 ):
                     return
-            self.bridge = RuntimeBridge(live_tuning(args))
+            self.bridge = RuntimeBridge(live_tuning(args), source=str(args.source))
             self.worker = SessionWorker(values, self.bridge, demo=demo)
             self.worker.completed.connect(self._remember_result)
             self.worker.finished.connect(self._worker_finished)
@@ -711,7 +711,9 @@ class StudioWindow(QMainWindow):
         )
 
     def _append_log(self, message: str) -> None:
-        self.console.appendPlainText(redact(message))
+        source = self.controls["source"].value()
+        assert isinstance(source, str)
+        self.console.appendPlainText(redact(message, source=source))
 
     def _show_error(self, message: str) -> None:
         safe = redact(message)

@@ -238,6 +238,9 @@ def arguments(values: dict[str, SettingValue]) -> list[str]:
     for name, value in vars(args).items():
         if value is None or value is False:
             continue
+        if name == "source":
+            result.append("--source=" + str(value))
+            continue
         result.append("--" + name.replace("_", "-"))
         if value is not True:
             result.append(str(value))
@@ -373,6 +376,9 @@ class RecordingOptions:
         result: list[str] = []
         for key, value in options.items():
             if value is False:
+                continue
+            if key == "source":
+                result.append("--source=" + str(value))
                 continue
             result.append("--" + key.replace("_", "-"))
             if value is not True:

@@ -334,8 +334,8 @@ def validate_options(
         raise ValueError("tracking input widths must be positive")
     if args.fps is not None and (not math.isfinite(args.fps) or args.fps <= 0):
         raise ValueError("requested FPS must be finite and positive")
-    if args.duration is not None and (not math.isfinite(args.duration) or args.duration <= 0):
-        raise ValueError("duration must be finite and positive")
+    if args.duration is not None and (not math.isfinite(args.duration) or args.duration < 0):
+        raise ValueError("duration must be finite and nonnegative")
     try:
         source = CameraSource.parse(args.source)
     except ValueError as error:
@@ -467,6 +467,8 @@ def main(argv: list[str] | None = None, *, runtime: RuntimeBridge | None = None)
     last_unavailable_at = -math.inf
 
     try:
+        if runtime is not None and runtime.stop_event.is_set():
+            return 0
         if args.virtual_camera:
             assert virtual_camera_config is not None
             virtual_camera = VirtualCameraOutput(virtual_camera_config)
@@ -476,6 +478,8 @@ def main(argv: list[str] | None = None, *, runtime: RuntimeBridge | None = None)
                 f"output={virtual_camera_config.width}x{virtual_camera_config.height}"
                 f"@{virtual_camera_config.fps:g} | clean_composite=True",
             )
+        if runtime is not None and runtime.stop_event.is_set():
+            return 0
         camera.start()
         while not shutdown.requested and not (
             runtime is not None and runtime.stop_event.is_set()

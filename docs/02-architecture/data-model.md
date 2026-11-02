@@ -118,7 +118,7 @@ A snapshot is immutable and point-in-time. It contains:
 flowchart LR
     Runtime["Mutable worker internals"] -->|"copy under lock"| Snapshot["Frozen CaptureSnapshot"]
     Snapshot --> CLI["CLI formats output"]
-    Snapshot --> FutureUI["Future monitoring UI"]
+    Snapshot --> UI["Native studio telemetry"]
 ```
 
 ## Why frozen and slotted?
@@ -143,6 +143,22 @@ class FaceTrackingState:
 ```
 
 This prevents MediaPipe-specific result objects from contaminating the renderer.
+
+## Desktop control and display contracts
+
+| Contract | Ownership / invariant |
+|---|---|
+| `EyeSensitivity` | Immutable effective anatomical left/right blink, open, wink and asymmetry thresholds shared by actions/renderers |
+| `LiveTuning` | One validated tuple of eye sensitivity, internal brightness and debounce intervals; atomically replaced |
+| `RuntimeTelemetry` | Raw/filtered face state, effective detection, observed rates, frame age, dimensions, and explicit synthetic/raw flags |
+| `PreviewPacket` | Owned display-size BGR image, optional separate skeleton, and matching telemetry |
+| `RuntimeBridge` | Thread event, short lock, one latest display slot and a bounded 500-entry log ring |
+| Studio preset | Versioned allowlisted scalar settings; excludes camera source and raw-preview consent |
+
+These are defined in `tracking\eyes.py`, `runtime.py`, and `gui\settings.py`. They separate a
+small control plane from the full-size compositor/output. The widget thread receives no
+mutable MediaPipe result or ModernGL object. [The desktop architecture
+chapter](../09-desktop-studio/runtime-architecture.md) traces the actual readers and writers.
 
 ---
 

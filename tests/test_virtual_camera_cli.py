@@ -161,13 +161,17 @@ def test_tracking_loss_does_not_restore_live_hand_pixels(
     assert np.all(backend.frames[2][0, 0] == 100)
 
 
+@pytest.mark.parametrize("duration", [None, "0"])
 def test_existing_headless_capture_does_not_render_or_send_video(
-    monkeypatch: pytest.MonkeyPatch,
+    monkeypatch: pytest.MonkeyPatch, duration: str | None,
 ) -> None:
     capture, tracker, backend, previews = setup_runtime(
         monkeypatch, [state(1000)], [1000],
     )
-    assert cli.main(["--track-face", "--headless"]) == 0
+    args = ["--track-face", "--headless"]
+    if duration is not None:
+        args.extend(["--duration", duration])
+    assert cli.main(args) == 0
     assert capture.stopped and tracker.closed
     assert backend.frames == [] and backend.close_count == 0
     assert previews == []

@@ -1,11 +1,11 @@
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Desktop studio development ledger
 Dependencies: None
 Purpose: Preserve chronological implementation and validation evidence separately from owner approval.
 
 Tasks:
   [x] Record initial source-grounded design.
-  [ ] Record runtime, interface and delivery milestones with actual outcomes.
+  [x] Record runtime, interface and delivery milestones with actual outcomes.
 
 Acceptance criteria:
   Each entry names changes and evidence; failures and unverified outcomes remain explicit.
@@ -16,5 +16,12 @@ Completion evidence:
   2026-11-02: Private offline replay exercised actual MediaPipe/GPU and live tuning. Post-warmup
   UI heartbeat: 359 samples, p95 31 ms, max 47 ms. This is not end-to-end video latency.
   2026-11-02: Dark/light/compact/tutorial screenshots inspected; synthetic framing corrected.
+  2026-11-02: Final compatibility/cancellation regressions bring the suite to 222 passing cases.
+  2026-11-02: Final illustrated handbook has 245 pages/97 diagrams, zero diagram errors and
+  zero overflowing pages. All four existing models passed checksum verification.
+  2026-11-02: Milestone commits: c84e6d7 research/design, f233d09 runtime, 93a1fb1 native UI.
+  The documentation/delivery commit records this completed ledger; no push is requested.
+  2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
+  binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
-  GUI work in progress. No visual acceptance has been supplied.
+  Engineering work complete. Native synthetic demo opened for review; no visual acceptance supplied.

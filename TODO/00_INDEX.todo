@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: IN_PROGRESS
+Status: DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -14,7 +14,7 @@ Workstreams:
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
   [x] Include the user's follow-up requirement: a tutorial.
-  [ ] Complete the four delivery workstreams in dependency order.
+  [x] Complete the four delivery workstreams in dependency order.
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -24,6 +24,12 @@ Acceptance criteria:
   Completed evidence is separate from user approval.
 
 Completion evidence:
-  Pending implementation.
+  All 45 runtime options have native controls; recording and model helpers are included.
+  Full suite: 224 passed; Ruff passed. README/book paths and fences checked.
+  Actual dark/light/compact/tutorial screenshots inspected; handbook: 245 pages, 97 diagrams,
+  zero Mermaid failures and zero overflowing pages.
+  Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
+  User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
   2026-11-02: Workstreams created following source and toolkit research.
+  2026-11-02: Studio opened in synthetic-demo mode; documentation and implementation delivered locally.

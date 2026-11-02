@@ -4,6 +4,19 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-02 - Native studio delivered and opened for review
+
+- Completed all GUI workstreams: all 45 runtime controls plus model verification/force download and private recording, live per-eye calibration, source-free presets, native KC-box identity, themes, logs and the nine-step tutorial.
+- Final validation: 224 tests and Ruff passed. Added explicit startup-cancellation coverage so a cancelled model initialization does not then acquire a camera/output, preserved zero-duration CLI probes, bound literal sources so they cannot become flags, and reported unexpected parser exits as failures.
+- Captured/inspected actual synthetic dark/light/compact/tutorial widgets; updated README, book architecture/data contracts, algorithm/design-principle chapters, control rationale and operational tutorial.
+- Final PDF: 245 pages and 97 diagrams, zero Mermaid errors and zero overflowing pages. All four existing models verified offline. Authored handbook builders are now versioned independently of ignored generated output.
+- Recorded-input integration and live tuning succeeded. The measured post-warmup UI heartbeat p95/max were 31/47 ms on this machine; these do not establish end-to-end video latency, privacy coverage, or performance for every feature combination.
+- Three completed milestone commits are c84e6d7 (research), f233d09 (runtime), and 93a1fb1 (GUI); final delivery evidence belongs to the documentation commit. Commits ran on the observed `workDesk/agentic_GUI` branch; no push was performed.
+- Opened the final app in synthetic-demo mode and verified its actual native window is open/responding. Closed the earlier owned demo cooperatively before refreshing it. No live capture, real calling-app test, or private screenshot export occurred.
+- User appearance/usability acceptance is still pending. Existing distance tracking, real calling-app qualification and recording timing issues were not claimed solved.
+- Final source/log-boundary checks also cover quoted credentials, malformed source text, and already userinfo-redacted endpoints before they reach GUI log copies. The review demo was refreshed normally after these checks; no live source was opened by this agent.
+- Persisted delivery as zmem `ep_829` and final 224-test follow-up as `ep_832`; advanced the successful full-offload marker to `2026-11-02T13:48:33+05:30`. Read the day's shared chat and recent direct mentions before refreshing; none required a reply from this persona.
+
 ## 2026-11-02 - Native desktop studio research and implementation
 
 - User requested a native GUI, live left/right blink sliders, a KC-box icon, deep design research, numbered implementation TODOs, README screenshots, and complete architecture/design rationale. They selected all existing features and explicitly added a tutorial.

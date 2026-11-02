@@ -30,6 +30,7 @@ flowchart LR
 | Dependency inversion | [Dependency inversion](dependency-inversion.md) | `VideoCaptureLike` + injected factory |
 | Immutable observations | [Immutable snapshots](immutable-snapshots.md) | Frozen `CaptureSnapshot` |
 | Security by boundary | [Security and secret boundaries](security-and-secret-boundaries.md) | URL redaction and ignored local config |
+| Responsive control surfaces | [Responsive control surfaces and progressive disclosure](responsive-control-surfaces.md) | Native widget/worker ownership, stable Stop placement, LIVE semantics and explicit raw consent |
 
 ```mermaid
 flowchart TD

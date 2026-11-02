@@ -37,6 +37,7 @@ flowchart LR
 | [One Euro motion filtering](one-euro-filtering.md) | Adaptive low-pass filter bank | Reduce jitter while retaining fast motion |
 | [Damped spring integration](damped-spring-integration.md) | Bounded-step harmonic oscillator | Produce controlled head/flap secondary motion |
 | [Low-resolution overlay compositing](low-resolution-overlay-compositing.md) | Separate color/alpha buffers + nearest-neighbor upscale | Pixelate only the avatar |
+| [Bounded studio mailbox](bounded-studio-mailbox.md) | One owned display slot + bounded log deque + atomic tuning | Keep a slow GUI from queuing stale video or partial calibration |
 
 ## Complexity summary
 

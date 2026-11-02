@@ -56,6 +56,8 @@ Reconcile overlapping history using the newer verified decisions and current sou
 - `docs\02-architecture\textured-3d-renderer.md`: detailed avatar geometry/materials/hinges/privacy specification.
 - `docs\99-appendix\command-reference.md`: operational commands; some historical sections still contain the former repository path.
 - `docs\book\README.md`: printable-handbook build pipeline.
+- `docs\09-desktop-studio\README.md`: native studio research, complete control inventory,
+  ownership architecture and tutorial; `TODO\00_INDEX.todo` indexes the completed implementation.
 - `YTScript\README.md`: local production package; do not assume it has been filmed, edited, or published.
 
 ## Read-only sibling cross-references

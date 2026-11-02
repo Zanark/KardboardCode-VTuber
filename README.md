@@ -2,6 +2,53 @@
 
 A lightweight Python VTuber tool that places a low-poly, PS1-style KardboardCode box over the user's head in a real camera feed.
 
+## Native desktop studio
+
+The optional **PySide6 desktop GUI** exposes every camera CLI option, live independent left/right
+eye calibration, virtual-camera output, green screen, hands, experimental tracking, private
+recording, model setup, redacted logs, and a nine-part built-in tutorial. The CLI remains available.
+
+<p align="center">
+  <img src="./docs/images/kardboardcode-studio-dark.png" alt="KardboardCode Studio native GUI with live left/right blink sliders and a synthetic cardboard avatar preview" width="1200">
+</p>
+<p align="center"><em>
+Actual desktop widgets running the real textured renderer on a labelled synthetic stage.
+No live camera, raw face image, or virtual output was used for this screenshot.
+</em></p>
+
+From `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber`:
+
+```powershell
+.\.venv312\Scripts\python.exe -m pip install -e ".[dev,tracking,virtual-camera,gui]"
+.\.venv312\Scripts\python.exe -m kardboard_vtuber.gui
+```
+
+Click **Try demo** to explore without a camera, then **Tutorial** for the complete walkthrough.
+Opening the GUI does not start capture. **LIVE** sliders update the current session; other
+settings unlock after **Stop**. Presets never retain camera sources or raw-preview consent.
+The installed launcher is `.\.venv312\Scripts\kardboard-studio.exe`.
+
+<details>
+<summary>Light theme and built-in tutorial</summary>
+
+![Native studio light theme](docs/images/kardboardcode-studio-light.png)
+
+*The same actual controls in the light theme, including both sun and moon icons; theme changes
+affect the interface, not video pixels.*
+
+![Built-in anatomical eye calibration tutorial](docs/images/kardboardcode-studio-tutorial.png)
+
+*The in-app tutorial explains per-eye thresholds, relative winks, validation, and navigation to
+the corresponding settings. It works before connecting a camera.*
+
+</details>
+
+Read the [studio tutorial](docs/09-desktop-studio/tutorial.md),
+[research and design rationale](docs/09-desktop-studio/research-and-design.md),
+[complete control inventory](docs/09-desktop-studio/interface-specification.md), and
+[GUI/runtime architecture](docs/09-desktop-studio/runtime-architecture.md).
+The numbered implementation workstreams and evidence live in [`TODO`](TODO/00_INDEX.todo).
+
 <p align="center">
   <img src="./docs/images/kardboardcode-hero.png" alt="Current KardboardCode textured 3D avatar" width="1000">
 </p>
@@ -66,6 +113,8 @@ The current working vertical slice includes:
 - A privacy-safe procedural 2D fallback.
 - Direct Windows virtual-camera output through the installed OBS camera component, without
   running OBS or capturing a preview window.
+- An optional native desktop studio with complete CLI controls, live per-eye calibration,
+  source-free presets, a synthetic demo, and built-in tutorial.
 
 The phone preview has been verified around 28-30 FPS. The isolated GPU renderer measures about
 8.17 ms per 1080x1920 frame on the validated AMD Radeon 780M environment.

@@ -107,7 +107,9 @@ reports unexpected failures to the console, not a success-shaped empty preview.
 
 Stop sets a thread event. Camera reads use short condition-wait timeouts in GUI mode so the
 loop can observe it without a per-frame queued Qt slot. A native camera open/read/release can
-still block internally. Closing during work keeps the window alive, requests Stop, and completes
+still block internally. A cancellation received during model initialization is checked before
+acquiring output and again before starting capture, so cancelled startup does not open a new source.
+Closing during work keeps the window alive, requests Stop, and completes
 after `QThread.finished`; it does not call `terminate`, block the UI with `wait`, or destroy a
 running QThread. This is cooperative shutdown, not process/crash isolation.
 

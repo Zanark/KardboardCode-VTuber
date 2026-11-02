@@ -123,6 +123,30 @@ def test_partial_runtime_initialization_closes_already_created_tracker(
     assert "Hand model unavailable" in "\n".join(bridge.take()[1])
 
 
+def test_cancel_during_model_initialization_does_not_open_source_or_output(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    capture = FakeCapture([])
+    tracker = FakeTracker([])
+    bridge = RuntimeBridge()
+    monkeypatch.setattr(cli, "LatestFrameCamera", lambda config: capture)
+
+    def initialize(args: object) -> FakeTracker:
+        bridge.stop_event.set()
+        return tracker
+
+    monkeypatch.setattr(cli, "_create_tracker", initialize)
+    monkeypatch.setattr(cli, "_create_renderer", lambda args, **kw: PS1CardboardRenderer())
+    monkeypatch.setattr(cli, "_create_action_detector", lambda args: None)
+    monkeypatch.setattr(
+        cli,
+        "VirtualCameraOutput",
+        lambda config: pytest.fail("A cancelled start must not open a virtual output"),
+    )
+    assert cli.main(["--virtual-camera"], runtime=bridge) == 0
+    assert not capture.started and capture.stopped and tracker.closed
+
+
 def test_live_eye_tuning_changes_procedural_expression_without_resetting_safe_frame() -> None:
     renderer = PS1CardboardRenderer()
     face = replace(state(1), left_eye_open=0.4, right_eye_open=0.4)
@@ -143,3 +167,8 @@ def test_log_redaction_hides_full_urls_not_just_passwords() -> None:
     safe = redact(text)
     assert "example.invalid" not in safe and "secret=" not in safe and "user:" not in safe
     assert "private" not in redact("HTTP://user:private@host/stream")
+    assert "thetic" not in redact("http://user:syn'thetic@invalid/video")
+    source = "http://user:example@invalid/video?token=synthetic value"
+    bridge = RuntimeBridge(source=source)
+    bridge.log("source=http://***@invalid/video?token=synthetic value | fps=20")
+    assert bridge.take()[1] == ("source=[camera source hidden] | fps=20",)

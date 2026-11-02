@@ -17,6 +17,8 @@ description: "Implemented capture, tracking, rendering, segmentation, compositio
 - [Textured GPU 3D renderer](textured-3d-renderer.md) — default mesh, materials, lighting, pose, and compositing
 - [Green-screen compositing](green-screen-compositing.md) — async person masks and fail-closed chroma output
 - [Procedural PS1 renderer](ps1-cardboard-renderer.md) — privacy-safe 2D fallback and original prototype
+- [Desktop runtime architecture](../09-desktop-studio/runtime-architecture.md) — native Qt host,
+  bounded preview bridge, live per-eye tuning, cleanup, and private subprocess tasks
 
 ```mermaid
 flowchart TD
@@ -44,6 +46,7 @@ The code currently combines:
 - **Finite-state lifecycle management** for recovery and diagnostics.
 - **Functional data contracts** through frozen dataclasses.
 - **Fail-closed privacy boundaries** for face loss and stale segmentation masks.
+- **Control-plane / data-plane separation** for native widgets versus the shared pipeline worker.
 
 ```mermaid
 flowchart LR
@@ -67,9 +70,12 @@ flowchart LR
 
 - `src/kardboard_vtuber/camera/models.py:15-157`
 - `src/kardboard_vtuber/camera/stream.py:20-288`
-- `src/kardboard_vtuber/cli.py:215-414`
+- `src\kardboard_vtuber\cli.py`, `validate_options`, `main`, `_create_renderer`
 - `src/kardboard_vtuber/renderer/textured_3d.py:140-327`
 - `src/kardboard_vtuber/tracking/green_screen.py:16-152`
+- `src\kardboard_vtuber\runtime.py`, `RuntimeBridge` and `LiveTuning`
+- `src\kardboard_vtuber\gui\worker.py`, `SessionWorker`
+- `src\kardboard_vtuber\gui\window.py`, `StudioWindow`
 
 ---
 

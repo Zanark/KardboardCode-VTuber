@@ -51,6 +51,9 @@ class SessionWorker(QThread):
                     runtime=self.bridge,
                 )
             )
+        except SystemExit as error:
+            self.bridge.log(f"[ERROR] Pipeline exited unexpectedly during startup: {error}")
+            result = error.code if isinstance(error.code, int) and error.code != 0 else 1
         except Exception:
             # A thread boundary must report unexpected native/setup failures to the operator.
             self.bridge.log("[ERROR] " + traceback.format_exc())

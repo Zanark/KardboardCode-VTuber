@@ -11,15 +11,22 @@ from dataclasses import dataclass, field
 import cv2
 from numpy import ndarray
 
+from kardboard_vtuber.camera.models import CameraSource
 from kardboard_vtuber.tracking.events import ActionThresholds
 from kardboard_vtuber.tracking.eyes import EyeSensitivity
 from kardboard_vtuber.tracking.models import FaceTrackingState
 
 
-def redact(message: str) -> str:
+def redact(message: str, *, source: str | None = None) -> str:
     """Keep camera endpoints and URL secrets out of GUI logs and command copies."""
+    if source and source.strip() and not source.strip().isdecimal():
+        message = message.replace(source, "[camera source hidden]")
+        message = message.replace(
+            CameraSource.parse(source).redacted(),
+            "[camera source hidden]",
+        )
     return re.sub(
-        r"\b[a-z][a-z0-9+.-]*://[^\s\"'<>]+",
+        r"\b[a-z][a-z0-9+.-]*://\S+",
         "[camera URL hidden]",
         message,
         flags=re.IGNORECASE,
@@ -79,10 +86,16 @@ class PreviewPacket:
 class RuntimeBridge:
     """One latest display packet; bounded logs; no dependency on the widget toolkit."""
 
-    def __init__(self, tuning: LiveTuning | None = None) -> None:
+    def __init__(
+        self,
+        tuning: LiveTuning | None = None,
+        *,
+        source: str | None = None,
+    ) -> None:
         self.stop_event = threading.Event()
         self._lock = threading.Lock()
         self._tuning = tuning or LiveTuning()
+        self._source = source
         self._preview: PreviewPacket | None = None
         self._logs: deque[str] = deque(maxlen=500)
         self._lost_logs = 0
@@ -96,7 +109,7 @@ class RuntimeBridge:
             return self._tuning
 
     def log(self, message: str) -> None:
-        safe = redact(message)
+        safe = redact(message, source=self._source)
         with self._lock:
             if len(self._logs) == self._logs.maxlen:
                 self._lost_logs += 1

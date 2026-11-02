@@ -86,10 +86,13 @@ def test_preset_import_does_not_restore_source_or_raw_consent(
     window: StudioWindow,
     tmp_path: Path,
 ) -> None:
-    window.controls["source"].set_value("rtsp://user:synthetic@invalid/video")
+    source = "user:synthetic'secret@invalid/video"
+    window.controls["source"].set_value(source)
     window.controls["debug_face_preview"].set_value(True)
     path = tmp_path / "studio.json"
     window.save_preset(path)
+    window._append_log("Failed to open: " + source)
+    assert "secret" not in window.console.toPlainText()
     window.controls["source"].set_value("2")
     window.load_preset(path)
     assert window.controls["source"].value() == "2"
@@ -184,3 +187,24 @@ def test_model_verification_is_async_and_does_not_open_capture(
     wait_until(app, lambda: window.job is None, timeout=15)
     assert "verified" in window.console.toPlainText()
     assert window.start_button.isEnabled()
+
+
+def test_worker_reports_parser_exit_as_failure_instead_of_success(
+    app: QApplication,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from kardboard_vtuber.gui import settings
+    from kardboard_vtuber.gui.worker import SessionWorker
+
+    def fail(*args: object, **kwargs: object) -> int:
+        raise SystemExit(2)
+
+    monkeypatch.setattr(settings, "required_models", lambda values: ())
+    monkeypatch.setattr("kardboard_vtuber.gui.worker.cli.main", fail)
+    bridge = RuntimeBridge()
+    worker = SessionWorker(settings.defaults(), bridge)
+    codes: list[int] = []
+    worker.completed.connect(codes.append)
+    worker.run()
+    assert codes == [2]
+    assert "exited unexpectedly" in "\n".join(bridge.take()[1])
