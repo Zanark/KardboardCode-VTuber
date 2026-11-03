@@ -1,42 +1,42 @@
 {
   "assets": {
     "KardboardCode-VTuber-source.zip": {
-      "bytes": 33201709,
-      "sha256": "8f0e29ff0ff5d1db8a6713c45b7c08e873394d72fc3b58113c87bb911bc8684e"
+      "bytes": 41210738,
+      "sha256": "6ecca117e016687465d9afed5f7f56915b5fe8cef0aebbcd8ab65b705cac4055"
     },
     "RELEASE_CONTEXT.md": {
       "bytes": 2009,
-      "sha256": "f973d2b3519f58a9537f469f68d19d114c8d7b7849e52c1c8987d999161a66a4"
+      "sha256": "ec56585fe168d7387df71d546aa8c581cff7a89f3e4b54fc83f9e9b739da4ec7"
     },
     "RELEASE_NOTES.md": {
-      "bytes": 13266,
-      "sha256": "e2ba739173b3af49162a926cce8d2ae2b6b0915af604f2d7bc1f7f62f431bb2d"
+      "bytes": 13547,
+      "sha256": "e51f2288c455a3de985cdb5845a309c49ed5dc9094b4e535c46d0b93017e438d"
     }
   },
-  "generatedAt": "2026-11-02T23:47:58+00:00",
+  "generatedAt": "2026-11-03T01:08:28+00:00",
   "schemaVersion": 1,
   "sourceBranch": "workDesk/agentic_GUI",
-  "sourceCommit": "a0d7c6f2a7262c16789302b5cc40cbb2e470c912",
+  "sourceCommit": "e75d5d9d2b0cb1932c3e139021668693a4bf313a",
   "sourceFiles": {
     ".gitattributes": {
-      "bytes": 181,
-      "sha256": "0f221e94f45b82bbc8af849c4158634f497d936f0cbc14b83a586fed3fbe203b"
+      "bytes": 247,
+      "sha256": "609bf2ad577aad1717a773339626db94cec8b548b4f13a69f54ab6a9b0c73850"
     },
     ".gitignore": {
       "bytes": 842,
       "sha256": "0f60df4be5771edfaa2a528711fc28ae5af9182bb2b5a3eb4b121bc416279128"
     },
     "AGENTS.md": {
-      "bytes": 1982,
-      "sha256": "397b08e7ad550bd635777b7ac9e6e61b357098934555fb760c420bedf48654bc"
+      "bytes": 3071,
+      "sha256": "f7d8803ef3fa08d1218fc554a26bde442290aa242278e99beb896f458eb970c4"
     },
     "README.md": {
-      "bytes": 2961,
-      "sha256": "8fb120155c07dd5af1a24a5e4a7036d1d21978bb8558096ec61530c77f9308c2"
+      "bytes": 3206,
+      "sha256": "91213e5f72ba484bb4f0882993c703b451d8a61c7d9edc77a6b389fdb69cc26f"
     },
     "TODO/00_INDEX.todo": {
-      "bytes": 10736,
-      "sha256": "5c815e7a732c9275896eab9bccab922e9e0b16a749d9bf79846f18a803af369d"
+      "bytes": 11583,
+      "sha256": "02ecb300c2158179e0635fa0ca74b985fef3079093d7a34a62a19c15895df0f6"
     },
     "TODO/01_RESEARCH_AND_DESIGN.todo": {
       "bytes": 1131,
@@ -55,8 +55,8 @@
       "sha256": "f63eb4731d13d0f5065c0a1ff11841cf2a974c13d69fd08b85af95c992a89897"
     },
     "TODO/05_DEVELOPMENT_LEDGER.todo": {
-      "bytes": 14189,
-      "sha256": "4a6773679897f0101cc0436ed5edbce00162777e4c304c52e3928ec20833e257"
+      "bytes": 15115,
+      "sha256": "98b6a2e0454fa355464b3a21408d22fad9404c9a93c5b12dbf846bead7e06cfa"
     },
     "TODO/06_NATIVE_CAMERA_SELECTION.todo": {
       "bytes": 1731,
@@ -125,6 +125,10 @@
     "TODO/22_NUMERIC_PADDING_AND_FEATURE_COVERAGE.todo": {
       "bytes": 4993,
       "sha256": "a1f6353b98f3dfea32706de79998b16ddb73ca4dae5503fb376cf7232684b5de"
+    },
+    "TODO/23_COMPLETE_GUI_VISUAL_REFERENCE.todo": {
+      "bytes": 3878,
+      "sha256": "78c9454cc9dddde71c7d518092636250a395f24440c53840bcc6af3c287ec43f"
     },
     "assets/PNGTuberV1/Eyes Closed.png": {
       "bytes": 21259,
@@ -359,8 +363,8 @@
       "sha256": "21faeb31dccf99b26c622b93fcb7f582b012125a97a68d5d5fbfb5e1c93fb375"
     },
     "docs/09-desktop-studio/README.md": {
-      "bytes": 2534,
-      "sha256": "ea03ff909b629fa8251f9ab8d4b9e3cc7edb821a9df695b82c3b88836a7f9070"
+      "bytes": 2919,
+      "sha256": "6a8d5aa4f7c4ef7dbdb9e7ac0617333f47df1acc98a99d2d54b2445465f99e39"
     },
     "docs/09-desktop-studio/interface-specification.md": {
       "bytes": 15561,
@@ -402,9 +406,13 @@
       "bytes": 5776,
       "sha256": "c3c24ca66114069d6e63ce71acd2f328250f96bc259ad3bbc8ac6a42cf0f3edd"
     },
+    "docs/KardboardCode-Studio-GUI-Visual-Reference.html": {
+      "bytes": 11386637,
+      "sha256": "14c24c343538b03c298a3afdbb6ba1382721e15b0974181d463e9aa6c5e2acf5"
+    },
     "docs/KardboardCode-VTuber-Engineering-Handbook.pdf": {
-      "bytes": 10775151,
-      "sha256": "c98afed7b315d3e1bcb894b42fa662bbd0beaff9efe00bf4ddeafc4bc6235957"
+      "bytes": 10779297,
+      "sha256": "92268f74e809410b01e0f542f5dcbc2eeff3c11ec3fb9643752109078fe3d1c3"
     },
     "docs/README.md": {
       "bytes": 8589,
@@ -595,8 +603,8 @@
       "sha256": "42636950d62b1b72b3d808e52cdf26b11955d89b4e9ca9163b0f2dae2f66baf4"
     },
     "docs/visual-gallery.md": {
-      "bytes": 6343,
-      "sha256": "783b4ef17642bedbd82e394ae919ab12b448fbd8bc16e28460896f8963830e28"
+      "bytes": 6677,
+      "sha256": "019061766ddc71acaab2d3cb79b41cbd65afdfc10b4120bb21bd4caddad469b4"
     },
     "installer/windows/bootstrap.py": {
       "bytes": 17572,
@@ -627,8 +635,8 @@
       "sha256": "202e3054c8be49e2145d354b01ff07dd92c49be0ed550092f00ee4f3b226811d"
     },
     "release/RELEASE_NOTES.md": {
-      "bytes": 13266,
-      "sha256": "e2ba739173b3af49162a926cce8d2ae2b6b0915af604f2d7bc1f7f62f431bb2d"
+      "bytes": 13547,
+      "sha256": "e51f2288c455a3de985cdb5845a309c49ed5dc9094b4e535c46d0b93017e438d"
     },
     "requirements-dev.txt": {
       "bytes": 53,
@@ -646,6 +654,10 @@
       "bytes": 3436,
       "sha256": "0c8de9202096318b9244336743b84e25feaef15eb294e383d9a9d41e4151430a"
     },
+    "scripts/build_gui_visual_reference.mjs": {
+      "bytes": 24997,
+      "sha256": "3cbf1c38ccd8c984066bc366ade8ff044322afae703587832c8688eae9a9ff91"
+    },
     "scripts/build_readme_art.py": {
       "bytes": 9700,
       "sha256": "a4f803f9a2fd4e69e2d7d1a47e0f31c90b417aa82d60978170f2a886ddc68156"
@@ -653,6 +665,10 @@
     "scripts/build_windows_installer.py": {
       "bytes": 22670,
       "sha256": "85bd66f317cfe41d280bf499b92306ffd5d7f4090c36c3d7efc6f21d1948e86e"
+    },
+    "scripts/capture_gui_visual_reference.py": {
+      "bytes": 40917,
+      "sha256": "2684aaf382dc2639f2fdda82c3df1b7f7f0e36f7010304747b68f22fff793411"
     },
     "scripts/capture_studio_screenshots.py": {
       "bytes": 7607,
@@ -942,6 +958,10 @@
       "bytes": 1518,
       "sha256": "794203b043767af96480603bc8c89eaa38ff54e7c257ab9441e57afa351af2b1"
     },
+    "tests/test_gui_visual_reference.py": {
+      "bytes": 1725,
+      "sha256": "8d50e524774e80af16053249eecc920fd93c8b5ec372b125e191c2b919ce0e23"
+    },
     "tests/test_guided_recording.py": {
       "bytes": 3627,
       "sha256": "2ac149d47356a1146944b6861e5ef76b1e1618802317667a6543606bb7ee3649"
@@ -1015,7 +1035,7 @@
       "sha256": "7ff6a0c1c8691d037c64a88173b93e2d547811f2332a84e86513fe92e5e62406"
     }
   },
-  "sourceFingerprint": "39e2f9382e43e91a1d75a45999b916db1ec4360b3d5ae51e72016b2b5e64147b",
+  "sourceFingerprint": "3cd5c505887c0ee552b5e5acaf6584b54eab7a16abcf5fc98699390dacd9c979",
   "sourceModified": false,
   "tag": "v1.2.4",
   "version": "1.2.4"
