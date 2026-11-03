@@ -1,4 +1,4 @@
-Status: IN PROGRESS
+Status: DONE
 Milestone: One portable complete GUI screenshot reference
 Dependencies: 22_NUMERIC_PADDING_AND_FEATURE_COVERAGE.todo
 Purpose: Show every named section/view instead of limiting documentation to selected examples.
@@ -11,7 +11,7 @@ Tasks:
   [x] Build one self-contained HTML file with embedded images, captions, sources and coverage receipt.
   [x] Add index/search/theme/expand/full-image controls and two rendered diagrams.
   [x] Verify every image/declared surface, offline operation and responsive reader controls.
-  [ ] Link from minimal README/gallery, refresh source/installer metadata and persist owned context.
+  [x] Link from minimal README/gallery, refresh source/installer metadata and persist owned context.
 
 Acceptance criteria:
   A single HTML file contains all screenshot bytes and works without a server/network.
@@ -38,9 +38,14 @@ Completion evidence:
   Main README/gallery/Studio chapter link the single file without adding front-page images.
   Handbook navigation rebuilt:275pages/103diagrams,zero Mermaid failures/overflow.
   HTML SHA256:14c24c343538b03c298a3afdbb6ba1382721e15b0974181d463e9aa6c5e2acf5.
-  Source/MSI snapshot metadata and completed owned continuity remain pending.
+  Current source/MSI snapshots include the reference and pass both checks. Installer rebuild
+  reflects README-in-wheel metadata only; GUI module bytes match unchanged runtime1.2.4.
+  Final evidence/artifact/context commits preserve the completed handoff separately.
+  No new installed lifecycle, live camera, portrait or remote publication is claimed.
   User approval remains separate from technical completion.
 
 Completion log:
   2026-11-03: User requested one file showing every section and view of the GUI. Selected a
   portable self-contained HTML catalogue so screenshots cannot become missing external files.
+  2026-11-03: Toolinge34ab1d and single-file reference/navigation35a72cb committed. Native
+  coverage/PNG/source/reader checks and current snapshot checks pass; source/runtime unchanged.

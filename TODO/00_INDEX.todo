@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: Workstream23 IN PROGRESS; earlier Studio workstreams DONE
+Status: All Studio workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -48,7 +48,7 @@ Tasks:
   [x] Deliver readable stacked side diagnostics and a persistent clean-output button (workstream 20).
   [x] Restore the preferred metric cards in the viewer footer beside Tools (workstream 21).
   [x] Fix numeric text padding and verify current GUI feature coverage (workstream 22).
-  [ ] Deliver one complete portable GUI screenshot reference (workstream23).
+  [x] Deliver one complete portable GUI screenshot reference (workstream23).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -58,6 +58,11 @@ Acceptance criteria:
   Completed evidence is separate from user approval.
 
 Completion evidence:
+  Complete GUI visual reference: one11,386,637-byte offline HTML with204embedded native
+  screenshots/102paired views/scroll parts and all named surfaces/45controls covered in both
+  themes. PNG/source/citation/coverage checks,3regressions/Ruff and copied-file browser controls/
+  1440/390bounds pass;2diagrams embedded. Main README7/GIF-first/gallery24 retained.
+  Runtime1.2.4unchanged; handbook275pages/103diagrams and current snapshots verified.
   Current v1.2.4 handoff fixes embedded numeric padding and custom preview-height binding,
   with canonical Video scope and verified45Live/22Video/17recorder/4model-helper coverage.
   Native padding/forwarding/scope/approved-layout set22passed at each100/125/150%; full suite
@@ -88,6 +93,9 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-03: Workstream23 delivered: one complete portable native GUI visual reference,
+  with all named sections/views, scrolling parts and dialogs in both themes. Linked from
+  existing docs while preserving minimal README and runtime/privacy/publication boundaries.
   2026-11-03: Workstream22 delivered as v1.2.4: properly inset numeric text, corrected preview-
   height integer forwarding, truthful Video-mode controls and actual operating-feature audit.
   Approved layout/fonts/cards retained; current screenshots/docs/handbook/snapshots verified.

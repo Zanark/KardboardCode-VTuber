@@ -3,3 +3,4 @@
 /installer/windows/** text eol=lf
 /release/*.zip -text
 /release/*.msi -text
+/docs/KardboardCode-Studio-GUI-Visual-Reference.html text eol=lf
