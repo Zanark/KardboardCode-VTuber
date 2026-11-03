@@ -24,6 +24,14 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-03: Complete GUI visual reference: one11,386,637-byte offline HTML with204embedded
+  native screenshots/102paired views and scroll parts, both themes and all named surfaces/
+  45controls accounted for. Toolinge34ab1d,3coverage regressions/Ruff pass. AllPNG bytes/
+  dimensions/hashes decode; sources recorded. Copied-file offline checks verify2diagrams,
+  search/theme/filter/expand/full-image controls and1440/390containment; no external requests.
+  Grouped sheets/final state fidelity/reader views reviewed. README7/GIF-first/gallery24 and
+  links retained; handbook275pages/103diagrams,zero failures/overflow. Runtime1.2.4 unchanged.
+  Final current snapshots and owned continuity handoff remain pending; no camera/publication.
   2026-11-03: v1.2.4 numeric padding/coverage audit (837b557): embedded margins6left/3right,
   custom preview-height integer binding fixed, Video scope/CLI preview share VIDEO_FIELDS.
   All45Live options forward two nondefault configurations; Video22+3file/quality settings,

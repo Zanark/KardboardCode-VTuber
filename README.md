@@ -37,6 +37,10 @@
 
 **[Explore the full gallery: Studio views, avatar details and diagnostics →](docs/visual-gallery.md)**
 
+**[Every GUI section and view in one offline HTML file →](docs/KardboardCode-Studio-GUI-Visual-Reference.html)**
+
+*Download/open the HTML in a browser: indexed native screenshots in both themes, including scrolling sections and dialogs.*
+
 ## Unbox your setup
 
 [Download Windows setup](release/KardboardCode-Studio-windows-x64.msi), then open

@@ -8,6 +8,9 @@ v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
 
 ### Numeric padding and actual feature coverage
 
+- Complete portable GUI visual reference: one self-contained HTML file with 204 embedded
+  native screenshots, 102 views/scroll parts, both themes, every declared interface surface,
+  captions/sources, navigation/search and offline full-image viewing. Synthetic/example data only.
 - Numeric editors now have explicit inner text margins so values do not hug their left
   border. The existing +/- targets, numeric steps, bounds and approved layout are unchanged.
 - Audited all 45 Live/runtime options through actual nondefault GUI-to-parser forwarding,

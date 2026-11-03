@@ -9,6 +9,11 @@ The full visual tour lives here so the front page can focus on the animations an
 showcases. Native Studio captures use synthetic imagery; camera names and video paths are
 illustrative. No raw camera footage or private face imagery is included.
 
+For the complete interface rather than selected examples, use the
+[single-file GUI visual reference](KardboardCode-Studio-GUI-Visual-Reference.html):
+204 embedded native screenshots covering 102 named views/scroll parts in both themes.
+Download/open the HTML in a browser; it needs no server, internet or external image folder.
+
 ## Inside the Studio
 
 ![The control room: real widgets and live sliders](images/readme/studio.svg)

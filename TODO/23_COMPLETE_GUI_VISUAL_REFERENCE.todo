@@ -35,7 +35,10 @@ Completion evidence:
   390px containment from a standalone copied HTML with no adjacent assets or network requests.
   Long code blocks scroll locally rather than overflowing the mobile page. Idle/signal/
   calibration/helper fixtures retain accurate state/text and explicit synthetic provenance.
-  Final handbook navigation, source/MSI snapshots and owned continuity remain pending.
+  Main README/gallery/Studio chapter link the single file without adding front-page images.
+  Handbook navigation rebuilt:275pages/103diagrams,zero Mermaid failures/overflow.
+  HTML SHA256:14c24c343538b03c298a3afdbb6ba1382721e15b0974181d463e9aa6c5e2acf5.
+  Source/MSI snapshot metadata and completed owned continuity remain pending.
   User approval remains separate from technical completion.
 
 Completion log:
