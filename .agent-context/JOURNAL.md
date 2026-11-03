@@ -4,6 +4,35 @@
 >
 > Newest at top. This repository-local store began on 2026-10-11. Earlier work below is retrospective continuity, not evidence that this store existed then.
 
+## 2026-11-03 - Complete portable GUI visual reference
+
+- Owner requested one file with every section/view. Built a native controlled capture tool
+  and single-file HTML reader; runtime/UI/version1.2.4 remain unchanged.
+- Captured204screenshots /102paired views/scroll parts in both themes:8pages,11sections,
+  3Tools tabs,3diagnostics,4menus,9selectors,10lessons,20dialogs and11major/illustrative states.
+  All45runtime controls are fully visible somewhere or explicitly represented by resolution UI.
+- No desktop capture/private data/camera/recording/download. Only real owned widgets and safe
+  synthetic fixtures; consent answeredNo. Controlled Qt pickers/illustrative states are labelled.
+- All PNGs decode/hash-match. Reviewed grouped contact sheets and corrected state fidelity.
+  Offline copied-file browser checks verify2diagrams, image bytes, search/theme/filter/
+  expand/full-image controls and1440/390px containment; local code scrolling fixed mobile overflow.
+- One HTML11,386,637bytes is produced. Three coverage regressions/Ruff pass.
+- Toolinge34ab1d and single-file/navigation35a72cb are committed. Reader/source/PNG checks pass
+  from a standalone copied HTML with no adjacent assets/network. README7/GIF-first/gallery24
+  preserved; handbook navigation rebuilt275pages/103diagrams,zero failures/overflow.
+- Workstream23complete; final public inputse75d5d9d2b0cb1932c3e139021668693a4bf313a and
+  artifact commit6128a16. Source/MSI clean checks/provenance and all9release-byte comparisons
+  pass; reference matches committed LF bytes with SHA256
+  14c24c343538b03c298a3afdbb6ba1382721e15b0974181d463e9aa6c5e2acf5.
+- ZIP41210738bytes SHA2566ecca117e016687465d9afed5f7f56915b5fe8cef0aebbcd8ab65b705cac4055;
+  MSI19714048bytes SHA256a7e47f25d3c0dea4650b558220b9d2dfb4960ff8dce9f55511ecf27e1234a101.
+  Installer README metadata refreshed; GUI module bytes remain identical to runtime1.2.4.
+- Latest installed context skills reread; active-only room/own attention checked, no pending
+  obligations/filler. Identity/archive/frozen documentary preserved. No camera/portrait/
+  runtime/UI/security change or remote publication; no new installer-lifecycle claim.
+- Persisted/read back ep_912, then advanced the exact full-offload marker after successful
+  store/episodic persistence:2026-11-03T06:45:56+05:30.
+
 ## 2026-11-03 - Numeric padding and actual GUI coverage audit
 
 - Owner requested left numeric padding and asked whether sparse presentation meant missing

@@ -22,6 +22,12 @@ No personal identities, device credentials, face imagery, or personal calibratio
   three existing GIFs immediately below them. Only dark/light Studio screenshots remain on
   the front. Detailed static imagery belongs in the linked `docs\visual-gallery.md`, organized
   with captions. Keep setup/features/camera/troubleshooting prose in `docs\guides`.
+- The complete GUI screenshot reference is the single self-contained
+  `docs\KardboardCode-Studio-GUI-Visual-Reference.html`, not the selective artwork gallery.
+  Keep every named page/section/tab/menu/selector/dialog and needed scroll parts in both themes.
+  Regenerate after GUI changes via capture_gui_visual_reference.py/build_gui_visual_reference.mjs.
+  Use only owned native widgets and safe fixtures; label illustrative states and Qt picker
+  specimens. Runtime/source/PNG coverage hashes must match; the portable reader has no externals.
 - README image galleries must not use table rows/cells or visible borders. Stack other images
   at full content width. Keep only the explicitly approved original-background / green-screen
   GIF comparison side by side, using borderless plain HTML rather than a table.

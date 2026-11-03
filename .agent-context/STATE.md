@@ -1,11 +1,42 @@
-> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered v1.2.4 numeric inner padding, corrected preview-height binding, truthful Video scope and verified operating-feature coverage with current snapshots. No portrait work.
-> **Last context offload:** 2026-11-03T05:20:31+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered one complete portable GUI visual reference:204native screenshots/102views, current snapshots/navigation. Runtime1.2.4 unchanged; no camera or portrait work.
+> **Last context offload:** 2026-11-03T06:45:56+05:30
 
 # KardboardCode-VTuber State
 
 > Resume as the KardboardCode VTuber engineering and streaming-output partner. Read both context stores below before continuing; preserve the user's face-only choice and privacy requirements.
 
 ## Current focus
+
+**DELIVERED: one complete GUI visual-reference file.** Owner requested every section/view
+in one file. Portable HTML:
+`C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\docs\KardboardCode-Studio-GUI-Visual-Reference.html`.
+11,386,637bytes / SHA25614c24c343538b03c298a3afdbb6ba1382721e15b0974181d463e9aa6c5e2acf5.
+All screenshot bytes, sources/coverage receipt,2rendered diagrams and reader controls embedded.
+204native screenshots /102paired named views and scroll parts, both themes. Coverage:
+8pages,11sections,3Tools tabs,3diagnostics,4menus,9selectors,10lessons,20dialog purposes/
+phases and11major/illustrative states. All45runtime controls visually accounted for, with
+the two output-size destinations represented by the native resolution selector.
+
+Only owned widgets and safe synthetic/example fixtures; no desktop/private paths/real face
+pixels, personal calibration, camera, recording or download. Consent answeredNo. Controlled
+Qt file-picker specimens/illustrative states are explicitly labelled, not exact OS variants
+or fake live qualification. Idle/signal/calibration/helper states preserve actual text/data rules.
+Every PNG decodes and matches hash/dimensions. Source hashes/citations recorded; grouped sheets/
+final state fidelity and desktop/mobile reader views reviewed. Three coverage regressions/
+Ruff pass. Copied-file browser checks validate all embedded bytes, search/theme/filter/expand/
+full-image controls,2diagrams and1440/390containment with no adjacent assets/network requests.
+
+Workstream23complete. Toolinge34ab1d; single-file/navigation35a72cb; final public inputs
+e75d5d9d2b0cb1932c3e139021668693a4bf313a; artifact commit6128a16.
+README7/GIF-first/gallery24 retained. Handbook navigation rebuilt275pages/103diagrams,zero
+failures/overflow. Canonical HTML LF bytes pinned. Source/MSI checks and clean provenance align;
+all9release files and the reference match committed blobs. Installer refresh is README-in-wheel
+metadata only; GUI bytes match unchanged runtime1.2.4. No new installed lifecycle claim.
+Source fingerprint:3cd5c505887c0ee552b5e5acaf6584b54eab7a16abcf5fc98699390dacd9c979.
+ZIP:41,210,738bytes / SHA2566ecca117e016687465d9afed5f7f56915b5fe8cef0aebbcd8ab65b705cac4055.
+MSI:19,714,048bytes / SHA256a7e47f25d3c0dea4650b558220b9d2dfb4960ff8dce9f55511ecf27e1234a101.
+No runtime/UI change, new camera, portrait, permission/security change or remote publication.
+All requested work complete; await feedback rather than rerunning capture/render/package loops.
 
 **DELIVERED: numeric text inset and GUI coverage audit, v1.2.4.** Owner requested left numeric
 padding and asked whether sparse/large-font presentation hid missing features. Added real
@@ -350,6 +381,14 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
+### Complete GUI visual-reference handoff
+
+- One self-contained HTML at the full path above,204screenshots/102views and scroll parts in
+  both themes, all named Studio surfaces/45controls covered. Offline reader/source/PNG checks pass.
+- Toolinge34ab1d, file35a72cb, completion e75d5d9, release artifacts6128a16. Runtime1.2.4unchanged.
+- `AGENTS.md` records regeneration after GUI changes. Keep source/capture hashes current,
+  label fixtures, preserve minimal README, and do not capture desktop/private camera/user data.
+
 ### Current GUI handoff - v1.2.4 Padded and Audited Controls
 
 - Native numeric inset6left/3right; corrected custom preview-height integer; Video scope uses
@@ -519,8 +558,9 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
-Workstream 22's code, native screenshots, documentation and source/MSI snapshots are complete
-as v1.2.4. Await the owner's next concrete GUI feedback, not another design/research/installer
+Workstream23's complete visual reference and current source/MSI snapshots are delivered.
+Application work through v1.2.4 is also complete. Await the owner's next concrete feedback,
+not another capture/design/research/installer
 loop. An already-running
 Studio must be restarted to load external source changes; do not terminate it for the user.
 Do not resume portrait work or silently revert the completed drawing. Real visual/live-camera/
@@ -557,7 +597,9 @@ Earlier live accuracy/privacy/calling-app and private recorder timing limits rem
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_910` (completed v1.2.4 native numeric padding, corrected
+- Latest cross-base receipt: `ep_912` (complete portable GUI visual reference204screenshots/
+  102views in one offline file, all named surfaces, current docs/snapshots; runtime unchanged).
+  Previous receipt: `ep_910` (completed v1.2.4 native numeric padding, corrected
   preview-height/Video scope, actual operating-feature audit and current verified snapshots).
   Previous receipt: `ep_908` (completed v1.2.3 preferred metric-card footer,
   viewer-only Tools/full-height settings, native and current-package proof, docs/snapshots).
