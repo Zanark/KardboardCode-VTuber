@@ -1,0 +1,43 @@
+Status: IN PROGRESS
+Milestone: One portable complete GUI screenshot reference
+Dependencies: 22_NUMERIC_PADDING_AND_FEATURE_COVERAGE.todo
+Purpose: Show every named section/view instead of limiting documentation to selected examples.
+
+Tasks:
+  [x] Inventory current pages, disclosure sections, tools/diagnostics, menus, selectors and dialogs.
+  [x] Capture native widgets in both themes, with every necessary scrolling part.
+  [x] Cover all 45 runtime controls or their explicit native resolution-selector representation.
+  [x] Include tutorial/calibration/consent/file-picker and major work-mode views with honest fixtures.
+  [x] Build one self-contained HTML file with embedded images, captions, sources and coverage receipt.
+  [x] Add index/search/theme/expand/full-image controls and two rendered diagrams.
+  [x] Verify every image/declared surface, offline operation and responsive reader controls.
+  [ ] Link from minimal README/gallery, refresh source/installer metadata and persist owned context.
+
+Acceptance criteria:
+  A single HTML file contains all screenshot bytes and works without a server/network.
+  Every current named page/section/tab/menu/selector/dialog is accounted for in both themes.
+  Long sections/lessons include all scrolling parts; actual control visibility is recorded.
+  No private camera pixels, endpoints, personal calibration, user-folder content, desktop capture,
+  recording/download job, portrait change or remote publication. Native file-picker specimens
+  are clearly labelled where OS appearance differs. Illustrative states are not fake live proof.
+  Preserve the approved runtime/UI and the seven-image GIF-first front README.
+
+Completion evidence:
+  One HTML file:docs\KardboardCode-Studio-GUI-Visual-Reference.html,11,386,637bytes.
+  204 embedded native screenshots /102paired named views and scroll parts. Both themes cover
+  8pages,11sections,3Tools tabs,3diagnostic views,4menus,9selectors,10tutorial lessons,
+  20dialog purposes/phases and11operating/illustrative states. All45runtime controls are
+  visually accounted for; output dimensions use their explicit resolution selector.
+  Every PNG decodes and matches its captured hash/dimensions. Source hashes/citations recorded.
+  Grouped contact sheets plus final state fidelity and desktop/mobile reader views reviewed.
+  Three completeness regression tests and Ruff pass. Builder checks every embedded byte and
+  validates both themes/search/filter/expand/full-image controls,2rendered diagrams and1440/
+  390px containment from a standalone copied HTML with no adjacent assets or network requests.
+  Long code blocks scroll locally rather than overflowing the mobile page. Idle/signal/
+  calibration/helper fixtures retain accurate state/text and explicit synthetic provenance.
+  Final handbook navigation, source/MSI snapshots and owned continuity remain pending.
+  User approval remains separate from technical completion.
+
+Completion log:
+  2026-11-03: User requested one file showing every section and view of the GUI. Selected a
+  portable self-contained HTML catalogue so screenshots cannot become missing external files.

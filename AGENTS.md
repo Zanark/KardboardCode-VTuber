@@ -25,3 +25,19 @@
   untracked public source changes rather than silently omit them.
 - Do not publish, push, tag, or merge merely because an export was regenerated. Those actions
   require the user's authorization and repository permissions.
+
+# Complete GUI visual reference
+
+- Keep `docs\KardboardCode-Studio-GUI-Visual-Reference.html` current after GUI layout,
+  page/section/control, menu, dialog or tutorial changes.
+- Capture owned native widgets only, using synthetic/example data. Never capture the desktop,
+  real camera endpoints/face pixels, personal calibration or user-folder contents.
+- From a Windows source checkout with the existing GUI environment, regenerate and verify:
+  `.\.venv312\Scripts\python.exe scripts\capture_gui_visual_reference.py`
+  `node scripts\build_gui_visual_reference.mjs`
+  `node scripts\build_gui_visual_reference.mjs --check`
+- The deliverable is one self-contained HTML file. Capture PNGs/manifest remain in ignored
+  `build\gui-visual-reference`; the reader embeds their bytes and source/coverage receipt.
+- Keep all named surfaces and required scroll parts represented in both themes. Label
+  illustrative operating states and controlled Qt file-picker specimens accurately.
+- Keep the main README minimal; link the complete reference rather than adding its screenshots.
