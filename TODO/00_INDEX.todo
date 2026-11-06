@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: All Studio workstreams DONE
+Status: Studio/tracking/README media workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -28,6 +28,15 @@ Workstreams:
   21_METRIC_CARD_FOOTER.todo
   22_NUMERIC_PADDING_AND_FEATURE_COVERAGE.todo
   23_COMPLETE_GUI_VISUAL_REFERENCE.todo
+  24_GITHUB_TRACKING_ADOPTION.todo
+  25_README_STUDIO_MEDIA.todo
+
+GitHub tracking:
+  Public actual workstreams use scripts\todo_sync.py and scripts\todo-sync.json.
+  Kanban: https://github.com/users/Zanark/projects/9/views/1 (Status columns).
+  Guide: docs\github-tracking-adoption.md
+  Index00/ledger05 are excluded; private workstreams13/17 need an approved public projection.
+  Local completion, owner acceptance and source/release publication remain separate.
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
@@ -49,6 +58,8 @@ Tasks:
   [x] Restore the preferred metric cards in the viewer footer beside Tools (workstream 21).
   [x] Fix numeric text padding and verify current GUI feature coverage (workstream 22).
   [x] Deliver one complete portable GUI screenshot reference (workstream23).
+  [x] Adopt verified local TODO/issue/Kanban synchronization and historical backfill (workstream24).
+  [x] Refresh native Studio animations and dark/light README screenshots (workstream25).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -58,6 +69,17 @@ Acceptance criteria:
   Completed evidence is separate from user approval.
 
 Completion evidence:
+  README media refresh: three1200x675native synthetic Studio GIFs and two1440x810PNGs.
+  Front remains7images; gallery27; all31former references/approved comparison bytes retained.
+  Four media/five export tests/Ruff, desktop/mobile bounds, native PDF screenshot match and
+  independent source/MSI checks pass. Runtime/UI/version unchanged; no commit/push.
+  GitHub tracking adoption: own Project9 Kanban/Status columns, explicit reviewed Python/gh
+  preview/apply and36focused sync/export tests/Ruff. Pilot issue7 and exact no-op rerun pass;
+  backfill has21unique issue/item/backlinks with full live body/lifecycle/Status matching.
+  Final readback:21new issues,0preexisting reused,0open/21closed-completed,21unique Done
+  Kanban items and21exact backlinks;21no-op plans/no pending/conflicts. Index/ledger and
+  private13/17 are excluded. Historical text is retained. Current working-tree source export
+  and independent unchanged-runtime installer checks pass. No commit/push or product change.
   Complete GUI visual reference: one11,386,637-byte offline HTML with204embedded native
   screenshots/102paired views/scroll parts and all named surfaces/45controls covered in both
   themes. PNG/source/citation/coverage checks,3regressions/Ruff and copied-file browser controls/
@@ -93,6 +115,14 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-06: Completed workstream25: new dark/light Studio tours, minimal front/gallery,
+  fresh theme screenshots, guarded synthetic-only capture guidance and dependent packages.
+  Earlier tracking work remains intact and uncommitted; user acceptance/publication are separate.
+  2026-11-06: Added workstream24, dedicated repository Kanban and verified historical
+  issue/Project/backlink backfill. Preserved original TODOs/privacy and source/runtime/UI.
+  Future invocation, conflict recovery and repository-local Zanark attribution are documented.
+  Completed adoption27 is closed/completed/Done; final live21mapping reconciliation passes.
+  Local tracking remains uncommitted, with new public files selectively staged for export.
   2026-11-03: Workstream23 delivered: one complete portable native GUI visual reference,
   with all named sections/views, scrolling parts and dialogs in both themes. Linked from
   existing docs while preserving minimal README and runtime/privacy/publication boundaries.

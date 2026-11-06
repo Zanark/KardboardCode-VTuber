@@ -18,6 +18,18 @@ Download/open the HTML in a browser; it needs no server, internet or external im
 
 ![The control room: real widgets and live sliders](images/readme/studio.svg)
 
+### Current Studio in motion
+
+![Dark native Studio walkthrough with animated synthetic preview, eye and output controls, and Logs](images/kardboardcode-studio-walkthrough-dark.gif)
+
+*Fresh dark-theme capture of the actual synthetic demo. The inspector changes pages and the
+optional Logs drawer opens without hiding the preview. No camera or desktop was captured.*
+
+![Light native Studio walkthrough showing the same protected preview and progressively disclosed controls](images/kardboardcode-studio-walkthrough-light.gif)
+
+*The same current workflow on warm paper. Diagnostics use explicitly synthetic example data.
+These are real widget captures, not interface mockups or live-camera qualification.*
+
 ### Camera selection
 
 ![Native laptop and USB camera selection with illustrative device names](images/kardboardcode-studio-native-camera.png)
@@ -55,6 +67,13 @@ See the [complete operating guide](guides/features-and-controls.md) for all sett
 ## Expressions and moving cardboard
 
 ![Built to move: real 3D and expressive pixels](images/readme/motion.svg)
+
+### Recorded-motion avatar showcase
+
+![Animated cardboard avatar with tracked head turns, eye expressions and flap physics](images/kardboardcode-live-demo.gif)
+
+*The former front-page animation remains here unchanged: recorded numeric motion telemetry
+rendered on a synthetic stage. No camera pixels are stored in this GIF.*
 
 ### Anatomical eye expressions
 

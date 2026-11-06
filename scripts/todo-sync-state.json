@@ -317,6 +317,21 @@
       "number": 27,
       "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/27",
       "item_id": "PVTI_lAHOAe2wCs4BqevGzhGks3Y"
+    },
+    "kc-25": {
+      "baseline": {
+        "title": "[25] Fresh native Studio animations and dark/light README screenshots",
+        "managed": "7aaec49f4a1459d64943c265650b7b33b66c01d0bfa7c49d3ccbf0ca45df268e",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdC7ddg",
+      "number": 28,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/28",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGlPxA"
     }
   }
 }

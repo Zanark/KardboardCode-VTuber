@@ -3,7 +3,7 @@
   "repository": "Zanark/KardboardCode-VTuber",
   "repository_id": "R_kgDOUAny-A",
   "branch": "workDesk/agentic_GUI",
-  "unpublished_workstreams": ["kc-24"],
+  "unpublished_workstreams": ["kc-24", "kc-25"],
   "project": {
     "id": "PVT_kwHOAe2wCs4BqevG",
     "number": 9,
@@ -56,7 +56,8 @@
     "kc-21": "21_METRIC_CARD_FOOTER.todo",
     "kc-22": "22_NUMERIC_PADDING_AND_FEATURE_COVERAGE.todo",
     "kc-23": "23_COMPLETE_GUI_VISUAL_REFERENCE.todo",
-    "kc-24": "24_GITHUB_TRACKING_ADOPTION.todo"
+    "kc-24": "24_GITHUB_TRACKING_ADOPTION.todo",
+    "kc-25": "25_README_STUDIO_MEDIA.todo"
   },
   "reviewed_statuses": {},
   "status_map": {

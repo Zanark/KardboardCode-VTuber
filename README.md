@@ -4,9 +4,9 @@
 
 ![The actual textured 3D avatar, presented in the forest-green and kraft-paper banner palette](docs/images/kardboardcode-hero.png)
 
-<img src="docs/images/kardboardcode-live-demo.gif" alt="Animated cardboard avatar with head rotation, eye expressions and flap physics" width="100%">
+<img src="docs/images/kardboardcode-studio-walkthrough.gif" alt="Actual native Studio in dark and light themes: moving synthetic preview, eye controls, output settings and optional Logs" width="100%">
 
-*Recorded motion telemetry, rendered on a synthetic stage. No camera pixels in this GIF.*
+*The current Studio in motion: dark, then light. Real native widgets and a synthetic demo; no camera capture.*
 
 <p align="center">
 <img src="docs/images/kardboardcode-real-life-demo.gif" alt="User-approved masked cardboard-camera example with the original background" width="49%">
@@ -29,13 +29,13 @@
 
 <a href="docs/images/kardboardcode-studio-dark.png"><img src="docs/images/kardboardcode-studio-dark.png" alt="Dark Studio with compact metric cards below the preview, full-height settings and stacked right-hand diagnostics" width="100%"></a>
 
-*Properly inset numeric values and the preferred data cards. Right-hand diagnostics use a synthetic pattern, not a face.*
+*Fresh native capture: moving synthetic preview, padded eye controls and the preferred data cards. Diagnostics are examples, not a face.*
 
 <a href="docs/images/kardboardcode-studio-light.png"><img src="docs/images/kardboardcode-studio-light.png" alt="Light Studio with the same readable diagnostic rail and persistent clean-output button" width="100%"></a>
 
-*Warm paper, the same card-based layout. Show clean output reopens the separate window. Synthetic, camera-free imagery.*
+*Fresh light-theme capture of the same 16:9 workbench. Show clean output stays accessible; all imagery is synthetic.*
 
-**[Explore the full gallery: Studio views, avatar details and diagnostics →](docs/visual-gallery.md)**
+**[More animations and views: themed Studio tours, avatar details and diagnostics →](docs/visual-gallery.md)**
 
 **[Every GUI section and view in one offline HTML file →](docs/KardboardCode-Studio-GUI-Visual-Reference.html)**
 

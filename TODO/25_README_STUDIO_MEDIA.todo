@@ -1,0 +1,58 @@
+Status: DONE
+Workstream-ID: kc-25
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/28
+Milestone: Fresh native Studio animations and dark/light README screenshots
+Dependencies: 23_COMPLETE_GUI_VISUAL_REFERENCE.todo, 24_GITHUB_TRACKING_ADOPTION.todo
+Purpose: Show the current Studio in motion without cluttering the approved animation-first
+  front page or capturing a desktop, real camera, endpoint or private recording.
+
+Tasks:
+  [x] Inspect existing capture helpers, media provenance and the current README/gallery contract.
+  [x] Capture fresh native dark/light screenshots and synthetic Studio walkthrough frames.
+  [x] Encode dark/light/combined GIFs and verify their frames, timing and meaningful motion.
+  [x] Keep seven front images, the approved comparison pair and two GUI screenshots only.
+  [x] Retain the former avatar animation and detailed media in the linked gallery.
+  [x] Review bounded keyframes and actual desktop/mobile README rendering.
+  [x] Update generation guidance, dependent handbook and required source/MSI metadata.
+  [x] Synchronize the workstream, preserve earlier dirty/staged work and offload owned context.
+
+Acceptance criteria:
+  GIFs show actual owned native widgets and the real synthetic demo, not a GUI mockup.
+  Source/environment/model paths use safe example fixtures; no camera/desktop/private media.
+  The main README remains banner, hero, three GIFs and two full-width theme screenshots.
+  The approved original-background/green-screen pair and all former media remain accessible.
+  Encoded GIFs loop with valid dimensions/durations and genuine changed frames; image/text
+  bounds and links work at desktop/mobile sizes. Captions clearly identify synthetic imagery.
+  No product feature/layout change, live-camera/installer-lifecycle claim, commit or push.
+
+Completion evidence:
+  Existing native capture, synthetic-demo and documentation helpers reviewed. Current
+  runtime/version remains1.2.4; complete GUI reference is unchanged and remains linked.
+  Two fresh1440x810native PNGs and three1200x675GIFs. Each theme has30distinct actual
+  program frames,30encoded frames/7.6seconds; combined60frames/15.2seconds. Sizes:
+  dark663628bytes,light663197bytes,combined1328696bytes; valid infinite loops/timing.
+  All preview/diagnostic widgets were fully visible during capture. Physical-device
+  discovery was disabled; old approved pair and former avatar GIF hashes are unchanged.
+  Per-frame guards reject a stopped/non-Demo worker, helper job, error or unexpected page.
+  Four focused media tests plus five source-export tests and Ruff pass. Reviewed one native
+  keyframe sheet, both full-size PNGs and actual encoded first frames, not every animation frame.
+  Local browser1440/390checks: README7images, gallery27; all31former references retained,
+  34unique current references; no tables/overflow/unbounded images/external requests.
+  Actual desktop/mobile layout sheet reviewed. This is local rendering, not hosted publication.
+  Handbook rebuilt275pages/103diagrams,zero failures/overflow. Native PDF count275 and exact
+  new screenshot pixels verified on page202. MSI rebuilt for README-in-wheel metadata only;
+  no new installed lifecycle or runtime-code qualification is claimed. Installer --check
+  passes; wheel README matches exactly and all52packaged runtime files match current source.
+  Source-only export and --check pass. New public media/helper/test/workstream files are
+  selectively staged; earlier tracking edits/staging are preserved. SourceModified=true
+  records intentionally uncommitted inputs at the unchanged source commit.
+
+Completion log:
+  2026-11-06: Owner requests new README GIFs/screenshots. Retain the approved comparison pair;
+  add a new combined native Studio tour at the front and themed variants in the gallery.
+  2026-11-06: Captured and reviewed current synthetic Studio media, preserved original
+  comparison assets and all31previous references, updated front/gallery/generation guidance.
+  Native handbook screenshot and README-metadata MSI refreshed; no application change.
+  2026-11-06: Added per-frame interruption guards, recaptured with final source and passed
+  nine targeted media/export tests. Final native image, browser layout, handbook pixels and
+  independent source/MSI metadata checks pass. No camera, commit, push or publication.

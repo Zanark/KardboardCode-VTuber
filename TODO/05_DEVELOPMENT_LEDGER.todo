@@ -24,6 +24,43 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-06: README media refresh captures the actual current synthetic Studio, not a mockup:
+  three1200x675GIFs (30frames/7.6s per theme,60/15.2s combined) and two1440x810PNGs.
+  The combined1.33MBGIF replaces the old front animation; themed variants and the unchanged
+  old animation live in the gallery. Front remains7images; gallery27; all31former references
+  retained, approved comparison bytes unchanged. No camera, desktop, private telemetry or
+  physical-device discovery. Bounded native/encoded keyframes and desktop/mobile previews
+  reviewed;1440/390checks show no overflow and all media decodes. Per-frame synthetic-origin/
+  expected-surface guards prevent interrupted captures. Four new media tests plus five export tests/
+  Ruff pass. Handbook275pages/103diagrams,zero failures/overflow; native PDF page202 contains
+  the exact new screenshot pixels. MSI rebuild is README-wheel metadata only, not a new
+  installer lifecycle. Installer --check and exact wheel README/52runtime-file checks pass.
+  Source-only export/--check pass with new public files selectively staged and earlier
+  tracking edits/staging preserved. SourceModified=true at unchanged HEAD0014603.
+  Product/runtime/UI/version1.2.4 remain unchanged; no commit, push or publication.
+  2026-11-06: Completed tracking adoption issue27 without replacing its issue/item identity.
+  Final full live reconciliation verifies21closed/completed issues,21unique Done Kanban
+  items,21persistent local backlinks and21no-op plans, with no pending/conflicts. All20
+  historical issue timestamps remained unchanged after backfill. Current working-tree
+  source export and unchanged-runtime installer --check pass; sourceModified=true records
+  the deliberately uncommitted inputs. No commit, push, workflow activation/dispatch,
+  scheduler, deployment, release, remote secret or unfinished product implementation.
+  2026-11-06: Adopted the updated development manual without changing product behavior.
+  Reviewed all historical workstreams and retained their eight-field evidence. Initial
+  GitHub inventory had zero issues/no linked Project. Created only own owner Project9,
+  linked here with primary Kanban view1/Status columns. Existing status IDs were preserved;
+  missing stages were added. Reused reviewed Python/gh synchronization with explicit
+  preview/apply, permanent kc-NN markers, atomic recovery state and human-edit conflicts.
+  The36focused sync/privacy/recovery/export tests and Ruff pass. Full dry-run preceded
+  pilot issue7; explicit rerun preserved its complete body/state/timestamp and item identity.
+  Backfill created20more issues and reused the pilot, with21unique items/backlinks and no
+  conflicts/partials. Full live readback matched all21mappings;20historical issues are
+  closed/completed/Done and adoption issue27 remains open/In Progress at this checkpoint.
+  Original20workstream contents are unchanged except tracking metadata/line endings.
+  Index/ledger and private documentary/persona workstreams are excluded from issue creation.
+  Contributor/adoption guidance and two locally rendered diagrams explain scope/recovery.
+  Local Zanark author/committer identity is verified; no global identity/history changes,
+  commit/push, workflow, scheduler, remote secret or unfinished product implementation.
   2026-11-03: Complete GUI visual reference: one11,386,637-byte offline HTML with204embedded
   native screenshots/102paired views and scroll parts, both themes and all named surfaces/
   45controls accounted for. Toolinge34ab1d,3coverage regressions/Ruff pass. AllPNG bytes/
