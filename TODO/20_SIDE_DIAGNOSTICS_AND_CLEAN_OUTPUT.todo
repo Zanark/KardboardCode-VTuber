@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-20
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/23
 Milestone: Readable side-by-side diagnostics and persistent clean-output access
 Dependencies: 16_PREVIEW_FIRST_STUDIO.todo, 19_NUMERIC_CONTROL_CLARITY.todo
 Purpose: Follow the user's illustrated settings/preview/stacked-diagnostics layout instead of

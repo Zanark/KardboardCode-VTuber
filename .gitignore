@@ -47,6 +47,7 @@ models/*
 .env.*
 !.env.example
 config.local.toml
+.todo-sync.lock
 
 # Local YouTube production package
 /YTScript/

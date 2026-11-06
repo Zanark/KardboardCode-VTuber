@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-09
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/14
 Milestone: Image-first README with cohesive cardboard typography
 Dependencies: 08_OFFICIAL_LOGO_RELEASE.todo
 Purpose: Replace the text-heavy front page with a polished visual showcase without losing operating information.

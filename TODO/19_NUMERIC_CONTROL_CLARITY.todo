@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-19
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/22
 Milestone: v1.2.1 numeric affordances and mode-strip cleanup
 Dependencies: 16_PREVIEW_FIRST_STUDIO.todo, 18_MINIMAL_README_GALLERY.todo
 Purpose: Make increase/decrease actions understandable instead of presenting unlabeled dark slots.

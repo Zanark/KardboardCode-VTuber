@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-01
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/7
 Milestone: Source-grounded desktop studio design
 Dependencies: None
 Purpose: Select a toolkit and interaction model based on the real pipeline, not a mock UI.

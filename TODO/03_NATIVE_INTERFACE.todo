@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-03
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/9
 Milestone: Usable PySide6 desktop studio
 Dependencies: 02_RUNTIME_AND_CALIBRATION.todo
 Purpose: Provide camera/recording operation, calibration, diagnostics, and help in a coherent native UI.

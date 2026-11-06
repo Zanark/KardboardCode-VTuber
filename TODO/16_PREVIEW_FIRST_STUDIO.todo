@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-16
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/20
 Milestone: Preview-first Studio layout without removing operating options
 Dependencies: 12_WINDOWS_SETUP.todo, 15_DARK_CARDBOARD_ACCENTS.todo
 Purpose: Keep the full preview visible and make a feature-rich interface calm and clearly separated.

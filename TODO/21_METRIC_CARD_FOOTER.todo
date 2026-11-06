@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-21
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/24
 Milestone: Restore the preferred compact data-card footer
 Dependencies: 20_SIDE_DIAGNOSTICS_AND_CLEAN_OUTPUT.todo
 Purpose: Preserve the user's preferred scannable metric cards instead of flattened text rows,

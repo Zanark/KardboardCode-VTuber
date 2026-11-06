@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-18
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/21
 Milestone: Animation-first minimal README with a complete visual gallery
 Dependencies: 16_PREVIEW_FIRST_STUDIO.todo
 Purpose: Put the best animation and two GUI themes at the front without losing detailed visual documentation.

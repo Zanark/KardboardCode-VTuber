@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-14
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/18
 Milestone: Automatically open successful Studio video exports
 Dependencies: 10_STUDIO_FEEDBACK.todo
 Purpose: Let the user immediately view the processed video through their normal media player.

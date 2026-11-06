@@ -1,0 +1,322 @@
+{
+  "schema": 1,
+  "repository_id": "R_kgDOUAny-A",
+  "project_id": "PVT_kwHOAe2wCs4BqevG",
+  "workstreams": {
+    "kc-01": {
+      "baseline": {
+        "title": "[01] Source-grounded desktop studio design",
+        "managed": "eef7d9648cdca9863c9a0536ed216a9f4da054075cd587856f19a29665d29549",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCUfGw",
+      "number": 7,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/7",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkpLA"
+    },
+    "kc-02": {
+      "baseline": {
+        "title": "[02] Reusable cooperative runtime and independent eye tuning",
+        "managed": "fefc584043d5186e8858ba3e37f5e22e071ee81e979ac83e32389498546215f0",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCWV4Q",
+      "number": 8,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/8",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkq3w"
+    },
+    "kc-03": {
+      "baseline": {
+        "title": "[03] Usable PySide6 desktop studio",
+        "managed": "c1653f965bdae1d1a06e56462a1b206af3bc0e29e47d0d10380dc41c3d4fc26f",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCWdgw",
+      "number": 9,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/9",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkq9w"
+    },
+    "kc-04": {
+      "baseline": {
+        "title": "[04] Verified, illustrated, documented delivery",
+        "managed": "f6174af423759887c488f80b0567609f5c615a4a1254269033f43c6e6b0c2e7b",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCWkIA",
+      "number": 10,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/10",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkrEg"
+    },
+    "kc-06": {
+      "baseline": {
+        "title": "[06] Explicit local laptop/USB camera selection",
+        "managed": "8a09aa62a6cedd7e0af59bfe7f90f0bf8b346af4d8b12b06fda0ca010b5e9080",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCWpgg",
+      "number": 11,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/11",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkrLM"
+    },
+    "kc-07": {
+      "baseline": {
+        "title": "[07] Tracked latest source release and manual-publishing handoff",
+        "managed": "20aaf9254e39c8a98fb2088dcc1d72a833356ce60a8a6ffbf2a469793973c1b4",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCWw2A",
+      "number": 12,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/12",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkrQY"
+    },
+    "kc-08": {
+      "baseline": {
+        "title": "[08] Supplied logo and first official release v1.0.0",
+        "managed": "acb5fb95af5b2e1a8cc04c26dea3e4333d6679ca4147b3f4e8277fcac85bb766",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCW4hQ",
+      "number": 13,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/13",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkrXQ"
+    },
+    "kc-09": {
+      "baseline": {
+        "title": "[09] Image-first README with cohesive cardboard typography",
+        "managed": "d47715a8745f1f7f5ef6a7f26f31a0325d967afda1ab901006120486b07cb693",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCW_ZA",
+      "number": 14,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/14",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkrdo"
+    },
+    "kc-10": {
+      "baseline": {
+        "title": "[10] Studio workspaces, unobstructed output and usable calibration",
+        "managed": "36059b11fcab79f586a650b2f08d3ef7f30db01c1cb61c899e8c328e0c7c6cfc",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCXGRw",
+      "number": 15,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/15",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkrlI"
+    },
+    "kc-11": {
+      "baseline": {
+        "title": "[11] Borderless, full-width README gallery",
+        "managed": "20cf79868a029522581ef2f3b6729d8b8865d70cae974a69bf8ef851d09e87bd",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCXNew",
+      "number": 16,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/16",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkrs4"
+    },
+    "kc-12": {
+      "baseline": {
+        "title": "[12] v1.1.1 online Windows x64 setup and cardboard slider accents",
+        "managed": "f75374cfcf4f8a1d79512b15d847e603fd700f11c8095899e2e7ba1f405ac86c",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCXVDg",
+      "number": 17,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/17",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkrzk"
+    },
+    "kc-14": {
+      "baseline": {
+        "title": "[14] Automatically open successful Studio video exports",
+        "managed": "5d793bdcf6300dc6cc07c5ee94f072820aaec6a251504f2bbaf769445947b521",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCXchQ",
+      "number": 18,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/18",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkr6I"
+    },
+    "kc-15": {
+      "baseline": {
+        "title": "[15] Finished cardboard-brown dark sliders and refreshed README screenshots",
+        "managed": "ed5f8c48879e23f66c82d63519b9c9322e86a0758da659182677b433149f017b",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCXjMQ",
+      "number": 19,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/19",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGksBg"
+    },
+    "kc-16": {
+      "baseline": {
+        "title": "[16] Preview-first Studio layout without removing operating options",
+        "managed": "436ac78e94cd8ab27e1a99b13dc8bc95e0c4f848425983100c9019651c5d5b46",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCXqOw",
+      "number": 20,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/20",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGksIc"
+    },
+    "kc-18": {
+      "baseline": {
+        "title": "[18] Animation-first minimal README with a complete visual gallery",
+        "managed": "27fd5b1814706e950135a6794e99a3c0a3461a248d681a549e3327820f182f74",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCXxlA",
+      "number": 21,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/21",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGksOY"
+    },
+    "kc-19": {
+      "baseline": {
+        "title": "[19] v1.2.1 numeric affordances and mode-strip cleanup",
+        "managed": "1c1b5ae097ec25f59314e5ad99ab260fda94e119772417f66ceb25062b5dfe11",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCX4nA",
+      "number": 22,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/22",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGksUg"
+    },
+    "kc-20": {
+      "baseline": {
+        "title": "[20] Readable side-by-side diagnostics and persistent clean-output access",
+        "managed": "014c5844d1834124aa29ce2676e65e57235a368b02bfd6bded5475c5d0ee0041",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCX_qA",
+      "number": 23,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/23",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGksd0"
+    },
+    "kc-21": {
+      "baseline": {
+        "title": "[21] Restore the preferred compact data-card footer",
+        "managed": "6903770c9b545eb3542cb7ad3226cac6930df4923e81546beffd4d19d132e496",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCYG7A",
+      "number": 24,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/24",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGkslQ"
+    },
+    "kc-22": {
+      "baseline": {
+        "title": "[22] Proper numeric-editor inset and verified GUI feature coverage",
+        "managed": "b75c54b180de465680535ac7078fb9939e350d34ab7057b6e0b7d78fb3a0e229",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCYOYQ",
+      "number": 25,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/25",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGksrc"
+    },
+    "kc-23": {
+      "baseline": {
+        "title": "[23] One portable complete GUI screenshot reference",
+        "managed": "2bbd76ff03ca2f4de2abaa35333f7e116019788e8e6bffa3c7f3878aced522e0",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCYVTg",
+      "number": 26,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/26",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGksyw"
+    },
+    "kc-24": {
+      "baseline": {
+        "title": "[24] Verified local-workstream, GitHub issue and Kanban adoption",
+        "managed": "eb0cb9962b89f9eac4ff8553e0747acb4885e8518003541ae861ad106b12b643",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABdCYcEw",
+      "number": 27,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/27",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhGks3Y"
+    }
+  }
+}

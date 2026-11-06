@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-22
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/25
 Milestone: Proper numeric-editor inset and verified GUI feature coverage
 Dependencies: 21_METRIC_CARD_FOOTER.todo
 Purpose: Fix border-hugging numeric text and answer the owner's exhaustive-feature question

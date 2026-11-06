@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-11
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/16
 Milestone: Borderless, full-width README gallery
 Dependencies: 10_STUDIO_FEEDBACK.todo
 Purpose: Remove table framing while preserving the approved two-GIF comparison.

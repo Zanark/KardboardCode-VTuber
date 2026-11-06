@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-04
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/10
 Milestone: Verified, illustrated, documented delivery
 Dependencies: 03_NATIVE_INTERFACE.todo
 Purpose: Deliver a GUI the user can launch and understand, with honest validation boundaries.
