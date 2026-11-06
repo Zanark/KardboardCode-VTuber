@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-07
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/12
 Milestone: Tracked latest source release and manual-publishing handoff
 Dependencies: 06_NATIVE_CAMERA_SELECTION.todo
 Purpose: Keep one public release folder ready for the owner to upload, without publishing through read-only authorization.

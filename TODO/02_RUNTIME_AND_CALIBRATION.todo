@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-02
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/8
 Milestone: Reusable cooperative runtime and independent eye tuning
 Dependencies: 01_RESEARCH_AND_DESIGN.todo
 Purpose: Reuse the actual CLI pipeline without blocking Qt or maintaining a second compositor.

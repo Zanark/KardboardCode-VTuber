@@ -18,9 +18,16 @@ No personal identities, device credentials, face imagery, or personal calibratio
 - Documentary PDF verification compares complete source-record text inside each printed record
   span, alongside task/message presence, chapter order, links, figures, bounds and stable folios.
   An ID count or a PDF that merely opens is not a completeness check. Preserve privacy redactions.
-- Keep the front README image-first: cohesive cardboard/pixel banners, actual UI/demo galleries,
-  short captions and navigation. Put detailed setup/features/camera/troubleshooting text in
-  clearly named `docs\guides` files rather than rebuilding long front-page explanations.
+- Keep the front README animation-first and minimal: branding banner, runtime hero, then all
+  three existing GIFs immediately below them. Only dark/light Studio screenshots remain on
+  the front. Detailed static imagery belongs in the linked `docs\visual-gallery.md`, organized
+  with captions. Keep setup/features/camera/troubleshooting prose in `docs\guides`.
+- The complete GUI screenshot reference is the single self-contained
+  `docs\KardboardCode-Studio-GUI-Visual-Reference.html`, not the selective artwork gallery.
+  Keep every named page/section/tab/menu/selector/dialog and needed scroll parts in both themes.
+  Regenerate after GUI changes via capture_gui_visual_reference.py/build_gui_visual_reference.mjs.
+  Use only owned native widgets and safe fixtures; label illustrative states and Qt picker
+  specimens. Runtime/source/PNG coverage hashes must match; the portable reader has no externals.
 - README image galleries must not use table rows/cells or visible borders. Stack other images
   at full content width. Keep only the explicitly approved original-background / green-screen
   GIF comparison side by side, using borderless plain HTML rather than a table.
@@ -46,8 +53,9 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 - Face-only output must be black before safe acquisition and reuse a copied last-safe composite on face loss, never fresh raw camera pixels. This is a fail-closed design requirement, not proof that every detected pose masks every identifying pixel.
 - Synthetic face-mesh/XYZ diagnostics are the normal inspection path. `--debug-face-preview`
-  exposes raw face imagery locally and stays opt-in. Studio places raw/mesh/body in separate
-  side panels, never over the clean program image. CLI local overlays remain available.
+  exposes raw face imagery locally and stays opt-in. Studio places raw face above face/pose
+  or body in a right-hand diagnostic rail, never over the clean program image. Tools contains
+  numeric Signals, not tiny image previews. CLI local overlays remain available.
 - The separate clean output window is for OBS Window Capture and is independent of OBS Virtual
   Camera. It receives only owned clean frames, never raw/debug/body-calibration text. Unmasked
   camera modes do not populate that channel. Windows controls native icon-slot size.
@@ -91,6 +99,48 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Native studio conventions
 
+- Numeric steps use explicit packaged plus/minus SVGs with contrast and muted disabled/boundary
+  states. Qt's native PlusMinus setting alone painted empty slots through this custom stylesheet.
+  Verify actual glyph pixels/shapes and click behaviour, not only a button-symbol property.
+  The Live/Video QTabBar disables drawBase so no baseline extends beyond its buttons.
+- Apply numeric padding to the embedded spin-box QLineEdit after theme styling, not only the
+  outer QSS box. Current text margins are6px left/3px right; native ink-inset tests cover both
+  palettes, disabled states and integer/decimal controls without shrinking the step targets.
+- Custom CLI numeric parser types need an explicit numeric GUI field kind. preview_height uses
+  the integer kind; a generic QLineEdit returned text that could not pass numeric validation.
+  Verify real nondefault control-to-parser forwarding, not only the option inventory.
+- Video availability/CLI copying reuse canonical VIDEO_FIELDS. Already-mirrored Video input
+  is owned by its Video file checkbox; the separate Camera field stays Live-only. Video always
+  tracks/renders; ignored Live controls must not look like effective Video knobs.
+- The owner chose the left settings inspector, main preview directly beside it and optional
+  right-hand stacked visual diagnostics. Raw face belongs above Face / pose or Body, with both
+  requested images visible without opening Tools. Reclaim the rail when channels are off;
+  protect actual visible and fitted image area, not only isVisible or declared minima.
+  Default startup is a
+  display-fitted 16:9 workbench; resizing stays responsive and never changes source/output
+  video dimensions or stretches/crops pixels. Keep all operating options reachable through
+  labelled sections rather than expanding every advanced field permanently.
+- Preview containment must be checked against actual ancestor-clipped visible regions, not
+  only isVisible or the canvas minimum size. Prevent splitter collapse; secondary Tools must
+  shrink/scroll rather than force a fixed-height dock to clip the viewer. Keep Stop, true
+  state, privacy warnings, errors and video progress visible outside optional details.
+- Tools / Ctrl+J contains Logs, CLI and numeric Signals, closed by default. Hidden tools still
+  collect bounded logs and owned diagnostic data. Keep compact eye decisions near tuning,
+  detailed numeric signals in Tools, and the separate clean-output window independent.
+- Preserve the owner's preferred rounded camera-FPS/tracking-FPS/internal-frame-age/output
+  cards below the preview beside Tools. Keep them visible outside the drawer; do not flatten
+  them into Signals text. The drawer belongs under the viewer only, keeping settings full-height.
+- Propagate the selected diagnostic rail's real minimum height into its horizontal splitter;
+  otherwise footer content can override nested minimum-size hints and clip diagnostic pixels.
+  Native text-fit checks require a real font backend: offscreen Qt without Segoe UI returns
+  placeholder metrics, not proof of Windows caption/value readability.
+- Keep Show clean output visible beside the Live preview, sharing the View-menu action.
+  Auto-open is a separate startup preference. Closing hides the same window without stopping
+  its worker; manual reopening works with Auto-open off and displays current owned clean pixels.
+  Idle opening is black/no capture; raw/headless/Video states cannot display clean output.
+- Qt's zero QScrollArea minimum retains its 70px minimum hint. Tools uses an explicit 1px
+  minimum so secondary content can yield space. Error details may shrink within 48-68px while
+  keeping all text scrollable. Neither may clip the main or diagnostic canvases at compact sizes.
 - Successful Studio VIDEO exports open the actual completed worker result in the OS default
   player, on the UI thread after cleanup. Never use editable output text to choose playback.
   Cancellation/failure must not launch. Launch refusal preserves the saved file and displays
@@ -169,6 +219,10 @@ No personal identities, device credentials, face imagery, or personal calibratio
 
 ## Context-offload protocol
 
+- When the mesh exposes social.archive, routine refreshes read only the active messages,
+  threads, attention and generated profiles in context-index.json. Do not proactively read
+  archived chats or historical source arrays, revive their obligations or reset identity.
+  Archived conversations require explicit user opt-in and remain read-only.
 - Standing user instruction, 2026-10-11: before starting or resuming any VTuber work, read `README.md`, `STATE.md`, `MEMORY.md`, and `JOURNAL.md` in both `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` and `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\.agent-context`. Neither store is optional.
 - Write all new VTuber context updates only to `C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\.agent-context`. The older store must remain read-only; do not mirror or backfill new updates into it.
 - The required read-only origin at `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode` owns OBS/PNGTuber/Live2D history and original research. Reconcile overlap against newer verified decisions/current source; report an unavailable store rather than claiming complete hydration.

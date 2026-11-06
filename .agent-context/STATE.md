@@ -1,5 +1,5 @@
-> **Last updated:** 2026-11-03 (Asia/Kolkata) - Windows setup v1.1.1 delivered locally with qualified native lifecycle and aligned release artifacts.
-> **Last context offload:** 2026-11-03T00:29:58+05:30
+> **Last updated:** 2026-11-03 (Asia/Kolkata) - Delivered one complete portable GUI visual reference:204native screenshots/102views, current snapshots/navigation. Runtime1.2.4 unchanged; no camera or portrait work.
+> **Last context offload:** 2026-11-03T06:45:56+05:30
 
 # KardboardCode-VTuber State
 
@@ -7,7 +7,210 @@
 
 ## Current focus
 
-**DELIVERED: v1.1.1 online Windows x64 setup.** The user explicitly resumed work after the
+**DELIVERED: one complete GUI visual-reference file.** Owner requested every section/view
+in one file. Portable HTML:
+`C:\devdesk\homedesk\KardboardCode\KardboardCode-VTuber\docs\KardboardCode-Studio-GUI-Visual-Reference.html`.
+11,386,637bytes / SHA25614c24c343538b03c298a3afdbb6ba1382721e15b0974181d463e9aa6c5e2acf5.
+All screenshot bytes, sources/coverage receipt,2rendered diagrams and reader controls embedded.
+204native screenshots /102paired named views and scroll parts, both themes. Coverage:
+8pages,11sections,3Tools tabs,3diagnostics,4menus,9selectors,10lessons,20dialog purposes/
+phases and11major/illustrative states. All45runtime controls visually accounted for, with
+the two output-size destinations represented by the native resolution selector.
+
+Only owned widgets and safe synthetic/example fixtures; no desktop/private paths/real face
+pixels, personal calibration, camera, recording or download. Consent answeredNo. Controlled
+Qt file-picker specimens/illustrative states are explicitly labelled, not exact OS variants
+or fake live qualification. Idle/signal/calibration/helper states preserve actual text/data rules.
+Every PNG decodes and matches hash/dimensions. Source hashes/citations recorded; grouped sheets/
+final state fidelity and desktop/mobile reader views reviewed. Three coverage regressions/
+Ruff pass. Copied-file browser checks validate all embedded bytes, search/theme/filter/expand/
+full-image controls,2diagrams and1440/390containment with no adjacent assets/network requests.
+
+Workstream23complete. Toolinge34ab1d; single-file/navigation35a72cb; final public inputs
+e75d5d9d2b0cb1932c3e139021668693a4bf313a; artifact commit6128a16.
+README7/GIF-first/gallery24 retained. Handbook navigation rebuilt275pages/103diagrams,zero
+failures/overflow. Canonical HTML LF bytes pinned. Source/MSI checks and clean provenance align;
+all9release files and the reference match committed blobs. Installer refresh is README-in-wheel
+metadata only; GUI bytes match unchanged runtime1.2.4. No new installed lifecycle claim.
+Source fingerprint:3cd5c505887c0ee552b5e5acaf6584b54eab7a16abcf5fc98699390dacd9c979.
+ZIP:41,210,738bytes / SHA2566ecca117e016687465d9afed5f7f56915b5fe8cef0aebbcd8ab65b705cac4055.
+MSI:19,714,048bytes / SHA256a7e47f25d3c0dea4650b558220b9d2dfb4960ff8dce9f55511ecf27e1234a101.
+No runtime/UI change, new camera, portrait, permission/security change or remote publication.
+All requested work complete; await feedback rather than rerunning capture/render/package loops.
+
+**DELIVERED: numeric text inset and GUI coverage audit, v1.2.4.** Owner requested left numeric
+padding and asked whether sparse/large-font presentation hid missing features. Added real
+embedded spin-editor margins6left/3right, retaining +/- targets/steps and the approved layout.
+Standard text remains12logical px, metric values14; much space reflects collapsed sections,
+one inspector category and aspect-fitted video rather than omitted features.
+
+Actual audit:45Live/runtime controls forward full nondefault settings;22accepted Video fields
+plus input/output/quality choices;17user-facing recorder settings+internal Stopfile;4model
+helpers and current GUI-only camera/preset/calibration/demo/log/tutorial/output actions.
+Fixed a real preview_height bug: custom numeric input was text and could not apply. It now
+uses an integer control. Video scope/CLI preview derive from canonical VIDEO_FIELDS; inactive
+Live fields are labelled and the separate mirrored-video choice remains explicit. Coverage
+is current operating features, not all developer/future utilities or every input/hardware case.
+
+Workstream22 complete. Core837b557; screenshots/docs/versiond36505e; final public inputs
+a0d7c6f2a7262c16789302b5cc40cbb2e470c912; artifact commit e8bd236.
+Final suite315passed/3explicit offscreen limitations skipped;Ruff. Native text-inset/full-
+forwarding/Video-scope/approved-layout set22passed at each100/125/150%. Actual extracted native
+wheel outside checkout verifies exact GUI/resources, painted inset, all45controls, working
+preview-height integer and canonical mode restrictions. No new MSI lifecycle is claimed.
+
+Eight native captures/banner and paired padded-editor crop reviewed. Every45runtime option
+is explicitly named in the coverage table. README7/GIF-first/gallery24 and local links retained.
+Handbook275pages/103diagrams,zero Mermaid failures/overflow. No font/layout redesign, camera,
+privacy/output pipeline change, portrait or remote publication. Frozen documentary unchanged.
+
+Both source/MSI checks pass, clean receipts align and all9release files match committed blobs.
+Source fingerprint:39e2f9382e43e91a1d75a45999b916db1ec4360b3d5ae51e72016b2b5e64147b.
+ZIP:33,201,709bytes / SHA256 8f0e29ff0ff5d1db8a6713c45b7c08e873394d72fc3b58113c87bb911bc8684e.
+MSI:19,714,048bytes / SHA256 dff5e71a330db9a96e434e8dec4e55d3ab90eb530a079a33e01044c8487de29c.
+All requested product work is complete; await concrete feedback rather than another UI/
+installer loop. Restart an existing Studio to load changes; do not terminate it for the user.
+
+**Historical delivered baseline: preferred metric cards in the viewer footer, v1.2.3.** The owner liked the
+earlier boxed camera FPS/tracking FPS/internal frame age/output values and rejected flattened
+Signals text. Restored compact rounded cards below the preview beside Tools, always outside
+the drawer. Tools now opens under the viewer only, keeping settings full-height. Existing
+metric values/units/demo states, right diagnostic rail and clean-output action are unchanged.
+
+Workstream21 is done. Core20542ad; native screenshots/docs/version7528541; final public
+inputs f999b74e282cb5e5840b21b52b0c817573a84cb7; artifacts ff92565.
+Native card/font/border/containment/channel/actions/Tools set:18passed at each100/125/150%.
+Final current-source suite:313passed,2skipped (unsupported offscreen widescreen work area and
+missing native Segoe UI metrics); Ruff. Border/layout checks still run offscreen; actual font
+readability is checked on Windows. The selected rail's real minimum height propagates into
+its horizontal splitter so footer content cannot clip diagnostic pixels.
+
+Eight actual native captures/banner refreshed; contact sheet and full dark/diagnostic views
+reviewed. Minimal README remains7images with all3GIFs directly below banner/hero; gallery24
+captioned images and local links preserved. Guide/in-app tutorial/design rationale match the
+restoration. Handbook274pages/103diagrams, zero Mermaid failures/overflow.
+
+Actual extracted native wheel outside checkout verifies matching GUI/resources, real card
+text, full-height settings, protected images and clean-output reopening in both themes.
+Both source/MSI checks pass; clean receipts align and all9release files match committed blobs.
+Source fingerprint: ad370079ad887183b574f8c05832e9f1e80279e5122496968e494d6b72e2f0d1.
+ZIP:33,183,074bytes / SHA256 4c858c78d7e782e8dab6d4e9f692416fee7eb4d979d8358c5520a3ab51378eb1.
+MSI:19,714,048bytes / SHA256 4b4be94ca80ea2015bb741daa2c370c481c89577e09a3f397107e4be6b10b894.
+No new installer lifecycle, live camera, tracking/data-sampling change, portrait or remote
+publication. Existing user Studio processes were not terminated. Await concrete owner feedback.
+
+**Historical delivered baseline: side diagnostics and clean-output access, v1.2.2.** Followed the owner's
+illustration: settings at the left, main preview snug beside them, raw face above Face / pose
+or Body in a resizable protected right-hand rail. Inactive channels reclaim width; Tools holds
+Logs/CLI/numeric Signals, not tiny image previews. Raw consent and pixel-channel ownership stay
+unchanged. Main containment alone was insufficient evidence of diagnostic readability.
+
+Persistent **Show clean output** shares the View action; **Auto-open** is a separate startup
+preference. Closing/reopening retains the same window and running worker, including when
+Auto-open is off. Idle opening is black/no capture; raw/headless/Video states cannot display
+clean output. Error details may shrink within 48-68px, retaining complete scrollable text.
+
+Workstream 20 is done. Code commits: 342c4cb/973dc1d; screenshots/docs/version: 63aefe9.
+Final current-source suite: 310 passed/one unsupported offscreen-widescreen skip; Ruff.
+Native image/channel/containment/close-reopen/primary-action set: 16 passed at each Qt
+100/125/150%. Actual wheel GUI/resource bytes match source; extracted-package proof outside
+the checkout verifies readable panels, safe clean pixels and button/menu reopening in both
+themes. No new MSI install/uninstall lifecycle or live-camera qualification is claimed.
+
+Eight actual synthetic native captures and banner refreshed; contact sheet and full dark/
+light/tutorial views reviewed. Minimal README still has seven images, with all three GIFs
+directly under banner/hero; the linked gallery has 24 captioned images. Media/navigation paths
+resolve. In-app/source guides and architecture match the correction. Engineering handbook:
+274 pages/103 diagrams, zero Mermaid failures/overflow. Frozen documentary is unchanged.
+
+Final public inputs: 3141d0dab504f33a1d55672158075cf435087b78; artifact commit: 2704a53.
+Both --check commands pass; source/MSI receipts align with clean inputs and all nine release
+files match committed blobs. Source fingerprint:
+1cab79620299728e2cdf751cbb7a5dc19944b42918e3e204bb978077f72e0cd9.
+ZIP: 33,116,630 bytes / SHA256 dab08656e88d43c5ed3b57946939efc08308b5e05c7c19c55a12353927f33b3d.
+MSI: 19,709,952 bytes / SHA256 9d74b1926f563b5b29f1fdf50b477c6d7a73eca50b02b355be48ba30691432f0.
+No new research, package build, camera, tracking/rendering algorithm, numeric semantics, portrait
+or remote publication remains. Existing user Studio processes were not terminated.
+
+**Historical delivered baseline: numeric-control clarity and tab underline, v1.2.1.** Code input
+21e4077 adds explicit 12px plus/minus SVG glyphs, contrasting wider step surfaces and muted
+disabled/boundary states for all integer/decimal controls. Existing values/steps/bindings are
+unchanged. Live/Video drawBase is disabled; raster tests confirm no trailing baseline.
+
+The native PlusMinus property alone still painted blank buttons under this stylesheet;
+explicit glyph images fix the actual rendering path. Complete suite: 302 passed, one unsupported
+offscreen-widescreen case skipped; Ruff. Native glyph/shape/click/boundary/baseline set passes
+at 100/125/150%. Actual dark/light control crops reviewed, eight screenshots refreshed and
+272-page/103-diagram handbook rebuilt with zero failures/overflow. Minimal README media budget
+is preserved. The actual wheel contains all six matching SVGs and paints both signs in both
+themes when extracted outside the checkout. No new MSI install/uninstall lifecycle was needed
+or claimed for this styling patch; previous installed-runtime qualification remains dated.
+
+Workstream 19 and all 178 session tasks are done. Final public completion inputs:
+b3f774d46f16693aaadeb9d7c1e366f9ad133ce3; artifact commit: 148e2f1. Both --check commands pass
+and all nine release files match committed blobs. Clean source fingerprint:
+c72d93f71118d7fcdd2c70d3b513e9b8c484ff52f932d4a4c59f44f0b4c69f68.
+ZIP: 33,042,612 bytes / SHA256 2f7e25200c8899c3ae0d646c57834d82552c2651b5a997fded93f4a01be7c593.
+MSI: 19,709,952 bytes / SHA256 7fd085d51e89415dce23101e9f8309586b7db82488b060a676e5361a3bfabc05.
+No more design, research, packaging or portrait work remains for this request.
+
+Only the existing GUI affordances changed. No tracking/rendering algorithm, numeric semantics,
+camera, output, portrait or remote-publication changes. Current base remains ctx-42d505fb393f;
+routine social reads remain active-only, with archive/history preserved.
+
+**Earlier delivered layout, preserved in v1.2.4: minimal animation-first README.** Core change committed as 67becce:
+banner/runtime hero, immediately followed by all three GIFs, then only dark/light GUI shots.
+Main has seven images total. `docs\visual-gallery.md` contains the other 24 captioned images.
+All 31 original references remain; local media/navigation links resolve; no table framing.
+That documentation-only change used v1.2.0 with no new screenshots/artwork or application-code changes.
+Workstream 18 is done. Final public inputs de9f18e0a866d55a48f8c7aed7850b23acbdacdc;
+artifacts 4c68266. All release bytes match committed blobs; manifests are clean/aligned.
+Source fingerprint: 1c263941eb234b9e304b1c804d7aaa1c8bd1b51b1ab2df72d0b5e27847be1a79.
+ZIP: 33,033,706 bytes / SHA256 29a7e2b7a1239998319dc6a69f5f9ff4cc36514eed0c3a633b9646ca38f93211.
+MSI: 19,709,952 bytes / SHA256 a2f51fbedc8f6ff65df2db0a9244b88b34bec4820819589b4239525e2a258bb9.
+README is embedded in wheel metadata, so its installer fingerprint is legitimately rebuilt;
+this was not another installer lifecycle or GUI design task. Both --check commands pass;
+the new wheel's GUI module bytes match unchanged runtime source. No push/publication.
+
+**DELIVERED: preview-first GUI v1.2.0.** The owner chose left inspector/right large preview after five
+research passes and 12 primary references. All 45 options/nine live fields remain accessible;
+labelled disclosure, compact states, a non-collapsible workspace, persistent video progress
+and capped scrollable Tools replace the crowded dashboard. Full compatibility baseline:
+297 tests/Ruff. Native containment/access/keyboard/headless cases pass at three Qt scales.
+
+Latest follow-up: default startup is display-fitted 16:9, up to 1440x810 logical pixels.
+Native widescreen/action-fit checks pass at 100/125/150%; video dimensions/aspect are never
+stretched or cropped. Eight native synthetic captures and the handbook (272 pages/103 diagrams)
+are refreshed. Final widescreen inputs are committed as 1bb30926cab472a463f80649702ffb29f1f48e8b;
+generated artifacts are committed separately as fe92a98. Both build/export checks pass and
+the final wheel's GUI module bytes match the verified source exactly.
+
+Prior GUI-only snapshot MSI (superseded by current README-metadata snapshot): 19,709,952 bytes, SHA256
+bd15e329a88ed44dc244fb264b66dab5e17e3b8778b7da52ded3d6a176445403.
+Final source ZIP: 33,031,157 bytes, SHA256
+1d1b587cbad1ea90a2885039878805e549653b9022b61e600bda2fc6fba68911.
+Public-source fingerprint:
+ea6961ca4aaae1eaf7d11c5f5f6e4bbd5dad63721b5d8c85d847ad7ffeb4fb87.
+Manifests are clean/aligned; setup remains online, unsigned and Windows x64. No push/release.
+
+Code inputs 5ca8d84; research/PDF finalization 6faefc4. Installed private Python 3.12.16/pythonw
+passed the redesigned preview with Tools, metadata camera/model helpers, real four-frame
+MediaPipe/GPU export, CLI help and pip check. Dependencies were installed from the previously
+verified hash-locked wheelhouse; this is not a new claim of online-path testing. Test product
+was completely removed. The harness initially compared a pre-probe preset hash despite the
+probe intentionally saving it; the isolated post-probe install/uninstall check passed with
+preset/model bytes unchanged.
+
+Latest user instruction: continue GUI work, stop any further portrait work. The KC box harness
+had already been completed/deployed before that instruction; no portrait agent/process exists.
+Do not resume branding, change identity, or silently revert it. It keeps the face unchanged.
+Shared source/live changes preserved another contributor's untracked bundle and were not staged.
+
+Original clipping evidence (76 visible pixels of a 220px canvas), 24 baseline geometry
+observations and research remain in the existing research chapter/workstream 16.
+No live camera, raw footage, global display/Python/PATH/security change or remote publication.
+
+**Historical delivered baseline: v1.1.1 online Windows x64 setup.** The user explicitly resumed work after the
 requested pre-resumption context refresh (ep_878, 2026-11-02 23:36 IST). Workstream 12 is done;
 the old pause and draft are superseded. No installer implementation/build/qualification work
 remains. Publication and owner usability approval are separate.
@@ -35,7 +238,7 @@ Runtime inputs: `209b852`; final public delivery inputs: `d030b3a5df83af9c49d06d
 generated artifacts: `037e723`. Both manifests name those clean public inputs (`sourceModified=false`).
 Source ZIP: **33,286,361 bytes**, SHA256
 `8400fa7cee78c1f8c0ef63c0fcd9fb65528c87dce00fc2dab32db84e80552748`.
-All nine release files match committed blobs; both build/export --check commands pass.
+At that completed handoff all nine release files matched committed blobs and both checks passed.
 These installer commits are local: no new push, merge, tag or remote release by this agent.
 
 **Earlier completed request:** cardboard-brown dark slider tracks/handles and refreshed native
@@ -178,7 +381,63 @@ This is the user's explicit 2026-10-11 instruction. The older store is required 
 
 ## Threads
 
-### Latest release handoff - v1.1.1 Windows Setup
+### Complete GUI visual-reference handoff
+
+- One self-contained HTML at the full path above,204screenshots/102views and scroll parts in
+  both themes, all named Studio surfaces/45controls covered. Offline reader/source/PNG checks pass.
+- Toolinge34ab1d, file35a72cb, completion e75d5d9, release artifacts6128a16. Runtime1.2.4unchanged.
+- `AGENTS.md` records regeneration after GUI changes. Keep source/capture hashes current,
+  label fixtures, preserve minimal README, and do not capture desktop/private camera/user data.
+
+### Current GUI handoff - v1.2.4 Padded and Audited Controls
+
+- Native numeric inset6left/3right; corrected custom preview-height integer; Video scope uses
+  canonical fields and its separate mirrored-file checkbox. Current operating features covered.
+- Core837b557; native docs/screenshotsd36505e; completion inputsa0d7c6f; artifactse8bd236.
+  Source/MSI/native extracted-package and committed release-byte checks pass.
+- Workstream22 complete. No further source, screenshot, book, package, camera or portrait
+  work remains. Preserve the approved card/diagnostic layout and accurate coverage limits.
+
+### Historical GUI baseline - v1.2.3 Preferred Metric Cards
+
+- Four compact rounded metric cards stay below the preview beside Tools. The drawer is in
+  the viewer column only, keeping settings full-height. Preserve this owner-preferred grouping.
+- Core20542ad; native visuals/docs7528541; completion inputsf999b74; artifactsff92565.
+  Current source/MSI/native extracted-package checks and committed release-byte checks pass.
+- Workstream21 is complete. No source, screenshot, handbook, installer or portrait work
+  remains. Restart an existing Studio to load changes; do not terminate it for the user.
+
+### Historical GUI baseline - v1.2.2 Readable Diagnostics
+
+- Layout 342c4cb: main preview beside the left inspector, with raw face above face/pose or body
+  in an independently resizable protected right-hand rail. Inactive channels reclaim width.
+- Clean output 973dc1d: persistent Live Show clean output button and shared View action;
+  Auto-open is a separate startup preference. Actual closing/reopening retains window/worker.
+- Public v1.2.2 screenshots/docs/version inputs 63aefe9; completion inputs 3141d0d; generated
+  artifacts 2704a53. Current source/MSI snapshots and committed release-byte checks pass.
+- All requested product work is complete. No new research, design questionnaire, installer
+  lifecycle, camera, portrait or remote publication. Await the owner's next concrete feedback.
+
+### Historical GUI baseline - v1.2.1 Numeric-Control Clarity
+
+- Explicit visible upper + / lower minus steps in both themes, with muted disabled and
+  unavailable directions. Native drawBase disabled for the Live/Video mode strip.
+- Code 21e4077, completion inputs b3f774d, generated artifacts 148e2f1. Current source/MSI
+  receipts align with clean inputs; full final evidence and hashes are above.
+- All 178 tasks complete. Restart an existing Studio to load changes; do not terminate it.
+  Await concrete owner feedback. No new portrait work or remote publication.
+
+### Historical GUI baseline - v1.2.0 Preview-First Studio
+
+- Final widescreen GUI inputs: 1bb3092, after implementation 5ca8d84 and handbook evidence
+  6faefc4. All operating controls retained; source code and native pictures are committed.
+- Final installer/source export is complete for those exact inputs; artifact commit fe92a98. The prior v1.2.0
+  installed runtime passed preview/Tools/real export/helper/CLI checks before the final
+  startup-size refinement; final 16:9 startup/action-fit checks pass natively.
+- No more portrait work. That previously requested change was complete before the user stopped
+  the task; its shared contributor bundle remains unstaged here.
+
+### Historical release baseline - v1.1.1 Windows Setup
 
 - Canonical handoff folder: `release` at this repository root, outside `src`. The user wants it
   refreshed with the latest export after future public source/docs changes.
@@ -299,6 +558,14 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your full camera stream URL"
 
 ## Next steps
 
+Workstream23's complete visual reference and current source/MSI snapshots are delivered.
+Application work through v1.2.4 is also complete. Await the owner's next concrete feedback,
+not another capture/design/research/installer
+loop. An already-running
+Studio must be restarted to load external source changes; do not terminate it for the user.
+Do not resume portrait work or silently revert the completed drawing. Real visual/live-camera/
+calling-app approval remains separate from the recorded synthetic/native evidence.
+
 Default-player feature is implemented and source-tested; actual OS codec/player behavior
 depends on the user's file associations and installed codecs, especially FFV1/MKV. Do not
 silently install or hardcode a different player. Existing Studio processes were not terminated.
@@ -309,7 +576,7 @@ cutoff and hashes define this edition. Rebuild only intentionally using the priv
 This private documentary does not belong in source-release ZIPs. Its original 977-page PDF hash
 was rechecked unchanged after the installer work.
 
-Windows setup and the v1.1.1 source handoff are complete locally. Hand off the full MSI path;
+The older Windows setup v1.1.1 was completed locally and is superseded by v1.2.4. Hand off the current full MSI path;
 the owner creates the final GitHub release manually. No automatic push/tag/merge/release,
 live camera, driver installation or system Python/PATH/security change is authorized.
 Use approved signing/IT handling if unsigned packages are blocked; never disable protections.
@@ -330,7 +597,23 @@ Earlier live accuracy/privacy/calling-app and private recorder timing limits rem
   `C:\Users\mishrad\.copilot\session-state\5f0403d8-ec0e-4548-b7cd-c9120aeb3ec7\files\visual-readme-browser-contact-sheet.jpg`.
   These are local review artifacts, not bundled release files or evidence of hosted GitHub rendering.
 - Read-only origin: `C:\devdesk\Copilot\CopilotSessions\homeDesk\KardboardCode\.agent-context` (August snapshot with superseded runtime details).
-- Latest cross-base receipt: `ep_883` (completed/qualified Windows setup v1.1.1, aligned clean
+- Latest cross-base receipt: `ep_912` (complete portable GUI visual reference204screenshots/
+  102views in one offline file, all named surfaces, current docs/snapshots; runtime unchanged).
+  Previous receipt: `ep_910` (completed v1.2.4 native numeric padding, corrected
+  preview-height/Video scope, actual operating-feature audit and current verified snapshots).
+  Previous receipt: `ep_908` (completed v1.2.3 preferred metric-card footer,
+  viewer-only Tools/full-height settings, native and current-package proof, docs/snapshots).
+  Previous receipt: `ep_906` (completed v1.2.2 owner-directed right diagnostic rail,
+  persistent clean-output access, native/current-package proof, refreshed docs and snapshots).
+  Previous receipt: `ep_904` (completed v1.2.1 numeric-control/tab-line patch,
+  current source/MSI handoff and all 178 tasks done; current-protocol active-only refresh).
+  Previous receipt: `ep_900` (explicit context-only refresh, active-only archive
+  boundary and preserved completed work; no application/artwork/package changes).
+  Previous receipt: `ep_899` (minimal animation-first README, seven front images,
+  complete 24-image visual gallery and matching documentation-only release snapshots).
+  Previous receipt: `ep_895` (completed preview-first 16:9 GUI v1.2.0, current artifacts,
+  GUI-only focus/no further portrait work and requested final refresh).
+  Previous receipt: `ep_883` (completed/qualified Windows setup v1.1.1, aligned clean
   source/MSI handoff and current-protocol post-delivery refresh).
   Previous receipt: `ep_878` (requested context refresh before explicitly resumed
   installer qualification; previous pause superseded).

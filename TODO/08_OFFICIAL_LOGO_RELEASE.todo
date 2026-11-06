@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-08
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/13
 Milestone: Supplied logo and first official release v1.0.0
 Dependencies: 07_RELEASE_STAGING.todo
 Purpose: Adopt the user's voxel KC artwork as the tool identity and refresh the official-release handoff.

@@ -1,7 +1,7 @@
 # Studio tutorial
 
 > **TL;DR:** Choose **LIVE** for cameras/streaming or **VIDEO** to process an existing recording.
-> Calibrate actual OPEN/CLOSED eye scores. Diagnostics stay beside the program image, while the
+> Calibrate actual OPEN/CLOSED eye scores. Diagnostics stay in optional Tools, while the
 > separate clean window supports OBS Window Capture. Nothing captures or records automatically.
 
 ## 1. Install and launch
@@ -29,9 +29,11 @@ This uses the real renderer and simulated signals on a labelled synthetic stage.
 a camera, runs live inference, records or publishes OBS Virtual Camera output. It can show the
 clean output window for layout review. Demo FPS values are unavailable, not invented measurements.
 
-The front modes are **LIVE / camera and streaming** and **VIDEO / process a prerecorded file**.
-The left notebook contains Camera, Avatar & eyes, Output & effects, Tracking labs, Private capture,
-Models and Tutorial. Scroll within each page for all controls.
+The compact header switches between **Live** and **Video**. The left inspector contains Camera,
+Video file, Avatar & eyes, Output & effects, Tracking labs, Private capture, Models and Tutorial.
+Expand labelled sections for secondary controls and scroll within a category. The large preview
+stays on the right. **Tools** / **Ctrl+J** opens Logs, CLI equivalent and Diagnostics; it starts
+closed and does not cover the viewer.
 
 ## 3. Verify models and enter a source
 
@@ -61,7 +63,8 @@ $env:KARDBOARD_CAMERA_URL = Read-Host "Paste your current camera stream URL"
 ```
 
 Set the variable in the same terminal before launch. Do not recover old credentials from history.
-Choose rotation/mirroring to fit the placement; already mirrored recordings have a separate flag.
+Expand **Image adjustments** for rotation/mirroring; already mirrored recordings have a separate flag.
+**Capture & tracking** contains backend, requested dimensions/FPS and other capture details.
 Tracking width changes analysis cost/detail, not final camera resolution.
 
 ## 4. Start and calibrate
@@ -70,7 +73,7 @@ Press **Start camera**. Initialization runs off the widget thread. Face-only car
 black before acquisition and freezes the last-safe composite on face loss. This is a failure
 policy, not proof of perfect coverage for every detected angle.
 
-In **Avatar & eyes**, use **Calibrate OPEN / CLOSED eyes** during a real live session:
+In **Avatar & eyes → Eye tuning**, use **Calibrate OPEN / CLOSED eyes** during a real live session:
 
 1. Face the camera with both eyes relaxed and open; capture the open samples.
 2. Begin the closed phase, close **both eyes** during its countdown and hold through capture.
@@ -78,13 +81,18 @@ In **Avatar & eyes**, use **Calibrate OPEN / CLOSED eyes** during a real live se
    fail visibly; repeat rather than assuming a physically closed eye must have model score zero.
 
 Only numeric observations are used; no face images are saved. K follows anatomical left and C
-anatomical right. The readout shows the actual rendered OPEN/CLOSED decision, raw/rendered scores
-and effective threshold. Geometry/pose remain smoothed; brief raw eye closures are not filtered away.
+anatomical right. Compact OPEN/CLOSED decisions stay next to tuning. **Tools → Signals**
+shows raw/rendered scores, applied thresholds and pose. Geometry/pose remain smoothed;
+brief raw eye closures are not filtered away.
 
 For manual tuning, **raise** blink thresholds for missed closures and **lower** them for false
 closures. Each must stay below both open/wink rules. An invalid edit displays **Not applied** and
 retains the last valid tuple. Shared blink is only the fallback for an eye whose Override is off.
 Relative wink rules also require the opposite eye to be open and sufficient asymmetry.
+Expand **Winks & timing** for those shared rules and debounce controls.
+Numeric fields use a visible upper **+** and lower **-** for one step. Direct typing and
+arrow keys still work; dimmed symbols indicate a disabled control or a reached bound.
+Their native text editor has explicit inner padding, so values no longer hug the border.
 
 ![Built-in calibration tutorial](../images/kardboardcode-studio-tutorial.png)
 
@@ -94,20 +102,31 @@ Relative wink rules also require the opposite eye to be open and sufficient asym
 persistent Stop-to-unlock explanation. Video-mode Live-only controls are labelled. Offline
 processing locks every processing option until completion/cancellation. Internal brightness
 affects analysis only; width/brightness are not proven distance-tracking fixes.
+The optional **Local preview maximum height** is a typed integer display setting; it does
+not change processing or clean-output dimensions.
 
 ## 5. Avatar, effects and separate diagnostics
 
-Textured 3D is canonical; disable physics before selecting procedural 2D for comparison.
+Four compact data cards below the preview show camera FPS, tracking FPS, internal frame age
+and output state. They remain visible beside Tools when its drawer is closed or open.
+Tools opens below the viewer only; your settings column keeps its full height. Detailed
+eye/pose numbers stay under **Tools → Signals**.
+
+Expand **Avatar setup**. Textured 3D is canonical; disable physics before selecting procedural 2D for comparison.
 Depth offset changes perspective placement and supports direct numeric entry without an
 artificial positive cap. Preview resizing does not crop or change source processing resolution.
 
-The central program image stays unobstructed. Raw-face pixels occupy the local left panel;
-face mesh/XYZ and the Body skeleton use the right panel. They do not enter clean output.
+The program image stays unobstructed beside the left settings inspector. Enable the required
+**Local diagnostics** in **Tracking labs**: **Raw face** appears in the upper-right panel;
+**Face / pose** or **Body** occupies the lower-right panel. Both image areas remain visible
+without opening Tools. Drag their dividers to adjust widths/heights. Disabling a channel
+reclaims its space; the main preview and diagnostic images cannot be collapsed by dragging.
+Raw consent remains explicit on each real start. These views never enter clean output.
 Skeleton diagnostics do not fill a full-body avatar into camera video.
 
-![Separate diagnostic panels](../images/kardboardcode-studio-diagnostics.png)
+![Raw face above face-pose or body diagnostics in the right-hand rail](../images/kardboardcode-studio-diagnostics.png)
 
-*Actual layout with synthetic placeholders, not a saved face image.*
+*Actual native layout with readable stacked image areas. The checkerboard is synthetic, not a face.*
 
 Green screen preserves the person over chroma green. Hand foreground restores conservative
 anatomical regions; RGB does not establish physical depth or recover arbitrary held objects.
@@ -129,17 +148,20 @@ not guaranteed delivered motion speed. Actual calling-app permissions still need
 
 ### Separate clean window for OBS Window Capture
 
-**Open clean output window / OBS Window Capture** is enabled by default for Live/demo.
+**Show clean output** remains beside the preview in Live mode, with the same action in View.
 The stable **KardboardCode - Clean Output** window contains only clean program video.
 Select its client area in OBS Window Capture; it is distinct from OBS Virtual Camera.
-Closing it hides the window, not the live pipeline. Reopen it from View. Raw/unmasked modes
-do not populate this clean-output channel.
+Closing it hides the window, not the live pipeline. Press the button to reopen the same window
+without restarting capture. **Auto-open**, enabled by default, separately controls startup opening;
+manual reopening also works when it is off. Opening before capture shows black and starts no camera.
+Raw/unmasked, headless and Video states cannot display this clean-output window.
 
 ![Clean output window](../images/kardboardcode-studio-clean-output.png)
 
 *Actual controls-free synthetic output. No diagnostic overlays or private face panel.*
 
-**Suppress preview** retains processing/virtual delivery but suppresses local video transfer.
+**Camera → Capture & tracking → Suppress preview** intentionally suppresses local video transfer
+while retaining processing/virtual delivery. Its workspace remains visible with an explanation.
 Clean output is full-resolution before display scaling; Studio diagnostic copies are bounded.
 
 ## 7. Advanced tracking and raw debug
@@ -155,11 +177,12 @@ Showing an available pose is not evidence that the estimate is visually accurate
 
 ## 8. Process a prerecorded video
 
-Choose front **VIDEO** mode. Browse an input and a NEW output filename. Default **lossless
+Choose front **Video** mode; the **Video file** inspector opens. Browse an input and a NEW output filename. Default **lossless
 FFV1/MKV** avoids additional compression loss but can be large. **High-quality H.264/MP4 CRF 17**
 is smaller and explicitly lossy. The original/existing outputs are never overwritten.
 
 Configure avatar/eyes, models and optional green-screen/hand effects, then **Process video**.
+Export progress stays beside the preview when you change inspector categories.
 Every frame is tracked/rendered synchronously at source dimensions and timestamp spacing
 within container precision. Compatible audio packets are copied. Source mirror/rotation,
 live capture/virtual-output dimensions and experimental body/marker modes do not apply.
@@ -194,10 +217,12 @@ Keep raw footage private. Browse it as a live-paced replay for diagnostics, or p
 
 ## 10. Presets, command copying, logs and stopping
 
-Presets remember validated controls, not sources or raw consent. Loading starts nothing.
-The bottom **CLI equivalent** tab copies the complete runnable command for the active mode.
+Use **Presets** in the inspector or the File menu. Presets remember validated controls, not
+sources or raw consent. Loading starts nothing. Open **Tools** / **Ctrl+J**; its
+**CLI equivalent** tab copies the complete runnable command for the active mode.
 Live commands substitute same-terminal source setup instead of credentials; video commands
-include the chosen local input/output paths. The separate **Logs** tab is bounded and selectable.
+include the chosen local input/output paths. **Logs** is bounded/selectable and continues
+collecting while Tools is closed. Long error messages remain readable in their scrollable banner.
 Native libraries can still write separate stderr.
 
 | Symptom | First checks |

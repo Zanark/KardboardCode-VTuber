@@ -1,12 +1,12 @@
-# v1.1.1 release context
+# v1.2.4 release context
 
-- Tag: `v1.1.1`
-- Source commit: `d030b3a5df83af9c49d06dac089cba870d7b48d4`
+- Tag: `v1.2.4`
+- Source commit: `290bae6f2c8638703fb77fce99c4cd48db665c21`
 - Source branch: `workDesk/agentic_GUI`
 - Included source differs from that commit: `False`
-- Public source SHA-256 fingerprint: `69f80bc254e2197b370945911f5648e1e3e0155439242bb8097be0c548ade689`
-- Generated (UTC): `2026-11-02T18:47:23+00:00`
-- Source files: `235`
+- Public source SHA-256 fingerprint: `36f45e028fd03b8c79b8f2e744d601a2c2deb1e74ecc63d38a5b4fcc91a1747f`
+- Generated (UTC): `2026-11-06T14:55:59+00:00`
+- Source files: `266`
 
 ## Packaging scope
 

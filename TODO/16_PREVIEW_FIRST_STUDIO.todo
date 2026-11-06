@@ -1,0 +1,72 @@
+Status: DONE
+Workstream-ID: kc-16
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/20
+Milestone: Preview-first Studio layout without removing operating options
+Dependencies: 12_WINDOWS_SETUP.todo, 15_DARK_CARDBOARD_ACCENTS.todo
+Purpose: Keep the full preview visible and make a feature-rich interface calm and clearly separated.
+
+Tasks:
+  [x] Research the current layout, interaction/state flow and actual geometry failure.
+  [x] Read primary usability, Windows/Qt layout and creative-tool reference documentation.
+  [x] Inventory all 45 runtime options, nine live fields and GUI-only operating actions.
+  [x] Compare workspace patterns and define measurable preview-containment acceptance criteria.
+  [x] Confirm the significant inspector/workspace structure choice with the owner.
+  [x] Implement a protected viewer, contextual inspector and optional bounded tools.
+  [x] Preserve every option, privacy/output boundary, preset, helper and runtime binding.
+  [x] Check native geometry, keyboard access, both themes, all relevant states and option access.
+  [x] Update actual screenshots, handbook/source/installer handoff and development evidence.
+  [x] Commit completed work and refresh this base's context without remote publication.
+
+Acceptance criteria:
+  The full aspect-fitted image is not clipped by any ancestor or covered by diagnostic panels.
+  Normal supported window sizes and controlled scaling preserve a useful visible preview.
+  Tools open/close, settings navigation and splitter dragging cannot collapse the viewer.
+  All runtime settings and GUI-only actions remain reachable; no feature is silently removed.
+  Explicit headless mode keeps its intentional suppression with a visible explanatory workspace.
+  Stop, true state, privacy warnings, actionable errors and export progress remain discoverable.
+  Controls/logs are progressively disclosed without hiding safety or breaking current bindings.
+  Actual native evidence is separate from owner visual/usability approval.
+
+Completion evidence:
+  Research baseline: 5dcf3db / v1.1.1. Implementation is v1.2.0.
+  Owner explicitly chose "Settings inspector on the left; large preview on the right".
+  Final complete compatibility suite: 297 passed/Ruff. Native containment/access/keyboard plus
+  headless cases pass at Qt scale 1.0/1.25/1.5 (27 distinct parameterized cases).
+  Native minimum-window testing found an additional nine-pixel clipping case with long errors
+  and fixed-height tools. The final drawer is capped, shrinkable and scrollable instead.
+  All 45 options remain reachable; logs continue while closed; clean/private channel tests
+  and real encoded export/default-player regressions remain intact.
+  Eight actual native synthetic captures refreshed and reviewed, including video setup.
+  Engineering handbook rebuilt: 272 pages/103 diagrams, zero Mermaid failures/overflow.
+  Current installer/source artifacts are rebuilt from committed inputs with independent
+  manifests/checksums; final handoff provenance is verified separately from owner approval.
+  Follow-up requirement: a display-fitted 16:9 startup workbench, without stretching/cropping
+  video or filling spare space with permanent clutter. Widescreen startup/action-fit checks
+  pass in native Qt at 100%, 125% and 150% scaling; final public screenshots use 16:9 sizes.
+  Installed v1.2.0 smoke passed before this final default-size refinement: private pythonw,
+  preview containment with Tools, metadata/model helpers, real four-frame export and CLI/pip check.
+  Initial preservation check used a pre-probe preset hash even though the probe intentionally
+  rewrites that preset; the isolated install/uninstall preservation recheck passed with the
+  correct post-probe baseline. Complete owned removal and preset/model preservation verified.
+  Five research lenses and 12 primary references recorded in
+  docs\09-desktop-studio\research-and-design.md.
+  Native Windows/Fusion audit: eight scenarios at Qt scale factors 1.0, 1.25 and 1.5.
+  At 1120x780, a 220px canvas has only 76px visible because its parent is 76px tall.
+  The layout asks for 960px height while the explicit main-window minimum is 720px.
+  The visible tools dock consumes 215px despite a 155px requested resize.
+  Closing tools restores whole-frame visibility in the measured case, but does not by itself
+  deliver the requested broader decluttering. Splitter zero-allocation was also reproduced.
+  All 45 runtime fields are present exactly once in the declarative inventory; nine are live.
+  Local probe/geometry JSON/contact sheets are session research artifacts, not shipping code.
+  No camera, microphone, virtual output, OS display change or user-process termination.
+  Owner structural choice: recorded above. Visual/usability approval is not recorded.
+  Final artifact/context commits record delivery; no remote publication is authorized.
+
+Completion log:
+  2026-11-03: Implemented the approved arrangement with compact chrome, progressive disclosure,
+  preserved model/preset busy states, persistent video progress and optional Tools. Native
+  containment plus keyboard/option access and full compatibility suite pass. No camera opened.
+  2026-11-03: User supplied a clipped-preview screenshot and explicitly requested deep research
+  before a less-cluttered redesign that retains every option. Structural bug reproduced.
+  Recommended a protected preview, one scrollable inspector, compact status and collapsed
+  bounded Logs/CLI/Diagnostics drawer; inspector side remains an owner choice.

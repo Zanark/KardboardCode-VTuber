@@ -27,6 +27,38 @@ The supplied logo is composed without redrawing it. Its canonical master stays u
 Screenshots remain actual widgets; banners are explicitly designed branding graphics, not UI
 mockups or runtime measurements.
 
+## Current Studio GIFs and screenshots
+
+The front page keeps seven images: banner, avatar hero, combined dark/light Studio GIF,
+approved original/green-screen comparison pair and two full-width theme screenshots.
+Separate dark/light GIFs and the former recorded-motion avatar animation live in the gallery.
+The approved comparison files are not regenerated or replaced by this refresh.
+
+```powershell
+.\.venv312\Scripts\python.exe scripts\capture_readme_media.py
+```
+
+The capture helper runs the real synthetic Studio demo, reusing the complete reference's
+safe example paths and diagnostic fixtures. It disables physical-device discovery and grabs
+only owned native widgets, never the desktop or a camera. Before each capture it verifies
+that the Demo worker and expected page are still active, without a helper job or visible error.
+The two PNGs are 1440x810; GIFs are 1200x675, loop indefinitely and cover eye controls,
+output controls and the optional Logs drawer. Dark/light loops are 7.6 seconds each;
+the combined front clip is 15.2 seconds. On-screen labels explicitly distinguish
+synthetic diagnostic fixtures from live data.
+
+Generated public files are `docs\images\kardboardcode-studio-dark.png`,
+`kardboardcode-studio-light.png` and the three `kardboardcode-studio-walkthrough*.gif` files.
+The ignored `build\readme-media` receipt records frame/timing/byte/source hashes, actual
+changed demo frames and unchanged approved-media hashes. Review bounded keyframes rather
+than decoding/reviewing every frame; inspect additional frames only for an unresolved issue.
+PNG source size is retained; GIFs are proportionally resized and palette-encoded, not cropped.
+This is documentation media, not new runtime, camera or privacy qualification.
+
+README changes also change application-wheel metadata. Refresh the dependent handbook,
+source ZIP and online unsigned MSI through the existing build commands, preserving explicit
+model/OBS prerequisites and honest uncommitted provenance. Do not publish or commit automatically.
+
 ## Rebuild
 
 Install the project's development extra, then run from the repository root:

@@ -5,46 +5,84 @@
 
 ## Spatial model
 
-The header contains identity, theme, tutorial, stable Start/Stop actions and two prominent modes:
+The compact header contains identity, theme, tutorial, stable Start/Stop actions and two modes:
 **LIVE** for cameras/streaming and **VIDEO** for applying the avatar to an existing file.
-Settings sit left. The central program image stays clean; private raw face and synthetic
-face/body diagnostics occupy separate side panels. Bottom tabs contain **Logs** and the
-**CLI equivalent**, with one-click copying of the complete command.
+The owner's chosen arrangement is a scrollable settings inspector on the **left** and a large,
+permanent preview directly beside it. Enabled visual diagnostics occupy a resizable **right-hand
+column**: raw face above Face / pose or Body. Both image areas remain visible together, without
+opening Tools; disabling their channels returns space to the main preview.
+Labelled disclosure sections retain every option without expanding every form.
+**Tools** / **Ctrl+J** opens a bounded bottom drawer containing **Logs**, **CLI equivalent**
+and numeric **Signals**. The drawer starts closed, not the preview or selected diagnostics.
+Four compact, rounded **Camera FPS**, **Tracking FPS**, **Internal frame age** and **Video
+output** cards stay beneath the preview beside Tools. They are outside the drawer, not a
+flattened text row in Signals. Tools opens under the viewer column only, so the settings
+inspector remains full-height.
 
 Why these positions:
 
 - **Start/Stop stay in the header:** changing settings pages must not hide the emergency stop.
   Stop is visually distinct from Start, never a destructive "kill thread" action.
 - **Source is first:** most startup failures are source/model/output setup, not eye calibration.
-- **Avatar/eyes sit next to the preview:** compare a left/right slider edit with the K/C result,
+- **Avatar/eyes sit next to the preview:** the default Eye tuning section has calibration,
+  shared/independent thresholds and compact anatomical OPEN/CLOSED readouts. Winks/timing and
+  Avatar setup remain labelled expansions. Compare a left/right slider edit with the K/C result,
   using anatomical names rather than ambiguous mirrored screen-side labels.
 - **Output is separate from input:** capture requests and virtual-camera dimensions are different
   contracts; changing one must not look like changing the other.
 - **Experimental tracking gets its own page and warnings:** all features remain accessible without
   presenting hood/body estimates as the normal or privacy-certified path.
-- **VIDEO is a front-level task:** input/output files, lossless/MP4 quality and progress are
-  separate from live capture. The old raw recorder remains a consent-gated **Private capture**
+- **VIDEO is a front-level task:** its Video file inspector holds input/output files and quality.
+  Progress stays beside the viewer even after changing inspector categories. File setup scrolls
+  rather than pushing every other page below an unbounded form. The old raw recorder remains a consent-gated **Private capture**
   utility in Live mode, not the meaning of video processing.
-- **Diagnostics never cover the program:** dedicated side panels preserve the complete central
-  image. A separate clean output window supports OBS Window Capture without exposing Studio.
+- **Visual diagnostics need image area, not a text strip:** the owner's illustrated arrangement
+  places raw face above tracking diagnostics to the right of the main preview. The main and
+  diagnostic splitters cannot collapse; each requested image retains a real, fully visible
+  canvas. Face / pose and Body share the lower tabs. Numeric signals remain in Tools.
+  Raw/local-only warnings and the original start-time consent remain explicit.
+- **Clean output is a persistent action:** **Show clean output** remains beside the Live preview
+  and shares its View-menu action. Closing that separate window does not stop the worker or
+  require restarting. **Auto-open** is a startup preference, independent of manual reopening.
+  Idle opening is black/no capture; raw/headless/Video states cannot display clean output.
 - **Model setup is discoverable:** missing files need actionable setup, not a cryptic traceback.
 - **Tutorial is a persistent header action and a full page:** it is available before camera access,
   not a first-run modal that blocks the interface or disappears forever.
 - **Logs remain selectable plain text:** no HTML interpretation, bounded history, explicit clearing
-  and safe copying. Rich styling is reserved for status, not log formatting.
+  and safe copying. Closing Tools does not stop log collection.
+- **Metric cards preserve useful grouping:** small captions and stronger values make performance/
+  output state scannable without opening Tools. Demo/unavailable values stay honest; internal
+  post-decode age is not end-to-end camera latency.
+- **Presets are a menu:** Save/Load/Reset remain reachable in the inspector and File menu without
+  a permanent row of three extra buttons. Load/Reset/model jobs visibly disable during work.
+- **Errors do not consume the stage:** the bounded plain-text error surface remains visible and
+  scrollable. Full details are retained rather than stretching an arbitrary-length message.
+
+The viewer's splitter cannot collapse. Secondary tools have a height cap and a scrollable
+content region, not a fixed height that can override the viewer's minimum. Native geometry
+checks inspect ancestor clipping, including compact sizes, portrait/landscape frames, tools,
+long errors, private diagnostics, video progress and explicit headless placeholders. Error
+details can shrink within 48-68px; Tools can shrink below Qt's default scroll-area hint when
+necessary. Neither may force diagnostic images outside their actual parent-clipped regions.
+
+The default workbench uses a display-fitted **16:9** window (up to 1440 x 810 logical pixels),
+with proportional down-sizing for the available work area. Resizing/maximizing remains native
+and responsive. Empty space is not filled with additional permanent panels. The video itself
+retains its source aspect ratio and original export dimensions; non-widescreen material is
+fitted rather than stretched or cropped.
 
 ## Complete runtime control inventory
 
 | Page | CLI fields / feature | Interaction |
 |---|---|---|
 | Camera | `source` | Computer-camera chooser with names/Refresh, or masked URL/file/manual-index entry |
-| Camera | `backend`, `width`, `height`, `fps` | Choice and numeric requests; automatic values clearly labelled |
+| Camera | `backend`, `width`, `height`, `fps`, `tracking_width` | Capture requests plus the separate face-analysis input width; automatic capture values labelled |
 | Camera | `rotate`, `mirror`, `input_already_mirrored` | Rotation choice and separate checkboxes |
 | Camera | `brightness` | Live internal-only slider with numeric value |
 | Camera | `duration`, `preview_height`, `headless` | Optional duration, display-only height, preview suppression |
 | Avatar / eyes | `render_cardboard`, `track_face`, `cardboard_renderer`, `physics` | Independent features and renderer selection |
 | Avatar / eyes | `box_depth_offset` | Numeric perspective depth offset; no artificial positive cap |
-| Avatar / eyes | `blink_threshold`, independent left/right overrides | Shared baseline plus live per-eye sliders/numeric editing |
+| Avatar / eyes | `blink_threshold`, `left_blink_threshold`, `right_blink_threshold` | Shared baseline plus live per-eye sliders/numeric editing |
 | Avatar / eyes | `wink_threshold`, `eye_open_threshold`, `wink_min_difference` | Live calibrated controls with validation |
 | Avatar / eyes | `action_hold_ms`, `eye_action_hold_ms` | Live debounce values |
 | Avatar / eyes | `no_motion_filter` | Explicit smoothing toggle, restart-only |
@@ -58,6 +96,34 @@ Why these positions:
 
 The new independent-eye CLI overrides preserve the original shared `--blink-threshold` default.
 They do not change anatomical K-left/C-right mapping.
+
+### Verified operating-feature coverage
+
+The current audit checks actual settings forwarding and helpers, not only the number of
+widgets. Every one of the **45 current Live/runtime options** has a control and participates
+in the shared validated argument path. Two complete nondefault configurations exercise all
+bindings, including both mutually exclusive fallback choices. This exposed a real bug in
+the optional `preview_height` custom integer control, which is now corrected.
+
+| Operating surface | Verified GUI coverage |
+|---|---|
+| Live/runtime | All 45 parser destinations; source, capture, transforms, tracking, avatar, eyes, effects, diagnostics and output |
+| Prerecorded Video | All 22 parameters accepted by the Video CLI, plus input/output filenames and quality; mirrored input uses the Video file checkbox |
+| Private capture | All 17 user-facing recorder settings: 9 capture-specific controls and 8 inherited selections; the eighteenth internal stop-file is wired to Stop |
+| Models | All four checksum-verifying model helpers, configured paths and explicit force download |
+| GUI-only operation | Named-camera refresh, presets, guided calibration, demo, themes/tutorial, logs/CLI copying, diagnostic views, clean-output reopening and completed-video playback |
+
+Video always tracks/renders the avatar. Its supported inventory is shared with the Video CLI;
+inapplicable Live controls are labelled rather than masquerading as working Video settings.
+No current user-facing operating feature was omitted by the audited inventory/bindings.
+Developer rendering, test, build and release utilities are not all GUI buttons. This coverage
+does not promise every imaginable input value, future feature or hardware configuration.
+
+Sparse appearance is not the feature inventory: advanced sections are collapsed, only one
+inspector category is shown, and video is aspect-fitted rather than stretched. Standard widget
+text is 12 logical pixels; panel headings/metric values are 14 and the application title 17.
+OS/DPI scaling can make them physically larger. The approved layout/fonts remain unchanged
+by this padding/coverage fix.
 
 ## Video processing and private capture
 
@@ -116,9 +182,18 @@ controls echo the box material. Mint remains reserved for checked/live/primary s
 than making every accent brown. Light sliders retain their deeper green for contrast on cream.
 Video pixels are never recolored by the UI. The theme button includes both a sun and a moon icon.
 The window/application/header icon uses the user's supplied voxel **KC cardboard-box artwork**.
+
+Numeric controls show an explicit **+** above **-** on contrasting step-button surfaces.
+They increase/decrease the current value by its existing step; direct typing and arrow keys
+remain available. Disabled and boundary-unavailable steps use muted symbols. Vector glyphs
+are specified explicitly because a native button-symbol setting alone did not paint reliably
+through the custom Qt stylesheet. The Live/Video strip does not draw Qt's extra trailing baseline.
 Its canonical PNG stays unchanged; optical bounds discard near-invisible outer noise in derived
 icons, which fill their small native slots. Windows controls the title-bar/taskbar slot size.
 Actual screenshots must be generated from the running widgets, not a design mockup.
+Embedded numeric editors also have explicit 6px left/3px right text margins. Outer spin-box
+stylesheet padding alone did not reliably inset the native editor. Native raster checks cover
+decimals, integer fields, disabled states and both palettes without changing the step targets.
 
 <img src="../../src/kardboard_vtuber/gui/assets/kardboardcode-logo.png" alt="Official voxel KC cardboard-box tool logo" width="180">
 

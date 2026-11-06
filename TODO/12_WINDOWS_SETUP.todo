@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-12
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/17
 Milestone: v1.1.1 online Windows x64 setup and cardboard slider accents
 Dependencies: 10_STUDIO_FEEDBACK.todo, 11_BORDERLESS_README.todo
 Purpose: Install and launch Studio without manual Python/pip commands or system Python changes.

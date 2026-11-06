@@ -47,6 +47,13 @@ class Field:
     hint: str = ""
 
 
+@dataclass(frozen=True, slots=True)
+class Section:
+    title: str
+    fields: tuple[str, ...]
+    expanded: bool = False
+
+
 PAGES: dict[str, tuple[Field, ...]] = {
     "Camera": (
         Field("source", "Camera / stream / recording", "source"),
@@ -69,7 +76,7 @@ PAGES: dict[str, tuple[Field, ...]] = {
             hint="1280 can retain more distant detail; it is not a guaranteed distance fix.",
         ),
         Field("duration", "Stop after seconds (unlimited when off)"),
-        Field("preview_height", "Local preview maximum height"),
+        Field("preview_height", "Local preview maximum height", "integer"),
         Field(
             "headless",
             "Suppress preview; keep processing / output",
@@ -151,6 +158,45 @@ PAGES: dict[str, tuple[Field, ...]] = {
         Field("hand_model", "Hand Landmarker model"),
         Field("segmentation_model", "Selfie Segmenter model"),
         Field("pose_model", "Pose Landmarker model"),
+    ),
+}
+
+SECTIONS: dict[str, tuple[Section, ...]] = {
+    "Camera": (
+        Section("Input source", ("source",), True),
+        Section("Image adjustments", ("rotate", "mirror", "input_already_mirrored", "brightness")),
+        Section("Capture & tracking", (
+            "backend", "width", "height", "fps", "tracking_width", "duration",
+            "preview_height", "headless",
+        )),
+    ),
+    "Avatar & eyes": (
+        Section("Eye tuning", (
+            "blink_threshold", "left_blink_threshold", "right_blink_threshold",
+        ), True),
+        Section("Winks & timing", (
+            "wink_threshold", "eye_open_threshold", "wink_min_difference",
+            "eye_action_hold_ms", "action_hold_ms",
+        )),
+        Section("Avatar setup", (
+            "render_cardboard", "track_face", "cardboard_renderer", "physics",
+            "box_depth_offset", "no_motion_filter",
+        )),
+    ),
+    "Output & effects": (
+        Section("Video output", (
+            "virtual_camera", "virtual_camera_width", "virtual_camera_height",
+            "virtual_camera_fps",
+        ), True),
+        Section("Background & foreground", (
+            "green_screen", "segmentation_width", "hand_occlusion", "hand_tracking_width",
+        )),
+    ),
+    "Tracking labs": (
+        Section("Local diagnostics", ("tracking_debug", "debug_face_preview", "full_body"), True),
+        Section("Experimental tracking", (
+            "body_head_fallback", "hood_marker_tracking", "pose_tracking_width",
+        )),
     ),
 }
 

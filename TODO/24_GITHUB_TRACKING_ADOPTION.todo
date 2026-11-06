@@ -1,0 +1,83 @@
+Status: DONE
+Workstream-ID: kc-24
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/27
+Milestone: Verified local-workstream, GitHub issue and Kanban adoption
+Dependencies: Existing numbered workstreams; authorized repository and owner Project access
+Purpose: Preserve the development record while giving each public actual workstream one issue
+  and one Status-column Kanban item, with recoverable explicit synchronization.
+
+Tasks:
+  [x] Read the current development manual, repository contracts and complete tracking inventory.
+  [x] Verify canonical repository/account access and repository-local Zanark attribution.
+  [x] Review all historical workstreams, their completion boundaries and publication suitability.
+  [x] Configure the repository's own Kanban Project without changing unrelated boards.
+  [x] Reuse and qualify a preview/apply synchronizer with stable identity and conflict recovery.
+  [x] Save the dry-run inventory; verify one pilot and an idempotent rerun.
+  [x] Backfill unambiguous public workstreams and verify issue/item/status/backlinks.
+  [x] Document adoption, future invocation, privacy, conflict and attribution rules.
+  [x] Reconcile final counts, required source snapshot and owned continuity without committing.
+
+Acceptance criteria:
+  One included actual workstream maps to one repository issue and one issue-containing Project
+  item. The primary view is Kanban, with columns grouped by the real Status field.
+  All eight fields, task/evidence history and historical dates are preserved; tracking metadata
+  cannot create a feedback loop. Local completion is not publication or human acceptance.
+  A repeated pilot creates no duplicate issue/item or needless issue-content changes.
+  Human edits and uncertain partial operations stop the affected item; independent work may
+  continue. Failed reads are errors, never empty inventories.
+  Navigation/index and perpetual ledger are excluded. Private documentary/persona work has no
+  approved public projection and is excluded pending a separate publication decision.
+  Credentials stay in the shared external runner's child environment, never source/payloads.
+  No product features, commits/pushes, workflows/dispatch, schedules, releases or remote secrets.
+
+Completion evidence:
+  Initial complete inventory: public Zanark/KardboardCode-VTuber, node R_kgDOUAny-A, main;
+  runner-backed Zanark account has admin/push permission. Zero actual issues and six PRs.
+  No repository-linked Project or existing local synchronizer; other named boards belong to
+  other repositories. Preserve those boards. Twenty historical public workstreams are DONE
+  against their recorded bounded criteria; their old tests are not rerun by this migration.
+  Index00, perpetual ledger05 and private workstreams13/17 are excluded from issue creation.
+  Both effective author and committer use repository-local Zanark/noreply attribution.
+  Owner Project9 exists at https://github.com/users/Zanark/projects/9, private default retained
+  and linked only to this repository. Primary view1 is Kanban/BOARD_LAYOUT with Status columns.
+  Existing Todo/In Progress/Done option identities retained; Backlog/Ready/In review added.
+  Focused sync/privacy/recovery/source-export set:36passed; Ruff passes.
+  Saved complete preview:21proposed issue/item/backlinks,20completed+1active, four exclusions,
+  zero conflicts. Historical source files are verified on workDesk/agentic_GUI; at the
+  initial preview, workstream24 used a local/unpublished notice instead of a broken link.
+  Pilot kc-01 created issue7 and item PVTI_lAHOAe2wCs4BqevGzhGkpLA; actual managed body,
+  closed/completed lifecycle, Done option and local backlink match readback.
+  Explicit pilot rerun reused the same IDs with zero creates and one no-op. Full issue
+  content/state and updatedAt=2026-11-06T13:31:19Z plus item/membership/Status were unchanged.
+  Backfill created20additional issues and reused the pilot:21new issues overall, zero
+  preexisting reused,21unique issue-containing Kanban items and21persistent local backlinks.
+  A fresh complete inventory matches every managed description/lifecycle/Status and all
+  backlinks with21no-op plans/no pending operations. At that checkpoint20historical issues
+  are closed/completed/Done and this adoption issue27 is open/In Progress.
+  All20historical files retain their exact prior content after stripping only the two
+  tracking metadata lines and normalizing line endings. Private exclusions and product/
+  README/GUI/installer/reference inputs are unchanged. Two new guide diagrams render locally
+  with zero external requests. Source export and installer --check pass. The source ZIP
+  honestly records sourceModified=true at the unchanged starting HEAD; no clean-commit
+  provenance, new MSI lifecycle or product qualification is claimed. New public files were
+  selectively staged only because the existing exporter requires them. Contributor guidance,
+  configuration, durable mappings and owned continuity record the complete adoption.
+  Final completed-adoption lifecycle/readback is recorded in the adoption guide and receipts.
+
+Completion log:
+  2026-11-06: Owner authorizes setup/pilot/historical backfill and adds explicit Kanban request.
+  2026-11-06: Canonical manual/credential-runner source and existing TODOs reviewed. No real
+  credential file opened/copied, no product work and no commit/push performed.
+  2026-11-06: Own Project9 Kanban and missing stages configured with existing IDs retained.
+  Full preview, bounded kc-01 pilot and explicit no-op rerun pass exact readback.
+  2026-11-06: Historical backfill and full21mapping readback pass with no duplicates,
+  conflicts or partial operations. Contributor/adoption guidance records real commands,
+  ownership, recovery, local attribution, visibility/exclusions and no-automation limits.
+  2026-11-06: Bounded adoption acceptance is complete: actual pilot/backfill/readback,
+  focused validation, preserved historical evidence, durable guidance and required working-
+  tree source export are verified. Synchronize this completed workstream to closed/completed/
+  Done and retain the final live reconciliation separately. No commit/push is performed.
+  2026-11-06: Owner separately requests "push the changes". Public tracking and README
+  commits d40e986/d1bf419 are pushed to workDesk/agentic_GUI. Independent GitHub ref/tree
+  reads verify the exact source objects before removing the local-only source notice.
+  Existing issue27/item identity and Done lifecycle are retained; private context stays local.

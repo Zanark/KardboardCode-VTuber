@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-15
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/19
 Milestone: Finished cardboard-brown dark sliders and refreshed README screenshots
 Dependencies: 10_STUDIO_FEEDBACK.todo, 14_VIDEO_DEFAULT_PLAYER.todo
 Purpose: Bring the cardboard material into dark-theme controls without losing state clarity.

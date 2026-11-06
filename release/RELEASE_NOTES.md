@@ -1,8 +1,94 @@
-# v1.1.1 - Windows Setup
+# v1.2.4 - Numeric Padding and Verified GUI Coverage
 
-A per-user online Windows installer and cardboard-brown dark sliders, retaining the v1.1.0
-Live/Video workspaces, unobstructed output, calibration and prerecorded-video processing.
+A quieter, preview-first native workspace with every operating option retained. Online Windows
+setup, cardboard-brown dark sliders, Live/Video processing and automatic playback remain included.
 v1.0.0 remains the first official version; v0.2.0 was unpublished local staging.
+
+## 2026-11-03
+
+### Numeric padding and actual feature coverage
+
+- Complete portable GUI visual reference: one self-contained HTML file with 204 embedded
+  native screenshots, 102 views/scroll parts, both themes, every declared interface surface,
+  captions/sources, navigation/search and offline full-image viewing. Synthetic/example data only.
+- Numeric editors now have explicit inner text margins so values do not hug their left
+  border. The existing +/- targets, numeric steps, bounds and approved layout are unchanged.
+- Audited all 45 Live/runtime options through actual nondefault GUI-to-parser forwarding,
+  not just widget counts. Fixed the optional preview-height field's custom integer binding.
+- Video scope and CLI copying derive from the shared 22-field Video inventory. Fixed/ignored
+  Live fields are clearly marked; the Video file page owns its already-mirrored input choice.
+- Private capture accounts for all 17 user-facing recorder settings plus the internal Stop
+  file. Four model helpers and the current GUI-only camera/preset/calibration/demo/log/
+  tutorial/output actions remain exposed.
+- Current user-facing operating features are covered; developer rendering/testing/release
+  utilities are not all GUI buttons. Presence does not promise every input value or hardware.
+- Refreshed current native screenshots, coverage documentation and engineering handbook.
+  No global font shrink, new layout, camera or privacy/output behaviour change.
+
+### Preferred metric cards, always in view
+
+- Restored the rounded **Camera FPS**, **Tracking FPS**, **Internal frame age** and **Video
+  output** cards below the preview, beside Tools. They remain visible with the drawer open
+  or closed, rather than flattening these values into a text row inside Signals.
+- Tools now opens below the viewer only. The settings inspector keeps its full height;
+  Logs, CLI and detailed eye/pose Signals remain available without covering program pixels.
+- Existing metric values/units, honest unavailable/demo states, stacked diagnostic images,
+  clean-output recovery and all settings/data bindings remain unchanged.
+- Native regressions check actual card borders, real-font text fit, full-height settings and
+  whole preview/diagnostic containment at compact sizes and 100/125/150% Qt scaling.
+- Refreshed native README/gallery screenshots and the operating guide/handbook.
+
+### Readable side diagnostics and clean-output access
+
+- Settings stay left; the protected main preview sits directly beside them. A resizable
+  right-hand rail shows raw face above Face / pose or Body. These visual diagnostics are
+  simultaneously readable without opening a bottom drawer, and return space when disabled.
+- Tools now contains Logs, CLI equivalent and numeric Signals, not tiny image previews.
+  Splitters cannot collapse the main or diagnostic image area; compact errors stay complete
+  and scrollable without pushing the image panels outside their parents.
+- A persistent **Show clean output** button shares the View-menu action in Live mode.
+  Closing that window does not stop processing; the button reopens the same clean window
+  without restarting the camera or toggling a checked box off and on.
+- **Auto-open** separately controls startup opening. Manual reopening works when it is off.
+  Idle opening is black and opens no camera. Video/headless/raw configurations cannot display
+  clean output; raw/debug pixels remain local to the diagnostic rail.
+- Updated actual native dark/light/compact/diagnostic screenshots and operating documentation.
+  The front README still contains only the banner/hero, three GIFs and two theme screenshots.
+
+### Numeric controls and mode strip
+
+- Numeric fields now have explicit **+ / -** vector glyphs on contrasting button surfaces,
+  rather than illegible native arrow slots. This applies to integer and decimal controls,
+  including eye sliders, camera parameters and private-capture settings.
+- Disabled controls and steps unavailable at a minimum/maximum have distinct muted glyphs.
+  Existing numeric step sizes, keyboard input, bounds and live tuning behaviour are unchanged.
+- Removed Qt's unintended tab-bar baseline extending beyond the Live/Video buttons.
+- Refreshed native screenshots while preserving the minimal animation-first README/gallery.
+
+### More preview, less clutter
+
+- Animation-first README: GIFs immediately follow the banner/hero; only dark/light GUI
+  screenshots remain on the front page. The full captioned visual gallery is linked separately.
+- Owner-selected **left settings inspector / large right preview**, with a compact header and
+  non-collapsible workspace splitter. The complete fitted image remains visible rather than
+  being clipped by a smaller ancestor.
+- Display-fitted **16:9** startup workbench, up to 1440 x 810 logical pixels, with native
+  responsive resizing. Original video dimensions/aspect remain unchanged.
+- Labelled expandable sections retain all 45 runtime options and nine live fields. Basic eye
+  tuning stays near compact anatomical OPEN/CLOSED decisions; additional timing/avatar/capture
+  settings remain accessible without filling the default view.
+- **Tools / Ctrl+J** opens a bounded, scrollable Logs/CLI/Signals drawer, closed by default.
+  Logs continue collecting when closed. Raw face, mesh and body views stay in their selected
+  right-hand diagnostic panels, never over the program image.
+- Video file setup is a scrollable inspector category; export progress stays beside the viewer
+  across category changes. Long error messages remain complete in a bounded plain-text surface.
+- Presets use a labelled menu. Load/Reset/model jobs visibly disable during work. Existing
+  clean output, consent, redaction, helper, default-player and shared-pipeline behaviour remains.
+- Explicit headless mode still suppresses local frames intentionally and leaves an explanatory
+  workspace. Window layout changes do not crop/recolour/export different video pixels.
+- Native containment checks cover compact windows, tools/errors/diagnostics, portrait and
+  landscape frames, splitter attempts and controlled 100%/125%/150% Qt scaling. Other hardware,
+  live tracking and owner visual/usability approval remain separate.
 
 ## 2026-11-02
 

@@ -4,8 +4,15 @@ This tracked folder is the handoff for creating a GitHub release manually. Regen
 source/documentation changes; it always represents the latest exported tool, not a release history.
 
 **v1.0.0 was designated the first official version**, adopting the supplied voxel KC box logo.
-The current **v1.1.1** handoff adds online Windows setup, brown dark-theme sliders and automatic
-playback after successful Studio video exports. The earlier
+The current **v1.2.4** handoff fixes embedded numeric text padding, the optional preview-height
+binding and misleading Video-only availability labels after an actual GUI coverage audit.
+It retains the preferred four metric cards below the preview,
+beside Tools. The drawer opens under the viewer only, keeping settings full-height.
+Readable, stacked visual diagnostics stay to the preview's right. **Show clean output** remains available in Live
+mode to reopen the separate window; **Auto-open** is an independent startup preference.
+Labelled control sections, optional Logs/CLI/Signals tools and clear numeric buttons remain.
+It retains online Windows setup,
+brown dark-theme sliders and automatic video playback. The earlier
 v0.2.0 export was unpublished local staging. A local version/export is not a remote publication.
 
 ## Files

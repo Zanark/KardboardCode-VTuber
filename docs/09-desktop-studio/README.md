@@ -14,6 +14,11 @@ description: "Native operation, live eye calibration, privacy, and the rationale
 *Actual Qt widgets displaying the real textured renderer on a synthetic, camera-free stage.
 The independent thresholds shown are illustrative demo settings, not recommended personal calibration.*
 
+The [complete single-file GUI visual reference](../KardboardCode-Studio-GUI-Visual-Reference.html)
+contains every named settings section/view, tool tab, menu, selector and dialog in both themes,
+including all scrolling parts. It embeds 204 native screenshots with sources and a coverage
+receipt. Open the HTML in a browser offline; fixtures are synthetic, not live-camera proof.
+
 ```mermaid
 flowchart TD
     Controls["Native controls / tutorial"] --> Settings["Validated settings"]

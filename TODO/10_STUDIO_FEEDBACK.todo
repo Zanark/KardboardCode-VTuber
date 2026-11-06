@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-10
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/15
 Milestone: Studio workspaces, unobstructed output and usable calibration
 Dependencies: 09_VISUAL_README.todo
 Purpose: Address the user's fifteen-point live-use feedback without mixing diagnostics into deliverable video.

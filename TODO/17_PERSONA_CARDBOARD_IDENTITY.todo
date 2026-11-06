@@ -1,0 +1,41 @@
+Status: DONE
+Milestone: Recognizable Cardboard Continuity portrait
+Dependencies: Existing registered persona and shared Context Mesh renderer
+Purpose: Make this session's profile unmistakably associated with the cardboard VTuber tool without covering its face.
+
+Tasks:
+  [x] Preserve the current persona ID, seed, expression, colour and face geometry.
+  [x] Add an exact-ID cardboard-box harness with KC mark, corrugated folds and box headphones.
+  [x] Apply only the scoped wardrobe addition to the versioned and deployed renderer.
+  [x] Render and review before/after; verify non-wardrobe geometry and other portrait outputs.
+  [x] Verify the actual generated dashboard uses the new exact-ID drawing.
+  [x] Record the verified handoff for the final current-base context refresh.
+
+Acceptance criteria:
+  Face and expression remain visible and unchanged; the box sits below the face.
+  Only this persona selects the new outfit; other identities/seed/colour records are untouched.
+  The source and live assets retain concurrent upstream work rather than overwriting it.
+  Profile, roster and chat continue to use the normal shared live avatar renderer.
+  Source changes in another contributor's untracked bundle are not silently committed as ours.
+
+Completion evidence:
+  Own exact-ID outfit is cardboard-harness; friendly-wink and existing seed are unchanged.
+  Scoped source/live asset hash after synchronization:
+  9d4263a7f66bf97f6bd5c1e207531c9a0141a388ada5c0a58e13d4d5e507900a.
+  Shared source was ahead of deployment with concurrent facial-hair work. The upstream
+  deployment advanced during verification; no unrelated work was reverted. Against the recorded
+  source revision, only this outfit changes among 17 indexed portrait outputs.
+  Source non-wardrobe SVG is identical and the top 335/512 rendered face pixels are unchanged.
+  Before/after contact sheet reviewed: prominent kraft KC box below the uncovered face.
+  Shared implementation bundle was already untracked/owned by another workstream; left unstaged.
+  Generated context-mesh.html contains the exact own-ID cardboard-harness mapping and box
+  geometry. The final user-requested full refresh will retain this verified drawing.
+  Owner appearance approval remains unrecorded.
+
+Completion log:
+  2026-11-03: User explicitly requested a cardboard/tool-specific profile identity without
+  covering the face, plus context refresh after the current work. Added and reviewed the
+  scoped vector wardrobe while preserving existing shared-source changes.
+  2026-11-03: Verified the existing generated dashboard already embeds the new drawing after
+  the concurrent upstream deployment. Preserved unrelated portrait changes and left that
+  contributor's untracked shared bundle unstaged.

@@ -1,0 +1,55 @@
+Status: DONE
+Workstream-ID: kc-21
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/24
+Milestone: Restore the preferred compact data-card footer
+Dependencies: 20_SIDE_DIAGNOSTICS_AND_CLEAN_OUTPUT.todo
+Purpose: Preserve the user's preferred scannable metric cards instead of flattened text rows,
+  using the illustrated placement below the preview beside Tools.
+
+Tasks:
+  [x] Recover the previous native metric-card implementation and visual grouping.
+  [x] Restore camera FPS, tracking FPS, internal frame age and output as persistent cards.
+  [x] Put Tools and its drawer below the viewer only, keeping the inspector full-height.
+  [x] Verify actual card borders/value readability and native containment across sizes/scales.
+  [x] Preserve the diagnostic rail, clean-output action and all existing controls/data bindings.
+  [x] Refresh native README/gallery screenshots, guide, handbook and current source/MSI snapshots.
+  [x] Commit completed work and persist only the owned context handoff.
+
+Acceptance criteria:
+  Four clearly grouped cards remain visible with Tools open or closed in both work modes.
+  The existing metric values/units and honest unavailable/demo states do not change.
+  Tools no longer shortens the settings column. Preview and diagnostic images remain fully
+  contained; cards and primary actions are readable at supported sizes/scales.
+  Preserve the user's minimal GIF-first README, privacy boundaries and current clean-output
+  recovery behaviour. No live camera, portrait, new research questionnaire or publication.
+
+Completion evidence:
+  Reused the earlier metric frames/captions and shared live QLabel bindings, with compact
+  spacing and 14px values. Cards stay below the preview beside Tools, outside the drawer.
+  Moving the drawer into the viewer column preserves full settings height when opened.
+  Native Windows card/text/border/containment/channel/actions/Tools set:18passed at each
+  100/125/150% scale. Covers 1440x810,1280x720,960x600, both themes/modes and Tools/errors.
+  Native font-fit proof uses real Segoe UI. Offscreen Qt has placeholder font metrics and
+  explicitly skips that font-only proof; border/layout checks still run there.
+  The selected diagnostic rail's minimum height now propagates explicitly into its horizontal
+  splitter, so new footer content cannot override its actual visible image area.
+  Final current-source complete suite:313passed,2skipped (unsupported offscreen widescreen
+  work area and unavailable native Segoe UI font metrics); Ruff and diff checks pass.
+  Eight actual native screenshots and banner refreshed for v1.2.3. Contact sheet and full
+  dark/diagnostic views reviewed: restored cards and full-height settings match the illustration.
+  README retains7images with all3GIFs below banner/hero; gallery24images; media/navigation
+  links resolve. In-app/source guides updated; handbook274pages/103diagrams, zero failures/
+  overflow. Current1.2.3 source/MSI snapshots pass both checks. Actual extracted package outside
+  checkout verifies matching GUI/resource bytes, native card text, full-height settings,
+  protected images and clean-output reopening in both themes.
+  Final completion-input/artifact/context commits preserve the handoff separately. No new
+  MSI lifecycle, live camera, portrait or remote publication is claimed.
+  Owner approval of the new implementation remains separate from automated evidence.
+
+Completion log:
+  2026-11-03: User explicitly preferred the earlier card view over plain metric text and
+  supplied the desired footer placement below the preview, beside Tools.
+  2026-11-03: Card footer/full-height settings committed as20542ad; real native text/border/
+  geometry proof passes at all3scales. Final current source and visual documentation verified.
+  2026-11-03: Current source/installer and extracted native-package checks pass. Completion
+  evidence is recorded separately from approval of the restored implementation.

@@ -1,0 +1,39 @@
+Status: DONE
+Workstream-ID: kc-18
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/21
+Milestone: Animation-first minimal README with a complete visual gallery
+Dependencies: 16_PREVIEW_FIRST_STUDIO.todo
+Purpose: Put the best animation and two GUI themes at the front without losing detailed visual documentation.
+
+Tasks:
+  [x] Inventory existing media and preserve every original image reference.
+  [x] Put all three GIFs directly below the branding banner and runtime hero.
+  [x] Retain only dark/light GUI screenshots as front-page screenshots.
+  [x] Move other images into docs\visual-gallery.md with organized sections and captions.
+  [x] Link the gallery prominently and preserve the approved borderless GIF pair.
+  [x] Check exact media order/counts, complete preservation, local paths and no table framing.
+  [x] Commit public inputs and refresh matching source/installer metadata artifacts.
+  [x] Record completion and update the current-base context.
+
+Acceptance criteria:
+  Main README has exactly banner, hero, three GIFs and two theme screenshots.
+  Animations precede other content/screenshots after the hero.
+  Every other former front-page image remains accessible in the separate linked gallery.
+  Gallery sections/captions distinguish synthetic imagery, illustrative paths and approved media.
+  No new screenshot generation, table borders, application behaviour change or remote publication.
+  Current release fingerprints account for README embedded in wheel metadata.
+
+Completion evidence:
+  Main media count: 7. Gallery media count: 24. All 31 original references preserved exactly.
+  Image order is banner, hero, synthetic animation, approved original/green-screen GIF pair,
+  dark Studio, light Studio. All local media/navigation links resolve; no table framing.
+  Existing media bytes and runtime code are unchanged. Version remains 1.2.0.
+  Public media restructure committed as 67becce. Source export verified and installer metadata
+  rebuilt because README is embedded in the wheel; no application-code or dependency changes.
+  Clean final receipts/checksums and current-base handoff are recorded in delivery commits.
+
+Completion log:
+  2026-11-03: User requested GIFs immediately below banner/hero, only two front-page GUI shots,
+  and a separate detailed image file. Implemented the minimal front page and captioned gallery.
+  2026-11-03: Verified exact media/links and refreshed version-aligned release snapshots.
+  No new images, code tests, installer lifecycle, camera activity or remote publication.

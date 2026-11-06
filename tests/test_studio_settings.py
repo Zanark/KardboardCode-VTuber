@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import asdict
 from pathlib import Path
 
 import pytest
@@ -20,6 +21,13 @@ def test_every_cli_option_has_a_native_control_and_roundtrips(source: str) -> No
     assert args.render_cardboard and args.physics
     assert args.source == source
     assert live_tuning(args).eyes.left_closed == 0.35
+
+
+def test_disclosure_sections_preserve_each_page_inventory_once() -> None:
+    for page, sections in settings.SECTIONS.items():
+        names = [name for section in sections for name in section.fields]
+        assert len(names) == len(set(names))
+        assert set(names) == {field.name for field in settings.PAGES[page]}
 
 
 def test_preset_keeps_current_source_and_drops_raw_consent(tmp_path: Path) -> None:
@@ -77,8 +85,24 @@ def test_recording_options_reach_the_existing_recorder(tmp_path: Path) -> None:
         pose_tracking_fps=8,
         output_dir=str(tmp_path),
         name="safe-test",
+        countdown=1.0,
+        preview_height=640,
     )
-    args = recording_parser().parse_args(options.arguments(settings.defaults(), tmp_path / "stop"))
+    values = dict(settings.defaults(), source="0")
+    arguments = options.arguments(values, tmp_path / "stop")
+    parser = recording_parser()
+    args = parser.parse_args(arguments)
+    assert {value.split("=", 1)[0] for value in arguments if value.startswith("--")} == {
+        action.option_strings[0] for action in parser._actions if action.dest != "help"
+    }
+    inherited = settings.namespace(values)
+    for name in (
+        "source", "backend", "rotate", "mirror", "brightness", "tracking_width",
+        "face_model", "pose_model",
+    ):
+        assert getattr(args, name) == getattr(inherited, name)
+    for name, value in asdict(options).items():
+        assert getattr(args, name) == (Path(value) if name == "output_dir" else value)
     assert args.free_recording and args.full_body
     assert args.duration == 12 and args.pose_tracking_fps == 8
     assert args.output_dir == tmp_path

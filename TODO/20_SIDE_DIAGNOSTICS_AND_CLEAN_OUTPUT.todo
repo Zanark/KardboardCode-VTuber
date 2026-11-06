@@ -1,0 +1,70 @@
+Status: DONE
+Workstream-ID: kc-20
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/23
+Milestone: Readable side-by-side diagnostics and persistent clean-output access
+Dependencies: 16_PREVIEW_FIRST_STUDIO.todo, 19_NUMERIC_CONTROL_CLARITY.todo
+Purpose: Follow the user's illustrated settings/preview/stacked-diagnostics layout instead of
+  shrinking visual diagnostics into a bottom text drawer.
+
+Tasks:
+  [x] Inspect the actual diagnostic widget allocation and clean-window lifecycle.
+  [x] Put a readable raw-face panel above face/pose or body diagnostics to the preview's right.
+  [x] Reclaim the diagnostic rail when its channels are off; preserve the protected main preview.
+  [x] Keep Logs, CLI and numeric signals in Tools rather than squeezing images into it.
+  [x] Add a persistent Live-mode action/button to show or reopen clean output after closing it.
+  [x] Verify image area, containment, settings access, privacy and real close/reopen behaviour.
+  [x] Update native dark/light README captures, gallery, guide and engineering handbook.
+  [x] Refresh current source/MSI artifacts, commit completed work and offload own context.
+
+Acceptance criteria:
+  With the relevant settings enabled, raw face and a tracking diagnostic are simultaneously
+  readable beside the main preview without opening Tools. Splitters cannot collapse the
+  preview or diagnostic image area. Smaller supported sizes retain the complete preview.
+  Flags, raw consent, local-only channels and original output dimensions remain unchanged.
+  Closing clean output does not stop the session; a visible Live button reopens the existing
+  clean window with current clean pixels. Raw/debug images never appear in that window.
+  The front README remains banner/hero, three GIFs and exactly two GUI screenshots; detailed
+  screenshots remain in the linked gallery. No camera, portrait or remote publication.
+
+Completion evidence:
+  Right-hand raw/face-pose/body rail implemented with independently resizable protected panels.
+  Off channels return the full width to the preview; selected channels stay visible with Tools
+  closed. No more visual-diagnostic tabs inside the small bottom drawer.
+  Native Windows containment/channel/readable-area/primary-action set: 12 passed at each
+  100/125/150% Qt scale; Ruff. Covers 1440x810, 1280x720 and 960x600, Tools/errors, actual
+  aspect-fitted image area, attempted splitter collapse and Live/Video/headless visibility.
+  Compact Tools must have an explicit 1px minimum rather than zero, which retains Qt's 70px
+  scroll-area minimum hint. Removed a redundant raw-note row, not privacy/area assertions.
+  Show clean output is a persistent Live button sharing the View-menu action. Auto-open is a
+  separate preference, not a stale claim that a closed window is still visible. Reopening
+  retains the same window and active worker, including when Auto-open is unchecked.
+  Idle opening is black and opens no camera; Video/headless/raw configurations cannot display
+  a clean window. Closing clean output does not request worker shutdown or change the preference.
+  Full suite: 310 passed, one unsupported offscreen-widescreen case skipped; Ruff.
+  Final native Windows image/channel/close-reopen/primary-control set: 16 passed at each
+  100/125/150% scale. Compact error details shrink within 48-68px and retain full scrollable text
+  instead of forcing the protected image panels outside their parents.
+  Eight actual native screenshots refreshed; contact sheet and full dark/light/tutorial views
+  reviewed. The README shows the diagnostic rail and persistent output button in both themes.
+  Banner/hero/three-GIF order and exactly two front GUI shots are preserved: seven front images,
+  24 captioned gallery images; local media/navigation links resolve.
+  In-app tutorial, operating guides, architecture and design rationale match the user-directed
+  layout. Handbook rebuilt: 274 pages/103 diagrams, zero Mermaid failures and zero overflow.
+  Final current-source full suite: 310 passed/one existing skip; Ruff and diff checks pass.
+  Current v1.2.2 source/MSI snapshots rebuilt; both --check commands pass. Actual wheel GUI/
+  resource bytes match source, and its extracted package outside the checkout renders readable
+  diagnostics and safe clean output with button/menu reopening in both themes.
+  Final completion-input/artifact/context commits preserve the handoff separately. No new MSI
+  lifecycle is claimed; existing installer qualification remains dated to its actual baseline.
+  User usability approval remains separate from automated/synthetic evidence.
+
+Completion log:
+  2026-11-03: User rejected the tiny raw-face strip and supplied a concrete illustration:
+  move the main preview beside the settings edge and use the freed right column for two
+  stacked diagnostics. Also requested an always-accessible clean-output reopen button and
+  refreshed README. No additional design questionnaire or unrelated research is needed.
+  2026-11-03: Layout 342c4cb and persistent clean-output action 973dc1d implemented/committed.
+  Native image/containment/lifecycle checks and current full suite pass; actual screenshots,
+  tutorial, guide and 274-page engineering handbook updated for v1.2.2.
+  2026-11-03: Current installer/source checks and actual packaged-GUI proof pass. Completed
+  evidence is recorded separately from owner approval; no camera/portrait/remote publication.

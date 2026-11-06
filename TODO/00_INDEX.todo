@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: All Studio workstreams DONE
+Status: Studio/tracking/README media workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -20,6 +20,23 @@ Workstreams:
   13_DEVELOPMENT_DOCUMENTARY.todo
   14_VIDEO_DEFAULT_PLAYER.todo
   15_DARK_CARDBOARD_ACCENTS.todo
+  16_PREVIEW_FIRST_STUDIO.todo
+  17_PERSONA_CARDBOARD_IDENTITY.todo
+  18_MINIMAL_README_GALLERY.todo
+  19_NUMERIC_CONTROL_CLARITY.todo
+  20_SIDE_DIAGNOSTICS_AND_CLEAN_OUTPUT.todo
+  21_METRIC_CARD_FOOTER.todo
+  22_NUMERIC_PADDING_AND_FEATURE_COVERAGE.todo
+  23_COMPLETE_GUI_VISUAL_REFERENCE.todo
+  24_GITHUB_TRACKING_ADOPTION.todo
+  25_README_STUDIO_MEDIA.todo
+
+GitHub tracking:
+  Public actual workstreams use scripts\todo_sync.py and scripts\todo-sync.json.
+  Kanban: https://github.com/users/Zanark/projects/9/views/1 (Status columns).
+  Guide: docs\github-tracking-adoption.md
+  Index00/ledger05 are excluded; private workstreams13/17 need an approved public projection.
+  Local completion, owner acceptance and source/release publication remain separate.
 
 Tasks:
   [x] Confirm scope with the user: expose all features, including experimental modes.
@@ -33,6 +50,16 @@ Tasks:
   [x] Create the exhaustive chronological documentary PDF (workstream 13).
   [x] Open successful Studio VIDEO exports in the default media player (workstream 14).
   [x] Finish cardboard-brown dark sliders and refresh/push README screenshots (workstream 15).
+  [x] Deliver a less-cluttered, preview-first layout without removing options (workstream 16).
+  [x] Add cardboard-tool identity to this session's unobscured portrait (workstream 17).
+  [x] Keep the main README animation-first and move detailed imagery to a gallery (workstream 18).
+  [x] Make numeric +/- controls readable and remove the stray mode-strip baseline (workstream 19).
+  [x] Deliver readable stacked side diagnostics and a persistent clean-output button (workstream 20).
+  [x] Restore the preferred metric cards in the viewer footer beside Tools (workstream 21).
+  [x] Fix numeric text padding and verify current GUI feature coverage (workstream 22).
+  [x] Deliver one complete portable GUI screenshot reference (workstream23).
+  [x] Adopt verified local TODO/issue/Kanban synchronization and historical backfill (workstream24).
+  [x] Refresh native Studio animations and dark/light README screenshots (workstream25).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -42,7 +69,42 @@ Acceptance criteria:
   Completed evidence is separate from user approval.
 
 Completion evidence:
-  Current v1.1.1 handoff includes online unsigned Windows x64 setup with private Python 3.12.16.
+  README media refresh: three1200x675native synthetic Studio GIFs and two1440x810PNGs.
+  Front remains7images; gallery27; all31former references/approved comparison bytes retained.
+  Four media/five export tests/Ruff, desktop/mobile bounds, native PDF screenshot match and
+  independent source/MSI checks pass. Runtime/UI/version unchanged; initial media phase
+  performed no commit/push. Separately authorized publication is recorded below.
+  GitHub tracking adoption: own Project9 Kanban/Status columns, explicit reviewed Python/gh
+  preview/apply and36focused sync/export tests/Ruff. Pilot issue7 and exact no-op rerun pass;
+  backfill has21unique issue/item/backlinks with full live body/lifecycle/Status matching.
+  Final readback:21new issues,0preexisting reused,0open/21closed-completed,21unique Done
+  Kanban items and21exact backlinks;21no-op plans/no pending/conflicts. Index/ledger and
+  private13/17 are excluded. Historical text is retained. Current working-tree source export
+  and independent unchanged-runtime installer checks pass. No commit/push or product change.
+  Complete GUI visual reference: one11,386,637-byte offline HTML with204embedded native
+  screenshots/102paired views/scroll parts and all named surfaces/45controls covered in both
+  themes. PNG/source/citation/coverage checks,3regressions/Ruff and copied-file browser controls/
+  1440/390bounds pass;2diagrams embedded. Main README7/GIF-first/gallery24 retained.
+  Runtime1.2.4unchanged; handbook275pages/103diagrams and current snapshots verified.
+  Current v1.2.4 handoff fixes embedded numeric padding and custom preview-height binding,
+  with canonical Video scope and verified45Live/22Video/17recorder/4model-helper coverage.
+  Native padding/forwarding/scope/approved-layout set22passed at each100/125/150%; full suite
+  315passed/3explicit offscreen limitations skipped;Ruff. Actual native extracted-wheel proof
+  works outside checkout. Eight native captures/banner and275page/103diagram handbook updated;
+  zero failures/overflow. Current source/MSI checks pass; developer utilities remain CLI-only.
+  Earlier v1.2.3 handoff restores the preferred four metric cards below the preview beside
+  Tools, with its drawer in the viewer column and settings full-height. Full suite313passed/
+  2explicit offscreen limitations skipped; Ruff. Native card/font/border/containment/channel/
+  actions/Tools set18passed at each100/125/150%. Actual extracted native wheel proof passes
+  outside checkout in both themes. README/gallery and handbook274pages/103diagrams refreshed;
+  zero failures/overflow. Current source/MSI snapshots pass their independent checks.
+  Earlier v1.2.2 handoff includes the owner-directed right diagnostic rail and persistent Live
+  Show clean output button with independent Auto-open preference. Full suite310passed/one
+  existing skip; Ruff. Native image/containment/channel/close-reopen/primary-action set16passed
+  at each100/125/150%. Actual wheel proof works outside checkout in both themes.
+  Eight native captures and minimal README/gallery refreshed; handbook274pages/103diagrams,
+  zero failures/overflow. Current source/MSI snapshots pass their independent checks.
+  Earlier v1.1.1 baseline includes online unsigned Windows x64 setup with private Python 3.12.16.
   Final suite: 285 passed/Ruff. Real final-MSI online setup, native application/helpers/video
   and complete uninstall passed; saved user preset/model bytes survived unchanged.
   Current engineering handbook: 263 pages/101 diagrams, zero failures/overflow.
@@ -54,6 +116,44 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-06: Owner separately requests publication. Tracking d40e986 and README media
+  d1bf419 are pushed to workDesk/agentic_GUI; exact remote branch/new file objects verified.
+  Both workstreams now have real source links. Private context stays local; main is not merged.
+  2026-11-06: Completed workstream25: new dark/light Studio tours, minimal front/gallery,
+  fresh theme screenshots, guarded synthetic-only capture guidance and dependent packages.
+  Earlier tracking work remains intact and uncommitted; user acceptance/publication are separate.
+  2026-11-06: Added workstream24, dedicated repository Kanban and verified historical
+  issue/Project/backlink backfill. Preserved original TODOs/privacy and source/runtime/UI.
+  Future invocation, conflict recovery and repository-local Zanark attribution are documented.
+  Completed adoption27 is closed/completed/Done; final live21mapping reconciliation passes.
+  Local tracking remains uncommitted, with new public files selectively staged for export.
+  2026-11-03: Workstream23 delivered: one complete portable native GUI visual reference,
+  with all named sections/views, scrolling parts and dialogs in both themes. Linked from
+  existing docs while preserving minimal README and runtime/privacy/publication boundaries.
+  2026-11-03: Workstream22 delivered as v1.2.4: properly inset numeric text, corrected preview-
+  height integer forwarding, truthful Video-mode controls and actual operating-feature audit.
+  Approved layout/fonts/cards retained; current screenshots/docs/handbook/snapshots verified.
+  2026-11-03: Workstream21 delivered as v1.2.3: restored data-card grouping, persistent below-
+  preview placement beside Tools and viewer-only drawer. Actual card/text/native geometry,
+  current screenshots/guide/handbook and source/MSI snapshots verified.
+  2026-11-03: Workstream20 delivered as v1.2.2: raw face above Face/pose or Body in a readable,
+  resizable right-hand rail, main preview snug beside the inspector, and a persistent clean-
+  output reopen button. Updated native README/gallery, guide/handbook and current snapshots.
+  User usability approval remains separate; no camera/portrait/remote publication.
+  2026-11-03: Workstream 19 delivered as v1.2.1: explicit contrasted +/- numeric controls,
+  muted disabled/boundary states and no trailing mode-strip line. Actual raster/click/DPI/
+  wheel-resource checks pass. Screenshots, guide, handbook and patch artifacts refreshed.
+  2026-11-03: Workstream 18 delivered: banner/hero then three GIFs, two GUI theme screenshots
+  only, and a linked 24-image captioned gallery. All 31 original media references preserved.
+  Documentation-only release metadata refreshed; runtime code/media bytes/version unchanged.
+  2026-11-03: Preview-first v1.2.0 delivered with a display-fitted 16:9 startup layout, left
+  inspector/right protected preview, full option access and optional bounded Tools. Current
+  native screenshots, engineering handbook and release handoff updated. Portrait work had
+  already finished when the user stopped that task; no further portrait work is active.
+  2026-11-03: Workstream 16 research completed. Native audit reproduces 76 visible pixels of a
+  220px canvas at 1120x780; dock/parent budgeting and splitter collapse are structural defects.
+  Five research lenses, 12 primary references and full option inventory recorded.
+  Design confirmation and implementation remain pending; this is not a shipped UI fix.
   2026-11-03: Workstream 12 delivered: 19,709,952-byte per-user MSI, strict online component
   setup and installed native/CLI/helper/export/uninstall qualification. Updated handbook and
   v1.1.1 source handoff. No live camera, system Python/PATH changes or remote publication.

@@ -1,4 +1,6 @@
 Status: DONE
+Workstream-ID: kc-06
+GitHub-Issue: https://github.com/Zanark/KardboardCode-VTuber/issues/11
 Milestone: Explicit local laptop/USB camera selection
 Dependencies: 03_NATIVE_INTERFACE.todo
 Purpose: Make native machine cameras discoverable without typing a numeric source into a masked URL field.

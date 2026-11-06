@@ -20,12 +20,13 @@ from PySide6.QtGui import (
     QPainter,
     QPen,
     QPixmap,
+    QResizeEvent,
 )
 from PySide6.QtWidgets import (
+    QAbstractSpinBox,
     QApplication,
     QCheckBox,
     QComboBox,
-    QDockWidget,
     QDoubleSpinBox,
     QFileDialog,
     QFormLayout,
@@ -36,6 +37,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
     QMainWindow,
+    QMenu,
     QMessageBox,
     QPlainTextEdit,
     QProgressBar,
@@ -47,6 +49,7 @@ from PySide6.QtWidgets import (
     QStackedWidget,
     QTabBar,
     QTabWidget,
+    QToolButton,
     QVBoxLayout,
     QWidget,
 )
@@ -66,11 +69,17 @@ from kardboard_vtuber.gui.settings import (
 )
 from kardboard_vtuber.gui.tutorial import LESSONS, TutorialDialog
 from kardboard_vtuber.gui.video_worker import VideoExportWorker
-from kardboard_vtuber.gui.widgets import OptionControl, VideoCanvas
+from kardboard_vtuber.gui.widgets import (
+    DisclosureSection,
+    ErrorBanner,
+    OptionControl,
+    VideoCanvas,
+)
 from kardboard_vtuber.gui.worker import SessionWorker
 from kardboard_vtuber.runtime import RuntimeBridge, RuntimeTelemetry, redact
 from kardboard_vtuber.tracking.eyes import EyeSensitivity
 from kardboard_vtuber.video import VideoExportOptions, VideoProgress
+from kardboard_vtuber.video_pipeline import VIDEO_FIELDS
 
 ICON_PATH = Path(__file__).parent / "assets" / "kardboardcode-icon.ico"
 
@@ -80,10 +89,17 @@ class StudioWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("KardboardCode Studio")
         self.setWindowIcon(QIcon(str(ICON_PATH)))
-        self.resize(1500, 980)
-        self.setMinimumSize(1080, 720)
+        self.setMinimumSize(960, 600)
+        screen = QApplication.primaryScreen()
+        available = screen.availableGeometry() if screen is not None else None
+        width = min(
+            1440, available.width() - 32, (available.height() - 64) * 16 // 9,
+        ) if available is not None else 1440
+        width = width // 16 * 16
+        self.resize(width, width // 16 * 9)
         self.values = settings.defaults()
         self.controls: dict[str, OptionControl] = {}
+        self.sections: dict[tuple[str, str], DisclosureSection] = {}
         self.worker: SessionWorker | VideoExportWorker | None = None
         self.bridge: RuntimeBridge | None = None
         self.job: QProcess | None = None
@@ -111,6 +127,7 @@ class StudioWindow(QMainWindow):
         self._calibration: EyeCalibrationDialog | None = None
         self._tutorial: TutorialDialog | None = None
         self._model_status: dict[str, QLabel] = {}
+        self._model_buttons: dict[str, QPushButton] = {}
         self._build_ui()
         self.output_window = CleanOutputWindow(self, self.windowIcon())
         self._sync_source_mode()
@@ -126,20 +143,26 @@ class StudioWindow(QMainWindow):
     def _build_ui(self) -> None:
         central = QWidget()
         root = QVBoxLayout(central)
-        root.setContentsMargins(22, 16, 22, 12)
-        root.setSpacing(14)
+        root.setContentsMargins(12, 8, 12, 8)
+        root.setSpacing(8)
         header = QHBoxLayout()
+        header.setSpacing(8)
         logo = QLabel()
-        logo.setPixmap(self.windowIcon().pixmap(54, 54))
+        logo.setPixmap(self.windowIcon().pixmap(32, 32))
         header.addWidget(logo)
-        identity = QVBoxLayout()
-        title = QLabel("KARDBOARD / STUDIO")
+        title = QLabel("Kardboard / Studio")
         title.setObjectName("appTitle")
-        identity.addWidget(title)
-        subtitle = QLabel("YOUR CAMERA. YOUR CARDBOARD. YOUR CONTROLS.")
-        subtitle.setObjectName("eyebrow")
-        identity.addWidget(subtitle)
-        header.addLayout(identity)
+        header.addWidget(title)
+        self.work_mode = QTabBar()
+        self.work_mode.setObjectName("workMode")
+        self.work_mode.setExpanding(False)
+        self.work_mode.setDrawBase(False)
+        self.work_mode.addTab("Live")
+        self.work_mode.addTab("Video")
+        self.work_mode.setTabToolTip(0, "Camera and streaming")
+        self.work_mode.setTabToolTip(1, "Process a prerecorded video")
+        self.work_mode.currentChanged.connect(self._change_work_mode)
+        header.addWidget(self.work_mode)
         header.addStretch()
         self.theme_button = QPushButton("Theme")
         self.theme_button.setToolTip("Switch dark / light theme")
@@ -162,47 +185,46 @@ class StudioWindow(QMainWindow):
             self.start_button,
             self.stop_button,
         ):
-            button.setMinimumHeight(36)
+            button.setMinimumHeight(32)
             header.addWidget(button)
         root.addLayout(header)
-        self.work_mode = QTabBar()
-        self.work_mode.setObjectName("workMode")
-        self.work_mode.setExpanding(True)
-        self.work_mode.addTab("LIVE / camera and streaming")
-        self.work_mode.addTab("VIDEO / process a prerecorded file")
-        self.work_mode.currentChanged.connect(self._change_work_mode)
-        root.addWidget(self.work_mode)
-
         self.status = QLabel("IDLE / NO CAMERA CONNECTED")
         self.status.setObjectName("status")
+        self.status.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed)
         root.addWidget(self.status)
-        self.error_label = QLabel()
-        self.error_label.setTextFormat(Qt.TextFormat.PlainText)
-        self.error_label.setObjectName("error")
-        self.error_label.setWordWrap(True)
+        self.error_label = ErrorBanner()
         self.error_label.hide()
         root.addWidget(self.error_label)
-        split = QSplitter(Qt.Orientation.Horizontal)
+        self.workspace_split = QSplitter(Qt.Orientation.Horizontal)
+        self.workspace_split.setChildrenCollapsible(False)
         controls_panel = QFrame()
         controls_panel.setObjectName("panel")
+        controls_panel.setMinimumWidth(300)
+        controls_panel.setMaximumWidth(420)
         panel_layout = QVBoxLayout(controls_panel)
-        panel_layout.setContentsMargins(16, 14, 16, 12)
-        self._build_video_setup(panel_layout)
+        panel_layout.setContentsMargins(12, 10, 12, 8)
+        panel_layout.setSpacing(8)
         top = QHBoxLayout()
-        top.addWidget(QLabel("CONTROL ROOM"), 1)
-        save = QPushButton("Save preset")
-        save.clicked.connect(self._save_preset_dialog)
-        self.load_button = QPushButton("Load")
-        self.load_button.clicked.connect(self._load_preset_dialog)
-        self.reset_button = QPushButton("Reset")
-        self.reset_button.clicked.connect(self.reset_settings)
-        for button in (save, self.load_button, self.reset_button):
-            top.addWidget(button)
+        heading = QLabel("Settings")
+        heading.setObjectName("panelTitle")
+        top.addWidget(heading, 1)
+        self.preset_menu = QMenu(self)
+        self.save_action = QAction("Save source-free preset...", self)
+        self.save_action.triggered.connect(self._save_preset_dialog)
+        self.load_action = QAction("Load preset...", self)
+        self.load_action.triggered.connect(self._load_preset_dialog)
+        self.reset_action = QAction("Reset settings", self)
+        self.reset_action.triggered.connect(self.reset_settings)
+        self.preset_menu.addActions((self.save_action, self.load_action, self.reset_action))
+        presets = QPushButton("Presets")
+        presets.setMenu(self.preset_menu)
+        top.addWidget(presets)
         panel_layout.addLayout(top)
         self.page_selector = QComboBox()
         self.page_selector.setAccessibleName("Settings page")
         self.page_names = [
             "Camera",
+            "Video file",
             "Avatar & eyes",
             "Output & effects",
             "Tracking labs",
@@ -219,6 +241,7 @@ class StudioWindow(QMainWindow):
         self.live_hint.setWordWrap(True)
         panel_layout.addWidget(self.live_hint)
         self.pages = QStackedWidget()
+        self.pages.setMinimumSize(0, 0)
         actions = settings.parser_actions()
         for name in self.page_names:
             page = QWidget()
@@ -227,6 +250,8 @@ class StudioWindow(QMainWindow):
             content.setSpacing(10)
             if name in PAGES:
                 self._build_control_page(name, content, actions)
+            elif name == "Video file":
+                self._build_video_setup(content)
             elif name == "Private capture":
                 self._build_recording_page(content)
             else:
@@ -235,25 +260,18 @@ class StudioWindow(QMainWindow):
             scroll = QScrollArea()
             scroll.setWidgetResizable(True)
             scroll.setFrameShape(QFrame.Shape.NoFrame)
+            scroll.setMinimumSize(0, 0)
             scroll.setWidget(page)
             self.pages.addWidget(scroll)
         self.page_selector.currentIndexChanged.connect(self.pages.setCurrentIndex)
         panel_layout.addWidget(self.pages, 1)
-        split.addWidget(controls_panel)
-        split.addWidget(self._build_workspace())
-        split.setStretchFactor(0, 0)
-        split.setStretchFactor(1, 1)
-        split.setSizes([420, 1000])
-        controls_panel.setMinimumWidth(360)
-        root.addWidget(split, 1)
-        footer = QLabel(
-            "LOCAL-FIRST  /  source-free presets  /  clean virtual output  /  "
-            "no automatic camera connection",
-        )
-        footer.setObjectName("hint")
-        root.addWidget(footer)
+        self.workspace_split.addWidget(controls_panel)
+        self.workspace_split.addWidget(self._build_workspace())
+        self.workspace_split.setStretchFactor(0, 0)
+        self.workspace_split.setStretchFactor(1, 1)
+        self.workspace_split.setSizes([340, 1000])
+        root.addWidget(self.workspace_split, 1)
         self.setCentralWidget(central)
-        self._build_console()
         self._build_menu()
 
     def _build_control_page(
@@ -263,10 +281,9 @@ class StudioWindow(QMainWindow):
         actions: dict[str, argparse.Action],
     ) -> None:
         descriptions = {
-            "Camera": "Connect a local camera, phone stream, or recorded file.",
+            "Camera": "Choose an input. Only Start camera opens capture.",
             "Avatar & eyes": (
-                "Missing blinks? Use OPEN / CLOSED calibration, or raise blink thresholds. "
-                "Lower them only to reduce false closures."
+                "Tune while watching the preview. Calibrate with your actual live eye scores."
             ),
             "Output & effects": "Output settings are independent of capture and local preview.",
             "Tracking labs": "EXPERIMENTAL / Face-only remains the selected workflow.",
@@ -282,47 +299,64 @@ class StudioWindow(QMainWindow):
                 "Explicitly run the checksum-verifying downloader with --force.",
             )
             layout.addWidget(self.model_force)
-        fields = PAGES[name]
-        if name == "Avatar & eyes":
-            calibrate = QPushButton("Calibrate OPEN / CLOSED eyes...")
-            calibrate.setToolTip(
-                "Capture your actual open and closed scores. "
-                "A closed eye does not always score zero.",
-            )
-            calibrate.clicked.connect(self.start_eye_calibration)
-            self.calibrate_button = calibrate
-            layout.addWidget(calibrate)
-            fields = tuple(field for field in fields if field.name in LIVE_FIELDS) + tuple(
-                field for field in fields if field.name not in LIVE_FIELDS
-            )
-        for field in fields:
-            if field.name == "source":
-                self._build_source_selector(layout)
-            control = OptionControl(field, actions[field.name], self.values[field.name])
-            self.controls[field.name] = control
-            control.changed.connect(self._refresh_settings)
-            layout.addWidget(control)
-            if field.name in {"virtual_camera_width", "virtual_camera_height"}:
-                control.hide()
-                if field.name == "virtual_camera_height":
-                    self._build_resolution_selector(layout)
-            if field.name == "source":
-                environment = QPushButton("Use KARDBOARD_CAMERA_URL from this process")
-                environment.clicked.connect(self._use_environment)
-                self.source_environment_button = environment
-                layout.addWidget(environment)
-            if field.name in MODEL_SCRIPTS:
-                row = QHBoxLayout()
-                state = QLabel()
-                state.setObjectName("hint")
-                self._model_status[field.name] = state
-                row.addWidget(state, 1)
-                download = QPushButton("Verify / download")
-                download.clicked.connect(
-                    lambda checked=False, model=field.name: self.download_model(model),
+        fields = {field.name: field for field in PAGES[name]}
+        sections = settings.SECTIONS.get(name, (
+            settings.Section("Model files", tuple(fields), True),
+        ))
+        for definition in sections:
+            section = DisclosureSection(definition.title, expanded=definition.expanded)
+            self.sections[name, definition.title] = section
+            layout.addWidget(section)
+            if name == "Avatar & eyes" and definition.title == "Eye tuning":
+                self.calibrate_button = QPushButton("Calibrate OPEN / CLOSED eyes...")
+                self.calibrate_button.setToolTip(
+                    "Use real open/closed samples; closed eyes do not always score zero. "
+                    "Raise blink thresholds for missed closures; lower them for false closures.",
                 )
-                row.addWidget(download)
-                layout.addLayout(row)
+                self.calibrate_button.clicked.connect(self.start_eye_calibration)
+                section.content.addWidget(self.calibrate_button)
+                self.eye_states: dict[str, QLabel] = {}
+                row = QHBoxLayout()
+                for eye, letter in (("left", "K"), ("right", "C")):
+                    state = QLabel(f"Your {eye.upper()} / {letter}: --")
+                    state.setObjectName("hint")
+                    self.eye_states[eye] = state
+                    row.addWidget(state)
+                section.content.addLayout(row)
+            for field_name in definition.fields:
+                self._add_control(fields[field_name], actions[field_name], section.content)
+
+    def _add_control(
+        self, field: settings.Field, action: argparse.Action, layout: QVBoxLayout,
+    ) -> None:
+        if field.name == "source":
+            self._build_source_selector(layout)
+        control = OptionControl(field, action, self.values[field.name])
+        self.controls[field.name] = control
+        control.changed.connect(self._refresh_settings)
+        layout.addWidget(control)
+        if field.name in {"virtual_camera_width", "virtual_camera_height"}:
+            control.hide()
+            if field.name == "virtual_camera_height":
+                self._build_resolution_selector(layout)
+        if field.name == "source":
+            environment = QPushButton("Use KARDBOARD_CAMERA_URL from this process")
+            environment.clicked.connect(self._use_environment)
+            self.source_environment_button = environment
+            layout.addWidget(environment)
+        if field.name in MODEL_SCRIPTS:
+            row = QHBoxLayout()
+            state = QLabel()
+            state.setObjectName("hint")
+            self._model_status[field.name] = state
+            row.addWidget(state, 1)
+            download = QPushButton("Verify / download")
+            self._model_buttons[field.name] = download
+            download.clicked.connect(
+                lambda checked=False, model=field.name: self.download_model(model),
+            )
+            row.addWidget(download)
+            layout.addLayout(row)
 
     def _build_resolution_selector(self, layout: QVBoxLayout) -> None:
         layout.addWidget(QLabel("Virtual camera resolution / restart required"))
@@ -395,7 +429,7 @@ class StudioWindow(QMainWindow):
         self.output_resolution.blockSignals(False)
 
     def _build_video_setup(self, layout: QVBoxLayout) -> None:
-        self.video_setup = QGroupBox("PROCESS A VIDEO / not private camera capture")
+        self.video_setup = QGroupBox("Video file")
         form = QVBoxLayout(self.video_setup)
         self.video_input = QLineEdit()
         self.video_input.setPlaceholderText("Choose an existing local video")
@@ -428,13 +462,6 @@ class StudioWindow(QMainWindow):
         note.setObjectName("hint")
         note.setWordWrap(True)
         form.addWidget(note)
-        self.video_progress = QProgressBar()
-        self.video_progress.setRange(0, 1000)
-        self.video_progress.setValue(0)
-        form.addWidget(self.video_progress)
-        self.video_progress_label = QLabel("Choose a video, tune the avatar, then Process video.")
-        self.video_progress_label.setWordWrap(True)
-        form.addWidget(self.video_progress_label)
         self.video_input.textChanged.connect(
             lambda _: self.command.setPlainText(self._video_command())
             if hasattr(self, "command") and self._mode == 1 else None,
@@ -448,7 +475,6 @@ class StudioWindow(QMainWindow):
             if hasattr(self, "command") and self._mode == 1 else None,
         )
         layout.addWidget(self.video_setup)
-        self.video_setup.hide()
 
     def _choose_video_input(self) -> None:
         filename, _ = QFileDialog.getOpenFileName(self, "Choose an existing video")
@@ -480,25 +506,34 @@ class StudioWindow(QMainWindow):
             self._show_error("Stop the current work before switching modes.")
             return
         self._mode = index
-        self.video_setup.setVisible(index == 1)
+        self.video_setup.setEnabled(index == 1)
+        self.video_progress_panel.setVisible(index == 1)
         self.start_button.setText("Process video" if index == 1 else "Start camera")
         self.demo_button.setVisible(index == 0)
+        self.clean_output_button.setVisible(index == 0)
         self.show_output.setVisible(index == 0)
-        self.preview.placeholder = (
-            "Choose an input video and a NEW output filename.\n\n"
-            "Process video renders every frame at original dimensions.\n"
-            "No live camera is opened."
-            if index == 1 else
-            "Your stage is ready.\n\nStart camera when ready, or Try demo "
-            "to explore with synthetic imagery.\n\nNo camera starts automatically."
-        )
+        self._set_preview_hint()
         self.preview.set_frame(None)
         self.status.setText(
             "VIDEO READY / NO FILE OPENED" if index == 1 else "IDLE / NO CAMERA CONNECTED",
         )
-        self.page_selector.setCurrentText("Avatar & eyes" if index == 1 else "Camera")
+        self.page_selector.setCurrentText("Video file" if index == 1 else "Camera")
         self._set_busy(False)
         self._refresh_settings()
+
+    def _set_preview_hint(self, *, suppressed: bool = False) -> None:
+        self.preview.placeholder = (
+            "Preview is explicitly suppressed.\n\nProcessing and output continue. "
+            "Stop and disable Suppress preview in Camera > Capture & tracking "
+            "to display frames here."
+            if suppressed else
+            "Choose an input video and a NEW output filename.\n\n"
+            "Process video renders every frame at original dimensions.\n"
+            "No live camera is opened."
+            if self._mode == 1 else
+            "Your stage is ready.\n\nStart camera when ready, or Try demo "
+            "to explore with synthetic imagery.\n\nNo camera starts automatically."
+        )
 
     def _video_command(self) -> str:
         def quote(value: object) -> str:
@@ -509,11 +544,7 @@ class StudioWindow(QMainWindow):
             "  --output-video=" + quote(self.video_output.text()) + " `",
             "  --video-quality " + str(self.video_quality.currentData()) + " `",
         ]
-        supported = {
-            "physics", "cardboard_renderer", "box_depth_offset", "tracking_width", "face_model",
-            "hand_model", "segmentation_model", "brightness", "green_screen", "segmentation_width",
-            "hand_occlusion", "hand_tracking_width", "no_motion_filter", *LIVE_FIELDS,
-        }
+        supported = VIDEO_FIELDS - {"input_already_mirrored"}
         for name in sorted(supported):
             value = self.values[name]
             if value is False or value is None:
@@ -581,19 +612,24 @@ class StudioWindow(QMainWindow):
     def _toggle_clean_output(self, enabled: bool) -> None:
         if not hasattr(self, "output_window"):
             return
-        if enabled and self.worker is not None and not self._processing_video:
-            if not self._renders(settings.namespace(self.values)):
-                self._show_error("Clean output requires cardboard rendering; raw modes stay local.")
-                return
-            if self.controls["headless"].value():
-                self._show_error(
-                    "Suppress preview is enabled. Stop and disable it for local windows.",
-                )
-                return
-            self.output_window.show()
-            self.output_window.raise_()
-        else:
+        if not enabled:
             self.output_window.hide()
+            return
+        if self._mode != 0 or self._processing_video:
+            self._show_error("Clean output is available in Live mode, not video export.")
+            return
+        args = settings.namespace(self.values)
+        if not self._renders(args):
+            self._show_error("Clean output requires cardboard rendering; raw modes stay local.")
+            return
+        if args.headless:
+            self._show_error(
+                "Suppress preview is enabled. Stop and disable it for local windows.",
+            )
+            return
+        self.output_window.show()
+        self.output_window.raise_()
+        self.output_window.activateWindow()
 
     def start_eye_calibration(self) -> None:
         if (
@@ -663,8 +699,7 @@ class StudioWindow(QMainWindow):
         row.addWidget(self.refresh_cameras_button)
         native_layout.addLayout(row)
         self.native_hint = QLabel(
-            "The default route opens the first camera (index 0). Named entries show alternative "
-            "Windows capture APIs, not RGB/IR modes. Refresh never opens a stream.",
+            "Refresh lists capture routes. Start opens the selected camera.",
         )
         self.native_hint.setWordWrap(True)
         self.native_hint.setObjectName("hint")
@@ -758,125 +793,230 @@ class StudioWindow(QMainWindow):
 
     def _build_workspace(self) -> QWidget:
         workspace = QWidget()
+        workspace.setObjectName("previewWorkspace")
         layout = QVBoxLayout(workspace)
-        layout.setContentsMargins(4, 0, 0, 0)
-        layout.setSpacing(12)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(6)
         top = QHBoxLayout()
-        heading = QLabel("PROGRAM / LOCAL PREVIEW")
-        heading.setObjectName("eyebrow")
-        top.addWidget(heading, 1)
+        heading = QLabel("Preview")
+        heading.setObjectName("panelTitle")
+        top.addWidget(heading)
+        self.diagnostics_notice = QLabel("Diagnostics / local only")
+        self.diagnostics_notice.setObjectName("privateNotice")
+        self.diagnostics_notice.setSizePolicy(
+            QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed,
+        )
+        self.diagnostics_notice.hide()
+        top.addWidget(self.diagnostics_notice, 1)
         self.preview_note = QLabel("No input / nothing is being published")
         self.preview_note.setObjectName("hint")
-        top.addWidget(self.preview_note)
+        self.preview_note.setAlignment(Qt.AlignmentFlag.AlignRight)
+        self.preview_note.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed)
+        top.addWidget(self.preview_note, 1)
+        self.clean_output_action = QAction("Show clean output", self)
+        self.clean_output_action.triggered.connect(lambda: self._toggle_clean_output(True))
+        self.clean_output_button = QToolButton()
+        self.clean_output_button.setDefaultAction(self.clean_output_action)
+        self.clean_output_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextOnly)
+        self.clean_output_button.setAccessibleName("Show or reopen clean output window")
+        top.addWidget(self.clean_output_button)
+        self.show_output = QCheckBox("Auto-open")
+        self.show_output.setChecked(True)
+        self.show_output.setToolTip(
+            "Open clean output automatically when Live/demo starts. "
+            "Unchecking hides it; Show clean output can reopen it without changing "
+            "this preference.",
+        )
+        self.show_output.toggled.connect(self._toggle_clean_output)
+        top.addWidget(self.show_output)
         layout.addLayout(top)
         self.preview = VideoCanvas(
             "Your stage is ready.\n\nStart camera when you are ready, or Try demo "
             "to explore with synthetic imagery.\n\nNo camera starts automatically.",
         )
-        self.skeleton = VideoCanvas(
-            "Enable the separate skeleton diagnostic in Tracking labs.\n"
-            "The skeleton is not composited onto your camera output.",
-        )
+        self.preview.setMinimumSize(320, 180)
+        self.preview.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.preview_split = QSplitter(Qt.Orientation.Horizontal)
+        self.preview_split.setChildrenCollapsible(False)
+        self.preview_split.addWidget(self.preview)
+        self.preview_split.addWidget(self._build_diagnostics())
+        self.preview_split.setStretchFactor(0, 1)
+        self.preview_split.setStretchFactor(1, 0)
+        layout.addWidget(self.preview_split, 1)
+        self.video_progress_panel = QWidget()
+        progress = QVBoxLayout(self.video_progress_panel)
+        progress.setContentsMargins(0, 0, 0, 0)
+        progress.setSpacing(4)
+        self.video_progress = QProgressBar()
+        self.video_progress.setRange(0, 1000)
+        self.video_progress.setValue(0)
+        progress.addWidget(self.video_progress)
+        self.video_progress_label = QLabel("Choose a video, then Process video.")
+        self.video_progress_label.setObjectName("hint")
+        progress.addWidget(self.video_progress_label)
+        self.video_progress_panel.hide()
+        layout.addWidget(self.video_progress_panel)
         self.command = QPlainTextEdit()
         self.command.setReadOnly(True)
+        self.command.setMinimumSize(0, 0)
         self.command.setLineWrapMode(QPlainTextEdit.LineWrapMode.NoWrap)
         self.command.setObjectName("command")
-        self.raw_face = VideoCanvas("No face observation / raw pixels stay local")
-        self.raw_face.setAccessibleName("Raw face diagnostic, local only")
-        self.face_mesh = VideoCanvas("Face mesh / pose diagnostic")
-        self.raw_face.setMinimumSize(120, 120)
-        self.face_mesh.setMinimumSize(120, 120)
-        self.skeleton.setMinimumSize(120, 120)
-        self.raw_panel = QGroupBox("RAW FACE / LOCAL ONLY")
-        raw_layout = QVBoxLayout(self.raw_panel)
-        raw_layout.addWidget(self.raw_face, 1)
-        raw_note = QLabel("PRIVATE DIAGNOSTIC\nNever included in program output.")
-        raw_note.setObjectName("warning")
-        raw_note.setWordWrap(True)
-        raw_layout.addWidget(raw_note)
-        self.diagnostic_panel = QGroupBox("DIAGNOSTICS / LOCAL ONLY")
-        diagnostic_layout = QVBoxLayout(self.diagnostic_panel)
-        self.diagnostic_tabs = QTabWidget()
-        self.diagnostic_tabs.addTab(self.face_mesh, "Face / pose")
-        self.diagnostic_tabs.addTab(self.skeleton, "Body")
-        diagnostic_layout.addWidget(self.diagnostic_tabs)
-        self.video_split = QSplitter(Qt.Orientation.Horizontal)
-        self.video_split.addWidget(self.raw_panel)
-        self.video_split.addWidget(self.preview)
-        self.video_split.addWidget(self.diagnostic_panel)
-        self.video_split.setStretchFactor(1, 1)
-        self.video_split.setSizes([230, 900, 260])
-        self.raw_panel.hide()
-        self.diagnostic_panel.hide()
-        layout.addWidget(self.video_split, 1)
-        self.show_output = QCheckBox("Open clean output window / OBS Window Capture")
-        self.show_output.setChecked(True)
-        self.show_output.setToolTip(
-            "A separate controls-free window, distinct from OBS Virtual Camera. "
-            "Raw/debug panels never appear in it.",
-        )
-        self.show_output.toggled.connect(self._toggle_clean_output)
-        layout.addWidget(self.show_output)
+        self._build_console()
+        footer = QHBoxLayout()
+        footer.setSpacing(6)
+        footer.addWidget(self.tools_button)
+        self.metrics_strip = self._build_metrics()
+        footer.addWidget(self.metrics_strip, 3)
+        self.session_summary = QLabel("No input / not publishing")
+        self.session_summary.setObjectName("hint")
+        self.session_summary.setAlignment(Qt.AlignmentFlag.AlignRight)
+        self.session_summary.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Fixed)
+        footer.addWidget(self.session_summary, 1)
+        layout.addLayout(footer)
+        layout.addWidget(self.tools_drawer)
+        return workspace
+
+    def _build_metrics(self) -> QWidget:
+        strip = QWidget()
+        strip.setAccessibleName("Live performance and output cards")
+        strip.setMaximumWidth(720)
+        row = QHBoxLayout(strip)
+        row.setContentsMargins(0, 0, 0, 0)
+        row.setSpacing(4)
         self.metrics: dict[str, QLabel] = {}
-        metrics_row = QHBoxLayout()
         for name, title in (
-            ("camera", "CAMERA FPS"),
-            ("tracking", "TRACKING FPS"),
-            ("age", "INTERNAL FRAME AGE"),
-            ("output", "VIDEO OUTPUT"),
+            ("camera", "CAMERA FPS"), ("tracking", "TRACKING FPS"),
+            ("age", "INTERNAL FRAME AGE"), ("output", "VIDEO OUTPUT"),
         ):
             card = QFrame()
             card.setObjectName("metric")
+            card.setAccessibleName(title)
+            card.setMinimumWidth(124 if name in ("age", "output") else 116)
             card_layout = QVBoxLayout(card)
+            card_layout.setContentsMargins(8, 3, 8, 3)
+            card_layout.setSpacing(1)
             caption = QLabel(title)
             caption.setObjectName("eyebrow")
             value = QLabel("--")
             value.setObjectName("metricValue")
+            value.setAccessibleName(title + " value")
             self.metrics[name] = value
             card_layout.addWidget(caption)
             card_layout.addWidget(value)
-            metrics_row.addWidget(card, 1)
-        layout.addLayout(metrics_row)
-        eyes = QGroupBox("LIVE SIGNALS / ANATOMICAL EYES")
-        signals = QGridLayout(eyes)
+            row.addWidget(card, 1)
+        return strip
+
+    def _build_diagnostics(self) -> QWidget:
+        self.raw_face = VideoCanvas("No face observation.\nNever included in clean output.")
+        self.raw_face.setAccessibleName("Raw face diagnostic, local only")
+        self.raw_face.setAccessibleDescription("Private pixels; never included in clean output.")
+        self.face_mesh = VideoCanvas("Face mesh / pose diagnostic")
+        self.face_mesh.setAccessibleName("Face mesh and pose diagnostic, local only")
+        self.skeleton = VideoCanvas(
+            "Waiting for a body observation.\nThe skeleton never enters clean output.",
+        )
+        self.skeleton.setAccessibleName("Body skeleton diagnostic, local only")
+        for canvas in (self.raw_face, self.face_mesh, self.skeleton):
+            canvas.setMinimumSize(120, 120)
+            canvas.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.raw_panel = QFrame()
+        self.raw_panel.setObjectName("diagnosticCard")
+        raw_layout = QVBoxLayout(self.raw_panel)
+        raw_layout.setContentsMargins(6, 4, 6, 4)
+        raw_layout.setSpacing(4)
+        raw_note = QLabel("RAW FACE / LOCAL ONLY")
+        raw_note.setObjectName("privateNotice")
+        raw_note.setToolTip("Private diagnostic; never included in clean output.")
+        raw_layout.addWidget(raw_note)
+        raw_layout.addWidget(self.raw_face, 1)
+        self.diagnostic_tabs = QTabWidget()
+        self.diagnostic_tabs.setAccessibleName("Tracking diagnostics beside the preview")
+        self.diagnostic_tabs.addTab(self.face_mesh, "Face / pose")
+        self.diagnostic_tabs.addTab(self.skeleton, "Body")
+        self.diagnostic_panel = QSplitter(Qt.Orientation.Vertical)
+        self.diagnostic_panel.setChildrenCollapsible(False)
+        self.diagnostic_panel.setMinimumWidth(240)
+        self.diagnostic_panel.setMaximumWidth(480)
+        self.diagnostic_panel.addWidget(self.raw_panel)
+        self.diagnostic_panel.addWidget(self.diagnostic_tabs)
+        self.diagnostic_panel.setStretchFactor(0, 1)
+        self.diagnostic_panel.setStretchFactor(1, 1)
+        self.diagnostic_panel.hide()
+        return self.diagnostic_panel
+
+    def _sync_diagnostics(self) -> None:
+        local = self._mode == 0 and not self.values["headless"]
+        raw = local and bool(self.values["debug_face_preview"])
+        mesh = local and bool(self.values["tracking_debug"])
+        body = local and bool(self.values["full_body"])
+        opening = self.diagnostic_panel.isHidden() and (raw or mesh or body)
+        stacking = raw and (mesh or body) and (
+            self.raw_panel.isHidden() or self.diagnostic_tabs.isHidden()
+        )
+        self.raw_panel.setVisible(raw)
+        self.diagnostic_tabs.setTabVisible(0, mesh)
+        self.diagnostic_tabs.setTabVisible(1, body)
+        self.diagnostic_tabs.setVisible(mesh or body)
+        self.diagnostic_panel.setVisible(raw or mesh or body)
+        self.preview_split.setMinimumHeight(max(
+            self.preview.minimumHeight(),
+            self.diagnostic_panel.minimumSizeHint().height() if raw or mesh or body else 0,
+        ))
+        if opening:
+            self.preview_split.setSizes([max(320, self.preview_split.width() - 324), 320])
+        if opening or stacking:
+            self.diagnostic_panel.setSizes([300, 300])
+
+    def _build_signals(self) -> QWidget:
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(6, 4, 6, 4)
+        layout.setSpacing(6)
+        signals_page = QWidget()
+        signals = QGridLayout(signals_page)
+        signals.setContentsMargins(6, 4, 6, 4)
         self.eye_meters: dict[str, QProgressBar] = {}
         self.eye_labels: dict[str, QLabel] = {}
         for row, (name, title) in enumerate(
-            (("left", "Your LEFT / K"), ("right", "Your RIGHT / C"))
+            (("left", "Your LEFT / K"), ("right", "Your RIGHT / C")),
         ):
             signals.addWidget(QLabel(title), row, 0)
             meter = QProgressBar()
             meter.setRange(0, 1000)
             meter.setTextVisible(False)
-            meter.setFixedHeight(10)
+            meter.setFixedHeight(8)
             meter.setAccessibleName(title + " openness")
             self.eye_meters[name] = meter
             signals.addWidget(meter, row, 1)
             label = QLabel("raw -- / filtered --")
             label.setObjectName("hint")
-            label.setWordWrap(True)
             self.eye_labels[name] = label
             signals.addWidget(label, row, 2)
         self.pose_label = QLabel("Yaw --   Pitch --   Roll --   /   Action --")
         self.pose_label.setObjectName("hint")
         signals.addWidget(self.pose_label, 2, 0, 1, 3)
-        layout.addWidget(eyes)
-        return workspace
+        layout.addWidget(signals_page, 1)
+        return panel
 
     def _build_console(self) -> None:
         self.console = QPlainTextEdit()
         self.console.setReadOnly(True)
         self.console.setMaximumBlockCount(1500)
+        self.console.setMinimumSize(0, 0)
         self.console.setLineWrapMode(QPlainTextEdit.LineWrapMode.NoWrap)
         self.console.setObjectName("console")
-        dock = QDockWidget("SESSION TOOLS / logs and runnable command", self)
-        dock.setObjectName("consoleDock")
+        self.tools_drawer = QScrollArea()
+        self.tools_drawer.setObjectName("toolsPanel")
+        self.tools_drawer.setWidgetResizable(True)
+        # Zero retains Qt's 70px scroll-area minimum hint and can clip the image workspace.
+        self.tools_drawer.setMinimumSize(0, 1)
+        self.tools_drawer.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         body = QWidget()
         layout = QVBoxLayout(body)
         layout.setContentsMargins(6, 2, 6, 4)
         toolbar = QHBoxLayout()
         hint = QLabel(
-            "CLI diagnostics remain available here. Native library messages may also use stderr."
+            "Session logs / native libraries may also write to stderr."
         )
         hint.setObjectName("hint")
         toolbar.addWidget(hint, 1)
@@ -897,40 +1037,65 @@ class StudioWindow(QMainWindow):
         )
         command_hint.setObjectName("hint")
         command_hint.setWordWrap(True)
-        command_layout.addWidget(command_hint)
+        command_toolbar = QHBoxLayout()
+        command_toolbar.addWidget(command_hint, 1)
         self.copy_command = QPushButton("Copy complete CLI command")
         self.copy_command.clicked.connect(
             lambda: QApplication.clipboard().setText(self.command.toPlainText()),
         )
-        command_layout.addWidget(self.copy_command)
-        command_layout.addWidget(self.command)
+        command_toolbar.addWidget(self.copy_command)
+        command_layout.addLayout(command_toolbar)
+        command_layout.addWidget(self.command, 1)
         self.console_tabs.addTab(command_page, "CLI equivalent")
-        dock.setWidget(self.console_tabs)
-        self.addDockWidget(Qt.DockWidgetArea.BottomDockWidgetArea, dock)
-        self.resizeDocks([dock], [155], Qt.Orientation.Vertical)
-        self.console_dock = dock
+        self.console_tabs.addTab(self._build_signals(), "Signals")
+        close = QToolButton()
+        close.setText("Hide")
+        close.setAccessibleName("Hide session tools")
+        close.clicked.connect(lambda: self.tools_action.setChecked(False))
+        self.console_tabs.setCornerWidget(close)
+        self.tools_drawer.setWidget(self.console_tabs)
+        self.tools_drawer.setMaximumHeight(min(220, max(140, self.height() // 4)))
+        self.tools_drawer.hide()
+        self.tools_action = QAction("Tools", self)
+        self.tools_action.setCheckable(True)
+        self.tools_action.setShortcut("Ctrl+J")
+        self.tools_action.setToolTip(
+            "Show or hide logs, CLI equivalent and numeric signals (Ctrl+J)",
+        )
+        self.tools_action.toggled.connect(self._set_tools_visible)
+        self.addAction(self.tools_action)
+        self.tools_button = QToolButton()
+        self.tools_button.setObjectName("toolsToggle")
+        self.tools_button.setDefaultAction(self.tools_action)
+        self.tools_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.tools_button.setArrowType(Qt.ArrowType.UpArrow)
+
+    def _set_tools_visible(self, visible: bool) -> None:
+        self.tools_drawer.setVisible(visible)
+        self.tools_button.setArrowType(
+            Qt.ArrowType.DownArrow if visible else Qt.ArrowType.UpArrow,
+        )
+
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        super().resizeEvent(event)
+        if hasattr(self, "tools_drawer"):
+            self.tools_drawer.setMaximumHeight(min(220, max(140, self.height() // 4)))
 
     def _build_menu(self) -> None:
         menu = self.menuBar().addMenu("File")
-        for label, slot in (
-            ("Save source-free preset...", self._save_preset_dialog),
-            ("Load preset...", self._load_preset_dialog),
-            ("Reset settings", self.reset_settings),
-            ("Exit", self.close),
-        ):
-            action = QAction(label, self)
-            action.triggered.connect(slot)
-            menu.addAction(action)
+        menu.addActions((self.save_action, self.load_action, self.reset_action))
+        exit_action = QAction("Exit", self)
+        exit_action.triggered.connect(self.close)
+        menu.addAction(exit_action)
         view = self.menuBar().addMenu("View")
-        view.addAction(self.console_dock.toggleViewAction())
+        view.addAction(self.tools_action)
         theme = QAction("Toggle dark / light", self)
         theme.triggered.connect(self.toggle_theme)
         view.addAction(theme)
-        clean = QAction("Show clean output window", self)
-        clean.triggered.connect(lambda: self._toggle_clean_output(True))
-        view.addAction(clean)
+        view.addAction(self.clean_output_action)
         help_menu = self.menuBar().addMenu("Help")
         guide = QAction("Studio tutorial", self)
+        guide.setShortcut("F1")
         guide.triggered.connect(self.show_tutorial)
         help_menu.addAction(guide)
 
@@ -1027,9 +1192,22 @@ class StudioWindow(QMainWindow):
             self.error_label.show()
             return
         self.values = values
+        self._sync_diagnostics()
         self._sync_resolution()
-        if self.worker is None:
-            self.show_output.setEnabled(self._renders(args) and not args.headless)
+        clean_available = self._mode == 0 and self._renders(args) and not args.headless
+        self.clean_output_action.setEnabled(clean_available)
+        self.show_output.setEnabled(clean_available)
+        self.clean_output_action.setToolTip(
+            "Stop and disable Suppress preview to use local output windows."
+            if args.headless else
+            "Enable cardboard rendering; unmasked/raw modes cannot populate clean output."
+            if not self._renders(args) else
+            "Show or reopen the controls-free window for OBS Window Capture. "
+            "Closing it does not stop the session. No raw/debug pixels are included.",
+        )
+        if not clean_available:
+            self.output_window.hide()
+            self.output_window.canvas.set_frame(None)
         pair = (str(values["source"]), str(values["backend"]))
         if self._source_mode == 0 and pair != self._native_pair_shown:
             self._populate_native_cameras()
@@ -1198,15 +1376,18 @@ class StudioWindow(QMainWindow):
         self.start_button.setEnabled(not busy)
         self.demo_button.setEnabled(not busy)
         self.stop_button.setEnabled(busy)
-        self.load_button.setEnabled(not busy)
-        self.reset_button.setEnabled(not busy)
+        self.load_action.setEnabled(not busy)
+        self.reset_action.setEnabled(not busy)
         self.record_button.setEnabled(not busy and self._mode == 0)
         self.record_group.setEnabled(not busy and self._mode == 0)
         self.source_environment_button.setEnabled(not busy and self._mode == 0)
         self.input_type.setEnabled(not busy and self._mode == 0)
         self.native_panel.setEnabled(not busy and self._mode == 0)
         self.model_force.setEnabled(not busy)
+        for button in self._model_buttons.values():
+            button.setEnabled(not busy)
         self.work_mode.setEnabled(not busy)
+        self.video_setup.setEnabled(not busy and self._mode == 1)
         for control in self.video_setup.findChildren(QWidget):
             if isinstance(control, (QLineEdit, QComboBox, QCheckBox, QPushButton)):
                 control.setEnabled(not busy)
@@ -1216,24 +1397,19 @@ class StudioWindow(QMainWindow):
             and self.worker is not None and not self.worker.demo,
         )
         self.live_hint.setText(
-            "VIDEO EXPORT: settings are locked for a deterministic output. Stop to cancel."
+            "EXPORT LOCKED / Stop cancels processing."
             if busy and self._processing_video else
-            "RUNNING: dimmed controls are LOCKED. LIVE eye controls remain available. "
-            "Stop to unlock."
+            "SETUP LOCKED / Live tuning remains available."
             if busy else
-            "Video mode keeps original size/timing; live camera/output controls are not used."
+            "VIDEO / Original size and timing."
             if self._mode == 1 else
-            "LIVE controls update immediately. Other settings lock while a session runs.",
+            "Ready / Settings are editable.",
         )
-        self.live_hint.setObjectName("warning" if busy else "hint")
+        self.live_hint.setObjectName("sessionHint")
+        self.live_hint.setProperty("busy", busy)
         self.live_hint.style().unpolish(self.live_hint)
         self.live_hint.style().polish(self.live_hint)
-        live_only = {
-            "source", "backend", "width", "height", "fps", "rotate", "mirror", "duration",
-            "headless", "preview_height", "virtual_camera", "virtual_camera_width",
-            "virtual_camera_height", "virtual_camera_fps", "full_body", "body_head_fallback",
-            "hood_marker_tracking", "pose_tracking_width", "tracking_debug", "debug_face_preview",
-        }
+        live_only = (self.controls.keys() - VIDEO_FIELDS) | {"input_already_mirrored"}
         for name, control in self.controls.items():
             mode_locked = self._mode == 1 and name in live_only
             editable = (
@@ -1245,12 +1421,12 @@ class StudioWindow(QMainWindow):
                 control.state_badge.setText("LIVE ONLY")
 
     def _clear_signals(self) -> None:
+        self._set_preview_hint()
         self.preview.set_frame(None)
         self.skeleton.set_frame(None)
         self.raw_face.set_frame(None)
         self.face_mesh.set_frame(None)
-        self.raw_panel.hide()
-        self.diagnostic_panel.hide()
+        self.diagnostics_notice.hide()
         self.output_window.canvas.set_frame(None)
         for label in self.metrics.values():
             label.setText("--")
@@ -1258,7 +1434,10 @@ class StudioWindow(QMainWindow):
             meter.setValue(0)
         for label in self.eye_labels.values():
             label.setText("raw -- / filtered --")
+        for eye, letter in (("left", "K"), ("right", "C")):
+            self.eye_states[eye].setText(f"Your {eye.upper()} / {letter}: --")
         self.pose_label.setText("Yaw --   Pitch --   Roll --   /   Action --")
+        self.session_summary.setText("No input / not publishing")
         self.preview_note.setText(
             "VIDEO / ORIGINAL SIZE / NO CAMERA"
             if self._mode == 1 else "No input / nothing is being published",
@@ -1276,12 +1455,13 @@ class StudioWindow(QMainWindow):
             self.skeleton.set_frame(packet.skeleton)
             self.raw_face.set_frame(packet.raw_face)
             self.face_mesh.set_frame(packet.face_mesh)
-            self.raw_panel.setVisible(
-                packet.raw_face is not None or packet.telemetry.raw_preview,
+            raw = packet.raw_face is not None or packet.telemetry.raw_preview
+            diagnostics = raw or packet.face_mesh is not None or packet.skeleton is not None
+            self.diagnostics_notice.setText(
+                "RAW diagnostics / local only"
+                if raw else "Diagnostics / local only",
             )
-            self.diagnostic_panel.setVisible(
-                packet.face_mesh is not None or packet.skeleton is not None,
-            )
+            self.diagnostics_notice.setVisible(diagnostics)
             if packet.clean_frame is not None:
                 self.output_window.canvas.set_frame(packet.clean_frame)
             self._display_telemetry(packet.telemetry, packet.frame is None)
@@ -1293,6 +1473,8 @@ class StudioWindow(QMainWindow):
             self.status.setText(
                 "VIDEO PROCESSING / WAITING FOR THE NEXT COMPLETED FRAME"
                 if self._processing_video else
+                "SYNTHETIC DEMO / WAITING FOR THE NEXT FRAME"
+                if self.worker is not None and self.worker.demo else
                 "WAITING FOR CAMERA / RETAINING LAST DISPLAYED FRAME",
             )
 
@@ -1319,6 +1501,7 @@ class StudioWindow(QMainWindow):
             + ("processing video" if self._processing_video else
                "synthetic stage" if state.demo else "local preview"),
         )
+        self._set_preview_hint(suppressed=headless)
         self.metrics["camera"].setText("-- / demo" if state.demo else f"{state.camera_fps:.1f}")
         self.metrics["tracking"].setText("-- / demo" if state.demo else f"{state.tracking_fps:.1f}")
         self.metrics["age"].setText("-- / demo" if state.demo else f"{state.frame_age_ms:.1f} ms")
@@ -1327,6 +1510,11 @@ class StudioWindow(QMainWindow):
             "OBS camera" if state.output_device else
             "Clean window" if self.output_window.isVisible() else "Not publishing",
         )
+        summary = (
+            "Synthetic demo / " if state.demo else
+            f"Capture {state.camera_fps:.1f} fps / Tracking {state.tracking_fps:.1f} fps / "
+        )
+        self.session_summary.setText(summary + self.metrics["output"].text())
         eyes = self.bridge.tuning().eyes if self.bridge is not None else live_tuning(
             settings.namespace(self.values),
         ).eyes
@@ -1339,6 +1527,10 @@ class StudioWindow(QMainWindow):
             other = visual.right_eye_open if name == "left" else visual.left_eye_open
             threshold = eyes.left_closed if name == "left" else eyes.right_closed
             closed = eyes.closed(displayed, other, left_eye=name == "left")
+            decision = ("CLOSED" if closed else "OPEN") if state.face.detected else "--"
+            self.eye_states[name].setText(
+                f"Your {name.upper()} / {'K' if name == 'left' else 'C'}: {decision}",
+            )
             self.eye_labels[name].setText(
                 f"{'CLOSED' if closed else 'OPEN'} / raw {raw:.2f} / "
                 f"render {displayed:.2f} / blink <= {threshold:.2f} / filtered {filtered:.2f}"
@@ -1625,9 +1817,8 @@ class StudioWindow(QMainWindow):
         self._native_devices = devices
         self._populate_native_cameras()
         self.native_hint.setText(
-            "Index 0 means the first device for an API. Media Foundation and DirectShow are "
-            "alternative capture routes, often for the same integrated camera, not RGB/IR modes. "
-            "Refresh does not open capture; Start does."
+            f"{len(devices)} capture routes / names can repeat across Windows APIs. "
+            "Start opens the selected route."
             if devices
             else "No camera entries were returned. Check connections/Windows permissions, refresh, "
             "or use a manual device index in the custom source field."
@@ -1654,6 +1845,8 @@ class StudioWindow(QMainWindow):
         from kardboard_vtuber.gui.theme import stylesheet
 
         self.setStyleSheet(stylesheet(self._dark))
+        for spin in self.findChildren(QAbstractSpinBox):
+            spin.lineEdit().setTextMargins(6, 0, 3, 0)
         self.theme_button.setIcon(_theme_icon(self._dark))
         self.theme_button.setIconSize(QSize(38, 20))
         self.theme_button.setText("Light" if self._dark else "Dark")

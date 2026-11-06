@@ -10,14 +10,27 @@ import pytest
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 pytest.importorskip("PySide6")
 
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QPoint, QRect, Qt, QTimer
+from PySide6.QtGui import QFontDatabase, QRegion
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QLineEdit
+from PySide6.QtWidgets import (
+    QAbstractSpinBox,
+    QApplication,
+    QFrame,
+    QLabel,
+    QLineEdit,
+    QScrollArea,
+    QStyle,
+    QStyleOptionSpinBox,
+)
 
 from kardboard_vtuber.camera.devices import LocalCameraDevice
+from kardboard_vtuber.cli import build_parser
 from kardboard_vtuber.gui import settings
+from kardboard_vtuber.gui.widgets import ValueSlider
 from kardboard_vtuber.gui.window import StudioWindow
 from kardboard_vtuber.runtime import RuntimeBridge
+from kardboard_vtuber.video_pipeline import VIDEO_FIELDS
 
 
 @pytest.fixture(scope="module")
@@ -60,6 +73,65 @@ def test_window_has_all_controls_and_no_implicit_capture(window: StudioWindow) -
     assert isinstance(source, QLineEdit) and source.echoMode() == QLineEdit.EchoMode.Password
     assert not window.error_label.isVisible()
     assert not window.windowIcon().isNull()
+
+
+@pytest.mark.parametrize("fallback", ["body_head_fallback", "hood_marker_tracking"])
+def test_all_runtime_controls_forward_a_nondefault_configuration(
+    window: StudioWindow, tmp_path: Path, fallback: str,
+) -> None:
+    values = dict(settings.defaults(), source="gui-fixture.mkv", backend="ffmpeg",
+                  width=960, height=540, fps=29.97, rotate="left", mirror=True,
+                  input_already_mirrored=True, brightness=27, track_face=True,
+                  tracking_debug=True, tracking_width=960, action_hold_ms=120,
+                  eye_action_hold_ms=50, blink_threshold=.25, left_blink_threshold=.20,
+                  right_blink_threshold=.30, wink_threshold=.70, eye_open_threshold=.80,
+                  wink_min_difference=.17, no_motion_filter=True, render_cardboard=True,
+                  cardboard_renderer="textured-3d", box_depth_offset=-.75, physics=True,
+                  debug_face_preview=True, hand_occlusion=True, hand_tracking_width=240,
+                  green_screen=True, segmentation_width=256, full_body=True,
+                  body_head_fallback=fallback == "body_head_fallback",
+                  hood_marker_tracking=fallback == "hood_marker_tracking",
+                  pose_tracking_width=320, preview_height=600, virtual_camera=True,
+                  virtual_camera_width=960, virtual_camera_height=540,
+                  virtual_camera_fps=25.0, headless=True, duration=2.5)
+    for name in settings.PATH_FIELDS:
+        values[name] = str(tmp_path / (name + ".model"))
+    window._apply_values(values)
+    expected = settings.namespace(values)
+    forwarded = build_parser().parse_args(settings.arguments(window.collected_values()))
+    assert vars(forwarded) == vars(expected)
+    assert window.worker is None and window.job is None
+
+
+def test_default_window_is_display_fitted_widescreen(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    screen = app.primaryScreen()
+    assert screen is not None
+    available = screen.availableGeometry()
+    if available.width() < 1104 or available.height() < 676:
+        pytest.skip("This work area is below the supported widescreen startup size.")
+    assert window.width() * 9 == window.height() * 16
+    assert window.frameGeometry().width() <= available.width()
+    assert window.frameGeometry().height() <= available.height()
+
+
+def test_mode_switcher_has_no_extra_rule_beyond_its_buttons(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    bar = window.work_mode
+    bar.setFixedWidth(bar.sizeHint().width() + 60)
+    for _ in range(2):
+        app.processEvents()
+        image = bar.grab().toImage()
+        start = round((bar.tabRect(bar.count() - 1).right() + 4) * image.devicePixelRatio())
+        colors = {
+            image.pixelColor(x, y).rgba()
+            for x in range(start, image.width() - 2)
+            for y in range(2, image.height())
+        }
+        assert len(colors) == 1, "The mode switcher must not paint a trailing tab baseline."
+        window.toggle_theme()
 
 
 def test_live_per_eye_edit_applies_atomically_and_invalid_edit_is_visible(
@@ -156,6 +228,9 @@ def test_demo_keeps_ui_heartbeat_and_cooperatively_stops(
         wait_until(app, lambda: not window.preview.image.isNull())
         assert window.controls["left_blink_threshold"].isEnabled()
         assert not window.controls["source"].isEnabled()
+        assert not window.load_action.isEnabled() and not window.reset_action.isEnabled()
+        assert window.save_action.isEnabled()
+        assert all(not button.isEnabled() for button in window._model_buttons.values())
         assert "LOCKED" in window.controls["source"].state_badge.text()
         assert "LOCKED" in window.live_hint.text()
         assert window.output_window.isVisible()
@@ -169,6 +244,7 @@ def test_demo_keeps_ui_heartbeat_and_cooperatively_stops(
         window.stop()
         wait_until(app, lambda: window.worker is None)
         assert window.start_button.isEnabled() and window.preview.image.isNull()
+        assert all(button.isEnabled() for button in window._model_buttons.values())
     finally:
         timer.stop()
 
@@ -179,6 +255,62 @@ def test_video_canvas_copies_buffer_before_owner_changes(window: StudioWindow) -
     frame[:] = 0
     color = window.preview.image.pixelColor(5, 5)
     assert (color.red(), color.green(), color.blue()) == (30, 20, 10)
+
+
+def test_clean_output_reopens_from_button_and_view_without_restarting_the_session(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    window.controls["physics"].set_value(False)
+    window.controls["cardboard_renderer"].set_value("procedural-2d")
+    window.start_demo()
+    wait_until(app, lambda: not window.output_window.canvas.image.isNull())
+    worker = window.worker
+    clean = window.output_window
+    assert worker is not None and window.clean_output_button.isEnabled()
+    for automatic in (True, False):
+        window.show_output.setChecked(automatic)
+        for reopen in (window.clean_output_button.click, window.clean_output_action.trigger):
+            clean.close()
+            app.processEvents()
+            assert not clean.isVisible()
+            assert window.worker is worker and window.bridge is not None
+            assert not window.bridge.stop_event.is_set()
+            reopen()
+            app.processEvents()
+            assert window.output_window is clean and clean.isVisible()
+            assert not clean.canvas.image.isNull()
+            assert window.show_output.isChecked() == automatic
+    window.stop()
+    wait_until(app, lambda: window.worker is None)
+
+
+@pytest.mark.parametrize("unavailable", ["headless", "raw", "video"])
+def test_clean_output_button_is_safe_before_capture_and_in_unavailable_modes(
+    app: QApplication, window: StudioWindow, unavailable: str,
+) -> None:
+    window.clean_output_button.click()
+    app.processEvents()
+    assert window.output_window.isVisible()
+    assert window.output_window.canvas.image.isNull()
+    assert window.worker is None and window.job is None
+    if unavailable == "headless":
+        window.controls["headless"].set_value(True)
+    elif unavailable == "raw":
+        for field in (
+            "render_cardboard", "physics", "full_body", "body_head_fallback",
+            "hood_marker_tracking", "virtual_camera",
+        ):
+            window.controls[field].set_value(False)
+    else:
+        window.work_mode.setCurrentIndex(1)
+    window._refresh_settings()
+    app.processEvents()
+    assert not window.clean_output_action.isEnabled()
+    assert not window.output_window.isVisible()
+    assert window.clean_output_button.isVisible() == (unavailable != "video")
+    window._toggle_clean_output(True)
+    assert window.error_label.isVisible() and not window.output_window.isVisible()
+    assert window.worker is None and window.job is None
 
 
 def test_close_while_demo_running_defers_until_thread_finishes(
@@ -323,6 +455,7 @@ def test_bottom_command_tab_copies_the_complete_redacted_command(
 
     window.controls["source"].set_value("https://synthetic:secret@invalid/video")
     window._refresh_settings()
+    window.tools_action.setChecked(True)
     window.console_tabs.setCurrentIndex(1)
     app.processEvents()
     QTest.mouseClick(window.copy_command, Qt.MouseButton.LeftButton)
@@ -360,13 +493,78 @@ def test_video_work_mode_is_not_private_camera_recording(window: StudioWindow) -
     assert "video_cli" in window.command.toPlainText()
     assert "--input-video=" in window.command.toPlainText()
     assert "record_guided_regression" not in window.command.toPlainText()
+    unavailable = (window.controls.keys() - VIDEO_FIELDS) | {"input_already_mirrored"}
+    assert {name for name, control in window.controls.items() if not control.isEnabled()} == (
+        unavailable
+    )
+    assert window.controls["input_already_mirrored"].state_badge.text() == "LIVE ONLY"
+    assert window.video_mirrored.isEnabled()
     window.work_mode.setCurrentIndex(0)
     assert window.controls["source"].isEnabled()
 
 
-def test_raw_debug_channels_never_cover_program_or_clean_window(window: StudioWindow) -> None:
+def test_numeric_text_has_real_inset_in_both_native_themes(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    if "Segoe UI" not in QFontDatabase.families():
+        pytest.skip("Native numeric-text raster proof requires real Segoe UI glyphs.")
+    for page, field in (
+        ("Avatar & eyes", "blink_threshold"),
+        ("Camera", "brightness"),
+        ("Avatar & eyes", "action_hold_ms"),
+        ("Camera", "preview_height"),
+    ):
+        window.page_selector.setCurrentText(page)
+        for (section_page, _), section in window.sections.items():
+            if section_page == page:
+                section.set_expanded(True)
+        scroll = window.pages.currentWidget()
+        assert isinstance(scroll, QScrollArea)
+        control = window.controls[field]
+        if field == "preview_height":
+            control.set_value(600)
+        spin = control.editor.number if isinstance(control.editor, ValueSlider) else control.editor
+        assert isinstance(spin, QAbstractSpinBox)
+        scroll.ensureWidgetVisible(spin, 0, 10)
+        for _ in range(2):
+            for disabled in (False, True):
+                control.set_locked(disabled)
+                app.processEvents()
+                option = QStyleOptionSpinBox()
+                spin.initStyleOption(option)
+                rect = spin.style().subControlRect(
+                    QStyle.ComplexControl.CC_SpinBox, option,
+                    QStyle.SubControl.SC_SpinBoxEditField, spin,
+                )
+                image = spin.grab().toImage()
+                ratio = image.devicePixelRatio()
+                ink = (
+                    (129, 147, 133) if window._dark else (120, 110, 92)
+                ) if disabled else (
+                    (255, 244, 219) if window._dark else (25, 51, 43)
+                )
+                pixels = []
+                for x in range(round(rect.left() * ratio), round((rect.right() + 1) * ratio)):
+                    for y in range(round(rect.top() * ratio), round((rect.bottom() + 1) * ratio)):
+                        color = image.pixelColor(x, y)
+                        if max(abs(a - b) for a, b in zip(
+                            (color.red(), color.green(), color.blue()), ink, strict=True,
+                        )) <= 24:
+                            pixels.append(x)
+                assert pixels, "The value text must remain visibly painted."
+                assert min(pixels) / ratio >= 8, "Numeric text must not hug the left border."
+            control.set_locked(False)
+            window.toggle_theme()
+
+
+def test_raw_debug_channels_never_cover_program_or_clean_window(
+    app: QApplication, window: StudioWindow,
+) -> None:
     from kardboard_vtuber.runtime import RuntimeTelemetry
 
+    window.controls["debug_face_preview"].set_value(True)
+    window.controls["tracking_debug"].set_value(True)
+    window._refresh_settings()
     window.bridge = RuntimeBridge()
     clean = np.full((60, 80, 3), (10, 20, 30), np.uint8)
     raw = np.full_like(clean, (100, 110, 120))
@@ -375,12 +573,299 @@ def test_raw_debug_channels_never_cover_program_or_clean_window(window: StudioWi
         clean, RuntimeTelemetry(), clean_frame=clean, raw_face=raw, face_mesh=debug,
     )
     window._poll_runtime()
-    assert window.raw_panel.isVisible() and window.diagnostic_panel.isVisible()
+    app.processEvents()
+    assert not window.tools_drawer.isVisible()
+    assert window.diagnostics_notice.isVisible()
     assert window.preview.image.pixelColor(5, 5).red() == 30
     assert window.output_window.canvas.image.pixelColor(5, 5).red() == 30
     assert window.raw_face.image.pixelColor(5, 5).red() == 120
     assert window.face_mesh.image.pixelColor(5, 5).red() == 220
+    assert window.raw_panel.isVisible()
+    assert window.diagnostic_panel.isVisible()
+    assert window.face_mesh.isVisible()
+    window.tools_action.setChecked(True)
+    window.console_tabs.setCurrentIndex(2)
+    app.processEvents()
+    assert window.console_tabs.tabText(2) == "Signals"
+    assert window.raw_face.isVisible() and window.face_mesh.isVisible()
     window.bridge = None
+
+
+def test_diagnostic_rail_follows_selected_channels_without_opening_tools(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    for raw, mesh, body in (
+        (False, False, False), (True, False, False), (False, True, False),
+        (False, False, True), (True, True, True),
+    ):
+        for field, value in (
+            ("debug_face_preview", raw), ("tracking_debug", mesh), ("full_body", body),
+        ):
+            window.controls[field].set_value(value)
+        window._refresh_settings()
+        app.processEvents()
+        assert window.diagnostic_panel.isVisible() == (raw or mesh or body)
+        assert window.raw_face.isVisible() == raw
+        assert window.diagnostic_tabs.isVisible() == (mesh or body)
+        assert window.diagnostic_tabs.isTabVisible(0) == mesh
+        assert window.diagnostic_tabs.isTabVisible(1) == body
+        assert not window.tools_drawer.isVisible()
+    window.controls["headless"].set_value(True)
+    window._refresh_settings()
+    assert not window.diagnostic_panel.isVisible()
+    window.controls["headless"].set_value(False)
+    window._refresh_settings()
+    window.work_mode.setCurrentIndex(1)
+    assert not window.diagnostic_panel.isVisible()
+    window.work_mode.setCurrentIndex(0)
+    assert window.raw_face.isVisible() and window.diagnostic_tabs.isVisible()
+    assert window.worker is None and window.job is None
+
+
+@pytest.mark.parametrize("size", [(1440, 810), (1280, 720), (960, 600)])
+def test_stacked_diagnostics_have_real_image_area_beside_the_whole_preview(
+    app: QApplication, window: StudioWindow, size: tuple[int, int],
+) -> None:
+    window.resize(*size)
+    for field in ("debug_face_preview", "tracking_debug", "full_body"):
+        window.controls[field].set_value(True)
+    window._refresh_settings()
+    window.preview.set_frame(np.full((720, 1280, 3), (10, 20, 30), np.uint8))
+    window.raw_face.set_frame(np.full((260, 230, 3), (40, 50, 60), np.uint8))
+    window.face_mesh.set_frame(np.full((360, 640, 3), (70, 80, 90), np.uint8))
+    for tools in (False, True):
+        window.tools_action.setChecked(tools)
+        for error in (False, True):
+            window.error_label.setVisible(error)
+            app.processEvents()
+            assert_whole_preview_visible(window)
+            for canvas in (window.raw_face, window.face_mesh):
+                assert QRegion(canvas.rect()).subtracted(canvas.visibleRegion()).isEmpty()
+                assert canvas.width() >= 120 and canvas.height() >= 120
+            preview = window.preview.mapTo(window, QPoint())
+            raw = window.raw_face.mapTo(window, QPoint())
+            mesh = window.face_mesh.mapTo(window, QPoint())
+            assert raw.x() > preview.x() + window.preview.width()
+            assert mesh.y() > raw.y() + window.raw_face.height()
+            if size == (1440, 810) and not tools and not error:
+                fitted = window.raw_face.image.size().scaled(
+                    window.raw_face.size(), Qt.AspectRatioMode.KeepAspectRatio,
+                )
+                assert fitted.height() >= 200 and fitted.width() >= 170
+    window.error_label.hide()
+    window.preview_split.setSizes([0, 1000])
+    window.diagnostic_panel.setSizes([0, 1000])
+    app.processEvents()
+    assert_whole_preview_visible(window)
+    assert window.raw_face.height() >= 120 and window.face_mesh.height() >= 120
+
+
+def assert_whole_preview_visible(window: StudioWindow) -> None:
+    preview = window.preview
+    visible = preview.visibleRegion()
+    assert QRegion(preview.rect()).subtracted(visible).isEmpty()
+    assert preview.width() >= 320 and preview.height() >= 180
+    if not preview.image.isNull():
+        fitted = preview.image.size().scaled(
+            preview.size(), Qt.AspectRatioMode.KeepAspectRatio,
+        )
+        target = QRect(
+            (preview.width() - fitted.width()) // 2,
+            (preview.height() - fitted.height()) // 2,
+            fitted.width(), fitted.height(),
+        )
+        assert QRegion(target).subtracted(visible).isEmpty()
+
+
+@pytest.mark.parametrize("size", [(1120, 780), (1280, 720), (960, 600)])
+@pytest.mark.parametrize("frame_size", [(720, 1280), (1280, 720)])
+def test_preview_is_not_clipped_by_tools_errors_pages_or_splitter(
+    app: QApplication, window: StudioWindow, size: tuple[int, int],
+    frame_size: tuple[int, int],
+) -> None:
+    window.resize(*size)
+    frame = np.full((*frame_size, 3), (10, 20, 30), np.uint8)
+    window.preview.set_frame(frame)
+    assert not window.tools_drawer.isVisible()
+    for tools in (False, True):
+        window.tools_action.setChecked(tools)
+        for page in ("Avatar & eyes", "Camera", "Models"):
+            window.page_selector.setCurrentText(page)
+            app.processEvents()
+            assert_whole_preview_visible(window)
+        window._show_error("Synthetic recoverable error with details. " * 100)
+        app.processEvents()
+        assert_whole_preview_visible(window)
+        assert "Synthetic recoverable" in window.error_label.text()
+        window.error_label.hide()
+        window.workspace_split.setSizes([320, 0])
+        app.processEvents()
+        assert_whole_preview_visible(window)
+    window.diagnostics_notice.show()
+    window._show_error("Synthetic raw-diagnostic error. " * 100)
+    app.processEvents()
+    assert_whole_preview_visible(window)
+    window.diagnostics_notice.hide()
+    window.work_mode.setCurrentIndex(1)
+    window.page_selector.setCurrentText("Avatar & eyes")
+    window.preview.set_frame(frame)
+    app.processEvents()
+    assert window.video_progress_panel.isVisible()
+    assert_whole_preview_visible(window)
+    window._show_error("Synthetic video-export error. " * 100)
+    app.processEvents()
+    assert_whole_preview_visible(window)
+
+
+def test_every_option_remains_reachable_in_the_scrollable_inspector(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    window.resize(1120, 780)
+    window.input_type.setCurrentIndex(1)
+    window.controls["source"].set_value("synthetic-input.mkv")
+    for page, fields in settings.PAGES.items():
+        window.page_selector.setCurrentText(page)
+        for (group_page, _), section in window.sections.items():
+            if group_page == page:
+                section.set_expanded(True)
+        app.processEvents()
+        scroll = window.pages.currentWidget()
+        assert isinstance(scroll, QScrollArea)
+        for field in fields:
+            if field.name in {"virtual_camera_width", "virtual_camera_height"}:
+                assert window.output_resolution.isVisible()
+                continue
+            control = window.controls[field.name]
+            scroll.ensureWidgetVisible(control.editor, 0, 10)
+            app.processEvents()
+            assert control.isVisible(), field.name
+            assert not control.editor.visibleRegion().isEmpty(), field.name
+    assert window.worker is None and window.job is None
+
+
+def test_tools_toggle_is_keyboard_reachable_and_keeps_background_logs(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    window._append_log("[TEST] This log arrived while tools were closed.")
+    assert not window.tools_drawer.isVisible()
+    QTest.keyClick(window, Qt.Key.Key_J, Qt.KeyboardModifier.ControlModifier)
+    app.processEvents()
+    assert window.tools_drawer.isVisible()
+    assert "arrived while tools were closed" in window.console.toPlainText()
+    QTest.keyClick(window, Qt.Key.Key_J, Qt.KeyboardModifier.ControlModifier)
+    app.processEvents()
+    assert not window.tools_drawer.isVisible()
+    assert window.preview.isVisible()
+
+
+@pytest.mark.parametrize("size", [(1440, 810), (1280, 720), (960, 600)])
+def test_metric_cards_stay_readable_below_preview_and_tools_do_not_shorten_settings(
+    app: QApplication, window: StudioWindow, size: tuple[int, int],
+) -> None:
+    window.resize(*size)
+    window.page_selector.setCurrentText("Tracking labs")
+    for field in ("debug_face_preview", "tracking_debug", "full_body"):
+        window.controls[field].set_value(True)
+    window._refresh_settings()
+    inspector = window.workspace_split.widget(0)
+    assert inspector is not None
+    for _ in range(2):
+        for mode in (0, 1):
+            window.work_mode.setCurrentIndex(mode)
+            app.processEvents()
+            closed_height = inspector.height()
+            for tools in (False, True):
+                window.tools_action.setChecked(tools)
+                for error in (False, True):
+                    window.error_label.setVisible(error)
+                    window.metrics["camera"].setText("-- / demo")
+                    window.metrics["tracking"].setText("59.9")
+                    window.metrics["age"].setText("9999.9 ms")
+                    window.metrics["output"].setText("Video file export")
+                    app.processEvents()
+                    assert_whole_preview_visible(window)
+                    for label in window.metrics.values():
+                        card = label.parentWidget()
+                        assert isinstance(card, QFrame)
+                        assert QRegion(card.rect()).subtracted(card.visibleRegion()).isEmpty()
+                        image = card.grab().toImage()
+                        ratio = image.devicePixelRatio()
+                        border = image.pixelColor(image.width() // 2, 0)
+                        surface = image.pixelColor(round(4 * ratio), image.height() // 2)
+                        assert border != surface, "Each metric must retain its visible card border."
+                    if tools:
+                        assert window.tools_drawer.mapTo(window, QPoint()).x() > (
+                            inspector.mapTo(window, QPoint()).x() + inspector.width()
+                        )
+                window.error_label.hide()
+                app.processEvents()
+                assert inspector.height() == closed_height
+        window.toggle_theme()
+
+
+def test_metric_card_text_fits_the_native_font_engine(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    if "Segoe UI" not in QFontDatabase.families():
+        pytest.skip("This Qt platform lacks native Segoe UI metrics; checked on Windows.")
+    for size in ((1440, 810), (1280, 720), (960, 600)):
+        window.resize(*size)
+        for _ in range(2):
+            window.metrics["camera"].setText("-- / demo")
+            window.metrics["tracking"].setText("59.9")
+            window.metrics["age"].setText("9999.9 ms")
+            window.metrics["output"].setText("Video file export")
+            app.processEvents()
+            for value in window.metrics.values():
+                card = value.parentWidget()
+                assert isinstance(card, QFrame)
+                for label in card.findChildren(QLabel):
+                    assert label.fontMetrics().horizontalAdvance(label.text()) <= (
+                        label.contentsRect().width()
+                    )
+            window.toggle_theme()
+
+
+def test_explicit_headless_keeps_a_visible_explanatory_workspace(
+    app: QApplication, window: StudioWindow,
+) -> None:
+    from kardboard_vtuber.runtime import RuntimeTelemetry
+
+    window.bridge = RuntimeBridge()
+    try:
+        window.bridge.publish(None, RuntimeTelemetry(demo=True))
+        window._poll_runtime()
+        app.processEvents()
+        assert window.preview.image.isNull()
+        assert "explicitly suppressed" in window.preview.placeholder
+        assert_whole_preview_visible(window)
+        window._clear_signals()
+        assert "explicitly suppressed" not in window.preview.placeholder
+    finally:
+        window.bridge = None
+
+
+@pytest.mark.parametrize("size", [(960, 600), (1120, 780)])
+def test_primary_actions_fit_both_work_modes_and_themes(
+    app: QApplication, window: StudioWindow, size: tuple[int, int],
+) -> None:
+    window.resize(*size)
+    window.tools_action.setChecked(True)
+    window.console_tabs.setCurrentIndex(2)
+    for mode in (0, 1):
+        window.work_mode.setCurrentIndex(mode)
+        for _ in range(2):
+            app.processEvents()
+            for button in (
+                window.theme_button, window.help_button, window.start_button, window.stop_button,
+            ):
+                assert QRegion(button.rect()).subtracted(button.visibleRegion()).isEmpty()
+            assert window.clean_output_button.isVisible() == (mode == 0)
+            if mode == 0:
+                button = window.clean_output_button
+                assert QRegion(button.rect()).subtracted(button.visibleRegion()).isEmpty()
+            assert_whole_preview_visible(window)
+            window.toggle_theme()
 
 
 def test_checkbox_visual_states_are_distinct_in_both_themes(

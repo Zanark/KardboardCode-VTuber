@@ -32,12 +32,23 @@ These are implemented features, not universal hardware/performance guarantees. E
 preview observations were around 28-30 FPS; an isolated renderer measurement was about 8.17 ms
 per 1080x1920 frame on AMD Radeon 780M. Neither is a current all-feature benchmark.
 See [scoped validation evidence](../07-quality-and-testing/validation-evidence.md).
+The [current GUI coverage audit](../09-desktop-studio/interface-specification.md#verified-operating-feature-coverage)
+accounts for all 45 Live/runtime controls, supported Video settings, private-capture/model
+helpers and GUI-only actions through actual bindings. Developer utilities are not all GUI buttons.
 
 ## Studio pages and live changes
 
-Use **Camera**, **Avatar & eyes**, **Output & effects**, **Tracking labs**, **Private capture**,
-**Models** and **Tutorial**. Diagnostics occupy side panels, not the program image.
-Logs/CLI-equivalent occupy the bottom tabs.
+Use the left inspector: **Camera**, **Video file**, **Avatar & eyes**, **Output & effects**,
+**Tracking labs**, **Private capture**, **Models** and **Tutorial**. Labelled sections expose
+secondary controls without removing them; field help is available in tooltips/accessibility
+descriptions. The main preview sits directly beside the inspector. Selected raw-face diagnostics
+appear above face/pose or body in a resizable right-hand rail, simultaneously visible without Tools.
+**Tools** / **Ctrl+J** opens a bounded Logs/CLI/numeric Signals drawer, closed by default.
+Four performance/output data cards stay below the preview beside Tools, whether the drawer
+is open or closed. The drawer occupies only the viewer column, keeping settings full-height.
+Raw face, mesh and body views never occupy or cover the program image.
+**Show clean output** remains available in Live mode to reopen the separate controls-free window
+after closing it; **Auto-open** is an independent startup preference.
 Left/right blink overrides, shared wink/open/asymmetry thresholds, internal brightness and
 debounce are live. Other settings unlock after Stop
 (`src/kardboard_vtuber/gui/settings.py:17-29,48-186`).

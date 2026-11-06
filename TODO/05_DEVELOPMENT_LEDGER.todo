@@ -24,6 +24,122 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-06: Owner separately requests "push the changes". Public tracking inputs are
+  committed as d40e986 and README/native media as d1bf419, then pushed normally to the
+  existing workDesk/agentic_GUI branch. Independent GitHub ref/tree reads verify the exact
+  commit and new workstream/README/GIF objects. Local-only source notices are removed only
+  after that verification. Private context is not staged; no main merge/tag/release/dispatch.
+  Independent release provenance is finalized after committing public inputs.
+  2026-11-06: README media refresh captures the actual current synthetic Studio, not a mockup:
+  three1200x675GIFs (30frames/7.6s per theme,60/15.2s combined) and two1440x810PNGs.
+  The combined1.33MBGIF replaces the old front animation; themed variants and the unchanged
+  old animation live in the gallery. Front remains7images; gallery27; all31former references
+  retained, approved comparison bytes unchanged. No camera, desktop, private telemetry or
+  physical-device discovery. Bounded native/encoded keyframes and desktop/mobile previews
+  reviewed;1440/390checks show no overflow and all media decodes. Per-frame synthetic-origin/
+  expected-surface guards prevent interrupted captures. Four new media tests plus five export tests/
+  Ruff pass. Handbook275pages/103diagrams,zero failures/overflow; native PDF page202 contains
+  the exact new screenshot pixels. MSI rebuild is README-wheel metadata only, not a new
+  installer lifecycle. Installer --check and exact wheel README/52runtime-file checks pass.
+  Source-only export/--check pass with new public files selectively staged and earlier
+  tracking edits/staging preserved. SourceModified=true at unchanged HEAD0014603.
+  Product/runtime/UI/version1.2.4 remain unchanged; no commit, push or publication.
+  2026-11-06: Completed tracking adoption issue27 without replacing its issue/item identity.
+  Final full live reconciliation verifies21closed/completed issues,21unique Done Kanban
+  items,21persistent local backlinks and21no-op plans, with no pending/conflicts. All20
+  historical issue timestamps remained unchanged after backfill. Current working-tree
+  source export and unchanged-runtime installer --check pass; sourceModified=true records
+  the deliberately uncommitted inputs. No commit, push, workflow activation/dispatch,
+  scheduler, deployment, release, remote secret or unfinished product implementation.
+  2026-11-06: Adopted the updated development manual without changing product behavior.
+  Reviewed all historical workstreams and retained their eight-field evidence. Initial
+  GitHub inventory had zero issues/no linked Project. Created only own owner Project9,
+  linked here with primary Kanban view1/Status columns. Existing status IDs were preserved;
+  missing stages were added. Reused reviewed Python/gh synchronization with explicit
+  preview/apply, permanent kc-NN markers, atomic recovery state and human-edit conflicts.
+  The36focused sync/privacy/recovery/export tests and Ruff pass. Full dry-run preceded
+  pilot issue7; explicit rerun preserved its complete body/state/timestamp and item identity.
+  Backfill created20more issues and reused the pilot, with21unique items/backlinks and no
+  conflicts/partials. Full live readback matched all21mappings;20historical issues are
+  closed/completed/Done and adoption issue27 remains open/In Progress at this checkpoint.
+  Original20workstream contents are unchanged except tracking metadata/line endings.
+  Index/ledger and private documentary/persona workstreams are excluded from issue creation.
+  Contributor/adoption guidance and two locally rendered diagrams explain scope/recovery.
+  Local Zanark author/committer identity is verified; no global identity/history changes,
+  commit/push, workflow, scheduler, remote secret or unfinished product implementation.
+  2026-11-03: Complete GUI visual reference: one11,386,637-byte offline HTML with204embedded
+  native screenshots/102paired views and scroll parts, both themes and all named surfaces/
+  45controls accounted for. Toolinge34ab1d,3coverage regressions/Ruff pass. AllPNG bytes/
+  dimensions/hashes decode; sources recorded. Copied-file offline checks verify2diagrams,
+  search/theme/filter/expand/full-image controls and1440/390containment; no external requests.
+  Grouped sheets/final state fidelity/reader views reviewed. README7/GIF-first/gallery24 and
+  links retained; handbook275pages/103diagrams,zero failures/overflow. Runtime1.2.4 unchanged.
+  Current source/MSI snapshots pass both checks and include the complete reference. Installer
+  GUI module bytes match unchanged source; README-in-wheel metadata refreshed. Final separate
+  evidence/artifact/context commits preserve the handoff; no camera/publication.
+  2026-11-03: v1.2.4 numeric padding/coverage audit (837b557): embedded margins6left/3right,
+  custom preview-height integer binding fixed, Video scope/CLI preview share VIDEO_FIELDS.
+  All45Live options forward two nondefault configurations; Video22+3file/quality settings,
+  recorder17user+internal Stopfile and4model helpers accounted for. Native padding/forwarding/
+  scope/approved-layout set22passed at each100/125/150%; final suite315passed/3explicit
+  offscreen limitations skipped;Ruff. Eight native captures/banner and padded-editor crop
+  reviewed; README7/GIF-first/gallery24 and links preserved. Handbook275pages/103diagrams,
+  zero failures/overflow. Current1.2.4source/MSI checks and native extracted-wheel proof outside
+  checkout pass, including exact GUI/resources, painted padding, working integer and mode
+  scope. Final evidence/artifact/context commits preserve the completed handoff separately.
+  2026-11-03: v1.2.3 restores the owner's preferred four metric cards below the preview beside
+  Tools, with its drawer in the viewer column so settings remain full-height. Core20542ad.
+  Native card/font/border/containment/channel/actions/Tools set18passed at each100/125/150%.
+  Final suite313passed/2explicit offscreen limitations skipped; Ruff. Eight native captures/
+  banner and minimal README/gallery refreshed; links resolve. Handbook274pages/103diagrams,
+  zero failures/overflow. Current1.2.3 snapshots pass both checks. Actual extracted native
+  wheel proof outside checkout verifies matching GUI/resources, card text, full-height
+  settings, protected images and clean-output recovery. Final handoff commits are separate.
+  2026-11-03: v1.2.2 follow-up: owner-sketched right-hand stacked visual diagnostics (342c4cb)
+  and persistent Show clean output / separate Auto-open preference (973dc1d). Actual close/
+  reopen retains the same window and worker; no capture starts from idle. Final complete suite
+  310 passed/one existing offscreen-widescreen skip; Ruff. Native image/containment/channel/
+  close-reopen/primary-action set16passed at each100/125/150%. Eight native screenshots and
+  minimal README/gallery refreshed; handbook274pages/103diagrams, zero failures/overflow.
+  Current1.2.2 snapshots pass both checks. Actual packaged GUI/resource bytes match source and
+  extracted-wheel side panels/clean-channel/reopen proof works in both themes outside checkout.
+  Separate final evidence/artifact/context commits preserve the handoff; no remote publication.
+  2026-11-03: v1.2.1 numeric-affordance patch completed. Full suite 302 passed/one unsupported
+  offscreen-widescreen case skipped; Ruff. Native glyph/shape/click/bounds/baseline set 5 passed
+  at each Qt factor 1/1.25/1.5. Actual wheel resolves all six glyph SVGs outside checkout.
+  Eight native captures refreshed and reviewed; handbook 272 pages/103 diagrams, no errors/
+  overflow. Public code inputs 21e4077; final evidence/artifact/context commits follow.
+  2026-11-03: Workstream 19 fixes invisible numeric step controls and Qt's trailing mode-tab
+  baseline. Native-symbol configuration alone did not paint through the stylesheet; explicit
+  packaged plus/minus SVGs with contrast, wider targets and muted unavailable states pass
+  native raster/shape/click/boundary checks. No numeric semantics or pipeline changes.
+  2026-11-03: Simplified the front README to banner/hero, all three GIFs and only dark/light
+  Studio screenshots. Moved the other 24 images into docs\visual-gallery.md with captions,
+  clear sections and prominent navigation. Exact order/media-preservation/link checks pass:
+  all 31 original references retained, no table frames. No new artwork or runtime changes.
+  2026-11-03: Final 16:9 follow-up uses display-fitted startup dimensions up to 1440x810 while
+  keeping original video aspect/output dimensions. Native startup/action-fit checks pass at
+  Qt factors 1/1.25/1.5; default, compact and diagnostic images use widescreen layouts.
+  Installed v1.2.0 private pythonw/preview/Tools/helpers/four-frame export/CLI/pip checks passed.
+  Qualified unchanged dependencies from verified cached wheels; earlier online bootstrap route
+  remains unchanged. Corrected the harness baseline after its deliberate preset save: isolated
+  install/uninstall confirms unchanged preset/model bytes and complete owned tree removal.
+  Latest user directive is GUI-only: no further portrait work. Final release/context handoff follows.
+  2026-11-03: Implemented the owner-approved left-inspector/right-preview structure as v1.2.0.
+  Labelled disclosure retains all 45 runtime fields; optional capped scrollable Tools separates
+  logs/CLI/raw/mesh/body data from the viewer. Fixed the remaining native nine-pixel corner case
+  with shrinkable secondary content. Final full suite: 297/Ruff; three native Qt scale factors,
+  both frame orientations, compact modes/errors/diagnostics/headless and action-fit checks pass.
+  Eight native synthetic captures refreshed; engineering handbook 272 pages/103 diagrams with
+  zero failures/overflow. Installer/source qualification and final offload follow this source milestone.
+  User also requested own portrait branding: scoped kraft KC box/headphones below the unchanged
+  face, source/live/generated output verified. Shared contributor bundle left unstaged.
+  2026-11-03: Completed five-pass preview-first UI research against 5dcf3db/v1.1.1. Read 12
+  primary references and recorded current source/state/pixel contracts. Native audit of eight
+  cases at three isolated Qt scale factors reproduces parent clipping and splitter collapse;
+  inventory covers all 45 runtime fields plus GUI-only actions. Research/acceptance criteria
+  are in the existing Studio research chapter; workstream 16 implementation awaits design
+  confirmation. No shipping UI change, camera, virtual output or global display change.
   2026-11-03: Completed workstream 12 after the user explicitly resumed it. Final MSI built
   from committed runtime inputs 209b852, with clean provenance and patched private Python
   3.12.16. Size 19,709,952 bytes; SHA256
