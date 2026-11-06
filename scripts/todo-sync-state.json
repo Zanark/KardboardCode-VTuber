@@ -306,7 +306,7 @@
     "kc-24": {
       "baseline": {
         "title": "[24] Verified local-workstream, GitHub issue and Kanban adoption",
-        "managed": "eb0cb9962b89f9eac4ff8553e0747acb4885e8518003541ae861ad106b12b643",
+        "managed": "33765e23a8db2819636234249592182d6b541ef39ef1b1485588da92e14043df",
         "lifecycle": [
           "CLOSED",
           "COMPLETED"
@@ -321,7 +321,7 @@
     "kc-25": {
       "baseline": {
         "title": "[25] Fresh native Studio animations and dark/light README screenshots",
-        "managed": "7aaec49f4a1459d64943c265650b7b33b66c01d0bfa7c49d3ccbf0ca45df268e",
+        "managed": "8e2db40b5908a2dd3de7ff870f3a845568a63275e83a076378bab2e91072ae92",
         "lifecycle": [
           "CLOSED",
           "COMPLETED"

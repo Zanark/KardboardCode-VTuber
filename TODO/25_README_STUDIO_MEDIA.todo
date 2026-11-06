@@ -23,7 +23,8 @@ Acceptance criteria:
   The approved original-background/green-screen pair and all former media remain accessible.
   Encoded GIFs loop with valid dimensions/durations and genuine changed frames; image/text
   bounds and links work at desktop/mobile sizes. Captions clearly identify synthetic imagery.
-  No product feature/layout change, live-camera/installer-lifecycle claim, commit or push.
+  No product feature/layout change or live-camera/installer-lifecycle claim. The media
+  refresh performs no automatic commit/push; publication requires separate owner authority.
 
 Completion evidence:
   Existing native capture, synthetic-demo and documentation helpers reviewed. Current
@@ -44,8 +45,8 @@ Completion evidence:
   no new installed lifecycle or runtime-code qualification is claimed. Installer --check
   passes; wheel README matches exactly and all52packaged runtime files match current source.
   Source-only export and --check pass. New public media/helper/test/workstream files are
-  selectively staged; earlier tracking edits/staging are preserved. SourceModified=true
-  records intentionally uncommitted inputs at the unchanged source commit.
+  selectively staged; earlier tracking edits/staging are preserved. Initial SourceModified=true
+  recorded intentionally uncommitted inputs until the owner's separate publication request.
 
 Completion log:
   2026-11-06: Owner requests new README GIFs/screenshots. Retain the approved comparison pair;
@@ -56,3 +57,7 @@ Completion log:
   2026-11-06: Added per-frame interruption guards, recaptured with final source and passed
   nine targeted media/export tests. Final native image, browser layout, handbook pixels and
   independent source/MSI metadata checks pass. No camera, commit, push or publication.
+  2026-11-06: Owner separately requests "push the changes". Media commit d1bf419 is pushed
+  after tracking commit d40e986. Independent GitHub reads verify the exact branch and both
+  workstream/README/GIF objects. Existing issue28/item identity and Done lifecycle are retained;
+  the now-published source replaces its local-only notice. Private context remains local.

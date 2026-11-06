@@ -181,12 +181,14 @@ does not cause a feedback loop
 (`AGENTS.md:45`; `scripts\todo_sync.py:482`, `write_backlink`;
 `scripts\todo_sync.py:632`, `run`).
 
-The repository's default branch remains main. Verified historical source links
-use `workDesk/agentic_GUI`, which contains the existing TODO set through workstream23;
-main contained only through15 at adoption. Workstream24 is explicitly listed
-in `unpublished_workstreams`, showing a local-source notice instead of a broken
-file link. Remove that designation or change the source ref only after separately
-authorized publication is verified. Issue synchronization does not push files.
+The repository's default branch remains main. Verified source links use
+`workDesk/agentic_GUI`; main contained only through15 at adoption. Workstreams24/25
+initially used `unpublished_workstreams` and local-source notices rather than broken
+file links. After the owner's separate November6 push request, both files and the
+new README media were published at `d1bf4194b0118c889f4568562ce69b7998ad32a2`.
+Independent GitHub branch/tree reads verified their exact objects before clearing
+the unpublished designations. Future unpublished workstreams require the same
+verification before enabling source links. Issue synchronization does not push files.
 
 ## Content ownership, conflicts and recovery
 
@@ -333,14 +335,29 @@ Final receipt:
 Mappings in `scripts\todo-sync-state.json` are authoritative: issue numbers do
 not equal workstream numbers. The actual created issue range is7-27.
 
-The source archive is refreshed and passes `--check`, with honest
+At the original tracking handoff, the source archive passed `--check`, with honest
 `sourceModified=true` at unchanged HEAD
 `0014603a2b3fded3293cac0108f67bf396098672`. Unchanged runtime inputs still pass
 the independent MSI check. No new runtime/GUI capture/installer-lifecycle
 qualification is claimed. New public files were selectively staged only
-to satisfy the existing export contract; tracking changes remain uncommitted.
+to satisfy the existing export contract; tracking changes were still uncommitted.
 
 No synchronization conflict or partial operation remains. The two private
 workstreams deliberately remain unmigrated without an approved public
 projection. No repository commit, push, workflow activation/dispatch,
 scheduler, deployment, release or remote-secret provisioning was performed.
+
+## Separately authorized publication
+
+The owner subsequently requested "push the changes" on November6. Public tracking
+and README inputs were committed separately as `d40e986` and `d1bf419`, then pushed
+normally to `origin/workDesk/agentic_GUI`. Independent API reads verified the exact
+remote commit and both newly linked workstreams, README and three GIF objects.
+Private context remains local. This does not merge main, create a tag/GitHub release,
+dispatch a workflow or change the Project's private visibility.
+
+The original21-workstream adoption receipt above remains historical evidence.
+README workstream25 adds issue28 and the22nddurable mapping. Publication removes
+only the two local-source notices; issue/item identities and completion stay intact.
+Release provenance is finalized separately from committed public inputs, without
+rebuilding unchanged MSI bytes or treating publication as installer qualification.
