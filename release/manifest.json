@@ -1,134 +1,142 @@
 {
   "assets": {
     "KardboardCode-VTuber-source.zip": {
-      "bytes": 41210738,
-      "sha256": "6ecca117e016687465d9afed5f7f56915b5fe8cef0aebbcd8ab65b705cac4055"
+      "bytes": 43878381,
+      "sha256": "430c916bf8f054aac45384b87d3f37cb98771075da07b12f29a407319e9a7560"
     },
     "RELEASE_CONTEXT.md": {
       "bytes": 2009,
-      "sha256": "ec56585fe168d7387df71d546aa8c581cff7a89f3e4b54fc83f9e9b739da4ec7"
+      "sha256": "9189758d236365949af90c40b1d540dddd478cb4343be59e91262eaa0e96f033"
     },
     "RELEASE_NOTES.md": {
       "bytes": 13547,
       "sha256": "e51f2288c455a3de985cdb5845a309c49ed5dc9094b4e535c46d0b93017e438d"
     }
   },
-  "generatedAt": "2026-11-03T01:08:28+00:00",
+  "generatedAt": "2026-11-06T14:55:59+00:00",
   "schemaVersion": 1,
   "sourceBranch": "workDesk/agentic_GUI",
-  "sourceCommit": "e75d5d9d2b0cb1932c3e139021668693a4bf313a",
+  "sourceCommit": "290bae6f2c8638703fb77fce99c4cd48db665c21",
   "sourceFiles": {
     ".gitattributes": {
       "bytes": 247,
       "sha256": "609bf2ad577aad1717a773339626db94cec8b548b4f13a69f54ab6a9b0c73850"
     },
     ".gitignore": {
-      "bytes": 842,
-      "sha256": "0f60df4be5771edfaa2a528711fc28ae5af9182bb2b5a3eb4b121bc416279128"
+      "bytes": 859,
+      "sha256": "8f2f10b8dbb064fdff9c6e6b0c833f643c084fb25b35d8ee7bc656b6518a7d81"
     },
     "AGENTS.md": {
-      "bytes": 3071,
-      "sha256": "f7d8803ef3fa08d1218fc554a26bde442290aa242278e99beb896f458eb970c4"
+      "bytes": 6574,
+      "sha256": "2d3e041d9ea30444776d6ff4867247754f773e9cf8d7f47e675ea47bee0042f9"
     },
     "README.md": {
-      "bytes": 3206,
-      "sha256": "91213e5f72ba484bb4f0882993c703b451d8a61c7d9edc77a6b389fdb69cc26f"
+      "bytes": 3299,
+      "sha256": "a55c90b26eef7589be1b1b8f3a6829f1780bf21ed7c253ecf683b93feb2ec273"
     },
     "TODO/00_INDEX.todo": {
-      "bytes": 11583,
-      "sha256": "02ecb300c2158179e0635fa0ca74b985fef3079093d7a34a62a19c15895df0f6"
+      "bytes": 14382,
+      "sha256": "2952d56bce2d7d893f2b4e7b57677454808c758e94eeb1cc1d7aebd223eb9800"
     },
     "TODO/01_RESEARCH_AND_DESIGN.todo": {
-      "bytes": 1131,
-      "sha256": "7b0d44b7b504f25f70891745981e2976cedc2e79e7b9d9f2a60a40dd4aa2029b"
+      "bytes": 1199,
+      "sha256": "a9de63311a2ca1cf3eb2736c654f4d64da0a24d5ffd1365882ad098108e88892"
     },
     "TODO/02_RUNTIME_AND_CALIBRATION.todo": {
-      "bytes": 1430,
-      "sha256": "2fbfe6843fc00a774df61dd736ff8f5d80fe19f4a5fef3b85b3aeb9d1fcd483e"
+      "bytes": 1495,
+      "sha256": "18a0c74e7c0994e04bb2a57ccdb42de37e7cc0a9429b42f4cfd3d609bf47c8cd"
     },
     "TODO/03_NATIVE_INTERFACE.todo": {
-      "bytes": 1565,
-      "sha256": "9a071186c189d936e97d2224949a41ec9182232dd05710bbfff1c80ddd0ba614"
+      "bytes": 1629,
+      "sha256": "6c56a4027f34f377154e5a51fc43bff70441788d02a6d7afb65bd762b8e2fbf9"
     },
     "TODO/04_DOCUMENTATION_AND_DELIVERY.todo": {
-      "bytes": 2207,
-      "sha256": "f63eb4731d13d0f5065c0a1ff11841cf2a974c13d69fd08b85af95c992a89897"
+      "bytes": 2266,
+      "sha256": "f5224edb2d35ef2757a78823430bd37cae1a1d002fb31f10c1d09f4ce85b7e6a"
     },
     "TODO/05_DEVELOPMENT_LEDGER.todo": {
-      "bytes": 15115,
-      "sha256": "98b6a2e0454fa355464b3a21408d22fad9404c9a93c5b12dbf846bead7e06cfa"
+      "bytes": 18993,
+      "sha256": "e4902aecfd3a1f507b3ce1ce37aa4858a9926965d2ebbfb1560e8c91aa0afd2d"
     },
     "TODO/06_NATIVE_CAMERA_SELECTION.todo": {
-      "bytes": 1731,
-      "sha256": "d96052d3cdab78509d4fa08b5d35d6e7d5cf0f7787d34f6f207ecae1deb6afdf"
+      "bytes": 1795,
+      "sha256": "621164da635002ab72d171eeb7fe11c42012702e683fb6ca4d93a46631f65657"
     },
     "TODO/07_RELEASE_STAGING.todo": {
-      "bytes": 1836,
-      "sha256": "29fdb5707cd280e959d967ce74d05aa8dca8ee3e616ccd50442cbf2abd9aab0a"
+      "bytes": 1900,
+      "sha256": "0505ffe4ac4c8ea87e470772d3e2a7cbfa33e764a74f3e06ae47f3c3e2de19e0"
     },
     "TODO/08_OFFICIAL_LOGO_RELEASE.todo": {
-      "bytes": 1957,
-      "sha256": "e6acef444e8dbec26cb77c754531bc18d0d7e70ce727c19a9a9057fbb382d8ca"
+      "bytes": 2017,
+      "sha256": "e02907570152c7137ed7c8b664f46c5fcd49cd8e1a08c40ec98b26765d8216f8"
     },
     "TODO/09_VISUAL_README.todo": {
-      "bytes": 2727,
-      "sha256": "56fac871502bf2077210b83ec8b1b88af73ba7e3bdd082533892fe2299976845"
+      "bytes": 2780,
+      "sha256": "05af7a2f224e6ab8a7ff5d4bf695fcfd96f6bd4215dc4f0c70c9f1b76ca4878f"
     },
     "TODO/10_STUDIO_FEEDBACK.todo": {
-      "bytes": 4275,
-      "sha256": "1027ce2404bc06c8db3bccb86bf556c6f7f85deaadb316b506ac34e2c3166b88"
+      "bytes": 4312,
+      "sha256": "b2e02acc0bcd02e8353ced20c386cdb1c558d015ffa07f6db1f699ee351204dd"
     },
     "TODO/11_BORDERLESS_README.todo": {
-      "bytes": 1530,
-      "sha256": "87caa4a2bc0a7dc0348d0027d57d5b0eefdde13d6b57d4cc33531d1d71589a0a"
+      "bytes": 1595,
+      "sha256": "24fa3a71a6ff15b2b4fce23f9713a9fe6ef9fe397be873b9ece74d0fac154421"
     },
     "TODO/12_WINDOWS_SETUP.todo": {
-      "bytes": 6524,
-      "sha256": "eee4645e45eca10b4f76c014b00312ebe63a1612c611e38cbe7a08f50e05b929"
+      "bytes": 6534,
+      "sha256": "454d761158f6f0ad384a16c8b6c3a6de1dda355d66db314f57021065dc5d5f7d"
     },
     "TODO/13_DEVELOPMENT_DOCUMENTARY.todo": {
       "bytes": 3931,
       "sha256": "c6861c01161e03e9bc96177264ae78b496aaea6b2bb78106950fbda2f188fe24"
     },
     "TODO/14_VIDEO_DEFAULT_PLAYER.todo": {
-      "bytes": 2249,
-      "sha256": "f8fbacf6e11a1cc19fdc1853fcb9240b482a41f4c16b2c9072a04fb7a668fb1c"
+      "bytes": 2307,
+      "sha256": "81812b2327e1fab943690fc9c43cb2dfc1a4570bfd6e8b860e397f732032bcf6"
     },
     "TODO/15_DARK_CARDBOARD_ACCENTS.todo": {
-      "bytes": 2210,
-      "sha256": "f32e4a9023802b2b6caa20ef71f02aec229fa1d07530031b40c524cd130242a9"
+      "bytes": 2270,
+      "sha256": "3d4ce4d88b8f67ad529b2f8594a025fa50ee7cd1a3a8b59c46432a5600a14773"
     },
     "TODO/16_PREVIEW_FIRST_STUDIO.todo": {
-      "bytes": 5516,
-      "sha256": "2adcf143de478ee08e7a0bd4801032c9a860eec7d6cf0dc5f4be15f57d0630a5"
+      "bytes": 5538,
+      "sha256": "83ca7359aad0cd6f5a9256c72ac2c30cc8d5914acf00ab5f0a30c59368d9c266"
     },
     "TODO/17_PERSONA_CARDBOARD_IDENTITY.todo": {
       "bytes": 2792,
       "sha256": "21c68dbd1c3610bc2a304ace8f89453a91ac6008b54c846f4a1f6856cbdef41a"
     },
     "TODO/18_MINIMAL_README_GALLERY.todo": {
-      "bytes": 2495,
-      "sha256": "dee9e376abaf2cf00be5e883fa79cc923b57cae2f31a6d41a4da8524b0d8c397"
+      "bytes": 2550,
+      "sha256": "36e47078580d3a2a5de57167503a61750772be319d9bfce09e20cfef7e77bc18"
     },
     "TODO/19_NUMERIC_CONTROL_CLARITY.todo": {
-      "bytes": 2745,
-      "sha256": "0d26be376966a307cd091a02e78c73790c84db88256bf032b350f9b951feaf30"
+      "bytes": 2797,
+      "sha256": "39f79ff2f04303a443418bc9446cd18c9683cc2cae77548e553d1d126c7efe91"
     },
     "TODO/20_SIDE_DIAGNOSTICS_AND_CLEAN_OUTPUT.todo": {
-      "bytes": 5404,
-      "sha256": "4ae741ec31ea13466f037f569d3a1d1f61a255e42d151494a2abb35df3667c32"
+      "bytes": 5428,
+      "sha256": "4a731381f86cdecf59a390eecaa8eba823b6667b61bad6d4966cd4ab413f1ae4"
     },
     "TODO/21_METRIC_CARD_FOOTER.todo": {
-      "bytes": 3920,
-      "sha256": "02a481dcbdb545be10e33a20c3048bf1bb35333714ad122e27ffd4ad4b3c62ca"
+      "bytes": 3959,
+      "sha256": "d9846e3eaf35741e5a5cbee6281fa3322f38991d09947ea20172169f283e5550"
     },
     "TODO/22_NUMERIC_PADDING_AND_FEATURE_COVERAGE.todo": {
-      "bytes": 4993,
-      "sha256": "a1f6353b98f3dfea32706de79998b16ddb73ca4dae5503fb376cf7232684b5de"
+      "bytes": 5021,
+      "sha256": "b4087e06d42d384332cf3a4c06f80103208cbb01076ee3127e0b149c7de2a1c1"
     },
     "TODO/23_COMPLETE_GUI_VISUAL_REFERENCE.todo": {
-      "bytes": 3878,
-      "sha256": "78c9454cc9dddde71c7d518092636250a395f24440c53840bcc6af3c287ec43f"
+      "bytes": 3919,
+      "sha256": "28dd99e2a9c7e1262a3976e223c1fd0e7f3485794926740a0462da56111bbb1c"
+    },
+    "TODO/24_GITHUB_TRACKING_ADOPTION.todo": {
+      "bytes": 6576,
+      "sha256": "9e49c4ce03d2bf299bc970de40d51a22e2e7475f836d866ab91fa0ae1194e422"
+    },
+    "TODO/25_README_STUDIO_MEDIA.todo": {
+      "bytes": 4835,
+      "sha256": "755c06f87e61cecd2e3eb759f24c37c7057857d974d783b521520a28b2a0e5d0"
     },
     "assets/PNGTuberV1/Eyes Closed.png": {
       "bytes": 21259,
@@ -411,8 +419,8 @@
       "sha256": "14c24c343538b03c298a3afdbb6ba1382721e15b0974181d463e9aa6c5e2acf5"
     },
     "docs/KardboardCode-VTuber-Engineering-Handbook.pdf": {
-      "bytes": 10779297,
-      "sha256": "92268f74e809410b01e0f542f5dcbc2eeff3c11ec3fb9643752109078fe3d1c3"
+      "bytes": 10792470,
+      "sha256": "fa1601f69277869b1422f06ce80dcf5be81762e7b7e586dfddc605be5db32896"
     },
     "docs/README.md": {
       "bytes": 8589,
@@ -439,8 +447,8 @@
       "sha256": "1b9111e018555113782843006cbdaf0752607a8d022d3f22f129f18c2c8d0cfe"
     },
     "docs/branding/README.md": {
-      "bytes": 3108,
-      "sha256": "db182cb20e73fda793884d3a320485ff038375252b563cbccc3ea8fc9b761cb4"
+      "bytes": 5167,
+      "sha256": "c9a968b0be9d13e4d1bf6c877a98460a03c917ef3c66b5632210cc10a0b0cacc"
     },
     "docs/branding/fonts/BarlowCondensed-OFL.txt": {
       "bytes": 4376,
@@ -465,6 +473,10 @@
     "docs/branding/fonts/Silkscreen-Regular.ttf": {
       "bytes": 32220,
       "sha256": "c845473330b94c2079ce9af01c51ac8ba2d99c24f4d14c039843bbb8e642ebd8"
+    },
+    "docs/github-tracking-adoption.md": {
+      "bytes": 21084,
+      "sha256": "3f226f09908606d43b3d84f9b5885aab1899d2e5aa1259e7e91e25c584edee16"
     },
     "docs/guides/camera-and-virtual-output.md": {
       "bytes": 8947,
@@ -543,16 +555,16 @@
       "sha256": "2cfed95eb6d90407263fe116ff4992a2ca25fe11b0957395826d1e739ab4701e"
     },
     "docs/images/kardboardcode-studio-dark.png": {
-      "bytes": 73887,
-      "sha256": "14291fab25ac5ec4081b0c0857036d9e58838d0b9e5875893b23074dee4583b0"
+      "bytes": 93166,
+      "sha256": "6d26df0bca32fc652edd604724e07576b3f184be12c76f70efa1c8e6549f3234"
     },
     "docs/images/kardboardcode-studio-diagnostics.png": {
       "bytes": 84056,
       "sha256": "77706330aeefe5e7f7bfa3c56afb62b08b2ab84f0a3461edd5c706ee908478f0"
     },
     "docs/images/kardboardcode-studio-light.png": {
-      "bytes": 74432,
-      "sha256": "07334763f5c70d2f7f9b3cfe2cd8d8368eb015cb9bff160aaf350ffdabe9ce5a"
+      "bytes": 91744,
+      "sha256": "5cd8345932a5cf59ca53c1b8010ec16fed911bac023e5904d115d71198738871"
     },
     "docs/images/kardboardcode-studio-native-camera.png": {
       "bytes": 47348,
@@ -565,6 +577,18 @@
     "docs/images/kardboardcode-studio-video.png": {
       "bytes": 52272,
       "sha256": "f877f1f69a6db6447d2e4ffbe288f3e60d7efb64be621884477fbc93211b3fea"
+    },
+    "docs/images/kardboardcode-studio-walkthrough-dark.gif": {
+      "bytes": 663628,
+      "sha256": "106b2805ad0d7c02de02ea624b4ab0ef91cf12d77e2f9b6ccc8dd78dae3580e6"
+    },
+    "docs/images/kardboardcode-studio-walkthrough-light.gif": {
+      "bytes": 663197,
+      "sha256": "e4f823d85f85e94e97281862e6f2907fcfee42c82361704c5ef71b0c36e8ddb9"
+    },
+    "docs/images/kardboardcode-studio-walkthrough.gif": {
+      "bytes": 1328696,
+      "sha256": "86725b43ced10f7879082f1db37e04e7573c621b39d3eedf24338a150ad4dd58"
     },
     "docs/images/kardboardcode-surface-tour.png": {
       "bytes": 209672,
@@ -603,8 +627,8 @@
       "sha256": "42636950d62b1b72b3d808e52cdf26b11955d89b4e9ca9163b0f2dae2f66baf4"
     },
     "docs/visual-gallery.md": {
-      "bytes": 6677,
-      "sha256": "019061766ddc71acaab2d3cb79b41cbd65afdfc10b4120bb21bd4caddad469b4"
+      "bytes": 7726,
+      "sha256": "9b084003e6f7b84eff35d7e05a61ce291917ed3c4b5b38d66678e6072925cb8c"
     },
     "installer/windows/bootstrap.py": {
       "bytes": 17572,
@@ -670,6 +694,10 @@
       "bytes": 40917,
       "sha256": "2684aaf382dc2639f2fdda82c3df1b7f7f0e36f7010304747b68f22fff793411"
     },
+    "scripts/capture_readme_media.py": {
+      "bytes": 11978,
+      "sha256": "bfec2249fa04a4538f1cb05497c59ac20d9e36ec0462110501ab7fc078fe2984"
+    },
     "scripts/capture_studio_screenshots.py": {
       "bytes": 7607,
       "sha256": "db0fbf311886a89fbbe837e48c84bb31101a0dd7568842ec3bcca6bbc18c51c6"
@@ -713,6 +741,18 @@
     "scripts/record_guided_regression.py": {
       "bytes": 18177,
       "sha256": "26408dc4ebc7320c18b45a959390dfdfc4039d1f6ab6b0269d429e0b77534fe0"
+    },
+    "scripts/todo-sync-state.json": {
+      "bytes": 11300,
+      "sha256": "f8bff96d3af49842d4d4a052f3102c8b8a8eee30f4671e77bd6d7dedf1281f8b"
+    },
+    "scripts/todo-sync.json": {
+      "bytes": 2840,
+      "sha256": "e9a05a66a0d29beb80682c2ab3979b4485c903ece9c1058f203bc67ce5b67410"
+    },
+    "scripts/todo_sync.py": {
+      "bytes": 29558,
+      "sha256": "d88c3cacc3f48efa500e406db61b8395e50bdc4724b4b54ac4a7c281d27c2e72"
     },
     "src/kardboard_vtuber/__init__.py": {
       "bytes": 469,
@@ -982,6 +1022,10 @@
       "bytes": 8275,
       "sha256": "b2249759eb9deb40f0763cbb2b13a0fc401e429f6055ef3e9653c9ef23d3bd4d"
     },
+    "tests/test_readme_media.py": {
+      "bytes": 2143,
+      "sha256": "6c4d118bb39bb2321cb4e02ef4b21f6f5f9ec183086b59fe99fc0c330f9909c0"
+    },
     "tests/test_release_export.py": {
       "bytes": 5451,
       "sha256": "52590800ef486f785d458deed505fddf8a752df5d7ae012627814d958d8724fa"
@@ -1005,6 +1049,10 @@
     "tests/test_textured_3d_renderer.py": {
       "bytes": 16655,
       "sha256": "ea3ebb3de317f2f2c02cea08ad8b72cdc9aa64e8ca7db2102a1eb594a0b40e4f"
+    },
+    "tests/test_todo_sync.py": {
+      "bytes": 19855,
+      "sha256": "5f94f8371cca40ddfe58616270388eabec56fa2ed0d93db59226c6790dd084d8"
     },
     "tests/test_tracking_events.py": {
       "bytes": 5251,
@@ -1035,7 +1083,7 @@
       "sha256": "7ff6a0c1c8691d037c64a88173b93e2d547811f2332a84e86513fe92e5e62406"
     }
   },
-  "sourceFingerprint": "3cd5c505887c0ee552b5e5acaf6584b54eab7a16abcf5fc98699390dacd9c979",
+  "sourceFingerprint": "36f45e028fd03b8c79b8f2e744d601a2c2deb1e74ecc63d38a5b4fcc91a1747f",
   "sourceModified": false,
   "tag": "v1.2.4",
   "version": "1.2.4"
