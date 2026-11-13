@@ -24,6 +24,20 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-13: Release follow-through a5728e0 is pushed; source26verified before issue30/
+  itemPVTI_lAHOAe2wCs4BqevGzhIfhZo creation. PR31 targets main and is ready for owner review:
+  OPEN/non-draft/MERGEABLE/CLEAN, autoMergeRequest=null and no reported status checks.
+  Thirty-six focused tracking/export tests and current source/MSI checks pass. No merge,
+  app/camera start or runtime change. Post-release documentation snapshots do not overwrite
+  immutable public v1.2.4 downloads. Workstream26 is complete at the publication/review boundary.
+  2026-11-13: Owner authorizes release creation and a current main PR, reserving merge.
+  Existing PAT is consumed only through the reviewed external runner; Zanark/ADMIN verified.
+  Initial inventories had no releases/tags/open PRs. Mainfeee3b0 already contains the earlier
+  Studio/media work through merged PR29 and has an identical tree to38607e8. Fast-forwarded
+  safely, verified source/MSI snapshots and froze eight upload files. Draft assets and then
+  public release444370420/v1.2.4 all match exact size/SHA256; tag points to merged mainfeee3b0.
+  Published2026-11-13T15:06:17Z. Online unsigned x64/model/OBS limits remain explicit.
+  New workstream26 owns the current review PR; no main merge or app/runtime change.
   2026-11-06: Owner separately requests "push the changes". Public tracking inputs are
   committed as d40e986 and README/native media as d1bf419, then pushed normally to the
   existing workDesk/agentic_GUI branch. Independent GitHub ref/tree reads verify the exact

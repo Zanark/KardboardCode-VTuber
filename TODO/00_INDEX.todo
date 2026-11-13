@@ -1,5 +1,5 @@
 KardboardCode Desktop Studio
-Status: Studio/tracking/README media workstreams DONE
+Status: Studio/tracking/README media/release and review-PR workstreams DONE
 Milestone: Native desktop GUI, with CLI compatibility and documented calibration
 Dependencies: Existing Python/OpenCV/MediaPipe/ModernGL application
 Purpose: Make every existing operating mode accessible without memorizing CLI commands.
@@ -30,6 +30,7 @@ Workstreams:
   23_COMPLETE_GUI_VISUAL_REFERENCE.todo
   24_GITHUB_TRACKING_ADOPTION.todo
   25_README_STUDIO_MEDIA.todo
+  26_GITHUB_RELEASE_AND_MAIN_PR.todo
 
 GitHub tracking:
   Public actual workstreams use scripts\todo_sync.py and scripts\todo-sync.json.
@@ -60,6 +61,7 @@ Tasks:
   [x] Deliver one complete portable GUI screenshot reference (workstream23).
   [x] Adopt verified local TODO/issue/Kanban synchronization and historical backfill (workstream24).
   [x] Refresh native Studio animations and dark/light README screenshots (workstream25).
+  [x] Publish verified v1.2.4 and prepare a current main PR without merging (workstream26).
 
 Acceptance criteria:
   Every CLI option has an identified GUI control.
@@ -69,6 +71,10 @@ Acceptance criteria:
   Completed evidence is separate from user approval.
 
 Completion evidence:
+  GitHub v1.2.4 release444370420 is public with eight size/SHA256-verified assets, tagged at
+  merged mainfeee3b0. PR31 is OPEN/non-draft/MERGEABLE/CLEAN against main, without auto-merge.
+  Issue30/item preserves kc-26. Thirty-six focused tracking/export tests and source/MSI checks
+  pass; private context/runtime are unchanged. Owner merge remains separate from delivery.
   README media refresh: three1200x675native synthetic Studio GIFs and two1440x810PNGs.
   Front remains7images; gallery27; all31former references/approved comparison bytes retained.
   Four media/five export tests/Ruff, desktop/mobile bounds, native PDF screenshot match and
@@ -116,6 +122,10 @@ Completion evidence:
   Real recorded-input GUI replay and live tuning succeeded; no live camera was opened.
   User visual/usability approval: PENDING REVIEW, separate from engineering completion.
 Completion log:
+  2026-11-13: Workstream26 delivered: public v1.2.4 downloads and PR31 ready for the owner's
+  merge. Earlier app/GUI/media were already merged through29; this PR is release follow-through.
+  2026-11-13: Prior GUI/media changes are already merged through PR29. Published v1.2.4
+  from exact mainfeee3b0 with eight digest-verified assets; current PR follow-through is26.
   2026-11-06: Owner separately requests publication. Tracking d40e986 and README media
   d1bf419 are pushed to workDesk/agentic_GUI; exact remote branch/new file objects verified.
   Both workstreams now have real source links. Private context stays local; main is not merged.

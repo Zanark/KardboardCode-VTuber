@@ -57,7 +57,8 @@
     "kc-22": "22_NUMERIC_PADDING_AND_FEATURE_COVERAGE.todo",
     "kc-23": "23_COMPLETE_GUI_VISUAL_REFERENCE.todo",
     "kc-24": "24_GITHUB_TRACKING_ADOPTION.todo",
-    "kc-25": "25_README_STUDIO_MEDIA.todo"
+    "kc-25": "25_README_STUDIO_MEDIA.todo",
+    "kc-26": "26_GITHUB_RELEASE_AND_MAIN_PR.todo"
   },
   "reviewed_statuses": {},
   "status_map": {

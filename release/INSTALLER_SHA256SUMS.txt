@@ -1,2 +1,2 @@
 40cbef832c81cfb44946ded9a54715e6e261d138c1323a872a070e9aa2424539  KardboardCode-Studio-windows-x64.msi
-8ae7fb883d25f72acdbf28caeb58779daf7f351f2825155473421db7408d30cf  installer-manifest.json
+bc58d612c372dae4fcf4c74822f7d149444a227cd9eed0d966b26ebd3c8d8dcc  installer-manifest.json
