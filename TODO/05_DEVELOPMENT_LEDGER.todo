@@ -24,6 +24,12 @@ Completion evidence:
   2026-11-02: Final source-boundary checks bring the suite to 224 passing cases: literal argument
   binding, explicit parser-exit failure reporting, and complete known-source log redaction.
 Completion log:
+  2026-11-13: Release follow-through a5728e0 is pushed; source26verified before issue30/
+  itemPVTI_lAHOAe2wCs4BqevGzhIfhZo creation. PR31 targets main and is ready for owner review:
+  OPEN/non-draft/MERGEABLE/CLEAN, autoMergeRequest=null and no reported status checks.
+  Thirty-six focused tracking/export tests and current source/MSI checks pass. No merge,
+  app/camera start or runtime change. Post-release documentation snapshots do not overwrite
+  immutable public v1.2.4 downloads. Workstream26 is complete at the publication/review boundary.
   2026-11-13: Owner authorizes release creation and a current main PR, reserving merge.
   Existing PAT is consumed only through the reviewed external runner; Zanark/ADMIN verified.
   Initial inventories had no releases/tags/open PRs. Mainfeee3b0 already contains the earlier

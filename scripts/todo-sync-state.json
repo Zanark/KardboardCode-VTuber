@@ -332,6 +332,21 @@
       "number": 28,
       "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/28",
       "item_id": "PVTI_lAHOAe2wCs4BqevGzhGlPxA"
+    },
+    "kc-26": {
+      "baseline": {
+        "title": "[26] Published v1.2.4 release and a current owner-reviewed main pull request",
+        "managed": "d1e5c61b6a0956e9e0b4ee339f7d1fe89637bfb977b724810c03a06cd0c43056",
+        "lifecycle": [
+          "CLOSED",
+          "COMPLETED"
+        ],
+        "status": "98236657"
+      },
+      "issue_id": "I_kwDOUAny-M8AAAABe-zlQA",
+      "number": 30,
+      "url": "https://github.com/Zanark/KardboardCode-VTuber/issues/30",
+      "item_id": "PVTI_lAHOAe2wCs4BqevGzhIfhZo"
     }
   }
 }
