@@ -15,6 +15,22 @@ It retains online Windows setup,
 brown dark-theme sliders and automatic video playback. The earlier
 v0.2.0 export was unpublished local staging. A local version/export is not a remote publication.
 
+## Published v1.2.4
+
+[GitHub release](https://github.com/Zanark/KardboardCode-VTuber/releases/tag/v1.2.4) ·
+[Windows x64 setup](https://github.com/Zanark/KardboardCode-VTuber/releases/download/v1.2.4/KardboardCode-Studio-windows-x64.msi) ·
+[Source ZIP](https://github.com/Zanark/KardboardCode-VTuber/releases/download/v1.2.4/KardboardCode-VTuber-source.zip)
+
+Published November 13, 2026 from merged main commit
+`feee3b0f9b1f074487224007a15d01bb954a0eff`. All eight uploaded assets were verified
+against their local SHA256 digests. The release includes the separate source/installer
+receipts, checksum files, notes and context.
+
+Published assets are immutable snapshots. This tracked folder can subsequently include
+newer documentation/tracking exports; do not overwrite v1.2.4 assets with those newer files.
+The installer is still online, unsigned and Windows x64 only, with explicit model downloads
+and a separate OBS component prerequisite for virtual-camera output.
+
 ## Files
 
 | File | Purpose |
