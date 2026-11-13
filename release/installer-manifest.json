@@ -10,7 +10,7 @@
   "runtimeInputFingerprint": "4a980a59293b45b504e07da0d316904dcf88fc1244c9ba38b8e72a861adb15ea",
   "schemaVersion": 1,
   "signed": false,
-  "sourceCommit": "290bae6f2c8638703fb77fce99c4cd48db665c21",
+  "sourceCommit": "8bb7bbb73ca7de0eb14905bbbb1969ae0ef2b98b",
   "sourceModified": false,
   "type": "online-per-user-msi",
   "upgradeCode": "{D4D3399E-CB0D-5F86-BDB7-A9CC98020C86}",
